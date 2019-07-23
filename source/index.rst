@@ -10,8 +10,8 @@ Get started with pyATS | Genie
    :maxdepth: 2
    :caption: Contents:
 
-   /Intro/Introduction
-   /Prerequisites/Prerequisites
+   /intro/Introduction
+   /prereqs/Prerequisites
 
 Indices and tables
 ==================
