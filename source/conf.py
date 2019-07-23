@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyATS User Guide'
+project = 'Get Started with pyATS | Genie'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
 
