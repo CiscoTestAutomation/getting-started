@@ -2,7 +2,7 @@ Configure your environment
 =============================
 
 Identify your terminal type
-------------
+---------------------------
 *We might want to briefly describe the types of terminal windows users might have. The following tip can go in this section.*
 
 .. tip:: Are you a Windows user? If yes, we recommend that you set up Windows Subsystem for Linux (WSL) and use Visual Studio (VS) Code as your editor.

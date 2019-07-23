@@ -13,6 +13,7 @@ Get started with pyATS | Genie
    /intro/Introduction
    /prereqs/Prerequisites
    /configuration/configureEnv
+   /install/installpyATS
 
 Indices and tables
 ==================
