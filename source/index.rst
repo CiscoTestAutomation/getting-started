@@ -21,6 +21,8 @@ Get started with pyATS | Genie
    /quickstart/learndevices
    /quickstart/configuredevices
    /quickstart/comparebeforeafter
+   /quickstart/runtestcase
+   /scenarios/scenarios
 
 
 Indices and tables

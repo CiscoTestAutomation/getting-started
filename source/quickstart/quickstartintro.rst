@@ -37,7 +37,7 @@ Keep Genie up to date
 *(This content can be re-used elsewhere.)*
 
 Get the latest core (infrastructure?) updates
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 *Procedure for using pip install genie --upgrade and info about how often we update the packages, recommendations for how often the user should run this.*
 
 Update the Genie packages

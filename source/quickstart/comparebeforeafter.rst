@@ -6,15 +6,15 @@ Important concepts
 -------------------
 *Describe the key Genie and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.*
 
-Concept 1
+<Concept 1>
 ^^^^^^^^^^^
 *(Each concept can be linked to and reused elsewhere.)*
 
-Concept 2
-^^^^^^^^^^
+<Concept 2>
+^^^^^^^^^^^
 
-Concept n...
-^^^^^^^^^^^^^
+<Concept n...>
+^^^^^^^^^^^^^^
 
 Comparison process
 ------------------
