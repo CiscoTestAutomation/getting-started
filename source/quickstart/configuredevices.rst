@@ -1,4 +1,4 @@
-Parse device output
+Configure devices
 ====================
 *Describe the purpose and objectives of this section.*
 
@@ -16,20 +16,24 @@ Concept 2
 Concept n...
 ^^^^^^^^^^^^^
 
-Examples of how to parse output
-------------------------------
-*(This content can be re-used elsewhere.)*
-
-Python example
-^^^^^^^^^^^^^^^
-*(This content can be re-used elsewhere.)*
+Configure a device
+-----------------------
+*(This content can be re-used elsewhere.) This contains a simple procedure to configure a single device. Include links to more detailed examples and instructions.*
 
 #. Step one 
 #. Step two
 #. Step n 
 
-Linux example
-^^^^^^^^^^^^^^^
+Test the configuration change
+--------------------------------
+*(This content can be re-used elsewhere.)*
+
+#. Step one 
+#. Step two
+#. Step n
+
+Take a snapshot of the current state
+-------------------------------------
 *(This content can be re-used elsewhere.)*
 
 #. Step one 
@@ -42,7 +46,6 @@ See also...
 * link 1
 * link 2
 * link 3
-
 
 
 

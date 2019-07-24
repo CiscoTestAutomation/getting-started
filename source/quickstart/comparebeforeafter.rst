@@ -1,5 +1,5 @@
-Parse device output
-====================
+Compare network states
+======================
 *Describe the purpose and objectives of this section.*
 
 Important concepts
@@ -16,25 +16,13 @@ Concept 2
 Concept n...
 ^^^^^^^^^^^^^
 
-Examples of how to parse output
-------------------------------
+Comparison process
+------------------
+*(This content can be re-used elsewhere.) This section describes the process of taking a snapshot, making a network config change, and then comparing (diff) the output.*
+
+Example comparison
+-------------------
 *(This content can be re-used elsewhere.)*
-
-Python example
-^^^^^^^^^^^^^^^
-*(This content can be re-used elsewhere.)*
-
-#. Step one 
-#. Step two
-#. Step n 
-
-Linux example
-^^^^^^^^^^^^^^^
-*(This content can be re-used elsewhere.)*
-
-#. Step one 
-#. Step two
-#. Step n
 
 See also...
 *a list of relevant links*
@@ -42,8 +30,6 @@ See also...
 * link 1
 * link 2
 * link 3
-
-
 
 
 

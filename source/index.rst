@@ -7,7 +7,7 @@ Get started with pyATS | Genie
 ============================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
    :caption: Contents:
 
    /intro/Introduction
@@ -19,6 +19,9 @@ Get started with pyATS | Genie
    /quickstart/manageconnections
    /quickstart/parseoutput
    /quickstart/learndevices
+   /quickstart/configuredevices
+   /quickstart/comparebeforeafter
+
 
 Indices and tables
 ==================
