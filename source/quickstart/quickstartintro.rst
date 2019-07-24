@@ -16,6 +16,22 @@ Concept 2
 Concept n...
 ^^^^^^^^^^^^^
 
+When to use Genie
+------------------
+*A description of when to use Genie, with real-world scenarios.*
+
+Genie for test automation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+*(These are the DevNet examples.)*
+
+Genie for test script creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*(These are the test automation-oriented examples.)*
+
+Use the Genie command line interface (CLI)
+------------------------------------------
+*This section explains what the CLI is and how to use it, along with a link to a CLI reference (if there is one).*
+
 Keep Genie up to date
 ----------------------
 *(This content can be re-used elsewhere.)*
@@ -69,4 +85,5 @@ See also...
 * link 1
 * link 2
 * link 3
+
 

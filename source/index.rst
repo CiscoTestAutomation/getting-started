@@ -18,6 +18,7 @@ Get started with pyATS | Genie
    /quickstart/quickstartintro
    /quickstart/manageconnections
    /quickstart/parseoutput
+   /quickstart/learndevices
 
 Indices and tables
 ==================
