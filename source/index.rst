@@ -7,13 +7,17 @@ Get started with pyATS | Genie
 ============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    /intro/Introduction
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
+   /install/installGenie
+   /quickstart/quickstartintro
+   /quickstart/manageconnections
+   /quickstart/parseoutput
 
 Indices and tables
 ==================

@@ -2,30 +2,29 @@ Install pyATS
 =============================
 Installation process
 ---------------------
-*Describe the overall process - check prereqs, install pyATS and Genie, clone the Genie repo for the libraries or other components that you need...*
+*Describe the overall process - check prereqs, install pyATS*
 
-.. list-table:: Example table
+.. list-table:: pyATS installation process
    :header-rows: 1
 
    * - Type of user
      - Installation process
    * - Internal
      - 
-         * foo
-         * bar
-         * baz
+         * *Stage 1 and link*
+         * *etc*
+  
    * - External
      - 
-         * foo
-         * bar
-         * baz
+         * *Stage 1 and link*
+         * *etc*
   
 
 
 Ways to install pyATS
 ------------------------
 
-*Explain that there are different ways to install pyATS, depending on your platform. Link to each section within this file for different options.*
+*Explain that there are different ways to install pyATS, depending on the platform. Link to each section within this file for different options.*
 
 * :ref:`pip-install-label`
 * :ref:`docker-label`
@@ -45,3 +44,15 @@ Run pyATS | Genie from a Docker container
 Install the RobotFramework
 ---------------------------
 *Describe how to do this.*
+
+Test your installation
+-----------------------
+*Provide a few steps to make sure all necessary components are installed at this point.*
+
+See also...
+*a list of relevant links*
+
+* link 1
+* link 2
+* link 3
+

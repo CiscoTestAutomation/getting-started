@@ -19,3 +19,10 @@ Set up a virtual environment
 #. Step ...
 #. Run the environment check.
 
+See also...
+*a list of relevant links*
+
+* link 1
+* link 2
+* link 3
+

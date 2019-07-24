@@ -1,5 +1,6 @@
 Prerequisites
 =============================
+
 Knowledge and skills
 ---------------------
 *Description of the concepts and skills that a user of this documentation should already have. This might be presented as a list or a table, possibly with links. The following table is a test of the markup for this purpose.*
@@ -27,3 +28,11 @@ System
 Network connectivity
 ^^^^^^^^^^^^^^^^^^^^^
 *List, including connection to internet and possibly telnet?*
+
+See also...
+*a list of relevant links*
+
+* link 1
+* link 2
+* link 3
+
