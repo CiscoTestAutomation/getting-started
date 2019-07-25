@@ -7,9 +7,13 @@ What is the |pyATS| ecosystem?
 -------------------------------------
 Concept: Definition of the ecoystem and how |pyATSbold| and the |librarybold| work together. Perhaps include a diagram and two or three paragraphs.
 
+|pyATS|
+^^^^^^^^^
+|pyATSbold| asdfasdf
+
 The |library|
 ^^^^^^^^^^^^^^
-(Rewrite)The |librarybold| is a Python library which contains all the tools needed for Networking Test Automation. Genie is the library solution for pyATS. The main goals of Genie is to facilitates rapid development, encourage re-usable libraries and simplify writing test automation.
+(Rewrite)The |librarybold| is a Python library that provides all the tools you need *(is this true?)* for Network Test Automation. Genie is the library solution for pyATS. The main goals of Genie is to facilitates rapid development, encourage re-usable libraries and simplify writing test automation.
 
 Key benefits of |pyATS|
 ------------------------------
