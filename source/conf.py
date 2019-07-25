@@ -53,7 +53,9 @@ html_theme_path = ["_themes", ]
 html_show_sourcelink = False
 rst_prolog = """
 .. |pyATS| replace:: pyATS
+.. |pyATSbold| replace:: **pyATS**
 .. |library| replace:: pyATS library
+.. |librarybold| replace:: **pyATS library**
 .. |geniecmd| replace:: genie
 .. |genieprfx| replace:: genie
 """
