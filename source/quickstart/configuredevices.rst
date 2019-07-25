@@ -4,7 +4,7 @@ Configure devices
 
 Important concepts
 -------------------
-*Describe the key Genie and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.*
+Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.
 
 <Concept 1>
 ^^^^^^^^^^^

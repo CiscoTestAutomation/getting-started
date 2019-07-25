@@ -4,7 +4,7 @@ Learn device features
 
 Important concepts
 -------------------
-*Describe the key Genie and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are (make sure we define what we mean by "feature" and genie Ops).*
+Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are (make sure we define what we mean by "feature" and |genieprfx| Ops).
 
 <Concept 1>
 ^^^^^^^^^^^

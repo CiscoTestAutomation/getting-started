@@ -24,7 +24,7 @@ Installation process
 Ways to install |pyATS|
 ------------------------
 
-Explain that there are different ways to install |pyATS|, depending on the platform. Link to each section within this file for different options.
+*Explain that there are different ways to install* |pyATS|, depending on the platform. Link to each section within this file for different options. Explain briefly the concepts of core (infrastructure) and feature libraries, and that these will be installed.
 
 * :ref:`pip-install-label`
 * :ref:`docker-label`

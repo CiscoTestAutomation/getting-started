@@ -4,7 +4,7 @@ Compare network states
 
 Important concepts
 -------------------
-*Describe the key Genie and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.*
+Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.
 
 <Concept 1>
 ^^^^^^^^^^^
@@ -12,7 +12,7 @@ Important concepts
 
 <Concept 2>
 ^^^^^^^^^^^
-
+ 
 <Concept n...>
 ^^^^^^^^^^^^^^
 
@@ -26,7 +26,7 @@ Example comparison
 
 See also...
 *a list of relevant links*
-
+|
 * link 1
 * link 2
 * link 3

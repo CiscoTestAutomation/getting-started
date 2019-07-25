@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Get Started with pyATS | Genie'
+project = 'Get Started with pyATS'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
 
@@ -54,4 +54,6 @@ html_show_sourcelink = False
 rst_prolog = """
 .. |pyATS| replace:: pyATS
 .. |library| replace:: pyATS library
+.. |geniecmd| replace:: genie
+.. |genieprfx| replace:: genie
 """

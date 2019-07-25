@@ -4,7 +4,7 @@ Run a test case
 
 Important concepts
 -------------------
-*Describe the key Genie and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are, but they should include Genie harness, jobs, datafiles, triggers, and verifications.*
+Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are, but they should include |genieprfx| harness, jobs, datafiles, triggers, and verifications.
 
 <Concept 1>
 ^^^^^^^^^^^
