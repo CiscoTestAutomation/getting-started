@@ -1,5 +1,5 @@
-Install pyATS
-=============================
+Install |pyATS|
+========================
 Installation process
 ---------------------
 *Describe the overall process - check prereqs, install pyATS*

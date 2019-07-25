@@ -14,7 +14,6 @@ Get started with pyATS | Genie
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
-   /install/installGenie
    /quickstart/quickstartintro
    /quickstart/manageconnections
    /quickstart/parseoutput
