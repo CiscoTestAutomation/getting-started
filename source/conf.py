@@ -27,6 +27,7 @@ author = 'Cisco Systems Inc.'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autosectionlabel',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -56,8 +57,8 @@ rst_prolog = """
 .. |pyATSbold| replace:: **pyATS**
 .. |library| replace:: pyATS library
 .. |librarybold| replace:: **pyATS library**
-.. |geniecmd| replace:: genie
-.. |genieprfx| replace:: genie
+.. |geniecmd| replace:: *genie*
+.. |genieprfx| replace:: *genie*
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
 
 .. raw:: html
