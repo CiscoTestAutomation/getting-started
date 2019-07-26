@@ -38,7 +38,7 @@ The |librarybold| is a Python library that provides all the tools needed for net
 * a Pythonic library for more complex scripting. :question:`We've already described the library itself as Pythonic, and as containing libraries. Can we reword any of this?`
 
 Key benefits of |pyATS|
-------------------------
+-----------------------
 The |pyATS| ecosystem provides an agnostic infrastructure for rapid test development and execution. All OS/Platform and management protocol support is defined and injected through plugins, library implementations, and extensions. This includes support for third-party platforms and protocols. 
 
 Network engineers and NetDevOps can be productive day one with the |library|'s readily available, holistic, and model-driven :question:`libraries`, which
