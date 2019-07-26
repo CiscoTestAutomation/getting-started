@@ -62,7 +62,9 @@ rst_prolog = """
 
 .. raw:: html
 
-    <style> .question {background-color: yellow; font-weight:bold; padding: .25em;} </style>
+    <style> 
+    .question {background-color: yellow; font-weight:bold; padding: .25em;} 
+    </style>
 
 .. role:: question
 
