@@ -13,17 +13,21 @@ Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at t
 * and :question:`nnnn` external network engineers,
 * for more than **2 million** test runs every month.
 
+The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components. 
+
 .. tip:: The |pyATS| ecosystem is available under Apache License Version 2.0
 
-The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components. The following diagram describes the ecosystem in more detail :question:`needs to be updated`.
+The following diagram describes the ecosystem in more detail :question:`needs to be updated`.
 
 .. image:: ../images/layers.png
+
+The |pyATS| ecosystem can learn and profile an entire feature's configuration and operational status. For example, with just a few commands, you can profile your system before and after a configuration change and get a detailed summary of exactly what changed.
 
 What is |pyATS|?
 ^^^^^^^^^^^^^^^^
 |pyATSbold| is the test framework foundation for the ecosystem. |pyATS| specializes in data-driven and reusable testing for Agile, rapid development iterations.
 
-This powerful, highly-pluggable Python framework enables developers to start with small, simple and linear test cases, then scale up to large, complex and asynchronous test suites.
+This powerful, highly-pluggable Python framework enables developers to start with small, simple and linear test cases, and then scale up to large, complex and asynchronous test suites.
 
 What is the |library|
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -43,21 +47,19 @@ Network engineers and NetDevOps can be productive day one with the |library|'s r
 * encourage the use of re-usable tests, and 
 * simplify how you write and execute test automation scripts.
 
-The |pyATS| ecosystem can learn and profile an entire feature's configuration and operational status. For example, with just a few commands, you can profile your system before and after a configuration change and get a detailed summary of exactly what changed.
-
-Script developers
+Script developer key benefits
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Parse device output parsed for stateful validation.
+* Parse device output for stateful validation.
 * Re-use any of the available test cases.
 * Connect to devices over CLI, NETCONF, or RESTCONF.
 * Use a single, cross-platform script instead of having to modify multiple scripts.
 * Verify CLI outputs with YANG and XML outputs.
 
-Network engineers
-^^^^^^^^^^^^^^^^^^^^^
+Network engineer key benefits
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Connect to devices and make sure that they are up, running and pingable,
+* Connect to devices and make sure that they are up, running and pingable.
 * Retrieve information about the network state.
 * Take before and after snapshots of the network, and then compare them.
 * Parse device output and store a snapshot, and then automatically run the same commands at specified time intervals to compare the current and previous states.
