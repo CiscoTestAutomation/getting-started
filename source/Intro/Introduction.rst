@@ -1,7 +1,7 @@
 Introduction
 =============================
 
-*One paragraph description of the get started guide, including the intended audience and objectives (install, configure, and prepare to set up test cases). This chapter should be kept brief, because readers will probably already know about the product and why they are trying to use it.*
+The |getstartedguide| introduces you to the features and functionality of the |pyATS| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATS| and the |library|.
 
 What is the |pyATS| ecosystem?
 -------------------------------------
@@ -13,7 +13,9 @@ Concept: Definition of the ecoystem and how |pyATSbold| and the |librarybold| wo
 
 The |library|
 ^^^^^^^^^^^^^^
-(Rewrite)The |librarybold| is a Python library that provides all the tools you need *(is this true?)* for Network Test Automation. Genie is the library solution for pyATS. The main goals of Genie is to facilitates rapid development, encourage re-usable libraries and simplify writing test automation.
+.. role:: red
+
+(Rewrite)The |librarybold| is a Python library that provides all the tools you need :question:`is this true?` for Network Test Automation. Genie is the library solution for pyATS. The main goals of Genie is to facilitates rapid development, encourage re-usable libraries and simplify writing test automation.
 
 Key benefits of |pyATS|
 ------------------------------

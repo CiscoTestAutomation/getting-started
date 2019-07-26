@@ -58,4 +58,12 @@ rst_prolog = """
 .. |librarybold| replace:: **pyATS library**
 .. |geniecmd| replace:: genie
 .. |genieprfx| replace:: genie
+.. |getstartedguide| replace:: *Get Started with pyATS Guide*
+
+.. raw:: html
+
+    <style> .question {background-color: yellow; font-weight:bold; padding: .25em;} </style>
+
+.. role:: question
+
 """
