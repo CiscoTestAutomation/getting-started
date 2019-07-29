@@ -19,7 +19,7 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 
 Requirements
 ------------
-Make sure you have the correct platform, system, and network connectivity in place before you install |pyATS| and the |library|.
+Make sure you have the correct platform, system, and network connectivity in place before you install |pyATSbold| and the |librarybold|.
 
 Hardware
 ^^^^^^^^^
@@ -27,9 +27,9 @@ The |pyATS| ecosystem is lightweight and scalable --- you only need 1 GB of RAM 
 
 Platform
 ^^^^^^^^^
-The |pyATS| ecosystem runs in a Linux or Linux-type environment. You can install it on any of the following platforms:
+The |pyATS| ecosystem runs in a Linux or Linux-type environment. You can install |pyATS| on any of the following platforms:
 
-* Any flavor of Linux, including Ubuntu, CentOS, and Fedora
+* Any flavor of Linux, including Ubuntu, CentOS, and Fedora, for example
 * macOS (previously Mac OS X)
 * `Windows Subsystem for Linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_
 * Docker containers (`get our container here <https://hub.docker.com/r/ciscotestautomation/pyats/>`_)
@@ -37,6 +37,8 @@ The |pyATS| ecosystem runs in a Linux or Linux-type environment. You can install
 System and software
 ^^^^^^^^^^^^^^^^^^^^
 |pyATS| and the |library| are written in Python. You don't need to know Python, but your system must have one of the following Python versions installed:
+
+.. _supported-python-versions:
 
 * Python 3.5.x
 * Python 3.6.x

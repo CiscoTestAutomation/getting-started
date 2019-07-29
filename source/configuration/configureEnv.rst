@@ -2,18 +2,28 @@
 
 Configure your environment
 =============================
+A |pyATSbold| instance is simply a directory (folder) in the file system that houses a Python Virtual Environment. Within your virtual environment, you install the |pyATS| and |library| packages and dependencies.
 
-Identify your terminal type
----------------------------
-*We might want to briefly describe the types of terminal windows users might have. The following tip can go in this section.*
-
-.. tip:: Are you a Windows user? If yes, we recommend that you set up Windows Subsystem for Linux (WSL) and use Visual Studio (VS) Code as your editor.
+.. tip:: If you're a Windows user, we recommend that you set up Windows Subsystem for Linux (WSL). With WSL, you can run |pyATS| and the |library| in your local environment. This enables on-the-go script development and execution over VPN without the need for a server :question:`Does this apply to both internal and external users?`. Use an app such as Ubuntu Terminal to run commands, including bash, ssh, git, and others.
 
 .. _install-python:
 
 Install Python
 ---------------
-*Describe how to install a supported version of Python (always latest minus {n}?), for each platform ?*
+#.  Go to https://www.python.org/ and download the correct version of Python for your OS. 
+
+    .. note:: Make sure you select a :ref:`supported version of Python <supported-python-versions>`.
+
+#.  Run the installer and respond to the prompts.
+
+    *Result*: The Python interpreter is installed in the specified directory.
+
+
+#.  To verify the installed version::
+
+        python -- version
+
+    *Result*: The system returns the installed version number.
 
 Set up a virtual environment
 -----------------------------
