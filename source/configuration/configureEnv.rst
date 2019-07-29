@@ -17,8 +17,7 @@ Install Python
 #.  Run the installer and respond to the prompts.
 
     *Result*: The Python interpreter is installed in the specified directory.
-
-
+    
 #.  To verify the installed version::
 
         python -- version
