@@ -7,7 +7,7 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 
 .. csv-table:: Prerequisite knowledge and skills
    :header: "You should know...", "So that you can..."
-  
+
    "How to use a command line interface (CLI)", "Install the ecosystem"
    "Fundamentals of network test automation", "Configure the ecosystem with testbed data"
    "GitHub clone and download procedures", "Get |library| packages"
@@ -33,6 +33,8 @@ The |pyATS| ecosystem runs in a Linux or Linux-type environment. You can install
 * macOS (previously Mac OS X)
 * `Windows Subsystem for Linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_
 * Docker containers (`get our container here <https://hub.docker.com/r/ciscotestautomation/pyats/>`_)
+
+.. tip:: If you're a **Windows user**, we recommend that you set up Windows Subsystem for Linux (WSL). With WSL, you can run |pyATS| and the |library| in your local environment. This enables on-the-go script development and execution over VPN without the need for a server :question:`Does this apply to both internal and external users?`. Use an app such as Ubuntu Terminal to run commands, including bash, ssh, git, and others.
 
 System and software
 ^^^^^^^^^^^^^^^^^^^^
@@ -65,9 +67,3 @@ See also...
 * link 1
 * link 2
 * link 3
-
-
-
-
-
-
