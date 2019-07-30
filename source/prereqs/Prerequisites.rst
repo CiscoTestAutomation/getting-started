@@ -10,7 +10,8 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 
    "How to use a command line interface (CLI)", "Install the ecosystem"
    "Fundamentals of network test automation", "Configure the ecosystem with testbed data"
-   "GitHub clone and download procedures", "Get |library| packages"
+   "GitHub clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
+   "Docker image usage (optional)", "Run |pyATS| from the Docker image"
    ":question:`add to this as we go along` ", " "
    " ", " "
    " ", " "
