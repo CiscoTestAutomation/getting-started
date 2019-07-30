@@ -1,3 +1,5 @@
+.. _quick-start:
+
 Quick start guide
 =============================
 Describe the purpose and objectives of this section - learn how to use the |library|, with real-life scenarios, hands-on practice procedures, and a testbed of mock devices.
@@ -51,33 +53,33 @@ Test a network of mock devices
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Step one 
+#. Step one
 #. Step two
-#. Step n 
+#. Step n
 
 Configure the testbed.yaml file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 *(Make sure this concept was explained in the "Important concepts" section.)*
 
-#. Step one 
+#. Step one
 #. Step two
-#. Step n 
+#. Step n
 
 Connect to the mock devices
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Step one 
+#. Step one
 #. Step two
-#. Step n 
+#. Step n
 
 Use the |library| to test a device upgrade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 *These are the steps for upgrading the device versions and then seeing the before and after views.*
 
-#. Step one 
+#. Step one
 #. Step two
-#. Step n 
+#. Step n
 
 See also...
 *a list of relevant links*
@@ -85,10 +87,3 @@ See also...
 * link 1
 * link 2
 * link 3
-
-
-
-
-
-
-
