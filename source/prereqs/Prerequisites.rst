@@ -1,3 +1,5 @@
+.. _pre-reqs:
+
 Prerequisites
 =============================
 
@@ -17,6 +19,7 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
    " ", " "
    " ", " "
 
+.. _requirements:
 
 Requirements
 ------------

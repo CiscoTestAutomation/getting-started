@@ -29,7 +29,6 @@ author = 'Cisco Systems Inc.'
 extensions = [
     'sphinx.ext.autosectionlabel',
 ]
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -67,8 +66,8 @@ rst_prolog = """
 
 .. raw:: html
 
-    <style> 
-    .question {background-color: yellow; font-weight:bold; padding: .25em;} 
+    <style>
+    .question {background-color: yellow; font-weight:bold; padding: .25em;}
     </style>
 
 .. role:: question
