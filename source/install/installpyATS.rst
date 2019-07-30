@@ -37,20 +37,7 @@ update env.sh/csh to include standard directories into PYTHONPATH
 git clone any repositories you are interested in.
 
 
-Example Installation on Ubuntu 14.04
-# ensure system packages met
-$ sudo apt-get install python3 python3-pip python3-venv
 
-# create virtual environment
-$ python3-m venv /path/to/pyats
-
-# symlink env.sh/csh if you want
-$ cd /path/to/pyats
-$ ln -s bin/activate env.sh
-$ ln -s bin/activate.csh env.csh
-
-# activate environment by sourcing bin/activate or env.sh
-$ source bin/activate
 
 # update pip and setuptools
 $ pip install --upgrade pip setuptools
@@ -84,6 +71,7 @@ Installation process
 
 .. list-table:: |pyATS| installation process
    :header-rows: 1
+   :widths: auto
 
    * - Type of user
      - Installation process
@@ -94,10 +82,10 @@ Installation process
 
    * - External
      -
-         * Check that your system meets the :ref:`requirements`.
+         * Check the :ref:`requirements`.
          * :ref:`configure-environment`.
-         * Within your virtual environment, upgrade and run the pip installer.
-         *
+         * Upgrade and run the pip installer.
+         * Verify the installation.
 
    * - Docker
      -
