@@ -60,6 +60,9 @@ rst_prolog = """
 .. |geniecmd| replace:: *genie*
 .. |genieprfx| replace:: *genie*
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
+.. |br| raw:: html
+
+  <br />
 
 
 .. raw:: html

@@ -14,10 +14,10 @@ Install Python
 
     .. note:: Make sure you select a :ref:`supported version of Python <supported-python-versions>`.
 
-#.  Run the installer and respond to the prompts.
+#.  Run the installer and respond to the prompts. |br| *Result*: The Python interpreter is installed in the specified directory.
 
-    *Result*: The Python interpreter is installed in the specified directory.
-    
+    |br|
+
 #.  To verify the installed version::
 
         python -- version
