@@ -1,5 +1,5 @@
 #!/bin/bash
-cd build
-rm -rf ./*
-cd ..
+cd build/html
+rm -rf !(_static)
+cd ../..
 make html
