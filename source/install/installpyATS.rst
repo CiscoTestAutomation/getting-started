@@ -96,7 +96,7 @@ Installation process
      -
          * Check that your system meets the :ref:`requirements`.
          * :ref:`configure-environment`.
-         * Within your virtual environment, upgrade and run the pip installer. asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsafasdfsadfasdfasdfa
+         * Within your virtual environment, upgrade and run the pip installer.
          *
 
    * - Docker
