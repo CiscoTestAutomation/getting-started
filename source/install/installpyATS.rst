@@ -44,19 +44,11 @@ The process that you follow depends on whether you are an internal, external, or
      -
          #. Download the Docker image from https://hub.docker.com/r/ciscotestautomation/pyats/.
          #. Mount a pip requirements file.
-         #. Customize your workspace.
+         #. Customize your workspace. :question:`Is this in the right order?`
          #. Start the |pyATS| container.
          #. Run the examples.
 
 .. note:: If you want to use Robot Framework to build scripts, you can also install the |library| Robot Framework plugin. :question:`Does Robot Framework work with a Docker image?`
-
-
-
-# clone your git repositories
-# browse https://bitbucket-eng-sjc1.cisco.com/bitbucket/projects/PYATS-PROJ/ for repos to clone to projects/ directory
-# browse https://bitbucket-eng-sjc1.cisco.com/bitbucket/projects/PYATS-PYPI/ for repos to clone to pypi directory
-
-# and voila
 
 .. _install-with-pip:
 
@@ -82,7 +74,7 @@ This section describes how to use the package installer for Python (pip) to inst
 
         $ pip install pyats library
 
-    .. hint:: Give the installer a few minutes to complete its work.
+    .. hint:: Give the installer a few minutes to finish.
 
     *Result*: You're ready to start using |pyATS| and the |library|!
 
@@ -107,7 +99,7 @@ $ pip install pyats.robot library.libs.robot
 
 .. _docker-label:
 
-Run |pyATS| and the |library| from a Docker container
+Run |pyATS| with Docker
 ------------------------------------------------------
 If you know how to use Docker, you can work with our pre-built docker image, which includes both |pyATS| and the |library|. You can find the image and instructions at
 https://hub.docker.com/r/ciscotestautomation/pyats/.
@@ -140,7 +132,9 @@ A number of image variants are available:
 
       $ docker run -it ciscotestautomation/pyats:latest pyats run job /pyats/examples/basic/job/basic_example_job.py
 
-    The pyATS virtual environment is sourced automatically, and your workspace is preset to be /pyats. Note that this workspace directory (virtual environment) is declared to be a docker volume, so its content will persist between container reloads.
+    The pyATS virtual environment is sourced automatically, and your workspace is preset to be ``/pyats``. Note that this workspace directory (virtual environment) is declared to be a docker volume, so its content will persist between container reloads.
+
+    |br|
 
 #.  For more details and Docker options, go to https://hub.docker.com/r/ciscotestautomation/pyats/ .
 
