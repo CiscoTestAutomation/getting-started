@@ -70,6 +70,10 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
     This makes the local directories the first place that the :question:`installer or pyATS?` looks for needed files.
 
+    .. hint:: When you're done with your |pyATS| session, you can close the terminal window or exit the environment::
+
+        $ deactivate
+
 
 See also...
 *a list of relevant links*
