@@ -53,7 +53,7 @@ The following diagram shows an example of how topology objects are referenced an
     |                               +----------+                               |
     +--------------------------------------------------------------------------+
 
-The |library| uses the ``Abstraction`` package to execute its parsers, triggers, verifications, and all other functions across Cisco and non-Cisco operating systems, agnostically.
+The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
 
 .. qs-features::
 
