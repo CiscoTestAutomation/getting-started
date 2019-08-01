@@ -2,33 +2,101 @@
 
 Quick start guide
 =============================
-Describe the purpose and objectives of this section - learn how to use the |library|, with real-life scenarios, hands-on practice procedures, and a testbed of mock devices.
+This topic will get you up and running quickly. It provides the following information:
+
+* Tips on how to use the |library|
+* Real-life scenarios
+* Hands-on practice procedures
+* A testbed file of mock devices
 
 Important concepts
 -------------------
-Describe the key |library| and generic concepts that the user needs to understand before they begin to use the |library|. We'll need to define what these are.
+This section describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
 
-<Concept 1>
+.. _qs-sdn::
+
+Software-defined network
+^^^^^^^^^^^^^^^^^^^^^^^^^
+A software-defined network (SDN) decouples network control from network forwarding, which makes the control functions programmable and the network itself more dynamic and scalable. The |pyATS| ecosystem helps you test, maintain, and diagnose
+the operational state of your agile SDN network.
+
+|pyATS| provides a framework that standardizes how to programmatically interact with devices (routers, switches, servers, traffic generators, and other hardware products). The ecosystem provides the mechanisms you need to parse, model, configure, and test your SDN, and includes a set of ready-to-use test automation libraries built by the same engineering teams that built your Cisco products.
+
+.. _qs-abstraction::
+
+Abstraction
 ^^^^^^^^^^^
-*(Each concept can be linked to and reused elsewhere.)*
+The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes programmatically, such as network topology and traffic, without having to change the underlying hardware.
 
-<Concept 2>
-^^^^^^^^^^^
+:question:`Does this belong here, under abstraction? Or is this a different sort of thing?` For example, the |library| uses abstraction to model your network topology and protocols, which results in a generalized view of network *objects*. These objects represent testbeds, devices, interfaces, and links :question:`and anything else?`.
 
-<Concept n...>
-^^^^^^^^^^^^^^
+The following diagram shows an example of how topology objects are referenced and interconnected.
+
+.. code-block:: text
+
+    +--------------------------------------------------------------------------+
+    | Testbed Object                                                           |
+    |                                                                          |
+    | +-----------------------------+          +-----------------------------+ |
+    | | Device Object - myRouterA   |          | Device Object - myRouterB   | |
+    | |                             |          |                             | |
+    | |         device interfaces   |          |          device interfaces  | |
+    | | +----------+ +----------+   |          |   +----------+ +----------+ | |
+    | | | intf Obj | | intf Obj |   |          |   |  intf Obj| | intf Obj | | |
+    | | | Eth1/1   | | Eth1/2 *-----------*----------*  Eth1/1| | Eth1/2   | | |
+    | | +----------+ + ---------+   |     |    |   +----------+ +----------+ | |
+    | +-----------------------------+     |    +-----------------------------+ |
+    |                                     |                                    |
+    |                               +-----*----+                               |
+    |                               | Link Obj |                               |
+    |                               |rtrA-rtrB |                               |
+    |                               +----------+                               |
+    +--------------------------------------------------------------------------+
+
+The |library| uses the ``Abstraction`` package to execute its parsers, triggers, verifications, and all other functions across Cisco and non-Cisco operating systems, agnostically.
+
+.. qs-features::
+
+Features
+^^^^^^^^^
+The term *feature* typically refers to a network protocol, represented by the |library| as a Python object, with attributes that represent the feature (protocol) configuration on a device. Many networks use a combination of different features, such as MPLS, BGP, and EIGRP.
+
+.. qs-statefulvalidation::
+
+Stateful validation
+^^^^^^^^^^^^^^^^^^^
+Configuration changes often result in a series of operational state changes. For example, you might see changes to the following items:
+
+* Interface status
+* Routing
+* Neighbors
+
+With just a few commands or an automated script, you can use the |library| to profile your system before and after a configuration change to see a detailed list of the changes.
 
 When to use the |library|
 -------------------------
-A description of when to use the |library| (any time you want to check the health of your network), with real-world scenarios.
+Use the |library| any time you want to check the health of your network. You can also use the |library| for Cisco-customer partnerships -- the automated tests used by Cisco during product development are also available externally. This is a win-win situation for Cisco and our customers!
 
-The |library| for test automation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*(These are the DevNet examples.)*
+Test script creation
+^^^^^^^^^^^^^^^^^^^^^^^
+Ideal for cross-OS and cross-platform development teams, the |library| enables you to
 
-The |library| for test script creation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*(These are the test automation-oriented examples.)*
+* develop in parallel
+* conduct tests, and
+* scale your respective features/components independently.
+
+The |library| decouples your tests from topology and configuration so that you can address a wide variety of user requirements in your unit, sanity, regression, and system/solution tests.
+
+:question:`What would be a specific, real-world scenario to show here? https://github.com/RunSi/DEVWKS-2601 (This example shows how to use a Robot Framework script, can we show an example that doesn't? This seems to go to the same workshop as the test automation one.)`
+
+"Learn the good state of the network
+Rerun periodically or when a disaster occurs to figure out what happened"
+
+Test automation
+^^^^^^^^^^^^^^^^^^
+The |library| has the functionality to combine any number of tests and run them under various test conditions. This provides you with the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
+
+:question:`What would be a specific, real-world scenario of doing this with Genie?` https://github.com/CiscoTestAutomation/CL-DevNet-2595
 
 Use the |library| command line interface (CLI)
 ----------------------------------------------
@@ -84,6 +152,6 @@ Use the |library| to test a device upgrade
 See also...
 *a list of relevant links*
 
-* link 1
-* link 2
+* `Cisco Open Network Environment <https://www.cisco.com/c/en/us/products/collateral/switches/nexus-1000v-switch-vmware-vsphere/white_paper_c11-728045.html>`_
+* Example of stateful validation https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/workshop.md
 * link 3
