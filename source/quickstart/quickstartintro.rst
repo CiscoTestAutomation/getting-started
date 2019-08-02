@@ -105,7 +105,7 @@ The |library| command line interface (CLI) is a powerful Linux-based command-lin
 
   All |library| commands start with |geniecmd|, followed by the command and its options.
 
-From your |pyATS| virtual environment :question:`any specific directory? Does genie need its own virtual environment?`, you can see a complete list of available commands :question:`This doesn't seem to work on my system`::
+From your |pyATS| virtual environment, you can see a complete list of available commands::
 
   (|library|)$ |geniecmd| --help
 
@@ -136,21 +136,25 @@ To see help for a specific command::
 
 .. qs-update::
 
-Keep the |library| up to date
+Keep |pyATS| up to date
 -----------------------------
-:question:`How often should a user update the library? Why would they update only the packages and not just the whole library? Will updating pyATS also update Genie?`
+On the last Tuesday of each month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
+
+.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`Can external users be on this list? How does an internal user sign up to the notices?`
 
 .. qs-upgrade-library::
 
-Upgrade the |library|
-^^^^^^^^^^^^^^^^^^^^^^
-From your virtual environment :question:`specifically?`::
+Upgrade the |pyATS| infrastructure
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+From your virtual environment::
 
   (|library|) $ pip install |geniecmd| --upgrade
 
-*Result*: The installer gives you the latest version of Genie. To check the version::
+*Result*: The installer gives you the latest version of |pyATS| and the |library|. To check the version::
 
-  (|library|) $ |geniecmd| --version
+  (|library|) $ pyats version
 
 Upgrade specific packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -192,6 +196,15 @@ For example::
 Test a network of mock devices
 -------------------------------
 *Procedure to download/clone the test file from Git, and then use Genie to connect to and test those devices.*
+
+# 1. make sure pyATS is installed (including the libraries)
+bash$ pip install pyats[full]
+
+# 2. clone this repository into your environment
+bash$ git clone https://github.com/CiscoTestAutomation/examples
+
+
+Start with https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_simple
 
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
