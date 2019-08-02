@@ -2,7 +2,7 @@
 
 Quick start guide
 =============================
-This topic will get you up and running quickly. It provides the following information:
+This topic will get you up and running quickly, and includes the following information:
 
 * Tips on how to use the |library|
 * Real-life scenarios
@@ -26,9 +26,9 @@ the operational state of your agile SDN network.
 
 Abstraction
 ^^^^^^^^^^^
-The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes programmatically, such as network topology and traffic, without having to change the underlying hardware.
+The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes -- such as network topology and traffic -- without having to change the underlying hardware.
 
-:question:`Does this belong here, under abstraction? Or is this a different sort of thing?` For example, the |library| uses abstraction to model your network topology and protocols, which results in a generalized view of network *objects*. These objects represent testbeds, devices, interfaces, and links :question:`and anything else?`.
+:question:`Does this belong here, under abstraction? Or is this a different sort of thing?` For example, the |library| uses abstraction to model your network topology and protocols, which results in a generalized view of network *objects*. These objects represent protocols, testbeds, devices, interfaces, and links :question:`and anything else?`.
 
 The following diagram shows an example of how topology objects are referenced and interconnected.
 
@@ -75,11 +75,11 @@ With just a few commands or an automated script, you can use the |library| to pr
 
 When to use the |library|
 -------------------------
-Use the |library| any time you want to check the health of your network. You can also use the |library| for Cisco-customer partnerships -- the automated tests used by Cisco during product development are also available externally. This is a win-win situation for Cisco and our customers!
+Use the |library| any time you want to configure or check the health of your network. Cisco makes the automated tests used during product development available externally, so customers can run the same tests on their own networks. This is a win-win situation for Cisco and our customers!
 
 Test script creation
 ^^^^^^^^^^^^^^^^^^^^^^^
-Ideal for cross-OS and cross-platform development teams, the |library| enables you to
+Ideal for cross-OS/cross-platform development teams, the |library| enables you to
 
 * develop in parallel
 * conduct tests, and
@@ -89,30 +89,105 @@ The |library| decouples your tests from topology and configuration so that you c
 
 :question:`What would be a specific, real-world scenario to show here? https://github.com/RunSi/DEVWKS-2601 (This example shows how to use a Robot Framework script, can we show an example that doesn't? This seems to go to the same workshop as the test automation one.)`
 
-"Learn the good state of the network
-Rerun periodically or when a disaster occurs to figure out what happened"
-
 Test automation
 ^^^^^^^^^^^^^^^^^^
-The |library| has the functionality to combine any number of tests and run them under various test conditions. This provides you with the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
+Use the |library| to combine any number of test scripts and run them at scheduled intervals, under different test conditions. The |library| gives you the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
 
 :question:`What would be a specific, real-world scenario of doing this with Genie?` https://github.com/CiscoTestAutomation/CL-DevNet-2595
 
-Use the |library| command line interface (CLI)
+.. qs-library-cli::
+
+Use the |library| command line
 ----------------------------------------------
-*This section explains what the CLI is and how to use it, along with a link to a CLI reference (if there is one).*
+The |library| command line interface (CLI) is a powerful Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
+
+.. note::
+
+  All |library| commands start with |geniecmd|, followed by the command and its options.
+
+From your |pyATS| virtual environment :question:`any specific directory? Does genie need its own virtual environment?`, you can see a complete list of available commands :question:`This doesn't seem to work on my system`::
+
+  (|library|)$ |geniecmd| --help
+
+*Result*: The system displays the following output, or similar:
+
+.. code-block::
+
+      Usage:
+      |geniecmd| <command> [options]
+
+    Commands:
+        diff                Command to diff two snapshots saved to file or directory
+        dnac                Command to learn DNAC features and save to file
+        learn               Command to learn device features and save to file
+        parse               Command to parse show commands
+        run                 Run |geniecmd| triggers & verifications in pyATS runtime environment
+        shell               enter Python shell and load a Genie testbed file and/or Pickled file
+
+    General Options:
+      -h, --help            Show help
+
+    Run '|geniecmd| <command> --help' for more information on a command.
+
+To see help for a specific command::
+
+  (|library|)$ |geniecmd| <command name> --help
+
+
+.. qs-update::
 
 Keep the |library| up to date
 -----------------------------
-*(This content can be re-used elsewhere.)*
+:question:`How often should a user update the library? Why would they update only the packages and not just the whole library? Will updating pyATS also update Genie?`
 
-Get the latest core (infrastructure?) updates
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Procedure for using pip install |geniecmd| --upgrade (will this be the same?) and info about how often we update the packages, recommendations for how often the user should run this.
+.. qs-upgrade-library::
 
-Update the |library| packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*Procedure for using pip install <package name> --upgrade to update the packages. How does a user know when there has been an upgrade? Can they sign up for notifications or watch the Git repo? If yes, we should explain that procedure here.*
+Upgrade the |library|
+^^^^^^^^^^^^^^^^^^^^^^
+From your virtual environment :question:`specifically?`::
+
+  (|library|) $ pip install |geniecmd| --upgrade
+
+*Result*: The installer gives you the latest version of Genie. To check the version::
+
+  (|library|) $ |geniecmd| --version
+
+Upgrade specific packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can upgrade any of the following packages individually :question:`why would a user do this?`:
+
+.. code-block:: text
+
+    |geniecmd|                         Main Genie package
+    |geniecmd|.abstract                Abstraction package for OS Agnostic
+    |geniecmd|.conf                    Genie core for Configuration object
+    |geniecmd|.examples                Example for Genie Conf/Ops/Robot and Harness
+    |geniecmd|.harness                 Genie core for Test Harness
+    |geniecmd|.libs.conf               Libraries for Configuration object
+    |geniecmd|.libs.filetransferutils  Libraries for File Transfer utils
+    |geniecmd|.libs.ops                Genie core for Operation state object
+    |geniecmd|.libs.parser             Libraries containing all the parsers
+    |geniecmd|.libs.robot              Libraries containing all Robot keywords
+    |geniecmd|.libs.sdk                Libraries containing all Triggers and Verifications
+    |geniecmd|.libs.telemetry          Librarires for Genie Telemetry
+    |geniecmd|.metaparser              Genie Core for Parser
+    |geniecmd|.ops                     Genie Core for operational state
+    |geniecmd|.parsergen               Genie Core for parsergen - Automatically parse output
+    |geniecmd|.predcore                Genie Core for predcore
+    |geniecmd|.telemetry               Genie Core for telemetry - Monitor testbed
+    |geniecmd|.utils                   Genie utilities
+
+To upgrade a specific package::
+
+    (|library|) $ pip install <package name> --upgrade
+
+
+For example::
+
+    pip install genie.libs.robot --upgrade
+    pip install genie.conf --upgrade
+
+:question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
 
 Test a network of mock devices
 -------------------------------
