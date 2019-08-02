@@ -82,11 +82,15 @@ This section describes how to use the package installer for Python (pip) to inst
 
     .. note:: If you see warning messages, or the installation fails, :question:`???`
 
-#. To test the installation, run the example provided::
+#. To test the installation, from the current (|pyATS|) directory, clone the Git examples repository::
 
-        pyats run job examples/basic/job/basic_example_job.py
+            git clone https://github.com/CiscoTestAutomation/examples
 
-   *Result*: :question:`When I tried to run this, I got an error: The provided jobfile 'examples/basic/job/basic_example_job.py' does not exist. What is the expected behavior? Does this verify that all required components are installed? Can we include the test file with the installation?`
+#. Run the following example::
+
+        pyats run job examples/basic/basic_example_job.py
+
+   *Result*: |pyATS| runs three sample test cases, displays a summary of the results, and emails you a summary. :question:`Does the email feature work for external users? Do we have a Genie example that we can also run?`
 
 
 Install the Robot Framework plugin
