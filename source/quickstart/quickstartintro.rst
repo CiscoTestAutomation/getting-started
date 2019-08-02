@@ -152,9 +152,11 @@ From your virtual environment::
 
   (|library|) $ pip install |geniecmd| --upgrade
 
-*Result*: The installer gives you the latest version of |pyATS| and the |library|. To check the version::
+*Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure. To check the version::
 
-  (|library|) $ pyats version
+  (|library|) $ pip list | egrep 'ats|genie'
+
+*Result*: The system displays a list of the core packages and the version of each.
 
 Upgrade specific packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
