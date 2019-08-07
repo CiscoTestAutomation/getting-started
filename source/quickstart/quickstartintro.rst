@@ -146,9 +146,9 @@ On the last Tuesday of each month, the team releases a new version of |pyATS| an
 
 Upgrade the |pyATS| infrastructure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. include:: /definitions/def_pyats_code_infrastructure.rst
 
-
-From your virtual environment::
+You can upgrade the infrastructure with one command. From your virtual environment::
 
   (|library|) $ pip install |geniecmd| --upgrade
 
@@ -158,10 +158,14 @@ From your virtual environment::
 
 *Result*: The system displays a list of the core packages and the version of each.
 
-Upgrade specific packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can upgrade any of the following packages individually :question:`why would a user do this?`:
+Upgrade the |library| packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. include:: /definitions/def_pyatslibrary_code_structure.rst
 
+To upgrade the packages, you simply run the pip installer and specify each package that you want to upgrade. This means that you can install only those packages that you need for your specific requirements.
+
+, or create a script that does this. Or, we can provide a command here that they can copy and paste, see the history from my meeting with Lubna. First, get the list of packages.>
+<Probably remove this list, it will be easier to maintain the doc without it.>
 .. code-block:: text
 
     |geniecmd|                         Main Genie package

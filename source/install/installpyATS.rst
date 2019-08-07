@@ -4,12 +4,10 @@ This topic describes how to install the |pyATSbold| ecosystem within your virtua
 
 Code structure
 ---------------
-The |library| code base is divided into two sections:
+.. include:: /definitions/def_pyats_code_infrastructure.rst
+.. include:: /definitions/def_pyatslibrary_code_structure.rst
 
-1. *Infrastructure* -- the core and base class, released through pip packages.
-2. *Feature libraries and components* -- user-community owned and developed, automatically installed with the |library|.
-
-:question:`We probably want to add more info to this section, specifically about pyATS.`
+:question:`We might want to add more info to this section, specifically about pyATS.`
 
 Installation process
 ---------------------
