@@ -150,9 +150,9 @@ Upgrade the |pyATS| infrastructure
 
 You can upgrade the infrastructure with one command. From your virtual environment::
 
-  (|library|) $ pip install |geniecmd| --upgrade
+  (|library|) $ pip install |pyATS| --upgrade
 
-*Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure. To check the version::
+*Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure, along with any dependencies. To check the version::
 
   (|library|) $ pip list | egrep 'ats|genie'
 
@@ -162,10 +162,16 @@ Upgrade the |library| packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. include:: /definitions/def_pyatslibrary_code_structure.rst
 
-To upgrade the packages, you simply run the pip installer and specify each package that you want to upgrade. This means that you can install only those packages that you need for your specific requirements.
+To upgrade the packages, you simply run the pip installer and specify each package that you want to upgrade, as per your specific requirements.
 
-, or create a script that does this. Or, we can provide a command here that they can copy and paste, see the history from my meeting with Lubna. First, get the list of packages.>
-<Probably remove this list, it will be easier to maintain the doc without it.>
+To upgrade all of the available packages, from your virtual environment::
+
+    (|library|) $ pip install genie.libs.filetransferutils genie.libs.telemetry genie.predcore genie.parsergen genie.trafficgen --upgrade
+
+.. note:: You can copy and paste the previous line, and then just delete any packages that you don't need.
+
+:question:`Which of the following are core, and which are optional packages that don't get automatically upgraded?`
+
 .. code-block:: text
 
     |geniecmd|                         Main Genie package
@@ -194,10 +200,8 @@ To upgrade a specific package::
 
 For example::
 
-    pip install genie.libs.robot --upgrade
-    pip install genie.conf --upgrade
-
-:question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
+    (|library|) $ pip install genie.libs.robot --upgrade
+    (|library|) $ pip install genie.conf --upgrade
 
 Test a network of mock devices
 -------------------------------
