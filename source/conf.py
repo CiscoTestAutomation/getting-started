@@ -29,7 +29,6 @@ author = 'Cisco Systems Inc.'
 extensions = [
     'sphinx.ext.autosectionlabel',
 ]
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -50,6 +49,9 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = [
+    'css/custom.css',
+]
 html_theme_path = ["_themes", ]
 html_show_sourcelink = False
 rst_prolog = """
@@ -57,14 +59,18 @@ rst_prolog = """
 .. |pyATSbold| replace:: **pyATS**
 .. |library| replace:: pyATS library
 .. |librarybold| replace:: **pyATS library**
-.. |geniecmd| replace:: *genie*
-.. |genieprfx| replace:: *genie*
+.. |geniecmd| replace:: **genie**
+.. |genieprfx| replace:: **genie**
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
+.. |br| raw:: html
+
+  <br />
+
 
 .. raw:: html
 
-    <style> 
-    .question {background-color: yellow; font-weight:bold; padding: .25em;} 
+    <style>
+    .question {background-color: yellow; font-weight:bold; padding: .25em;}
     </style>
 
 .. role:: question

@@ -7,13 +7,13 @@ What is the |pyATS| ecosystem?
 -------------------------------------
 |pyATSbold| and the |librarybold| together define an ecosystem that streamlines and standardizes how you set up and run automated network tests. |pyATS| and the |library| provide sanity, feature, solution, system, and scale test automation for products that range from routers and switches to access points, firewalls, and cable CPEs.
 
-Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at the core of Cisco's Test Automation Solution. It's currently used 
+Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at the core of Cisco's Test Automation Solution. It's currently used
 
 * by more than **3000** internal Cisco engineers and developers
 * and :question:`nnnn` external network engineers,
 * for more than **2 million** test runs every month.
 
-The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components. 
+The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components.
 
 .. tip:: The |pyATS| ecosystem is available under Apache License Version 2.0
 
@@ -39,12 +39,12 @@ The |librarybold| is a Python library that provides all the tools needed for net
 
 Key benefits of |pyATS|
 -----------------------
-The |pyATS| ecosystem provides an agnostic infrastructure for rapid test development and execution. All OS/Platform and management protocol support is defined and injected through plugins, library implementations, and extensions. This includes support for third-party platforms and protocols. 
+The |pyATS| ecosystem provides an agnostic infrastructure for rapid test development and execution. All OS/Platform and management protocol support is defined and injected through plugins, library implementations, and extensions. This includes support for third-party platforms and protocols.
 
 Network engineers and NetDevOps can be productive day one with the |library|'s readily available, holistic, and model-driven :question:`libraries`, which
 
 * facilitate rapid development
-* encourage the use of re-usable tests, and 
+* encourage the use of re-usable tests, and
 * simplify how you write and execute test automation scripts.
 
 Script developer key benefits
@@ -84,15 +84,17 @@ The |librarybold| builds on |pyATS| to provide:
 * The ability to build a test suite elastically through the use of YAML-based datafiles
 * A mechanism for modeling network device features
 
+System architecture
+-------------------
+The following diagram shows a high-level view of the system architecture.
+
+.. image:: ../images/SystemArchitecture.png
+
+
+
 See also...
 *a list of relevant links once we know what these are*
 
 * link 1
 * link 2
 * link 3
-
-
-
-
-
-
