@@ -73,6 +73,31 @@ Configuration changes often result in a series of operational state changes. For
 
 With just a few commands or an automated script, you can use the |library| to profile your system before and after a configuration change to see a detailed list of the changes.
 
+.. qs-testbedyaml::
+
+Testbed YAML file
+^^^^^^^^^^^^^^^^^^
+Network test automation is based on the use of testbeds. With |pyATS| and the |library|, you describe your devices under test in a `YAML <http://www.yaml.org/start.html>`_ file named ``testbed.yaml``.
+
+Use the YAML testbed file to describe your physical devices and how they link together to form the testbed network topology.
+
+The following example shows a simple testbed file that contains a single device::
+
+  devices:                # define all devices under the devices block
+    csr1000v-1:           # the device definition must begin with its HOSTNAME
+      type: router
+      os: iosxe           # specify the device connection OS type
+      tacacs:                         # login credentials
+          username: devnetuser
+      passwords:                      # password info
+          tacacs: Cisco123!
+          line: Cisco123!
+      connections:        # define the mgmt interface connection details under this block
+        mgmt:
+          protocol: ssh
+          ip: 172.25.192.90
+
+
 When to use the |library|
 -------------------------
 Use the |library| any time you want to configure or check the health of your network. Cisco makes the automated tests used during product development available externally, so customers can run the same tests on their own networks. This is a win-win situation for Cisco and our customers!
@@ -200,34 +225,98 @@ DevNet community users
 
 Test a network of mock devices
 -------------------------------
-*Procedure to download/clone the test file from Git, and then use Genie to connect to and test those devices.*
+This section describes how you can use the |library| to run some initial tests on a testbed of our mock devices. This will help you to start using the |library| for some simple scenarios that demonstrate how the |library| works.
 
-# 1. make sure pyATS is installed (including the libraries)
-bash$ pip install pyats[full]
+.. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.
 
-# 2. clone this repository into your environment
-bash$ git clone https://github.com/CiscoTestAutomation/examples
-
-
-Start with https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_simple
+First, you'll download or clone the Git repository that contains the testbed file, and then use the |library| to connect to and test those devices.
 
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Step one
-#. Step two
-#. Step n
+* To clone the Git repository from your virtual environment::
+
+    (|library|) $ git clone https://github.com/CiscoTestAutomation/examples
+
+* To download the Git repository from a browser:
+
+  * Go to https://github.com/CiscoTestAutomation/examples.
+  * Select **Clone or download**.
+  * Select **Open in Desktop** to download and use the GitHub Desktop app, or **Download Zip** to download and extract a zip file.
+
+ *Result*: You now have the example files stored in the ``examples`` directory.
 
 Configure the testbed.yaml file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*(Make sure this concept was explained in the "Important concepts" section.)*
+The following example shows the testbed file used for the mock devices::
 
-#. Step one
-#. Step two
-#. Step n
+  testbed:
+    name: 'virl'
+
+  devices:
+    nx-osv-1:
+        type: "NX-OSv 9000"
+        os: "nxos"
+        alias: uut
+        tacacs:
+            login_prompt: 'login:'
+            password_prompt: 'Password:'
+            username: admin
+        passwords:
+            tacacs: admin
+            enable: admin
+            line: admin
+        connections:
+            defaults:
+                class: 'unicon.Unicon'
+            a:
+                protocol: telnet
+                ip: 172.25.192.90
+                port: 17023
+        custom:
+            abstraction:
+                order: [os]
+    csr1000v-1:
+        type: asr1k
+        os: "iosxe"
+        alias: helper
+        tacacs:
+            login_prompt: 'login:'
+            password_prompt: 'Password:'
+            username: cisco
+        passwords:
+            tacacs: cisco
+            enable: cisco
+            line: cisco
+        connections:
+            defaults:
+                class: 'unicon.Unicon'
+            a:
+                protocol: telnet
+                ip: 172.25.192.90
+                port: 17021
+        custom:
+            abstraction:
+                order: [os]
+
+:question:`Is it okay to publish these ip addresses externally?`
+
+.. note::
+
+   * Each device name must match the hostname of the device. Otherwise, the connection will hang.
+   * At least one device must have the alias 'uut' in the testbed YAML file.
 
 Connect to the mock devices
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+By default, the |library| connects to all devices in the testbed YAML file. To override the default  behavior:
+
+  * specify one or more devices as a command line argument, or
+  * provide a mapping datafile, to control connections per device. :question:`Add a link here to a relevant topic.`
+
+
+Try manually connecting to a device and showing its ???: https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/genie.html#how-to-keep-genie-up-to-date-how-to-upgrade-genie
+
+*Describe what each command does one at a time*
 
 #. Step one
 #. Step two
