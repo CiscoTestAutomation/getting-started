@@ -148,15 +148,21 @@ Upgrade the |pyATS| infrastructure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. include:: /definitions/def_pyats_code_infrastructure.rst
 
-You can upgrade the infrastructure with one command. From your virtual environment::
+To upgrade the infrastructure, run the pip installer from your virtual environment.
 
-  (|library|) $ pip install |pyATS| --upgrade
+**DevNet community users**::
+
+  (|library|) $ pip install --upgrade |pyATS|
+
+**Cisco internal users**::
+
+    (|library|) $ pip install --upgrade ats
 
 *Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure, along with any dependencies. To check the version::
 
   (|library|) $ pip list | egrep 'ats|genie'
 
-*Result*: The system displays a list of the core packages and the version of each.
+*Result*: The system displays a list of the core packages and the version of each. :question:`We should show the result of the egrep.`
 
 Upgrade the |library| packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
