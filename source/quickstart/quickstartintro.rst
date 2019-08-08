@@ -138,45 +138,41 @@ To see help for a specific command::
 
 Keep |pyATS| up to date
 -----------------------------
-On the last Tuesday of each month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
+On the last Tuesday of the month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
+
+.. qs-upgrade::
+
+To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command from your virtual environment.
+
+Internal Cisco users
+^^^^^^^^^^^^^^^^^^^^^
 
 .. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`Can external users be on this list? How does an internal user sign up to the notices?`
 
-.. qs-upgrade-library::
+.. csv-table:: Upgrade options
+    :header: "Upgrade option", "Use case", "Command"
 
-Upgrade the |pyATS| infrastructure
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. include:: /definitions/def_pyats_code_infrastructure.rst
+    "All |pyATS| and |library|  infrastructure and packages", " ", "``(library) $ pip install --upgrade ats genie``"
+    "|pyATS| infrastructure only", " ", "``(library) $ pip install --upgrade ats``"
+    "Specific packages or libraries", " ", "``(|library|) $ pip install <package name> --upgrade``"
 
-To upgrade the infrastructure, run the pip installer from your virtual environment.
+DevNet community users
+^^^^^^^^^^^^^^^^^^^^^^^
 
-**DevNet community users**::
+.. csv-table:: Upgrade options
+     :header: "Upgrade option", "Use case", "Command"
 
-  (|library|) $ pip install --upgrade |pyATS|
+     "All |pyATS| and |library|  infrastructure and packages", " ", "``(library) $ pip install --upgrade pyats genie``"
+     "|pyATS| infrastructure only", " ", "``(library) $ pip install --upgrade pyats``"
+     "Specific packages or libraries", " ", "``(|library|) $ pip install <package name> --upgrade``"
 
-**Cisco internal users**::
-
-    (|library|) $ pip install --upgrade ats
-
-*Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure, along with any dependencies. To check the version::
+*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
   (|library|) $ pip list | egrep 'ats|genie'
 
-*Result*: The system displays a list of the core packages and the version of each. :question:`We should show the result of the egrep.`
+*Result*: The system displays a list of the core packages and the version of each.
 
-Upgrade the |library| packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. include:: /definitions/def_pyatslibrary_code_structure.rst
-
-To upgrade the packages, you simply run the pip installer and specify each package that you want to upgrade, as per your specific requirements.
-
-To upgrade all of the available packages, from your virtual environment::
-
-    (|library|) $ pip install genie.libs.filetransferutils genie.libs.telemetry genie.predcore genie.parsergen genie.trafficgen --upgrade
-
-.. note:: You can copy and paste the previous line, and then just delete any packages that you don't need.
-
-:question:`Which of the following are core, and which are optional packages that don't get automatically upgraded?`
+:question:`<Probably remove this list, it will be easier to maintain the doc without it.>`
 
 .. code-block:: text
 
@@ -199,15 +195,8 @@ To upgrade all of the available packages, from your virtual environment::
     |geniecmd|.telemetry               Genie Core for telemetry - Monitor testbed
     |geniecmd|.utils                   Genie utilities
 
-To upgrade a specific package::
 
-    (|library|) $ pip install <package name> --upgrade
-
-
-For example::
-
-    (|library|) $ pip install genie.libs.robot --upgrade
-    (|library|) $ pip install genie.conf --upgrade
+:question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
 
 Test a network of mock devices
 -------------------------------
