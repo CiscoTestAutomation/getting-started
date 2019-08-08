@@ -16,7 +16,7 @@ For more information about how to use |pyATS| and the |library| see the :ref:`qu
 
 DevNet community users
 ----------------------
-Before you install |pyATS|, you must :ref:`install-python` and :ref:`set-up-venv`.
+Before you install |pyATS|, you must :ref:`install-python` and :ref:`set-up-venv`. 
 
 .. _install-python:
 
