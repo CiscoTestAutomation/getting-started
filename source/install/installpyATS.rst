@@ -15,7 +15,7 @@ The process that you follow depends on whether you are an internal, external, or
 
 .. list-table:: |pyATS| installation process
    :header-rows: 1
-   :widths: 25 75
+   :widths: 35 65
 
    * - Type of user
      - Installation process
