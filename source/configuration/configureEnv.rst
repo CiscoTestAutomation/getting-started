@@ -14,8 +14,8 @@ If you use Docker, you can run |pyATS| and the |library| from a Docker image. Ge
 
 For more information about how to use |pyATS| and the |library| see the :ref:`quick-start`.
 
-External users
----------------
+DevNet community users
+----------------------
 Before you install |pyATS|, you must :ref:`install-python` and :ref:`set-up-venv`.
 
 .. _install-python:
