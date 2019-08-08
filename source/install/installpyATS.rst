@@ -19,7 +19,7 @@ The process that you follow depends on whether you are an internal, external, or
 
    * - Type of user
      - Installation process
-   * - Internal
+   * - Internal Cisco user
      -
          #. Check the :ref:`requirements`.
          #. Sign in to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions. :question:`How permanent is the Wiki link? Should we keep and maintain the hyperlink here?`
@@ -30,7 +30,7 @@ The process that you follow depends on whether you are an internal, external, or
             * install all |pyATS| and |library| packages and dependencies :question:`components?`, and
             * clone the selected Git repositories from Bitbucket.
 
-   * - External
+   * - DevNet community user
      -
          #. Check the :ref:`requirements`.
          #. :ref:`configure-environment`.
