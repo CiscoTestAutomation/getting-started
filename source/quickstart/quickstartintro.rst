@@ -223,8 +223,19 @@ DevNet community users
 
 :question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
 
-Test a network of mock devices
--------------------------------
+Test a network of virtual devices
+----------------------------------
+
+Launch the |library|
+^^^^^^^^^^^^^^^^^^^^^
+
+Parse...
+^^^^^^^^^
+
+Run a test script
+^^^^^^^^^^^^^^^^^^^
+
+
 This section describes how you can use the |library| to run some initial tests on a testbed of our mock devices. This will help you to start using the |library| for some simple scenarios that demonstrate how the |library| works.
 
 .. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.
@@ -306,9 +317,9 @@ The following example shows the testbed file used for the mock devices::
    * Each device name must match the hostname of the device. Otherwise, the connection will hang.
    * At least one device must have the alias 'uut' in the testbed YAML file.
 
-Connect to the mock devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-By default, the |library| connects to all devices in the testbed YAML file. To override the default  behavior:
+Connect to the mock devices and show the version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+By default, the |library| connects to all devices in the testbed YAML file. To override the default behavior:
 
   * specify one or more devices as a command line argument, or
   * provide a mapping datafile, to control connections per device. :question:`Add a link here to a relevant topic.`
