@@ -1,25 +1,16 @@
-.. _quick-start:
-
-Quick start guide
-=============================
-This topic will get you up and running quickly, and includes the following information:
-
-* Tips on how to use the |library|
-* Real-life scenarios
-* Hands-on practice procedures
+.. _key-concepts:
 
 Important concepts
--------------------
+=============================
+
 This section describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
 
-.. _qs-sdn::
+.. glossary::
 
-Software-defined network
-^^^^^^^^^^^^^^^^^^^^^^^^^
-A software-defined network (SDN) decouples network control from network forwarding, which makes the control functions programmable and the network itself more dynamic and scalable. The |pyATS| ecosystem helps you test, maintain, and diagnose
-the operational state of your agile SDN network.
-
-|pyATS| provides a framework that standardizes how to programmatically interact with devices (routers, switches, servers, traffic generators, and other hardware products). The ecosystem provides the mechanisms you need to parse, model, configure, and test your SDN, and includes a set of ready-to-use test automation libraries built by the same engineering teams that built your Cisco products.
+   Software-defined network
+    A software-defined network (SDN) decouples network control from network forwarding, which makes the control functions programmable and the network itself more dynamic and scalable. The |pyATS| ecosystem helps you test, maintain, and diagnose the operational state of your agile SDN network.
+    
+    |pyATS| provides a framework that standardizes how to programmatically interact with devices (routers, switches, servers, traffic generators, and other hardware products). The ecosystem provides the mechanisms you need to parse, model, configure, and test your SDN, and includes a set of ready-to-use test automation libraries built by the same engineering teams that built your Cisco products.
 
 .. _qs-abstraction::
 
