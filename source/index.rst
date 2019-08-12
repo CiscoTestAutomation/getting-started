@@ -14,6 +14,7 @@ Get started with pyATS
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
+   /quickstart/keyconcepts
    /quickstart/quickstartintro
    /quickstart/manageconnections
    /quickstart/parseoutput
