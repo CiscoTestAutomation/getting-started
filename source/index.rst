@@ -11,10 +11,10 @@ Get started with pyATS
    :caption: Contents:
 
    /intro/Introduction
+   /quickstart/keyconcepts  
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
-   /quickstart/keyconcepts
    /quickstart/quickstartintro
    /quickstart/manageconnections
    /quickstart/parseoutput
