@@ -36,10 +36,6 @@ Internal Cisco users
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
-.. csv-table:: Upgrade options
-    :file: /quickstart/InstallationTable.csv
-    :header-rows: 1
-
 
 .. csv-table:: Upgrade options
      :header: "Upgrade option", "Use case", "Command"
