@@ -57,7 +57,6 @@ This section describes the key concepts that you need to understand before you b
 
     With just a few commands or an automated script, you can use the |library| to profile your system before and after a configuration change to see a detailed list of the changes.
 
-.. qs-testbedyaml::
 
    Testbed YAML file
     Network test automation is based on the use of testbeds. With |pyATS| and the |library|, you describe your devices under test in a `YAML <http://www.yaml.org/start.html>`_ file named ``testbed.yaml``.
@@ -66,16 +65,16 @@ This section describes the key concepts that you need to understand before you b
 
     The following example shows a simple testbed file that contains a single device::
 
-    devices:                # define all devices under the devices block
-      csr1000v-1:           # the device definition must begin with its HOSTNAME
+     devices:                # define all devices under the devices block
+      csr1000v-1:            # the device definition must begin with its HOSTNAME
         type: router
-        os: iosxe           # specify the device connection OS type
+        os: iosxe            # specify the device connection OS type
         tacacs:                         # login credentials
           username: devnetuser
         passwords:                      # password info
           tacacs: Cisco123!
           line: Cisco123!
-        connections:        # define the mgmt interface connection details under this block
+        connections:         # define the mgmt interface connection details under this block
         mgmt:
           protocol: ssh
           ip: 172.25.192.90
