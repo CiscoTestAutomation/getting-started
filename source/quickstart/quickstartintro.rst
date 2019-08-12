@@ -12,45 +12,6 @@ When to use the |library|
 -------------------------
 Use the |library| any time you want to configure or check the health of your network. Cisco makes the automated tests used during product development available externally, so customers can run the same tests on their own networks. This is a win-win situation for Cisco and our customers!
 
-.. qs-library-cli::
-
-Use the |library| command line
-----------------------------------------------
-The |library| command line interface (CLI) is a powerful Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
-
-.. note::
-
-  All |library| commands start with |geniecmd|, followed by the command and its options.
-
-From your |pyATS| virtual environment, you can see a complete list of available commands::
-
-  (|library|)$ |geniecmd| --help
-
-*Result*: The system displays the following output, or similar:
-
-.. code-block::
-
-      Usage:
-      |geniecmd| <command> [options]
-
-    Commands:
-        diff                Command to diff two snapshots saved to file or directory
-        dnac                Command to learn DNAC features and save to file
-        learn               Command to learn device features and save to file
-        parse               Command to parse show commands
-        run                 Run |geniecmd| triggers & verifications in pyATS runtime environment
-        shell               enter Python shell and load a Genie testbed file and/or Pickled file
-
-    General Options:
-      -h, --help            Show help
-
-    Run '|geniecmd| <command> --help' for more information on a command.
-
-To see help for a specific command::
-
-  (|library|)$ |geniecmd| <command name> --help
-
-
 .. qs-update::
 
 Keep |pyATS| up to date
@@ -64,7 +25,7 @@ To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyat
 Internal Cisco users
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`Can external users be on this list? How does an internal user sign up to the notices?`
+.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
 
 .. csv-table:: Upgrade options
     :header: "Upgrade option", "Use case", "Command"
@@ -75,6 +36,10 @@ Internal Cisco users
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
+.. csv-table:: Upgrade options
+    :file: /quickstart/InstallationTable.csv
+    :header-rows: 1
+
 
 .. csv-table:: Upgrade options
      :header: "Upgrade option", "Use case", "Command"
