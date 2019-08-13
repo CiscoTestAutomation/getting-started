@@ -212,6 +212,8 @@ bash$ git clone https://github.com/CiscoTestAutomation/examples
 
 Start with https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_simple
 
+.. _clone-git-examples:
+
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

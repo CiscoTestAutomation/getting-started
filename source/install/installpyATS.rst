@@ -38,14 +38,17 @@ The process that you follow depends on whether you are an internal, external, or
          #. Check the :ref:`requirements`.
          #. :ref:`configure-environment`.
          #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`.
-         #. Verify the installation.
-         #. Run the example.
+         #. Verify the installation:
+
+            * ``pip list | grep pyats``
+            * ``pip list | grep library`` |br| |br| 
+
+         #. :ref:`clone-git-examples`.
+         #. Run the example: ``pyats run job examples/basic/basic_example_job.py``
 
    * - Docker
      -
          #. Download the Docker image from https://hub.docker.com/r/ciscotestautomation/pyats/.
-         #. Mount a pip requirements file.
-         #. Customize your workspace. :question:`Is this in the right order?`
          #. Start the |pyATS| container.
          #. Run the examples.
 
