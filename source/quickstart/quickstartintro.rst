@@ -30,8 +30,9 @@ Internal Cisco users
 .. csv-table:: Upgrade options
     :file: InstallationTable.csv
     :header-rows: 1
+    :widths: 20 30 50
 
-    
+
 
 .. csv-table:: Upgrade options
     :header: "Upgrade option", "Use case", "Command"

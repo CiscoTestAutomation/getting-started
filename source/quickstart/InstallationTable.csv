@@ -1,3 +1,5 @@
 Upgrade option,Includes,Command
-Full,"All pyATS and |library| infrastructure, packages, and optional extras (templates and the Robot Framework plug-in)",Test
+Full,"* All pyATS and |library| infrastructure
+* All package
+* Optional extras (templates and the Robot Framework plug-in)",Test
 Test,Test,Test
