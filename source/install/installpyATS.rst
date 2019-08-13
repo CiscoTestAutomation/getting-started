@@ -109,7 +109,11 @@ This section describes how to use the package installer for Python (pip) to inst
 
         pyats run job examples/basic/basic_example_job.py
 
-   *Result*: |pyATS| runs three sample test cases, displays a summary of the results, and emails you a summary. :question:`Does the email feature work for external users? Do we have a Genie example that we can also run?`
+  Or, for DevNet community users who want to receive an email summary::
+
+        pyats run job examples/basic/basic_example_job.py --mailto <address>
+
+  *Result*: |pyATS| runs three sample test cases, displays a summary of the results, and emails you the summary.
 
 
 Install the Robot Framework plugin
