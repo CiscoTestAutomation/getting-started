@@ -46,7 +46,7 @@ Set up a Python virtual environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 A |pyATSbold| instance is simply a directory (folder) in the file system that houses a Python Virtual Environment. Within your virtual environment, you install the |pyATS| and |library| packages, dependencies, and libraries, which include everything you need to run the system.
 
-We strongly recommend that you install |pyATS| and the |library| from within a virtual environment. This keeps everything together for your current project. :question:`We haven't introduced the concept of a "project" yet, should we do that here? Also, do we want to say "libraries and dependencies" or "components" and "objects"?`
+We strongly recommend that you install |pyATS| and the |library| from within a virtual environment.
 
 .. note:: In our examples, we use the directory ``pyats``, but you can give your directory a different name.
 
@@ -64,6 +64,9 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
         $ python3 -m venv .
 
+    *Result*: This creates a project "folder" (space) within the current directory. The folder keeps all dependencies, features, and components together in once place. |br| |br|
+    
+
 #.   Activate the virtual environment::
 
         $ source bin/activate .
@@ -72,7 +75,7 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
         (pyats)$
 
-    This makes the local directories the first place that the :question:`installer or pyATS?` looks for needed files.
+    When you install the |pyATS| ecosystem within this virtual environment, the packages remain separate from those in other project spaces.
 
     .. hint:: When you're done with your |pyATS| session, you can close the terminal window or exit the environment::
 
