@@ -40,11 +40,11 @@ The process that you follow depends on whether you are an internal, external, or
          #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`.
          #. Verify the installation:
 
-            * ``pip list | grep pyats``
-            * ``pip list | grep library`` |br| |br| 
+            * ``$ pip list | grep pyats``
+            * ``$ pip list | grep library`` |br| |br| 
 
          #. :ref:`clone-git-examples`.
-         #. Run the example: ``pyats run job examples/basic/basic_example_job.py``
+         #. Run the example: ``$ pyats run job examples/basic/basic_example_job.py``
 
    * - Docker
      -
@@ -52,7 +52,24 @@ The process that you follow depends on whether you are an internal, external, or
          #. Start the |pyATS| container.
          #. Run the examples.
 
-.. note:: If you want to use Robot Framework to build scripts, you can also install the |library| Robot Framework plugin. :question:`Does Robot Framework work with a Docker image?`
+   * - Robot Framework
+     -
+       Install the Robot Framework plugin.
+
+        * Internal Cisco users:
+          
+            * ``$ pip install ats.robot``
+            * ``$ pip install library.libs.robot``
+
+        * DevNet users: 
+          
+            * ``$ pip install pyats.robot``
+            * ``$ pip install library.libs.robot``
+
+        * Docker users:
+          
+            * The Robot Framework is already installed.
+
 
 .. _install-with-pip:
 
@@ -64,7 +81,7 @@ This section describes how to use the package installer for Python (pip) to inst
 
 #.  If you haven't already done so, activate your virtual environment::
 
-        $ source bin/activate .
+        $ source bin/activate
 
     *Result*: The system displays the directory in parentheses before the command prompt::
 
@@ -76,7 +93,7 @@ This section describes how to use the package installer for Python (pip) to inst
 
 #.  Install |pyATS| and the |library|::
 
-        $ pip install pyats library
+        $ pip install pyats[library]
 
     .. hint:: Give the installer a few minutes to finish.
 
