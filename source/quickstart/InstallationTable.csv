@@ -1,5 +1,0 @@
-Upgrade option,Includes,Command
-Full,"* All pyATS and |library| infrastructure
-* All package
-* Optional extras (templates and the Robot Framework plug-in)",``pip install ats[full] --upgrade``
-Test,Test,Test

@@ -30,7 +30,7 @@ Internal Cisco users
 .. csv-table:: Upgrade options
     :file: UpgradeInternal.csv
     :header-rows: 1
-    :widths: 20 30 50
+    :widths: 25 35 40
 
 
 
