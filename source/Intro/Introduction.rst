@@ -1,7 +1,7 @@
 Introduction
 =============================
 
-The |getstartedguide| introduces you to the features and functionality of the |pyATS| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATS| and the |library|.
+This topic provides a high-level view of the |pyATS| ecosystem and describes how it helps you to automate your network operations and testing.
 
 What is the |pyATS| ecosystem?
 -------------------------------------
