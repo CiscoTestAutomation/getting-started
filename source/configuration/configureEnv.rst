@@ -24,7 +24,7 @@ Install Python
 ^^^^^^^^^^^^^^^
 #.  Go to https://www.python.org/ and download the correct version of Python for your OS.
 
-    .. note:: Make sure you select a :ref:`supported version of Python <supported-python-versions>`:
+    .. note:: Make sure you select a supported version of Python:
         
         .. include:: ../prereqs/supportedpythonversions.rst
 
