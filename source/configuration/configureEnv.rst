@@ -6,7 +6,7 @@ Configure your environment
 
 Internal Cisco users
 --------------------
-Cisco engineers and developers can skip this topic, because the internal installer sets up a virtual environment for you. For more information about how to install |pyATS| and the |library|, see the internal Wiki pages.
+Cisco engineers and developers can skip this topic, because the internal installer sets up a virtual environment for you. For more information about how to install |pyATS| and the |library|, see the topic :ref:`install-pyats`.
 
 Docker users
 -------------

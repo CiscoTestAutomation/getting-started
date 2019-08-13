@@ -1,3 +1,5 @@
+.. _install-pyats:
+
 Install |pyATS|
 ========================
 This topic describes how to install the |pyATSbold| ecosystem within your virtual environment.
