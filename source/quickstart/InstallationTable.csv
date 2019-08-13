@@ -1,3 +1,3 @@
 Upgrade option,Includes,Command
-Full,"Core pyATS framework, pyATS library features and components, and all available options, including templates and Robot  Framework support",``$ pip install ats[full] --upgrade``
+Full,"All pyATS and |library| infrastructure, packages, and optional extras (templates and the Robot Framework plug-in)",Test
 Test,Test,Test
