@@ -59,7 +59,9 @@ Your host platform must have internet access so that you can:
 * Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the :question:`packages`.
 
 .. important:: The |pyATS| ecosystem *never* collects or streams any data or statistics back to Cisco.
-:question:`We will probably need a formal legal statement or link to the DevNet privacy policy.`
+
+..
+    I checked on the devnet site and didn't see anything to add about data privacy.
 
 See also...
 *a list of relevant links once we know what these will be*
