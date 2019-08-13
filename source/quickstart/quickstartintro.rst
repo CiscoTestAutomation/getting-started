@@ -28,18 +28,11 @@ Internal Cisco users
 .. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
 
 .. csv-table:: Upgrade options
-    :file: InstallationTable.csv
+    :file: UpgradeInternal.csv
     :header-rows: 1
     :widths: 20 30 50
 
 
-
-.. csv-table:: Upgrade options
-    :header: "Upgrade option", "Use case", "Command"
-
-    "All |pyATS| and |library|  infrastructure and packages", " ", "``(library) $ pip install --upgrade ats genie``"
-    "|pyATS| infrastructure only", " ", "``(library) $ pip install --upgrade ats``"
-    "Specific packages or libraries", " ", "``(|library|) $ pip install <package name> --upgrade``"
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
