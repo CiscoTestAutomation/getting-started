@@ -5,12 +5,14 @@
 
 Get started with pyATS
 ============================================
+The |getstartedguide| introduces you to the features and functionality of the |pyATS| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATS| and the |library|.
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Contents:
 
    /intro/Introduction
+   /quickstart/keyconcepts
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
