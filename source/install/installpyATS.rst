@@ -9,7 +9,6 @@ Code structure
 .. include:: /definitions/def_pyats_code_infrastructure.rst
 .. include:: /definitions/def_pyatslibrary_code_structure.rst
 
-:question:`We might want to add more info to this section, specifically about pyATS.`
 
 Installation process
 ---------------------
@@ -23,14 +22,16 @@ The process that you follow depends on whether you are an internal, external, or
      - Installation process
    * - Internal Cisco user
      -
-         #. Check the :ref:`requirements`.
-         #. Sign in to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions. :question:`How permanent is the Wiki link? Should we keep and maintain the hyperlink here?`
-         #. Run the command ``pip install pyats full`` to
-
+        #. Check the :ref:`requirements`.
+        #. Sign in to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions. The installation script will:
+         
             * check your environment
             * create the virtual environment
-            * install all |pyATS| and |library| packages and dependencies :question:`components?`, and
+            * install all |pyATS| and |library| packages and dependencies, and
             * clone the selected Git repositories from Bitbucket.
+
+        
+        #. Run the command ``pip install library`` to install the |library| infrastructure, features, and components.
 
    * - DevNet community user
      -
