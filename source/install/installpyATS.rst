@@ -141,9 +141,9 @@ A number of image variants are available:
 
       $ docker pull ciscotestautomation/pyats:latest
 
-    where *latest* is the current |pyATS| version.
-
-    |br| :question:`I tried to test this but couldn't get Docker set up properly. Can't connect to daemon. Can someone with Docker test this command?`
+    where *latest* is the current |pyATS| version. 
+    
+    |br|
 
 #.  Start the |pyATS| container.
 
