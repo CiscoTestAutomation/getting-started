@@ -22,24 +22,24 @@ This section describes the key concepts that you need to understand before you b
 
     .. code-block:: text
 
-    +--------------------------------------------------------------------------+
-    | Testbed Object                                                           |
-    |                                                                          |
-    | +-----------------------------+          +-----------------------------+ |
-    | | Device Object - myRouterA   |          | Device Object - myRouterB   | |
-    | |                             |          |                             | |
-    | |         device interfaces   |          |          device interfaces  | |
-    | | +----------+ +----------+   |          |   +----------+ +----------+ | |
-    | | | intf Obj | | intf Obj |   |          |   |  intf Obj| | intf Obj | | |
-    | | | Eth1/1   | | Eth1/2 *-----------*----------*  Eth1/1| | Eth1/2   | | |
-    | | +----------+ + ---------+   |     |    |   +----------+ +----------+ | |
-    | +-----------------------------+     |    +-----------------------------+ |
-    |                                     |                                    |
-    |                               +-----*----+                               |
-    |                               | Link Obj |                               |
-    |                               |rtrA-rtrB |                               |
-    |                               +----------+                               |
-    +--------------------------------------------------------------------------+
+     +--------------------------------------------------------------------------+
+     | Testbed Object                                                           |
+     |                                                                          |
+     | +-----------------------------+          +-----------------------------+ |
+     | | Device Object - myRouterA   |          | Device Object - myRouterB   | |
+     | |                             |          |                             | |
+     | |         device interfaces   |          |          device interfaces  | |
+     | | +----------+ +----------+   |          |   +----------+ +----------+ | |
+     | | | intf Obj | | intf Obj |   |          |   |  intf Obj| | intf Obj | | |
+     | | | Eth1/1   | | Eth1/2 *-----------*----------*  Eth1/1| | Eth1/2   | | |
+     | | +----------+ + ---------+   |     |    |   +----------+ +----------+ | |
+     | +-----------------------------+     |    +-----------------------------+ |
+     |                                     |                                    |
+     |                               +-----*----+                               |
+     |                               | Link Obj |                               |
+     |                               |rtrA-rtrB |                               |
+     |                               +----------+                               |
+     +--------------------------------------------------------------------------+
 
     The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
 
