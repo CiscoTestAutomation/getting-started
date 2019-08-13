@@ -64,8 +64,8 @@ DevNet community users
 
 .. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
-Test a network of virtual devices
-----------------------------------
+Practice using the |library| for network automation
+----------------------------------------------------
 
 Launch the |library|
 ^^^^^^^^^^^^^^^^^^^^^
