@@ -77,6 +77,8 @@ This section describes how you can use the |library| to run some initial tests o
 
 First, you'll download or clone the Git repository that contains the testbed file, and then use the |library| to connect to and test those devices.
 
+.. _clone-git-examples:
+
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
