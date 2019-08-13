@@ -52,7 +52,7 @@ Script developer key benefits
 
 * Parse device output for stateful validation.
 * Re-use any of the available test cases.
-* Connect to devices over CLI, NETCONF, or RESTCONF.
+* Connect to devices over Telnet, SSH, REST, RESTCONF, NETCONF, and YANG.
 * Use a single, cross-platform script instead of having to modify multiple scripts.
 * Verify CLI outputs with YANG and XML outputs.
 

@@ -55,7 +55,7 @@ Network connectivity
 Your host platform must have internet access so that you can:
 
 * Download the Python installation packages (https://pypi.org) or Docker image (https://hub.docker.com).
-* Connect to your test devices. You can use Telnet, SSH, Rest, YANG, :question:`What else, and should this list match what's in the Introduction?`
+* Connect to your test devices. You can use Telnet, SSH, REST, RESTCONF, NETCONF, and YANG.
 * Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the :question:`packages`.
 
 .. important:: The |pyATS| ecosystem *never* collects or streams any data or statistics back to Cisco.
