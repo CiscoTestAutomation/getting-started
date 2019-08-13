@@ -99,9 +99,7 @@ This section describes how to use the package installer for Python (pip) to inst
 
     *Result*: You're ready to start using |pyATS| and the |library|!
 
-    :question:`Is this how it will really work? What should we say about any warning messages or failed installations?`
-
-    .. note:: If you see warning messages, or the installation fails, :question:`???`
+    .. note:: If you see warning messages, or the installation fails, first check your :ref:`system requirements <requirements>`, especially your Linux and Python versions. If you need more help, contact us at |br| pyats-support@cisco.com.
 
 #. To test the installation, from the current (|pyATS|) directory, clone the Git examples repository::
 
