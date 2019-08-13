@@ -24,7 +24,9 @@ Install Python
 ^^^^^^^^^^^^^^^
 #.  Go to https://www.python.org/ and download the correct version of Python for your OS.
 
-    .. note:: Make sure you select a :ref:`supported version of Python <supported-python-versions>`.
+    .. note:: Make sure you select a :ref:`supported version of Python <supported-python-versions>`:
+        
+        .. include:: ../prereqs/supportedpythonversions.rst
 
 #.  Run the installer and respond to the prompts. |br| *Result*: The Python interpreter is installed in the specified directory.
 

@@ -40,11 +40,7 @@ System and software
 ^^^^^^^^^^^^^^^^^^^^
 |pyATS| and the |library| are written in Python. You don't need to know Python, but your system must have one of the following Python versions installed:
 
-.. _supported-python-versions:
-
-* Python 3.5.x
-* Python 3.6.x
-* Python 3.7.x
+    .. include:: supportedpythonversions.rst
 
 The section :ref:`configure-environment` includes details about how to install Python.
 
