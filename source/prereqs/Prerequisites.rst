@@ -10,15 +10,11 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 .. csv-table:: Prerequisite knowledge and skills
    :header: "You should know...", "So that you can..."
 
-   "How to use Linux, and how to run Linux commands", "Install the ecosystem"
+   "Linux (on Mac and Windows)", "Install and use the ecosystem"
    "Fundamentals of network test automation", "Configure the ecosystem with testbed data"
-   "GitHub clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
-   "Docker image usage (optional)", "Run |pyATS| from the Docker image"
-   ":question:`add to this as we go along` ", " "
-   " ", " "
-   " ", " "
-   " ", " "
-
+   "(Optional) GitHub clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
+   "(Optional) Docker image usage (optional)", "Run |pyATS| from the Docker image"
+  
 .. _requirements:
 
 Requirements
@@ -27,7 +23,7 @@ Make sure you have the correct platform, system, and network connectivity in pla
 
 Hardware
 ^^^^^^^^^
-The |pyATS| ecosystem is lightweight and scalable --- you only need 1 GB of RAM and 1 vCPU to connect to :question:`a small number of` devices. If you have a larger network with more complex configuration, you'll need to increase the memory and processing power of your system. :question:`Can we provide a guideline for memory and processing per number of devices?`
+The |pyATS| ecosystem is lightweight and scalable --- you only need 1 GB of RAM and 1 vCPU to start your network automation. If you have a large network with more complex configuration, you'll need to increase the memory and processing power of your system. The types of tests that you run also affect the amount of memory required.
 
 Platform
 ^^^^^^^^^
