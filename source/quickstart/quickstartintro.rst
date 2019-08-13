@@ -38,10 +38,11 @@ Internal Cisco users
 
 *Result*: The system displays a list of the packages and the installed versions.
 
-.. important:: The major and minor versions must all match. It's okay if the patch version varies.
+.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
+.. tip:: You can find the latest information about releases on Twitter at #pyATS.
 
 .. csv-table:: DevNet user upgrade options
     :file: UpgradeExternal.csv
@@ -55,7 +56,7 @@ DevNet community users
 
 *Result*: The system displays a list of the packages and the installed versions.
 
-.. important:: The major and minor versions must all match. It's okay if the patch version varies.
+.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
 Test a network of virtual devices
 ----------------------------------
