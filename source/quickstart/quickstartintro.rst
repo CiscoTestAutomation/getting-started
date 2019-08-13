@@ -20,61 +20,42 @@ On the last Tuesday of the month, the team releases a new version of |pyATS| and
 
 .. qs-upgrade::
 
-To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command from your virtual environment.
+To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command **from your virtual environment**.
 
 Internal Cisco users
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
 
-.. csv-table:: Upgrade options
+.. csv-table:: Internal Cisco user upgrade options
     :file: UpgradeInternal.csv
     :header-rows: 1
     :widths: 25 35 40
 
+*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
+  (pyats) $ pip list | egrep 'ats|library'
+
+*Result*: The system displays a list of the packages and the installed versions.
+
+.. important:: The major and minor versions must all match. It's okay if the patch version varies.
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. csv-table:: Upgrade options
-     :header: "Upgrade option", "Use case", "Command"
+.. csv-table:: DevNet user upgrade options
+    :file: UpgradeExternal.csv
+    :header-rows: 1
+    :widths: 25 35 40
 
-     "All |pyATS| and |library|  infrastructure and packages", " ", "``(library) $ pip install --upgrade pyats genie``"
-     "|pyATS| infrastructure only", " ", "``(library) $ pip install --upgrade pyats``"
-     "Specific packages or libraries", " ", "``(|library|) $ pip install <package name> --upgrade``"
 
 *Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
-  (|library|) $ pip list | egrep 'ats|genie'
+  (pyats) $ pip list | egrep 'pyats|library'
 
-*Result*: The system displays a list of the core packages and the version of each.
+*Result*: The system displays a list of the packages and the installed versions.
 
-:question:`<Probably remove this list, it will be easier to maintain the doc without it.>`
-
-.. code-block:: text
-
-    |geniecmd|                         Main Genie package
-    |geniecmd|.abstract                Abstraction package for OS Agnostic
-    |geniecmd|.conf                    Genie core for Configuration object
-    |geniecmd|.examples                Example for Genie Conf/Ops/Robot and Harness
-    |geniecmd|.harness                 Genie core for Test Harness
-    |geniecmd|.libs.conf               Libraries for Configuration object
-    |geniecmd|.libs.filetransferutils  Libraries for File Transfer utils
-    |geniecmd|.libs.ops                Genie core for Operation state object
-    |geniecmd|.libs.parser             Libraries containing all the parsers
-    |geniecmd|.libs.robot              Libraries containing all Robot keywords
-    |geniecmd|.libs.sdk                Libraries containing all Triggers and Verifications
-    |geniecmd|.libs.telemetry          Librarires for Genie Telemetry
-    |geniecmd|.metaparser              Genie Core for Parser
-    |geniecmd|.ops                     Genie Core for operational state
-    |geniecmd|.parsergen               Genie Core for parsergen - Automatically parse output
-    |geniecmd|.predcore                Genie Core for predcore
-    |geniecmd|.telemetry               Genie Core for telemetry - Monitor testbed
-    |geniecmd|.utils                   Genie utilities
-
-
-:question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
+.. important:: The major and minor versions must all match. It's okay if the patch version varies.
 
 Test a network of virtual devices
 ----------------------------------
