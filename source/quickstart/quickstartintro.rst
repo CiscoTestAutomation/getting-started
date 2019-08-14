@@ -18,6 +18,7 @@ Use the |library| when you want to automate your day-to-day DevOps activities, p
   * Introduce changes -- such as new products or releases -- and see the effects on your network.
   * Use the power of our Pythonic library to efficiently write your own, reusable, OS-agnostic scripts.
 
+
 .. qs-update::
 
 Keep |pyATS| up to date
@@ -64,29 +65,13 @@ DevNet community users
 
 .. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
-Practice using the |library| for network automation
-----------------------------------------------------
-
-Launch the |library|
-^^^^^^^^^^^^^^^^^^^^^
-
-Parse...
-^^^^^^^^^
-
-Run a test script
-^^^^^^^^^^^^^^^^^^^
-
-
-This section describes how you can use the |library| to run some initial tests on a testbed of our mock devices. This will help you to start using the |library| for some simple scenarios that demonstrate how the |library| works.
-
-.. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.
-
-First, you'll download or clone the Git repository that contains the testbed file, and then use the |library| to connect to and test those devices.
-
 .. _clone-git-examples:
 
-Download or clone the Git repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Download or clone the Git examples repository
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+We've provided some examples to help you start using the |library| for some simple scenarios that demonstrate how the |library| works.
+
+.. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.
 
 * To clone the Git repository from your virtual environment::
 
@@ -99,6 +84,25 @@ Download or clone the Git repository
   * Select **Open in Desktop** to download and use the GitHub Desktop app, or **Download Zip** to download and extract a zip file.
 
  *Result*: You now have the example files stored in the ``examples`` directory.
+
+Practice using the |library| for network automation
+----------------------------------------------------
+The following sections provide step-by-step instructions that will give you some guided practice with the |library|.
+
+Launch a simulated testbed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+Parse...
+^^^^^^^^^
+
+Run a test script
+^^^^^^^^^^^^^^^^^^^
+
+
+
+
 
 Configure the testbed.yaml file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
