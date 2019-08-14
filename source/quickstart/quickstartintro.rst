@@ -91,7 +91,21 @@ The following sections provide step-by-step instructions that will give you some
 
 Launch a simulated testbed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This section describes how you can connect to a simulated testbed of devices using the `Cisco Virtual Internet Routing Lab (VIRL) <http://virl.cisco.com>`_. This enables you to give the |library| a try, even if you don't have your own network of devices.
 
+We recommend that  you reserve and use the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_. 
+
+
+#. Go to the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_.
+
+#. At the top right, select **Reserve**.
+
+#. Set the number of nodes to **none**.
+
+    * At the prompt, select the edit icon.
+    * Select the 
+
+    .. image:: 
 
 
 Parse...
