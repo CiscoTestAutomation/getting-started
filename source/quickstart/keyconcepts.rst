@@ -16,32 +16,7 @@ This section describes the key concepts that you need to understand before you b
    Abstraction
     The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes -- such as network topology and traffic -- without having to change the underlying hardware.
 
-    :question:`Does this belong here, under abstraction? Or is this a different sort of thing?` For example, the |library| uses abstraction to model your network topology and protocols, which results in a generalized view of network *objects*. These objects represent protocols, testbeds, devices, interfaces, and links :question:`and anything else?`.
-
-    The following diagram shows an example of how topology objects are referenced and interconnected.
-
-    .. code-block:: text
-
-     +--------------------------------------------------------------------------+
-     | Testbed Object                                                           |
-     |                                                                          |
-     | +-----------------------------+          +-----------------------------+ |
-     | | Device Object - myRouterA   |          | Device Object - myRouterB   | |
-     | |                             |          |                             | |
-     | |         device interfaces   |          |          device interfaces  | |
-     | | +----------+ +----------+   |          |   +----------+ +----------+ | |
-     | | | intf Obj | | intf Obj |   |          |   |  intf Obj| | intf Obj | | |
-     | | | Eth1/1   | | Eth1/2 *-----------*----------*  Eth1/1| | Eth1/2   | | |
-     | | +----------+ + ---------+   |     |    |   +----------+ +----------+ | |
-     | +-----------------------------+     |    +-----------------------------+ |
-     |                                     |                                    |
-     |                               +-----*----+                               |
-     |                               | Link Obj |                               |
-     |                               |rtrA-rtrB |                               |
-     |                               +----------+                               |
-     +--------------------------------------------------------------------------+
-
-    The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
+    Abstraction makes it possible for the |library| to determine the functions to execute on a device, based on its operating system. The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
 
 
    Features
@@ -58,58 +33,57 @@ This section describes the key concepts that you need to understand before you b
     With just a few commands or an automated script, you can use the |library| to profile your system before and after a configuration change to see a detailed list of the changes.
 
 
+   Testbed 
+    In the |pyATS| ecosystem, a testbed represents a set of connected devices. You run your automated network tests on the testbed that you define.
+
    Testbed YAML file
-    Network test automation is based on the use of testbeds. With |pyATS| and the |library|, you describe your devices under test in a `YAML <http://www.yaml.org/start.html>`_ file named ``testbed.yaml``.
+    With |pyATS| and the |library|, you describe your devices under test (your testbed) in a `YAML <http://www.yaml.org/start.html>`_ file named ``testbed.yaml``. The file describes your physical devices and how they link together to form the testbed network topology.
 
-    Use the YAML testbed file to describe your physical devices and how they link together to form the testbed network topology.
-
-    The following example shows a simple testbed file that contains a single device::
-
-     devices:                # define all devices under the devices block
-      csr1000v-1:            # the device definition must begin with its HOSTNAME
-        type: router
-        os: iosxe            # specify the device connection OS type
-
-     credentials             # add credential details common to the server
-      credential1:           # give this credential a name              
-          username: devnetuser               # optional
-          password:                          # optional
-          
-     connections:         # define the mgmt interface connection details under this block
-        mgmt:
-          protocol: ssh
-          ip: 172.25.192.90
-
-
-   Test script creation
-    Ideal for cross-OS/cross-platform development teams, the |library| enables you to
-
-    * develop in parallel
-    * conduct tests, and
-    * scale your respective features/components independently.
-
-    The |library| decouples your tests from topology and configuration so that you can address a wide variety of user requirements in your unit, sanity, regression, and system/solution tests.
-
-    :question:`What would be a specific, real-world scenario to show here? https://github.com/RunSi/DEVWKS-2601 (This example shows how to use a Robot Framework script, can we show an example that doesn't? This seems to go to the same workshop as the test automation one.)`
-
+   
    Test automation
-    Use the |library| to combine any number of test scripts and run them at scheduled intervals, under different test conditions. The |library| gives you the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
-
-    :question:`What would be a specific, real-world scenario of doing this with Genie?` https://github.com/CiscoTestAutomation/CL-DevNet-2595
-
+    The term *test automation* refers to how you use the |library| to combine any number of test scripts and run them at scheduled intervals, under different test conditions. The |library| gives you the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
 
    |library| command line
-    The |library| command line interface (CLI) is a powerful Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
+    The |library| command line interface (CLI) is a powerful, Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
 
-    .. note::
+   Trigger
+    A trigger is an action or sequence of actions performed on a device, which changes the device state or configuration. 
 
-      All |library| commands start with |geniecmd|, followed by the command and its options.
+   Verification
+    A verification is the execution of a show command to retrieve the current state of one or more devices. A verification typically runs before and after an action (trigger) to compare the previous and current device states.
 
-    From your |pyATS| virtual environment, you can see a complete list of available commands::
+   Show command
+    The term *show command* refers to a type of Linux command that you use to get information about a networking device, such as a router or switch. For example, ``show version`` returns information about the OS version of a device.
 
-      (|library|)$ |geniecmd| --help
+   Parser
+    A |library| Parser takes show command output and converts it into Python dictionaries, a data structure that can be used by automation scripts.
 
-    To see help for a specific command::
+   Harness
+    The |library| Harness controls the flow of your network automation and testing, based on user-provided input (arguments). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
 
-      (|library|)$ |geniecmd| <command name> --help
+
+   Devices
+    Devices are network components such as routers, switches, servers, traffic generators, and other hardware products.
+
+   Ops 
+    The |library| Ops is a representation of the current operational state of a device, per feature (protocol). It "learns" the operational state by executing a series of show commands and parsing them into a Python dictionary.
+
+   Conf 
+    The |library| Conf provides a way for you to configure a network device without having to build the configuration yourself. Instead, you can generate reusable, multi-line configuration strings and apply them to one or more devices all at once.
+
+   Robot Framework
+    Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
+
+   Argument
+    An argument is an input parameter.
+
+   SDK library functions/API
+    A |library| function is a series of actions or retrieval commands executed on a device, such as an interface shutdown. The functions provide clear exception messages if an action fails.
+
+
+
+
+
+
+
 
