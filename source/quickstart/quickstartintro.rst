@@ -93,20 +93,23 @@ Launch a simulated testbed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This section describes how you can connect to a simulated testbed of devices using the `Cisco Virtual Internet Routing Lab (VIRL) <http://virl.cisco.com>`_. This enables you to give the |library| a try, even if you don't have your own network of devices.
 
-We recommend that  you reserve and use the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_. 
+#. We recommend that  you reserve and use the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_. 
 
+    .. tip:: The sandbox can get busy, so you might want to reserve it a few days in advance.
 
-#. Go to the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_.
+    * Go to the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_.
 
-#. At the top right, select **Reserve**.
+    * At the top right, select **Reserve**.
 
-#. Set the number of nodes to **none**.
+    * In the **Schedule** section, choose your preferred time slot.
 
-    * At the prompt, select the edit icon.
-    * Select the 
+    * In the **Parameter** section, from the **Value** list, select **None**.
 
-    .. image:: 
+        .. image:: ../images/ReserveSandbox.png
 
+    * Select **Reserve**, and then follow the instructions to complete the reservation.
+
+#. Next step...
 
 Parse...
 ^^^^^^^^^
