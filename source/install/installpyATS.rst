@@ -139,7 +139,7 @@ A number of image variants are available:
 
 #.  Download the image::
 
-      $ docker pull ciscotestautomation/pyats:latest
+      $ docker pull ciscotestautomation/pyats:<latest>
 
     where *latest* is the current |pyATS| version. 
     
