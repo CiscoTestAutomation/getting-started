@@ -61,10 +61,10 @@ The ``devices`` block contains a description of each network device, and must in
     "``name``", "This *must* be the hostname of the device."
     "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
-    "``credentials``", "The username and password to log in to the device."
+    "``credentials``", "The username, password, and any other credentials required to log in to the device."
     "``type``", "Device type"
     "``ip``", "IP address"
-    "``protocol``", "Any supported protocol |br| (currently Telnet, SSH, REST, RESTCONF, NETCONF, and YANG)"
+    "``protocol``", "Any one of the supported protocols |br| (currently Telnet, SSH, REST, RESTCONF, NETCONF, and YANG)"
     "``port``", "Connection port"
  
 
