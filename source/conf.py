@@ -57,7 +57,7 @@ html_show_sourcelink = False
 rst_prolog = """
 .. |pyATS| replace:: pyATS
 .. |pyATSbold| replace:: **pyATS**
-.. |library| replace:: pyATS library
+.. |library| replace:: pyATS Library
 .. |librarybold| replace:: **pyATS library**
 .. |geniecmd| replace:: **genie**
 .. |genieprfx| replace:: **genie**
