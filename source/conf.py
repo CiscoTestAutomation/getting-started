@@ -58,7 +58,7 @@ rst_prolog = """
 .. |pyATS| replace:: pyATS
 .. |pyATSbold| replace:: **pyATS**
 .. |library| replace:: pyATS Library
-.. |librarybold| replace:: **pyATS library**
+.. |librarybold| replace:: **pyATS Library**
 .. |geniecmd| replace:: **genie**
 .. |genieprfx| replace:: **genie**
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
