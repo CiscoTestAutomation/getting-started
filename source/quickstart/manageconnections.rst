@@ -8,7 +8,7 @@ The following table describes the process that the |library| uses to connect to 
 
 .. csv-table::
     :file: ConnectionProcess.csv
-    
+    :header-rows: 1
 
 |pyATS| uses the information contained in your :term:`testbed YAML file` to create an *object*
 *Describe the process that JB described to me today...*
