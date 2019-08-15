@@ -113,8 +113,6 @@ The following example shows the testbed file used for the mock devices::
 
 .. _clone-git-examples:
 
-Download or clone the Git repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Try manually connecting to a device and showing its ???: https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/genie.html#how-to-keep-genie-up-to-date-how-to-upgrade-genie
 
