@@ -59,9 +59,9 @@ The ``devices`` block contains a description of each network device, and must in
     :widths: 25 75
 
     "``name``", "This *must* be the hostname of the device."
-    "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as uut (unit under test)."
+    "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
-    "credentials", "The username and password to log in to the device."
+    "``credentials``", "The username and password to log in to the device."
     "``type``", "Device type"
     "``ip``", "IP address"
     "``protocol``", "Any supported protocol |br| (currently Telnet, SSH, REST, RESTCONF, NETCONF, and YANG)"
