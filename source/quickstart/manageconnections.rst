@@ -1,23 +1,47 @@
 Manage device connections
 =============================
-This section describes how to connect to network devices using the |librarybold|, and gives you a quick example that you can try yourself.
+This section describes how to connect to network devices using the |librarybold| and gives you quick examples that you can try yourself.
 
-How the |pyATS| connects to devices
+How the |library| connects to devices
 -------------------------------------
-The following table describes the process that the |library| uses to connect to a network device.
+Because the |library| is based on Python, an object-oriented programming language, it uses an :term:`object` to represent your testbed topology, and another object to represent a device.
 
-.. csv-table::
-    :file: ConnectionProcess.csv
-    :header-rows: 1
+The following example shows how this works:
 
-|pyATS| uses the information contained in your :term:`testbed YAML file` to create an *object*
-*Describe the process that JB described to me today...*
+#. Load the |library| API that creates a testbed object::
 
-.. manageconnections-setup-testbed
+    $ from genie.testbed import Load
+
+#. Define a variable ``tb`` that contains the absolute or relative path to your :term:`testbed YAML file`, in this case, ``tb.yaml``::
+
+    $ tb = load('tb.yaml')
+
+   *Result*: The system creates a testbed object called ``tb``. |br|
+
+   |br|
+
+#. Define a variable ``device`` that contains a hostname or alias contained in the ``tb`` object::
+
+    $ device = tb.devices['nx-osv-1']
+
+   *Result*: The system creates a device object called ``device``. |br|
+
+   |br|
+
+#. Connect to the device object::
+
+    $ device.connect()
+
+   *Result*: The system connects to the device and displays the connection details.
+
+Once you're connected, you can run show commands and :ref:`parse the device output <parse-output>`. 
+
+
+.. _manageconnections-setup-testbed:
 
 Set up your testbed file
 ------------------------------
-Your :term:`testbed YAML file` defines the :term:`devices` in your network and how to connect to each device. There are a few different ways to create a testbed file, but the two simplest are:
+There are a few different ways to create a testbed file, but the two simplest are:
 
 * Use a text editor to copy and edit an existing YAML file.
 * Enter device information into an Excel file, and let the |library| create the YAML file for you.
@@ -35,8 +59,9 @@ The ``devices`` block contains a description of each network device, and must in
     :widths: 25 75
 
     "``name``", "This *must* be the hostname of the device."
-    "``alias``", "Not required, but strongly recommended. The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as uut (for unit under test)."
+    "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as uut (unit under test)."
     "``os``", "Device operating system"
+    "credentials", "The username and password to log in to the device."
     "``type``", "Device type"
     "``ip``", "IP address"
     "``protocol``", "Any supported protocol |br| (currently Telnet, SSH, REST, RESTCONF, NETCONF, and YANG)"
@@ -51,6 +76,10 @@ The following example shows a YAML file with two devices defined::
      alias: 'uut'
      os: nxos
      type: NX-OSv
+     credentials:
+       credentialname1:
+         username: admin1
+         password: admin1
      connections:
        defaults:
          class: unicon.Unicon
@@ -62,6 +91,10 @@ The following example shows a YAML file with two devices defined::
      alias: 'helper'
      os: iosxe
      type: CSR1000v
+     credentials:
+       credentialname2:
+         username: admin2
+         password: admin2
      connections:
        defaults:
          class: unicon.Unicon

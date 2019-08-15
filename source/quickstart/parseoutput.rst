@@ -1,3 +1,5 @@
+.. _parse-output:
+
 Parse device output
 ====================
 *Describe the purpose and objectives of this section.*
