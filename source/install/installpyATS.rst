@@ -12,7 +12,7 @@ Code structure
 
 Installation process
 ---------------------
-The process that you follow depends on whether you are an internal, external, or Docker user.
+The process that you follow depends on whether you are an internal, external, or Docker user, and whether you want to use the Robot Framework.
 
 .. list-table:: |pyATS| installation process
    :header-rows: 1
