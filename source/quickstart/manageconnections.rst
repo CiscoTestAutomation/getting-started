@@ -28,7 +28,7 @@ The following example shows how this works:
 
    |br|
 
-#. Connect to the device object::
+#. Connect to the ``device`` object::
 
     $ device.connect()
 
