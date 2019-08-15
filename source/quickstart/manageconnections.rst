@@ -20,7 +20,7 @@ The following example shows how this works:
 
    |br|
 
-#. Define a variable ``device`` that contains a hostname or alias contained in the ``tb`` object::
+#. Define a variable ``device`` that contains a hostname or alias from the ``tb`` object::
 
     $ device = tb.devices['nx-osv-1']
 
@@ -34,7 +34,7 @@ The following example shows how this works:
 
    *Result*: The system connects to the device and displays the connection details.
 
-Once you're connected, you can run show commands and :ref:`parse the device output <parse-output>`. 
+Once you're connected, you can run show commands and :ref:`parse the output <parse-output>`. 
 
 
 .. _manageconnections-setup-testbed:
