@@ -8,15 +8,7 @@ This topic will get you up and running quickly, and includes the following infor
 * Real-life scenarios
 * Hands-on practice procedures
 
-When to use the |library|
--------------------------
-Use the |library| when you want to automate your day-to-day DevOps activities, perform stateful validation of your network devices, or build a safety net of scalable, data-driven and reusable test cases around your network requirements. You can:
 
-  * Profile the current state of your network and take a snapshot for later comparison.
-  * Set up automated monitoring of the operational state of your devices.
-  * Automate configuration and upgrade tasks.
-  * Introduce changes -- such as new products or releases -- and see the effects on your network.
-  * Use the power of our Pythonic library to efficiently write your own, reusable, OS-agnostic scripts.
 
 
 

@@ -37,6 +37,16 @@ The |librarybold| is a Python library that provides all the tools needed for net
 * a pool of reusable test cases, and
 * a Pythonic library for more complex scripting. :question:`We've already described the library itself as Pythonic, and as containing libraries. Can we reword any of this?`
 
+When to use the |library|
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Use the |library| when you want to automate your day-to-day DevOps activities, perform stateful validation of your network devices, or build a safety net of scalable, data-driven and reusable test cases around your network requirements. You can:
+
+  * Profile the current state of your network and take a snapshot for later comparison.
+  * Set up automated monitoring of the operational state of your devices.
+  * Automate configuration and upgrade tasks.
+  * Introduce changes -- such as new products or releases -- and see the effects on your network.
+  * Use the power of our Pythonic library to efficiently write your own, reusable, OS-agnostic scripts.
+
 Key benefits of |pyATS|
 -----------------------
 The |pyATS| ecosystem provides an agnostic infrastructure for rapid test development and execution. All OS/Platform and management protocol support is defined and injected through plugins, library implementations, and extensions. This includes support for third-party platforms and protocols.
