@@ -1,236 +1,194 @@
 .. _quick-start:
 
-Quick start guide
+Quick start instructions
 =============================
 This topic will get you up and running quickly, and includes the following information:
 
 * Tips on how to use the |library|
 * Real-life scenarios
 * Hands-on practice procedures
-* A testbed file of mock devices
-
-Important concepts
--------------------
-This section describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
-
-.. _qs-sdn::
-
-Software-defined network
-^^^^^^^^^^^^^^^^^^^^^^^^^
-A software-defined network (SDN) decouples network control from network forwarding, which makes the control functions programmable and the network itself more dynamic and scalable. The |pyATS| ecosystem helps you test, maintain, and diagnose
-the operational state of your agile SDN network.
-
-|pyATS| provides a framework that standardizes how to programmatically interact with devices (routers, switches, servers, traffic generators, and other hardware products). The ecosystem provides the mechanisms you need to parse, model, configure, and test your SDN, and includes a set of ready-to-use test automation libraries built by the same engineering teams that built your Cisco products.
-
-.. _qs-abstraction::
-
-Abstraction
-^^^^^^^^^^^
-The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes -- such as network topology and traffic -- without having to change the underlying hardware.
-
-:question:`Does this belong here, under abstraction? Or is this a different sort of thing?` For example, the |library| uses abstraction to model your network topology and protocols, which results in a generalized view of network *objects*. These objects represent protocols, testbeds, devices, interfaces, and links :question:`and anything else?`.
-
-The following diagram shows an example of how topology objects are referenced and interconnected.
-
-.. code-block:: text
-
-    +--------------------------------------------------------------------------+
-    | Testbed Object                                                           |
-    |                                                                          |
-    | +-----------------------------+          +-----------------------------+ |
-    | | Device Object - myRouterA   |          | Device Object - myRouterB   | |
-    | |                             |          |                             | |
-    | |         device interfaces   |          |          device interfaces  | |
-    | | +----------+ +----------+   |          |   +----------+ +----------+ | |
-    | | | intf Obj | | intf Obj |   |          |   |  intf Obj| | intf Obj | | |
-    | | | Eth1/1   | | Eth1/2 *-----------*----------*  Eth1/1| | Eth1/2   | | |
-    | | +----------+ + ---------+   |     |    |   +----------+ +----------+ | |
-    | +-----------------------------+     |    +-----------------------------+ |
-    |                                     |                                    |
-    |                               +-----*----+                               |
-    |                               | Link Obj |                               |
-    |                               |rtrA-rtrB |                               |
-    |                               +----------+                               |
-    +--------------------------------------------------------------------------+
-
-The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
-
-.. qs-features::
-
-Features
-^^^^^^^^^
-The term *feature* typically refers to a network protocol, represented by the |library| as a Python object, with attributes that represent the feature (protocol) configuration on a device. Many networks use a combination of different features, such as MPLS, BGP, and EIGRP.
-
-.. qs-statefulvalidation::
-
-Stateful validation
-^^^^^^^^^^^^^^^^^^^
-Configuration changes often result in a series of operational state changes. For example, you might see changes to the following items:
-
-* Interface status
-* Routing
-* Neighbors
-
-With just a few commands or an automated script, you can use the |library| to profile your system before and after a configuration change to see a detailed list of the changes.
 
 When to use the |library|
 -------------------------
-Use the |library| any time you want to configure or check the health of your network. Cisco makes the automated tests used during product development available externally, so customers can run the same tests on their own networks. This is a win-win situation for Cisco and our customers!
+Use the |library| when you want to automate your day-to-day DevOps activities, perform stateful validation of your network devices, or build a safety net of scalable, data-driven and reusable test cases around your network requirements. You can:
 
-Test script creation
-^^^^^^^^^^^^^^^^^^^^^^^
-Ideal for cross-OS/cross-platform development teams, the |library| enables you to
-
-* develop in parallel
-* conduct tests, and
-* scale your respective features/components independently.
-
-The |library| decouples your tests from topology and configuration so that you can address a wide variety of user requirements in your unit, sanity, regression, and system/solution tests.
-
-:question:`What would be a specific, real-world scenario to show here? https://github.com/RunSi/DEVWKS-2601 (This example shows how to use a Robot Framework script, can we show an example that doesn't? This seems to go to the same workshop as the test automation one.)`
-
-Test automation
-^^^^^^^^^^^^^^^^^^
-Use the |library| to combine any number of test scripts and run them at scheduled intervals, under different test conditions. The |library| gives you the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
-
-:question:`What would be a specific, real-world scenario of doing this with Genie?` https://github.com/CiscoTestAutomation/CL-DevNet-2595
-
-.. qs-library-cli::
-
-Use the |library| command line
-----------------------------------------------
-The |library| command line interface (CLI) is a powerful Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
-
-.. note::
-
-  All |library| commands start with |geniecmd|, followed by the command and its options.
-
-From your |pyATS| virtual environment, you can see a complete list of available commands::
-
-  (|library|)$ |geniecmd| --help
-
-*Result*: The system displays the following output, or similar:
-
-.. code-block::
-
-      Usage:
-      |geniecmd| <command> [options]
-
-    Commands:
-        diff                Command to diff two snapshots saved to file or directory
-        dnac                Command to learn DNAC features and save to file
-        learn               Command to learn device features and save to file
-        parse               Command to parse show commands
-        run                 Run |geniecmd| triggers & verifications in pyATS runtime environment
-        shell               enter Python shell and load a Genie testbed file and/or Pickled file
-
-    General Options:
-      -h, --help            Show help
-
-    Run '|geniecmd| <command> --help' for more information on a command.
-
-To see help for a specific command::
-
-  (|library|)$ |geniecmd| <command name> --help
+  * Profile the current state of your network and take a snapshot for later comparison.
+  * Set up automated monitoring of the operational state of your devices.
+  * Automate configuration and upgrade tasks.
+  * Introduce changes -- such as new products or releases -- and see the effects on your network.
+  * Use the power of our Pythonic library to efficiently write your own, reusable, OS-agnostic scripts.
 
 
 .. qs-update::
 
 Keep |pyATS| up to date
 -----------------------------
-On the last Tuesday of each month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
+On the last Tuesday of the month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
 
-.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`Can external users be on this list? How does an internal user sign up to the notices?`
+.. qs-upgrade::
 
-.. qs-upgrade-library::
+To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command **from your virtual environment**.
 
-Upgrade the |pyATS| infrastructure
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. include:: /definitions/def_pyats_code_infrastructure.rst
+Internal Cisco users
+^^^^^^^^^^^^^^^^^^^^^
 
-You can upgrade the infrastructure with one command. From your virtual environment::
+.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
 
-  (|library|) $ pip install |geniecmd| --upgrade
+.. csv-table:: Internal Cisco user upgrade options
+    :file: UpgradeInternal.csv
+    :header-rows: 1
+    :widths: 25 35 40
 
-*Result*: The installer gives you the latest version of |pyATS| and the |library| infrastructure. To check the version::
+*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
-  (|library|) $ pip list | egrep 'ats|genie'
+  (pyats) $ pip list | egrep 'ats|library'
 
-*Result*: The system displays a list of the core packages and the version of each.
+*Result*: The system displays a list of the packages and the installed versions.
 
-Upgrade the |library| packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. include:: /definitions/def_pyatslibrary_code_structure.rst
+.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
-To upgrade the packages, you simply run the pip installer and specify each package that you want to upgrade. This means that you can install only those packages that you need for your specific requirements.
+DevNet community users
+^^^^^^^^^^^^^^^^^^^^^^^
+.. tip:: You can find the latest information about releases on Twitter at #pyATS.
 
-, or create a script that does this. Or, we can provide a command here that they can copy and paste, see the history from my meeting with Lubna. First, get the list of packages.>
-<Probably remove this list, it will be easier to maintain the doc without it.>
-.. code-block:: text
-
-    |geniecmd|                         Main Genie package
-    |geniecmd|.abstract                Abstraction package for OS Agnostic
-    |geniecmd|.conf                    Genie core for Configuration object
-    |geniecmd|.examples                Example for Genie Conf/Ops/Robot and Harness
-    |geniecmd|.harness                 Genie core for Test Harness
-    |geniecmd|.libs.conf               Libraries for Configuration object
-    |geniecmd|.libs.filetransferutils  Libraries for File Transfer utils
-    |geniecmd|.libs.ops                Genie core for Operation state object
-    |geniecmd|.libs.parser             Libraries containing all the parsers
-    |geniecmd|.libs.robot              Libraries containing all Robot keywords
-    |geniecmd|.libs.sdk                Libraries containing all Triggers and Verifications
-    |geniecmd|.libs.telemetry          Librarires for Genie Telemetry
-    |geniecmd|.metaparser              Genie Core for Parser
-    |geniecmd|.ops                     Genie Core for operational state
-    |geniecmd|.parsergen               Genie Core for parsergen - Automatically parse output
-    |geniecmd|.predcore                Genie Core for predcore
-    |geniecmd|.telemetry               Genie Core for telemetry - Monitor testbed
-    |geniecmd|.utils                   Genie utilities
-
-To upgrade a specific package::
-
-    (|library|) $ pip install <package name> --upgrade
+.. csv-table:: DevNet user upgrade options
+    :file: UpgradeExternal.csv
+    :header-rows: 1
+    :widths: 25 35 40
 
 
-For example::
+*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
-    pip install genie.libs.robot --upgrade
-    pip install genie.conf --upgrade
+  (pyats) $ pip list | egrep 'pyats|library'
 
-:question:`Does a user need to update the libraries, or does that happen with the core |library| upgrade?`
+*Result*: The system displays a list of the packages and the installed versions.
 
-Test a network of mock devices
--------------------------------
-*Procedure to download/clone the test file from Git, and then use Genie to connect to and test those devices.*
+.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
-# 1. make sure pyATS is installed (including the libraries)
-bash$ pip install pyats[full]
+.. _clone-git-examples:
 
-# 2. clone this repository into your environment
-bash$ git clone https://github.com/CiscoTestAutomation/examples
+Download or clone the Git examples repository
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+We've provided some examples to help you start using the |library| for some simple scenarios that demonstrate how the |library| works.
+
+.. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.
+
+* To clone the Git repository from your virtual environment::
+
+    (|library|) $ git clone https://github.com/CiscoTestAutomation/examples
+
+* To download the Git repository from a browser:
+
+  * Go to https://github.com/CiscoTestAutomation/examples.
+  * Select **Clone or download**.
+  * Select **Open in Desktop** to download and use the GitHub Desktop app, or **Download Zip** to download and extract a zip file.
+
+ *Result*: You now have the example files stored in the ``examples`` directory.
+
+Practice using the |library| for network automation
+----------------------------------------------------
+The following sections provide step-by-step instructions that will give you some guided practice with the |library|.
+
+Launch a simulated testbed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This section describes how you can connect to a simulated testbed of devices using the `Cisco Virtual Internet Routing Lab (VIRL) <http://virl.cisco.com>`_. This enables you to give the |library| a try, even if you don't have your own network of devices.
+
+#. We recommend that  you reserve and use the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_. 
+
+    .. tip:: The sandbox can get busy, so you might want to reserve it a few days in advance.
+
+    * Go to the `Multi-IOS Cisco Test Network Sandbox <https://devnetsandbox.cisco.com/RM/Diagram/Index/6b023525-4e7f-4755-81ae-05ac500d464a?diagramType=Topology>`_.
+
+    * At the top right, select **Reserve**.
+
+    * In the **Schedule** section, choose your preferred time slot.
+
+    * In the **Parameter** section, from the **Value** list, select **None**.
+
+        .. image:: ../images/ReserveSandbox.png
+
+    * Select **Reserve**, and then follow the instructions to complete the reservation.
+
+#. Next step...
+
+Parse...
+^^^^^^^^^
+
+Run a test script
+^^^^^^^^^^^^^^^^^^^
 
 
-Start with https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_simple
+
+
+
+Configure the testbed.yaml file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The following example shows the testbed file used for the mock devices::
+
+  testbed:
+    name: 'virl'
+
+  devices:
+    nx-osv-1:
+        type: "NX-OSv 9000"
+        os: "nxos"
+        alias: uut
+        tacacs:
+            login_prompt: 'login:'
+            password_prompt: 'Password:'
+            username: admin
+        passwords:
+            tacacs: admin
+            enable: admin
+            line: admin
+        connections:
+            defaults:
+                class: 'unicon.Unicon'
+            a:
+                protocol: telnet
+                ip: 172.25.192.90
+                port: 17023
+        custom:
+            abstraction:
+                order: [os]
+    csr1000v-1:
+        type: asr1k
+        os: "iosxe"
+        alias: helper
+        tacacs:
+            login_prompt: 'login:'
+            password_prompt: 'Password:'
+            username: cisco
+        passwords:
+            tacacs: cisco
+            enable: cisco
+            line: cisco
+        connections:
+            defaults:
+                class: 'unicon.Unicon'
+            a:
+                protocol: telnet
+                ip: 172.25.192.90
+                port: 17021
+        custom:
+            abstraction:
+                order: [os]
+
+:question:`Is it okay to publish these ip addresses externally?`
+
+.. note::
+
+   * Each device name must match the hostname of the device. Otherwise, the connection will hang.
+   * At least one device must have the alias 'uut' in the testbed YAML file.
 
 .. _clone-git-examples:
 
 Download or clone the Git repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Step one
-#. Step two
-#. Step n
+Try manually connecting to a device and showing its ???: https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/genie.html#how-to-keep-genie-up-to-date-how-to-upgrade-genie
 
-Configure the testbed.yaml file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*(Make sure this concept was explained in the "Important concepts" section.)*
-
-#. Step one
-#. Step two
-#. Step n
-
-Connect to the mock devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*Describe what each command does one at a time*
 
 #. Step one
 #. Step two
@@ -250,4 +208,4 @@ See also...
 
 * `Cisco Open Network Environment <https://www.cisco.com/c/en/us/products/collateral/switches/nexus-1000v-switch-vmware-vsphere/white_paper_c11-728045.html>`_
 * Example of stateful validation https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/workshop.md
-* link 3
+* `Cisco Virtual Internet Routing Lab <http://virl.cisco.com/>`
