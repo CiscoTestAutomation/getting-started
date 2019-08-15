@@ -82,7 +82,7 @@ This section describes the key concepts that you need to understand before you b
     A |library| function is a series of actions or retrieval commands executed on a device, such as an interface shutdown. The functions provide clear exception messages if an action fails.
 
    Object 
-    The term *object* refers to a specific instance of a Python class. You can think of an object as a "container" of information, with actual values. 
+    The term *object* refers to an entity that the |pyATS| ecosystem can access and act on. You can think of an object as a "container" of information, with actual values. 
 
 
 
