@@ -84,7 +84,8 @@ This section describes the key concepts that you need to understand before you b
    Object 
     The term *object* refers to an entity that the |pyATS| ecosystem can access and act on. You can think of an object as a "container" of information, with actual values. 
 
-
+   Key-value pair 
+    A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key "Device name" and the value "nx-osv-1".
 
 
 
