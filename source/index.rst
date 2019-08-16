@@ -17,8 +17,6 @@ The |getstartedguide| introduces you to the features and functionality of the |p
    /configuration/configureEnv
    /install/installpyATS
    /quickstart/guidedpractice
-   /quickstart/manageconnections
-   /quickstart/parseoutput
    /quickstart/learndevices
    /quickstart/configuredevices
    /quickstart/comparebeforeafter
