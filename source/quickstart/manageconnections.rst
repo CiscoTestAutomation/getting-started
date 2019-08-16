@@ -1,3 +1,5 @@
+.. _manage-connections:
+
 Manage device connections
 =============================
 This section describes how to connect to network devices using the |librarybold|. It also gives you quick examples that you can try yourself.
