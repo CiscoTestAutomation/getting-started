@@ -50,11 +50,12 @@ The section :ref:`configure-environment` includes details about how to install P
 
 Network connectivity
 ^^^^^^^^^^^^^^^^^^^^^
-Your host platform must have internet access so that you can:
+Your host platform must have internet access when you want to:
 
-* Download the Python installation packages (https://pypi.org) or Docker image (https://hub.docker.com).
-* Connect to your test devices. You can use Telnet, SSH, REST, RESTCONF, NETCONF, and YANG.
-* Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the :question:`packages`.
+ * Install or upgrade |pyATS| (https://pypi.org) or use the Docker image (https://hub.docker.com).
+ * Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the :question:`packages (to be decided 2019/08/19 about the terminology)`.
+
+For test automation or command execution, you only need device connectivity. You can use Telnet, SSH, REST, RESTCONF, NETCONF, and YANG.
 
 .. important:: The |pyATS| ecosystem *never* collects or streams any data or statistics back to Cisco.
 
