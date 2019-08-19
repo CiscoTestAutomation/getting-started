@@ -16,29 +16,26 @@ For more information about how to use |pyATS| and the |library| see the :ref:`qu
 
 DevNet community users
 ----------------------
-Before you install |pyATS|, you must :ref:`install-python` and :ref:`set-up-venv`.
+Before you install |pyATS|, you must:
 
-.. _install-python:
+ * :ref:`check-python`
+ * :ref:`set-up-venv`
 
-Install Python
-^^^^^^^^^^^^^^^
-#.  Go to https://www.python.org/ and download the correct version of Python for your OS.
+.. _check-python:
 
-    .. note:: Make sure you select a supported version of Python:
+Check your version of Python
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    .. note:: Make sure your system has a supported version of Python installed:
         
         .. include:: ../prereqs/supportedpythonversions.rst
 
-#.  Run the installer and respond to the prompts. |br| *Result*: The Python interpreter is installed in the specified directory.
+To check your installed version::
 
-    |br|
+$ python --version
 
-#.  To verify the installed version::
+*Result*: The system returns the installed version number::
 
-        python --version
-
-    *Result*: The system returns the installed version number::
-
-        Python 3.7.4
+$ Python 3.7.4
 
 .. _set-up-venv:
 

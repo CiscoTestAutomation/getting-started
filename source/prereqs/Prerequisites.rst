@@ -32,10 +32,15 @@ The |pyATS| ecosystem runs in a Linux or Linux-type environment. You can install
 * Any flavor of Linux, including Ubuntu, CentOS, and Fedora, for example
 * macOS (previously Mac OS X)
 * Docker containers (`get our container here <https://hub.docker.com/r/ciscotestautomation/pyats/>`_)
+* `Windows Subsystem for Linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_
 
 .. include:: supportedLinux.rst
 
-.. note:: The |pyATS| ecosystem does not currently support |windows_reg|.
+.. note:: 
+
+    * The |pyATS| ecosystem does not support |windows_reg|.
+    * If you're a Windows user, we recommend that you set up Windows Subsystem for Linux (WSL). With WSL, you can run |pyATS| and the |library| in your local environment. This enables on-the-go script development and execution on your local machine, without the need to connect to a server.
+    * Your Linux emulator - such as Ubuntu - might already have Python installed. Make sure to :ref:`check your version of Python <check-python>`.
 
 System and software
 ^^^^^^^^^^^^^^^^^^^^
