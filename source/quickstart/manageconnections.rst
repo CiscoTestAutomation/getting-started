@@ -49,7 +49,7 @@ The ``devices`` block contains a description of each network device, and must in
     "``port``", "Connection port"
  
 
-The following example shows a YAML file with two devices defined :question:`Should we show SSH instead of telnet, and would that require more credentials in the credentials block?` ::
+The following example shows a YAML file with two devices defined :question:`Should we show SSH instead of telnet, and would that require more credentials in the credentials block? Do we need to show/explain the "enable" block here?` ::
 
  devices:
   nx-osv-1:
@@ -90,7 +90,7 @@ Use Excel to create the YAML file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You can define all of your device data in a CSV (.csv) or Excel (.xls, .xlsx) file. The |library| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
 
-The following example shows an Excel file with the required columns.
+The following example shows an Excel file with the required columns. :question:`This example will change to hostname - just need some example hostnames here.`
 
 .. image:: geniecreate_example_excel.png 
 
