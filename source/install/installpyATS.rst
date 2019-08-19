@@ -31,13 +31,15 @@ The process that you follow depends on whether you are an internal, external, or
             * clone the selected Git repositories from Bitbucket.
 
         
-        #. Run the command ``pip install library`` to install the |library| infrastructure, features, and components.
 
    * - DevNet community user
      -
          #. Check the :ref:`requirements`.
          #. :ref:`configure-environment`.
-         #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`.
+         #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`:
+
+            ``pip install pyats[library]`` |br| |br|
+
          #. Verify the installation:
 
             * ``$ pip list | grep pyats``
@@ -91,9 +93,12 @@ This section describes how to use the package installer for Python (pip) to inst
 
         $ pip install --upgrade pip setuptools
 
-#.  Install |pyATS| and the |library|::
+#.  Install |pyATS| and the |library|, using the options described in the following table.
 
-        $ pip install pyats[library]
+      .. csv-table:: Installation options
+        :file: InstallOptions.csv
+        :header-rows: 1
+        :widths: 25 35 40
 
     .. hint:: Give the installer a few minutes to finish.
 
@@ -121,7 +126,7 @@ Install the Robot Framework plugin
 
 You can use the plugin after you install an additional component::
 
-$ pip install pyats.robot library.libs.robot
+$ pip install pyats[robot]
 
 
 .. _docker-label:
@@ -139,9 +144,9 @@ A number of image variants are available:
 
 #.  Download the image::
 
-      $ docker pull ciscotestautomation/pyats:<latest>
+      $ docker pull ciscotestautomation/pyats:version
 
-    where *latest* is the current |pyATS| version. 
+    where *version* is the current |pyATS| version. 
     
     |br|
 
@@ -165,51 +170,7 @@ A number of image variants are available:
 
 #.  For more details and Docker options, go to https://hub.docker.com/r/ciscotestautomation/pyats/ .
 
-.. qs-update::
-
-Keep |pyATS| up to date
------------------------------
-On the last Tuesday of the month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
-
-.. qs-upgrade::
-
-To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command **from your virtual environment**.
-
-Internal Cisco users
-^^^^^^^^^^^^^^^^^^^^^
-
-.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
-
-.. csv-table:: Internal Cisco user upgrade options
-    :file: ../quickstart/UpgradeInternal.csv
-    :header-rows: 1
-    :widths: 25 35 40
-
-*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
-
-  (pyats) $ pip list | egrep 'ats|library'
-
-*Result*: The system displays a list of the packages and the installed versions.
-
-.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
-
-DevNet community users
-^^^^^^^^^^^^^^^^^^^^^^^
-.. tip:: You can find the latest information about releases on Twitter at #pyATS.
-
-.. csv-table:: DevNet user upgrade options
-    :file: ../quickstart/UpgradeExternal.csv
-    :header-rows: 1
-    :widths: 25 35 40
-
-
-*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
-
-  (pyats) $ pip list | egrep 'pyats|library'
-
-*Result*: The system displays a list of the packages and the installed versions.
-
-.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
+.. tip:: Once you install the |pyATS| ecosystem, remember to :ref:`keep your system up to date <upgrade-pyats>`.
 
 .. _clone-git-examples:
 

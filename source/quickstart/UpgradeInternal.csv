@@ -7,8 +7,7 @@ Standard,"* All |pyATS| and |library| infrastructure
 Core |pyATS|,* ATS infrastructure,``$ pip install ats --upgrade``
 Robot Framework,"* Optional Robot Framework package
 * ``pyats.robot`` package (contains |pyATS|-specific keywords)",``$ pip install ats[robot] --upgrade``
-Template library,"* Files that help you with network automation by prompting you for information at runtime 
-:question: `Is this correct, or is it only the create project template?`",``$ pip install ats[template] --upgrade``
+Template library,* Enables use of the ``template`` command,``$ pip install ats[template] --upgrade``
 "Individual packages
 
 (for three-part patch versions)",* The specified package,``$ pip install <package_name> --upgrade``

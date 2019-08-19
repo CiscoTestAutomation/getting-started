@@ -16,6 +16,7 @@ The |getstartedguide| introduces you to the features and functionality of the |p
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
+   /install/keepuptodate
    /quickstart/guidedpractice
    /quickstart/learndevices
    /quickstart/configuredevices
