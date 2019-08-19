@@ -50,7 +50,7 @@ System and software
 
 .. note:: Python 3.4 has reached its end of life and is now deprecated. |pyATS| and the |library| no longer support Python 3.4.
 
-The section :ref:`configure-environment` includes instructions on how to configure a Python virtual environment.
+The section :ref:`configure-environment` includes instructions on how to :ref:`check your version of Python <check-python>` and :ref:`set up a Python virtual environment <set-up-venv>`.
 
 Network connectivity
 ^^^^^^^^^^^^^^^^^^^^^
