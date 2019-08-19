@@ -39,7 +39,7 @@ The ``devices`` block contains a description of each network device, and must in
     :header: "Key", "Description"
     :widths: 25 75
 
-    "``name``", "This *must* be the hostname of the device."
+    "``hostname``", "This *must* be the hostname of the device."
     "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
     "``credentials``", "The username, password, and any other credentials required to log in to the device."
@@ -90,7 +90,7 @@ Use Excel to create the YAML file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You can define all of your device data in a CSV (.csv) or Excel (.xls, .xlsx) file. The |library| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
 
-The following example shows an Excel file with the required columns. :question:`This example will change to hostname - just need some example hostnames here.`
+The following example shows an Excel file with the required columns.
 
 .. image:: geniecreate_example_excel.png 
 
