@@ -14,10 +14,7 @@ This section describes the key concepts that you need to understand before you b
     |pyATS| provides a framework that standardizes how to programmatically interact with devices (routers, switches, servers, traffic generators, and other hardware products). The ecosystem provides the mechanisms you need to parse, model, configure, and test your SDN, and includes a set of ready-to-use test automation libraries built by the same engineering teams that built your Cisco products.
 
    Abstraction
-    The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). Abstraction enables you to monitor and manage changes -- such as network topology and traffic -- without having to change the underlying hardware.
-
-    Abstraction makes it possible for the |library| to determine the functions to execute on a device, based on its operating system. The |library| uses the ``Abstraction`` package to make your tests agnostic, so that they run seamlessly over various operating systems, platforms, and communication protocols.
-
+    The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). This enables you to use |pyATS| and the |library| across different platforms, operating systems, and hardware.
 
 
    Features
@@ -57,20 +54,22 @@ This section describes the key concepts that you need to understand before you b
     The term *show command* refers to a type of Linux command that you use to get information about a networking device, such as a router or switch. For example, ``show version`` returns information about the OS version of a device.
 
    Parser
-    A |library| Parser takes show command output and converts it into Python dictionaries, a data structure that can be used by automation scripts.
+    A parser converts device output into a Python dictionary, which stores the device data as a set of key-value pairs. This process harmonizes the data (makes it consistent) across different types of communication interfaces, including CLI, REST, NETCONF, and others. 
+    
+    The |library| parsers create standardized output for ``show`` commands, which means that you can write and run reusable automation scripts. In the |pyATS| ecosystem, parsers are typi cally written using the Metaparser package.
 
    Harness
-    The |library| Harness controls the flow of your network automation and testing, based on user-provided input (arguments). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
+    The |library| Harness module controls the flow of your network automation and testing, based on user-provided input (arguments). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
 
 
    Devices
     Devices are network components such as routers, switches, servers, traffic generators, and other hardware products.
 
    Ops 
-    The |library| Ops is a representation of the current operational state of a device, per feature (protocol). It "learns" the operational state by executing a series of show commands and parsing them into a Python dictionary.
+    The |library| Ops module is a representation of the current operational state of a device, per feature (protocol). It "learns" the operational state by executing a series of show commands and parsing them into a Python dictionary.
 
    Conf 
-    The |library| Conf provides a way for you to configure a network device without having to build the configuration yourself. Instead, you can generate reusable, multi-line configuration strings and apply them to one or more devices all at once.
+    The |library| Conf module provides a way for you to configure a network device without having to build the configuration yourself. Instead, you can generate reusable, multi-line configuration strings and apply them to one or more devices all at once.
 
    Robot Framework
     Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
@@ -86,6 +85,10 @@ This section describes the key concepts that you need to understand before you b
 
    Key-value pair 
     A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key "Device name" and the value "nx-osv-1".
+
+   |pyATS| packages
+    * For *internal Cisco users*, a |pyATS| package
+    * For *DevNet community users*, a |pyATS| package 
 
 
 
