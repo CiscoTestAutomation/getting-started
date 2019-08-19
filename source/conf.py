@@ -64,7 +64,11 @@ rst_prolog = """
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
 .. |windows_reg| unicode:: Windows U+00AE
 .. |ubuntu_reg| unicode:: Ubuntu U+00AE
-.. |linux_reg| unicode:: Ubuntu U+00AE
+.. |linux_reg| unicode:: Linux U+00AE
+.. |mac_reg| unicode:: Mac U+00AE
+.. |docker_reg| unicode:: Docker U+00AE
+.. |github_reg| unicode:: GitHub U+00AE
+.. |python_reg| unicode:: Python U+00AE
 .. |br| raw:: html
 
   <br />

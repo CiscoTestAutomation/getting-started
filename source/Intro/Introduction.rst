@@ -27,7 +27,7 @@ What is |pyATS|?
 ^^^^^^^^^^^^^^^^
 |pyATSbold| is the test framework foundation for the ecosystem. |pyATS| specializes in data-driven and reusable testing for Agile, rapid development iterations.
 
-This powerful, highly-pluggable Python framework enables developers to start with small, simple and linear test cases, and then scale up to large, complex and asynchronous test suites.
+This powerful, highly-pluggable |python_reg| framework enables developers to start with small, simple and linear test cases, and then scale up to large, complex and asynchronous test suites.
 
 What is the |library|
 ^^^^^^^^^^^^^^^^^^^^^^

@@ -10,10 +10,10 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 .. csv-table:: Prerequisite knowledge and skills
    :header: "You should know...", "So that you can..."
 
-   "Linux (on Mac and Windows)", "Install and use the ecosystem"
+   "|linux_reg| (on |mac_reg| and |windows_reg|)", "Install and use the ecosystem"
    "Fundamentals of network test automation", "Configure the ecosystem with testbed data"
-   "(Optional) GitHub clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
-   "(Optional) Docker image usage (optional)", "Run |pyATS| from the Docker image"
+   "(Optional) |github_reg| clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
+   "(Optional) |docker_reg| image usage (optional)", "Run |pyATS| from the Docker image"
   
 .. _requirements:
 
