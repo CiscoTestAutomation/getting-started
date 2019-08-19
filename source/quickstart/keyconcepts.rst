@@ -87,8 +87,13 @@ This section describes the key concepts that you need to understand before you b
     A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key "Device name" and the value "nx-osv-1".
 
    |pyATS| packages
-    * For *internal Cisco users*, a |pyATS| package
-    * For *DevNet community users*, a |pyATS| package 
+    The |pyATS| ecosystem is available externally through `Cisco DevNet <https://developer.cisco.com/pyats/>`_. We release slightly different packages for internal and external users to ensure that the packages work correctly in different environments. Differences include:
+
+    * Package format - where the code is not open source
+    * Package names - ``ats`` internally, ``pyats`` externally
+    * Source location for installation files
+    * Architecture (32-bit available internally *only*)
+    * Defaults - no Cisco-specific defaults for external release
 
 
 
