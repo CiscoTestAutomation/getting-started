@@ -44,9 +44,9 @@ System and software
 
     .. include:: supportedpythonversions.rst
 
-The section :ref:`configure-environment` includes details about how to install Python.
-
 .. note:: Python 3.4 has reached its end of life and is now deprecated. |pyATS| and the |library| no longer support Python 3.4.
+
+The section :ref:`configure-environment` includes instructions on how to configure a Python virtual environment.
 
 Network connectivity
 ^^^^^^^^^^^^^^^^^^^^^
