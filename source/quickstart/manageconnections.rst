@@ -8,7 +8,7 @@ How the |library| connects to devices
 -------------------------------------
 Because the |library| is based on Python, an object-oriented programming language, it uses an :term:`object` to represent your testbed topology, and another object to represent a device. You connect to a device by specifying the device object name.
 
-#. :ref:`manageconnections-setup-testbed` file that contains your device details.
+#. Set up a testbed YAML file that contains your device details.
 #. Use the |library| to create the testbed and device objects.
 #. Tell the |library| which device to connect to.
 #. Connect and run commands.
@@ -110,12 +110,20 @@ where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`
 
 Connect to a mock device
 ---------------------------
-This step-by-step example shows you how to connect to a mock device, so that you can practice using the |library| without having to connect to a real device.
+You don't need a real device to practice using the |library|. This step-by-step example shows you how to connect to a :term:`mock device`. 
 
-#. Copy or clone the repo? No, it's probably out of date because of the credentials? https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_simple Use mock devices. We have used the Unicon playback feature to record all interactions with the device so you can use it smoothly without connecting to real devices as below.
-pyats run job demo1_harness_simple_job.py --testbed-file cisco_live.yaml --replay mock_device
+#. :download:`Download the zip file that contains the mock data and YAML file <mock.zip>`. |br| |br|
 
-#. From your virtual environment, open the Python interpreter::
+#. Extract the files to a location of your choice, and keep the zip file structure intact. This example uses the directory ``mock``. |br| |br|
+
+#. In your virtual environment, change to the directory that contains the mock YAML file::
+
+    (pyats) $ cd mock
+
+   .. important:: The mock feature is location-sensitive. Make sure that you change to the directory that contains the ``mock.yaml`` file and keep the zip file structure intact.
+
+
+#. Open the Python interpreter::
 
     (pyats) $ python
 
@@ -123,25 +131,21 @@ pyats run job demo1_harness_simple_job.py --testbed-file cisco_live.yaml --repla
 
     >>> from genie.testbed import load
 
-#. Create a testbed object ``tb`` based on your :term:`testbed YAML file`. Specify the absolute or relative path, in this case, ``tb.yaml``::
+#. Create a testbed object ``tb`` based on your :term:`testbed YAML file`. Specify the absolute or relative path, in this case, ``mock/mock.yaml``::
 
-    >>> tb = load('tb.yaml')
+    >>> tb = load('mock.yaml')
 
-   *Result*: The system creates a variable ``tb`` that points to the testbed object. This command also creates ``tb.devices``, which contains the YAML device information in the form of key-value pairs. |br|
+   *Result*: The system creates a variable ``tb`` that points to the testbed object. This command also creates ``tb.devices``, which contains the YAML device information in the form of key-value pairs. |br| |br|
 
-   |br|
+#. Create an object ``dev`` for the device that you want to connect to::
 
-#. Create an object ``device`` for the device that you want to connect to::
+    >>> dev = tb.devices['nx-osv-1']
 
-    >>> device = tb.devices['nx-osv-1']
-
-   *Result*: The |library| finds the device named ``nx-osv-1`` in ``tb.devices`` and stores the information in the ``device`` object. |br|
-
-   |br|
+   *Result*: The |library| finds the device named ``nx-osv-1`` in ``tb.devices`` and stores the information in the ``dev`` object. |br| |br| 
 
 #. Connect using the values stored in the ``device`` object::
 
-    >>> device.connect()
+    >>> dev.connect()
 
    *Result*: The system connects to the device and displays the connection details.
 
