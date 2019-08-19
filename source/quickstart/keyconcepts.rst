@@ -95,6 +95,9 @@ This section describes the key concepts that you need to understand before you b
     * Architecture (32-bit available internally *only*)
     * Defaults - no Cisco-specific defaults for external release
 
+   Mock device
+    
+
 
 
 

@@ -151,7 +151,7 @@ You don't need a real device to practice using the |library|. This step-by-step 
 
 Once you're connected, you can run show commands and :ref:`parse the output <parse-output>`. 
 
-
+.. tip:: Remember - you can put all of these commands into a single script. We'll show you how in the :ref:`parse-output` section. 
 
 See also...
 *a list of relevant links*
