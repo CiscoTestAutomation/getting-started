@@ -2,21 +2,15 @@
 
 Parse device output
 ====================
-*Describe the purpose and objectives of this section.*
+This section describes the benefits of using parsed output for network automation and provides an example of how a :term:`parser` works.
 
-Important concepts
--------------------
-Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.
+.. _parsed-output-benefits:
 
-<Concept 1>
-^^^^^^^^^^^
-*(Each concept can be linked to and reused elsewhere.)*
+Benefits of parsed device output
+---------------------------------
+As described in the section :ref:`manage-connections`, asdf 
 
-<Concept 2>
-^^^^^^^^^^^
 
-<Concept n...>
-^^^^^^^^^^^^^^
 
 Examples of how to parse output
 -------------------------------

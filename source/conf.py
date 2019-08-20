@@ -73,6 +73,10 @@ rst_prolog = """
 
   <br />
 
+.. |line6| raw:: html
+
+  <p style="border:1px solid #e1e4e5;"><code style="border:none; color:#e74c3c;">print('Slot 1 serial number:' </br>&nbsp;+ p1['name']['Slot 1']['serial_number'])</code></p>
+
 
 .. raw:: html
 

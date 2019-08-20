@@ -19,15 +19,18 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
 
 Structure of a |pyATS| statement
 ----------------------------------
-Although you don't need to know Python to use the |pyATS| ecosystem, it might help you to understand the structure of the Python-based commands. The following example shows the statements used in the topic :ref:`connect-to-device`.
+Although you don't need to know Python to use the |pyATS| ecosystem, it might help you to understand the structure of the Python-based commands. The following example explains the statements used to connect to a device and parse output from the ``show inventory`` command.
 
-.. image:: ../images/structure_python_statement.png
+.. csv-table:: Structure of a |pyATS| statement
+   :header: "Number", "Statement", "Description"
+   :widths: 5, 40, 55
 
-So for line 3 of this example:
-
- * ``dev`` is a variable that stores the result of the rest of the line
- * ``tb.devices`` runs the command ``devices`` on the object ``tb``
- * ``['nx-osv-1']`` tells ``tb.devices`` to get data for the host ``nx-osv-1`` (which was already defined in the YAML file)
+   "1", "``from genie.testbed import load``", "Get the ``genie.testbed`` library and its ``load`` function."
+   "2", "``tb = load('tb.yaml')``", "Load the ``tb.yaml`` testbed within the ``tb`` variable."
+   "3", "``dev = tb.devices['nx-osv-1']``", "Find the ``nx-osv-1`` device and store it in the variable ``dev``."
+   "4", "``dev.connect()``", "Connect to the device you defined as ``dev``."
+   "5", "``p1 = dev.parse('show inventory')``", "Parse the ``show inventory`` command output for the device ``dev``, and store the output in the variable ``p1``."
+   "6", "|line6|", "Print a meaningful message and the serial number for Slot 1."
 
 .. tip:: If you want to know more about how to use Python, you can find many good online tutorials.
   
