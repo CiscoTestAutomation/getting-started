@@ -77,11 +77,16 @@ The |library| provides a parser for most of the Cisco-specific ``show`` commands
 
 .. _example-parse-output:
 
-Example: Parse output from a show command
----------------------------------------------
+Examples of how to parse output from a show command
+----------------------------------------------------
 In the section :ref:`manage-connections`, you learned :ref:`how the system connects to devices <how-library-connects>`. Once you connect to a device, you can run ``show`` commands and parse the output.
 
-The following example shows you how to parse output from the ``show inventory`` command, using a :term:`mock device`.
+.. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
+
+Parse output in the Python interpreter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following example shows you how to parse output from the ``show inventory`` command, using a :term:`mock device`. 
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
@@ -146,21 +151,85 @@ The following example shows you how to parse output from the ``show inventory`` 
 
     >>> exit()
 
-Python example
-^^^^^^^^^^^^^^^
-*(This content can be re-used elsewhere.)*
 
-#. Step one 
-#. Step two
-#. Step n 
+.. _example-run-parse-script:
 
-Linux example
-^^^^^^^^^^^^^^^
-*(This content can be re-used elsewhere.)*
+Parse output with a Python script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This example shows you how easy it is to put all of your statements into a single script that you can run from your virtual environment.
 
-#. Step one 
-#. Step two
-#. Step n
+#. Open ``new_script.py`` in a text editor.
+
+   *Result*: You can see all of the commands that connect to a device and parse the output. |br| |br| 
+
+
+#. In your virtual environment, change to the directory where you extracted the zip file::
+
+    (pyats) $ cd mock
+
+
+#. Run the script::
+
+    (pyats) $ python3 new_script.py
+
+   *Result*: The system displays the device output before and after it's parsed, and prints the user-friendly message on-screen::
+
+    [2019-08-20 16:48:19,466] +++ nx-osv-1 logfile /tmp/nx-osv-1-cli-20190820T164819462.log +++
+    [2019-08-20 16:48:19,467] +++ Unicon plugin nxos +++
+    /mnt/c/Users/kacann/Documents/development/pyats/lib/python3.6/site-packages/unicon/bases/routers/connection.py:93: DeprecationWarning: Arguments 'username', 'enable_password','tacacs_password' and 'line_password' are now deprecated and replaced by 'credentials'.
+    category = DeprecationWarning)
+    Trying mock_device ...
+    Connected to mock_device.
+    Escape character is '^]'.
+
+    [2019-08-20 16:48:23,447] +++ connection to spawn: mock_device_cli --os nxos --mock_data_dir mock_data --state connect, id: 139915288871992 +++
+    [2019-08-20 16:48:23,451] connection to nx-osv-1
+
+    switch#
+    [2019-08-20 16:48:24,059] +++ initializing handle +++
+    [2019-08-20 16:48:24,070] +++ nx-osv-1: executing command 'term length 0' +++
+    term length 0
+    switch#
+    [2019-08-20 16:48:24,077] +++ nx-osv-1: executing command 'term width 511' +++
+    term width 511
+    switch#
+    [2019-08-20 16:48:24,085] +++ nx-osv-1: executing command 'terminal session-timeout 0' +++
+    terminal session-timeout 0
+    switch#
+    [2019-08-20 16:48:24,089] +++ nx-osv-1: config +++
+    config term
+    switch(config)#no logging console
+    switch(config)#line console
+    switch(config)#exec-timeout 0
+    switch(config)#terminal width 511
+    switch(config)#end
+    switch#
+    [2019-08-20 16:48:25,013] +++ nx-osv-1: executing command 'show inventory' +++
+    show inventory
+    NAME: "Chassis",  DESCR: "NX-OSv Chassis "
+    PID: N7K-C7018           ,  VID: V00 ,  SN: TB00010000B
+
+    NAME: "Slot 1",  DESCR: "NX-OSv Supervisor Module"
+    PID: N7K-SUP1            ,  VID: V00 ,  SN: TM00010000B
+
+    NAME: "Slot 2",  DESCR: "NX-OSv Ethernet Module"
+    PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000C
+
+    NAME: "Slot 3",  DESCR: "NX-OSv Ethernet Module"
+    PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000D
+
+    NAME: "Slot 4",  DESCR: "NX-OSv Ethernet Module"
+    PID: N7K-F248XP-25       ,  VID: V00 ,  SN: TM00010000E
+
+    NAME: "Slot 33",  DESCR: "NX-OSv Chassis Power Supply"
+    PID:                     ,  VID: V00 ,  SN:
+
+    NAME: "Slot 35",  DESCR: "NX-OSv Chassis Fan Module"
+    PID:                     ,  VID: V00 ,  SN:
+    switch#
+    My serial for slot1 is:TM00010000B
+
+
 
 See also...
 *a list of relevant links*
