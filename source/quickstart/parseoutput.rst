@@ -2,13 +2,15 @@
 
 Parse device output
 ====================
-This section describes the benefits of using parsed output for network automation and provides an example of how a :term:`parser` works.
+This section describes the benefits of using parsed output for network automation, and provides an example of how a :term:`parser` works.
 
 .. _parsed-output-benefits:
 
 Benefits of parsed device output
 ---------------------------------
-As described in the section :ref:`manage-connections`, asdf 
+Device output can vary widely between different devices and for different show commands.
+
+.. include:: ../def_parser.rst 
 
 
 

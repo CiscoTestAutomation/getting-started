@@ -54,9 +54,7 @@ This section describes the key concepts that you need to understand before you b
     The term *show command* refers to a type of Linux command that you use to get information about a networking device, such as a router or switch. For example, ``show version`` returns information about the OS version of a device.
 
    Parser
-    A parser converts device output into a Python dictionary, which stores the device data as a set of key-value pairs. This process harmonizes the data (makes it consistent) across different types of communication interfaces, including CLI, REST, NETCONF, and others. 
-    
-    The |library| parsers create standardized output for ``show`` commands, which means that you can write and run reusable automation scripts. In the |pyATS| ecosystem, parsers are typically written using the Metaparser package.
+    .. include:: ../definitions/def_parser.rst 
 
    Harness
     The |library| Harness module controls the flow of your network automation and testing, based on user-provided :term:`arguments` (input). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
