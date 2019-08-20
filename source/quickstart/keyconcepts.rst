@@ -41,7 +41,7 @@ This section describes the key concepts that you need to understand before you b
    Test automation
     The term *test automation* refers to how you use the |library| to combine any number of test scripts and run them at scheduled intervals, under different test conditions. The |library| gives you the flexibility to scale coverage, configuration, and runtime based on your testing requirements.
 
-   |library| command line
+   Library command line
     The |library| command line interface (CLI) is a powerful, Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
 
    Trigger
@@ -56,10 +56,10 @@ This section describes the key concepts that you need to understand before you b
    Parser
     A parser converts device output into a Python dictionary, which stores the device data as a set of key-value pairs. This process harmonizes the data (makes it consistent) across different types of communication interfaces, including CLI, REST, NETCONF, and others. 
     
-    The |library| parsers create standardized output for ``show`` commands, which means that you can write and run reusable automation scripts. In the |pyATS| ecosystem, parsers are typi cally written using the Metaparser package.
+    The |library| parsers create standardized output for ``show`` commands, which means that you can write and run reusable automation scripts. In the |pyATS| ecosystem, parsers are typically written using the Metaparser package.
 
    Harness
-    The |library| Harness module controls the flow of your network automation and testing, based on user-provided input (arguments). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
+    The |library| Harness module controls the flow of your network automation and testing, based on user-provided :term:`arguments` (input). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
 
 
    Devices
@@ -74,8 +74,8 @@ This section describes the key concepts that you need to understand before you b
    Robot Framework
     Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
 
-   Argument
-    An argument is an input parameter.
+   Arguments
+    Arguments are simply input parameters.
 
    SDK library functions/API
     A |library| function is a series of actions or retrieval commands executed on a device, such as an interface shutdown. The functions provide clear exception messages if an action fails.
@@ -84,7 +84,7 @@ This section describes the key concepts that you need to understand before you b
     The term *object* refers to an entity that the |pyATS| ecosystem can access and act on. You can think of an object as a "container" of information, with actual values. 
 
    Key-value pair 
-    A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key "Device name" and the value "nx-osv-1".
+    A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key ``Device name`` and the value ``nx-osv-1``.
 
    |pyATS| packages
     The |pyATS| ecosystem is available externally through `Cisco DevNet <https://developer.cisco.com/pyats/>`_. We release slightly different packages for internal and external users to ensure that the packages work correctly in different environments. Differences include:
@@ -95,8 +95,11 @@ This section describes the key concepts that you need to understand before you b
     * Architecture (32-bit available internally *only*)
     * Defaults - no Cisco-specific defaults for external release
 
-   Mock device
-    
+   Mock devices
+    The term *mock device* refers to a set of recorded device interactions that you can replay any time you want to practice with or demo the |pyATS| ecosystem. 
+
+   Unicon
+    Unicon is a framework for developing device control libraries for routers, switches and servers. It is developed purely in Python, with no dependency on Tcl-based infrastructure. Unicon is also test framework agnostic and can be used with |pyATS|. We use *Unicon.playback* to create :term:`mock devices`.
 
 
 
