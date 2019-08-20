@@ -69,6 +69,7 @@ rst_prolog = """
 .. |docker_reg| unicode:: Docker U+00AE
 .. |github_reg| unicode:: GitHub U+00AE
 .. |python_reg| unicode:: Python U+00AE
+.. |parser_site| replace:: https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
 .. |br| raw:: html
 
   <br />

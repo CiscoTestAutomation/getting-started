@@ -4,6 +4,8 @@ Manage device connections
 =============================
 This section describes how to connect to network devices using the |librarybold|. It also gives you a quick example to try using mocked devices.
 
+.. _how-library-connects:
+
 How the |library| connects to devices
 -------------------------------------
 Because the |library| is based on Python, an object-oriented programming language, it uses an :term:`object` to represent your testbed topology, and another object to represent a device. You connect to a device by specifying the device object name.
@@ -147,9 +149,11 @@ You don't need a real device to practice using the |library|. This step-by-step 
 
     >>> dev.connect()
 
-   *Result*: The system connects to the device and displays the connection details.
+   *Result*: The system connects to the device and displays the connection details. Once you're connected, you can run show commands and :ref:`parse the output <parse-output>`. |br| |br| 
 
-Once you're connected, you can run show commands and :ref:`parse the output <parse-output>`. 
+#. To exit the Python interpreter::
+
+    >>> exit()
 
 .. tip:: Remember - you can put all of these commands into a single script. We'll show you how in the :ref:`parse-output` section. 
 
