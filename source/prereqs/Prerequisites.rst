@@ -14,6 +14,22 @@ To understand and use the |getstartedguide|, you'll need to have the knowledge a
    "Fundamentals of network test automation", "Configure the ecosystem with testbed data"
    "(Optional) |github_reg| clone and download procedures", "Get |library| packages |br| |br| Contribute to the |pyATS| libraries"
    "(Optional) |docker_reg| image usage (optional)", "Run |pyATS| from the Docker image"
+
+.. _statement-structure:
+
+Structure of a |pyATS| statement
+----------------------------------
+Although you don't need to know Python to use the |pyATS| ecosystem, it might help you to understand the structure of the Python-based commands. The following example shows the statements used in the topic :ref:`connect-to-device`.
+
+.. image:: ../images/structure_python_statement.png
+
+So for line 3 of this example:
+
+ * ``dev`` is a variable that stores the result of the rest of the line
+ * ``tb.devices`` runs the command ``devices`` on the object ``tb``
+ * ``['nx-osv-1']`` tells ``tb.devices`` to get data for the host ``nx-osv-1`` (which was already defined in the YAML file)
+
+.. tip:: If you want to know more about how to use Python, you can find many good online tutorials.
   
 .. _requirements:
 
