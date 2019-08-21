@@ -18,7 +18,6 @@ The |getstartedguide| introduces you to the features and functionality of the |p
    /install/installpyATS
    /install/keepuptodate
    /quickstart/guidedpractice
-   /quickstart/learndevices
    /quickstart/configuredevices
    /quickstart/comparebeforeafter
    /quickstart/runtestcase

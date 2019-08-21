@@ -2,7 +2,7 @@ Learn device features
 =====================
 .. include:: ../definitions/def_feature.rst 
 
-*Describe the purpose and objectives of this section. This is used for stateful network validation of features such as protocols, interfaces, line cards, and other hardware.*
+This section describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
 :question:`Begin editing from here.`
 
