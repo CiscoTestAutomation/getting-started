@@ -90,23 +90,43 @@ The following example shows a YAML file with two devices defined :question:`Shou
 
 Use Excel to create the YAML file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can define all of your device data in a CSV (.csv) or Excel (.xls, .xlsx) file. The |library| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
+You can define all of your device data in a CSV (.csv) or Excel (.xls, .xlsx) file. The |geniecmd| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
 
 The following example shows an Excel file with the required columns.
 
 .. image:: geniecreate_example_excel.png 
 
-.. tip:: 
+Follow these guidelines to create a valid YAML file:
 
-    * The ip and port can be separated by either a space or a colon (:).
-    * If you leave a password cell blank, the system prompts you for the password when you try to connect to the device.
+    * Separate the ``ip`` and ``port`` with either a space or a colon (:).
+    * The ``password`` column is the default password used to log in to the device.
+    * If you leave the password blank, the system prompts you for the password when you connect to the device.
+    * To enter privileged EXEC mode with the ``enable`` command, add a column with the header ``enable_password``. The value can be the same as or different from the default password.
+    * Any additional columns that you define, such as ``alias`` or ``type``, are added to the YAML file as key-value pairs.
+    * The columns can be in any order, as long as you include the required columns.
+
 
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
- (pyats) $ genie create testbed my_devices.xls --output yaml/my_testbed.yaml
+ (pyats) $ |geniecmd| create testbed my_devices.xls --output yaml/my_testbed.yaml
 
 where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
 
+.. tip:: To hide the password in the YAML file as a secret string, add the ``--encode-password`` option when you run the command.
+
+Other ways to create the YAML file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ * You can enter the device data manually, without having to first create a YAML or Excel/CSV file::
+
+    (pyats) $ genie create testbed --output yaml/my_testbed.yaml --encode-password
+
+   *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option hides the password in the resulting YAML file. |br| |br|
+
+ * If you have a JSON dictionary that contains the device data, you can convert it directly into a testbed object::
+
+    How?
+
+   *Result*: :question:`???`
 
 .. _connect-to-device:
 

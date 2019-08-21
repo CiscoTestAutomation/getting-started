@@ -59,8 +59,8 @@ rst_prolog = """
 .. |pyATSbold| replace:: **pyATS**
 .. |library| replace:: pyATS Library
 .. |librarybold| replace:: **pyATS Library**
-.. |geniecmd| replace:: **genie**
-.. |genieprfx| replace:: **genie**
+.. |geniecmd| replace:: genie
+.. |genieprfx| replace:: genie
 .. |getstartedguide| replace:: *Get Started with pyATS Guide*
 .. |windows_reg| unicode:: Windows U+00AE
 .. |ubuntu_reg| unicode:: Ubuntu U+00AE
