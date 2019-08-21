@@ -1,5 +1,7 @@
 Learn device features
 =====================
+.. include:: ../definitions/def_feature.rst 
+
 *Describe the purpose and objectives of this section. This is used for stateful network validation.*
 
 Important concepts

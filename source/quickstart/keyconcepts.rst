@@ -17,8 +17,8 @@ This section describes the key concepts that you need to understand before you b
     The term *abstraction* refers to the separation of network control from the actual, physical network infrastructure (devices). This enables you to use |pyATS| and the |library| across different platforms, operating systems, and hardware.
 
 
-   Features
-    The term *feature* typically refers to a network protocol, represented by the |library| as a Python object, with attributes that represent the feature (protocol) configuration on a device. Many networks use a combination of different features, such as MPLS, BGP, and EIGRP.
+   Feature
+    .. include:: ../definitions/def_feature.rst 
 
 
    Stateful validation
