@@ -29,13 +29,33 @@ What is |pyATS|?
 
 This powerful, highly-pluggable |python_reg| framework enables developers to start with small, simple and linear test cases, and then scale up to large, complex and asynchronous test suites.
 
-What is the |library|
+What is the |library|?
 ^^^^^^^^^^^^^^^^^^^^^^
 The |librarybold| is a Python library that provides all the tools needed for network test automation :question:`is this true?`, including
 
-* a simple command line interface (no Python knowledge needed)
+* a simple :ref:`command line interface <genie-cli>` (no Python knowledge needed)
 * a pool of reusable test cases, and
 * a Pythonic library for more complex scripting. :question:`We've already described the library itself as Pythonic, and as containing libraries. Can we reword any of this?`
+
+.. _genie-cli:
+
+What is the |library| CLI?
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. include:: ../definitions/def_genie_cli.rst
+
+When you want to use the CLI, you simply type::
+
+ (pyats) $ |geniecmd| <command> [options]
+
+For example, to get the operational state of a :term:`feature` on a device, run the command::
+
+ (pyats) $ |geniecmd| learn ospf --testbed-file testbed.yaml
+
+where ``ospf`` is the feature, and ``testbed.yaml`` is the :term:`testbed YAML file` that contains information about your network devices.
+
+To see a complete list of the CLI built-in functions, after you :ref:`configure-environment` and :ref:`install pyATS and the pyATS library <install-pyats>`, run the command::
+
+ (pyats) $ |geniecmd| --help
 
 When to use the |library|
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
