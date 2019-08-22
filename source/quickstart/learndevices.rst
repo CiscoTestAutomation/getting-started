@@ -1,187 +1,89 @@
+.. _learn-features:
+
 Learn device features
 =====================
 .. include:: ../definitions/def_feature.rst 
 
 This section describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
-:question:`Begin editing from here.`
-
 .. _cli_learn:
 
-Genie Learn
-===========
+How the |library| "learns" a feature
+-------------------------------------
+.. include:: ../definitions/def_ops.rst
 
-`genie learn` is a powerful tool that can be extensively used to accomplish
-stateful network validation across multiple devices, with one linux command.
+The output is stored as a JSON dictionary with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
 
-``Genie`` `Ops` is used to represent the operational state of a `feature` using
-Python datastructures. `genie learn` works by to "learning" a `feature`
-configured on a `device` by executing ``Genie`` `Ops` directly from a linux
-terminal. 
+.. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
 
-For each `feature`, the operational information is collected by executing
-multiple show-commands, after which that output is parsed and stored into a
-Python datastructure. 
+To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
 
-To see what functionality `genie learn` offers, execute the following in your
-linux terminal:
+Examples of how to learn device features
+----------------------------------------
+This section describes how you can tell the system to learn one or more features.
 
-.. code-block:: bash
+.. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
-    (genie) bash-4.1$ genie learn --help
-    Usage:
-      genie learn [commands] [options]
+Learn a single feature
+^^^^^^^^^^^^^^^^^^^^^^
+To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
 
-    Example
-    -------
-      genie learn ospf --testbed-file /path/to/testbed.yaml
-      genie learn ospf --testbed-file /path/to/testbed.yaml --output features_snapshots/ --devices nxos-osv-1
-      genie learn ospf interface bgp platform --testbed-file /path/to/testbed.yaml --output features_snapshots/
+#. In your virtual environment, change to the directory that contains the mock YAML file::
 
-    Description:
-      Learn device feature and parse into Python datastructures
+    (pyats) $ cd mock
 
-          List of available features: https://pubhub.devnetcloud.com/media/pyats-packages/docs/genie/genie_libs/#/models
+#. You can use a Python interpreter or the :term:`library command line`.
 
-    Learn Options:
-      ops                   List of Feature to learn, comma separated, ospf,bgp
-      --testbed-file        TESTBED_FILE
-                            specify testbed_file yaml
-      --devices             [DEVICES [DEVICES ...]]
-                            List of devices, comma separated, if not provided it will learn on all
-                            devices (Optional)
-      --output OUTPUT       Which directory to store logs, by default it will be current directory
-                            (Optional)
-      --single-process      Learn one device at the time instead of in parallel (Optional)
-      --via [VIA [VIA ...]]
-                            List of connection to use per device "nxos-1:ssh"
+    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature and store the output in a directory::
 
-    General Options:
-      -h, --help            Show help
-      -v, --verbose         Give more output, additive up to 3 times.
-      -q, --quiet           Give less output, additive up to 3 times, corresponding to WARNING, ERROR,
-                            and CRITICAL logging levels
+       (pyats) $ genie shell --testbed-file mock.yaml
+          >>> dev = testbed.devices['uut']
+          >>> dev.connect()
+          >>> output = dev.learn('ospf') WHAT IS THE OPTION TO PRINT THE OUTPUT TO A FILE FOR LATER DIFF?
 
-The following is a complete list of of `feature`'s available to learn using
-`genie learn`: :models:`Genie Models<http>`. It also provides details on the
-Python datastructure that will be built with `genie learn` for each feature.
+      *Result*: The system displays a summary of the parsed ``show`` commands that ran. |br| |br| 
 
-Refer to :ref:`Genie Ops <ops>` for more information on how ``Genie`` `Ops` works.
+    * If you want to use the CLI::
 
-Single Feature
---------------
+      (pyats) $ |geniecmd| learn ospf --testbed-file mock.yaml --devices uut --output output_folder
 
-The following is an example of how to learn one `feature` (BGP) on the `device`
-`uut`:
+      *Result*: The system connects to the device, runs the show commands, stores the output in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
+        
+          * Connection log
+          * Structured JSON output
+          * Device console output |br| |br| 
 
-.. code-block:: bash
-    
-    (genie) bash-4.1$ genie learn bgp --testbed-file /path/to/testbed.yaml --devices nx-osv-1
+          .. code-block:: text
 
-    Learning '['bgp']' on devices '['uut']'
-    100%|############################################################| 1/1 [00:11<00:00, 11.04s/it]
-    +==============================================================================+
-    | Genie Learn Summary for device nx-osv-1                                      |
-    +==============================================================================+
-    |  Connected to nx-osv-1                                                       |
-    |  -   Log: ./connection_uut.txt                                               |
-    |------------------------------------------------------------------------------|
-    |  Learnt feature 'bgp'                                                        |
-    |  -  Ops structure:  ./bgp_nxos_nx-osv-1_ops.txt                              |
-    |  -  Device Console: ./bgp_nxos_nx-osv-1_console.txt                          |
-    |==============================================================================|
+                +==============================================================================+
+                | Genie Learn Summary for device nx-osv-1                                      |
+                +==============================================================================+
+                |  Connected to nx-osv-1                                                       |
+                |  -   Log: output_folder/connection_uut.txt                                   |
+                |------------------------------------------------------------------------------|
+                |  Learnt feature 'ospf'                                                       |
+                |  -  Ops structure:  output_folder/ospf_nxos_nx-osv-1_ops.txt                 |
+                |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
+                |==============================================================================|    
 
-.. note::
+#. To see the structured data, use a text editor to open the file ``output_folder/ospf_nxos_nx-osv-1_ops.txt``.
 
-    Default behaviour:
 
-    1. `genie learn` will save all the `Ops` objects that are built, into files
-        within the current directory of execution; unless argument '--output'
-        specifying the directory is provided.
 
-    2. `genie learn` will execute on all `device`'s within the `testbed` YAML in
-        *parallel*; unless argument '--single-process' is provided. This will cause
-        ``Genie`` to execute `Ops` *sequentially* on each `device`.
+Learn multiple features
+^^^^^^^^^^^^^^^^^^^^^^^^^
+You can use the "learn" function to get the operational states of multiple or all features, as shown in the following examples. :question:`Should we show Python examples also?`
 
-Similar to the `genie parse` mechanism, `genie learn` generates 3 files:
+Learn multiple features on all devices
+******************************************
 
-1. `Unicon` telnet connection log
-2. `device` console output (for all show commands executed in `Ops`)
-3. `Ops` Python datastructure in JSON.
+Run the command::
 
-The following is a snippet of the `Ops` Python datastructure (in JSON format)
-created by `genie learn` for `feature` BGP:
+ (pyats) $ |geniecmd| learn bgp ospf --testbed-file mock.yaml --output output_folder
 
-.. code-block:: bash
+*Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
-    (genie) bash-4.1$ more ./bgp_nxos_nx-osv-1_ops.txt
-    {
-      "attributes": null,
-      "commands": null,
-      "connections": null,
-      "context_manager": {},
-      "info": {
-        "instance": {
-          "default": {
-            "bgp_id": 100,
-            "peer_policy": {
-              "PP-1": {
-                "send_community": true,
-                "soft_reconfiguration": true
-              }
-            },
-            "peer_session": {
-              "PS-1": {
-                "disable_connected_check": true
-              }
-            },
-            "protocol_state": "running",
-            "vrf": {
-              "VRF1": {
-                "address_family": {
-                  "ipv4 unicast": {
-                    "label_allocation_mode": "per-vrf",
-                    "nexthop_trigger_delay_critical": 3000,
-                    "nexthop_trigger_delay_non_critical": 10000,
-                    "nexthop_trigger_enable": true
-                  },
-                  "ipv6 unicast": {
-                    "label_allocation_mode": "per-vrf",
-                    "nexthop_trigger_delay_critical": 3000,
-                    "nexthop_trigger_delay_non_critical": 10000,
-                    "nexthop_trigger_enable": true
-                  }
-                },
-                "cluster_id": "0.0.0.0",
-                "confederation_identifier": 0,
-                "neighbor": {
-                  "55.1.1.101": {
-                    "address_family": {
-                      "ipv4 unicast": {
-                        "as_override": true,
-                        "bgp_table_version": 2,
-                        "session_state": "idle"
-                      }
-                    },
-            ...
-
-A ``Genie`` `Ops` datastructure contains extensive information on the operational
-state of the `feature` on the `device`. Using `genie learn` facilitates and
-expedites stateful network validation of all `features` configured on all
-`device`'s in a network.
-
-Multiple Features
------------------
-
-`genie learn` also supports learning multiple `features` on a multiple `device`'s
-in a `testbed` as shown in the example below:
-
-.. code-block:: bash
-
-    (genie) bash-4.1$ genie learn bgp ospf --testbed-file /path/to/testbed.yaml --output genie_learn
-
-    Learning '['bgp', 'ospf']' on devices '['nx-osv-1', 'csr1000v-1']
-    100%|############################################################| 1/1 [00:27<00:00, 27.60s/it]
+  .. code-block::
 
     +==============================================================================+
     | Genie Learn Summary for device nx-osv-1                                      |
@@ -214,28 +116,16 @@ in a `testbed` as shown in the example below:
     |  -  Device Console: genie_learn/ospf_nxos_csr1000v-1_console.txt             |
     |==============================================================================|
 
-`genie learn` creates a new directory with the name specified within '--output'
-argument. Within this directory, it creates the `Ops` output for each `feature`
-on each `device`.
+Learn all features on one device
+**********************************
 
-All Features
-------------
+Run the command::
 
-`genie learn` can also be used to learn *all* the features available within
-``Genie`` `Ops`. 
+ (pyats) $ |geniecmd| learn all --testbed-file mock.yaml --devices uut --output output_folder
 
-The following is a complete list of of `feature`'s available to learn using
-`genie learn`: :models:`Genie Models<http>`. It also provides details on the
-Python datastructure that will be built with `genie learn` for each feature.
+*Result*: The system saves all of the console and structured output files to the specified directory and displays a summary of the results for each feature, as shown in the following snippet. 
 
-Here is an example:
-
-.. code-block:: bash
-
-    (genie) bash-4.1$ genie learn all --testbed-file /path/to/testbed.yaml --devices nx-osv-1 --output genie_learn_all
-
-    Learning '['acl', 'bgp', 'dot1x', 'fdb', 'hsrp', 'igmp', 'interface', 'lag', 'lisp', 'lldp', 'mcast', 'mld', 'msdp', 'nd', 'ntp', 'ospf', 'pim', 'platform', 'prefix_list', 'route_policy', 'routing', 'static_routing', 'stp', 'vlan', 'vrf', 'vxlan', 'arp']' on devices '['uut']'
-    100%|##########################################################| 27/27 [01:49<00:00,  3.94s/it]
+.. code-block:: text
 
     +=================================================================================+
     | Genie Learn Summary for device nx-osv-1                                         |
@@ -253,146 +143,9 @@ Here is an example:
     |---------------------------------------------------------------------------------|
     |  Could not learn feature 'dot1x'                                                |
     |  -  Exception:      genie_learn_all/dot1x_nxos_nx-osv-1_exception.txt           |
-    |  -  Feature not yet developped for this os                                      |
+    |  -  Feature not yet developed for this os                                       |
     |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'fdb'                                                  |
-    |  -  Exception:      genie_learn_all/fdb_nxos_nx-osv-1_exception.txt             |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'hsrp'                                                          |
-    |  -  Ops structure:  genie_learn_all/hsrp_nxos_nx-osv-1_ops.txt                  |
-    |  -  Device Console: genie_learn_all/hsrp_nxos_nx-osv-1_console.txt              |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'igmp'                                                          |
-    |  -  Ops structure:  genie_learn_all/igmp_nxos_nx-osv-1_ops.txt                  |
-    |  -  Device Console: genie_learn_all/igmp_nxos_nx-osv-1_console.txt              |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'interface'                                                     |
-    |  -  Ops structure:  genie_learn_all/interface_nxos_nx-osv-1_ops.txt             |
-    |  -  Device Console: genie_learn_all/interface_nxos_nx-osv-1_console.txt         |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'lag'                                                  |
-    |  -  Exception:      genie_learn_all/lag_nxos_nx-osv-1_exception.txt             |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'lisp'                                                 |
-    |  -  Exception:      genie_learn_all/lisp_nxos_nx-osv-1_exception.txt            |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'lldp'                                                 |
-    |  -  Exception:      genie_learn_all/lldp_nxos_nx-osv-1_exception.txt            |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'mcast'                                                         |
-    |  -  Ops structure:  genie_learn_all/mcast_nxos_nx-osv-1_ops.txt                 |
-    |  -  Device Console: genie_learn_all/mcast_nxos_nx-osv-1_console.txt             |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'mld'                                                           |
-    |  -  Ops structure:  genie_learn_all/mld_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/mld_nxos_nx-osv-1_console.txt               |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'msdp'                                                          |
-    |  -  Ops structure:  genie_learn_all/msdp_nxos_nx-osv-1_ops.txt                  |
-    |  -  Device Console: genie_learn_all/msdp_nxos_nx-osv-1_console.txt              |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'nd'                                                            |
-    |  -  Ops structure:  genie_learn_all/nd_nxos_nx-osv-1_ops.txt                    |
-    |  -  Device Console: genie_learn_all/nd_nxos_nx-osv-1_console.txt                |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'ntp'                                                           |
-    |  -  Ops structure:  genie_learn_all/ntp_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/ntp_nxos_nx-osv-1_console.txt               |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'ospf'                                                          |
-    |  -  Ops structure:  genie_learn_all/ospf_nxos_nx-osv-1_ops.txt                  |
-    |  -  Device Console: genie_learn_all/ospf_nxos_nx-osv-1_console.txt              |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'pim'                                                           |
-    |  -  Ops structure:  genie_learn_all/pim_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/pim_nxos_nx-osv-1_console.txt               |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'platform'                                                      |
-    |  -  Ops structure:  genie_learn_all/platform_nxos_nx-osv-1_ops.txt              |
-    |  -  Device Console: genie_learn_all/platform_nxos_nx-osv-1_console.txt          |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'prefix_list'                                                   |
-    |  -  Ops structure:  genie_learn_all/prefix_list_nxos_nx-osv-1_ops.txt           |
-    |  -  Device Console: genie_learn_all/prefix_list_nxos_nx-osv-1_console.txt       |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'route_policy'                                                  |
-    |  -  Ops structure:  genie_learn_all/route_policy_nxos_nx-osv-1_ops.txt          |
-    |  -  Device Console: genie_learn_all/route_policy_nxos_nx-osv-1_console.txt      |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'routing'                                                       |
-    |  -  Ops structure:  genie_learn_all/routing_nxos_nx-osv-1_ops.txt               |
-    |  -  Device Console: genie_learn_all/routing_nxos_nx-osv-1_console.txt           |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'static_routing'                                       |
-    |  -  Exception:      genie_learn_all/static_routing_nxos_nx-osv-1_exception.txt  |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'stp'                                                  |
-    |  -  Exception:      genie_learn_all/stp_nxos_nx-osv-1_exception.txt             |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'vlan'                                                          |
-    |  -  Ops structure:  genie_learn_all/vlan_nxos_nx-osv-1_ops.txt                  |
-    |  -  Device Console: genie_learn_all/vlan_nxos_nx-osv-1_console.txt              |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'vrf'                                                           |
-    |  -  Ops structure:  genie_learn_all/vrf_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/vrf_nxos_nx-osv-1_console.txt               |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'vxlan'                                                |
-    |  -  Exception:      genie_learn_all/vxlan_nxos_nx-osv-1_exception.txt           |
-    |  -  Ops structure:  genie_learn_all/vxlan_nxos_nx-osv-1_ops.txt                 |
-    |  -  Device Console: genie_learn_all/vxlan_nxos_nx-osv-1_console.txt             |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'arp'                                                           |
-    |  -  Ops structure:  genie_learn_all/arp_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/arp_nxos_nx-osv-1_console.txt               |
-    |=================================================================================|
 
-`genie learn` is well equipped with efficient error handling. In the event that
-the ``Genie`` `Ops` has not been developed for a certain `OS` on a certain
-`feature`, `genie learn` will print a proper error message displaying this to the
-user as seen in the exampe above:
-
-.. code-block:: text
-
-    |------------------------------------------------------------------------------|
-    |  Could not learn feature 'lisp'                                              |
-    |  -  Exception:      genie_learn_all/lisp_nxos_nx-osv-1_exception.txt         |
-    |  -  Feature not yet developped for this os                                   |
-    |------------------------------------------------------------------------------|
-
-
-`genie learn` is a powerful tool that can be extensively used for accomplish
-stateful network validation in a few simple steps
-
-Learn a single feature
------------------------
-*(This content can be re-used elsewhere.)*
-
-#. Step one 
-#. Step two
-#. Step n 
-
-Learn multiple features
------------------------
-*(This content can be re-used elsewhere.)*
-
-#. Step one 
-#. Step two
-#. Step n
-
-Learn all features
--------------------
-*(This content can be re-used elsewhere.)*
-
-#. Step one 
-#. Step two
-#. Step n
 
 See also...
 *a list of relevant links*

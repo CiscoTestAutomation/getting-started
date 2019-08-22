@@ -64,7 +64,7 @@ This section describes the key concepts that you need to understand before you b
     Devices are network components such as routers, switches, servers, traffic generators, and other hardware products.
 
    Ops 
-    The |library| Ops module is a representation of the current operational state of a device, per feature (protocol). It "learns" the operational state by executing a series of show commands and parsing them into a Python dictionary.
+    .. include:: ../definitions/def_ops.rst
 
    Conf 
     The |library| Conf module provides a way for you to configure a network device without having to build the configuration yourself. Instead, you can generate reusable, multi-line configuration strings and apply them to one or more devices all at once.

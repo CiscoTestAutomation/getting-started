@@ -1,3 +1,5 @@
+.. _compare-network-states:
+
 Compare network states
 ======================
 *Describe the purpose and objectives of this section.*
