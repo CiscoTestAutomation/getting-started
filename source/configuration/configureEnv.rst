@@ -51,7 +51,6 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
         $ mkdir pyats
 
-    .. tip:: Windows users can just add a new folder in the File Explorer.
 
 #.  Go to the new directory::
 
