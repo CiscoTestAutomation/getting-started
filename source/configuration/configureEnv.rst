@@ -61,7 +61,7 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
         $ python3 -m venv .
 
-    *Result*: This creates a project "folder" (space) within the current directory. The folder keeps all dependencies, features, and components together in once place. |br| |br|
+    *Result*: This creates a project "folder" (space) within the current directory. The folder keeps all dependencies, features, and components together in one place. |br| |br|
     
 
 #.   Activate the virtual environment::
