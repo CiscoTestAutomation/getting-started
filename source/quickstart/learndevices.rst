@@ -12,7 +12,7 @@ How the |library| "learns" a feature
 -------------------------------------
 .. include:: ../definitions/def_ops.rst
 
-The output is stored as a JSON dictionary with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
+The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
 
 .. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
 
