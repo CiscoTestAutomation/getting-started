@@ -11,6 +11,7 @@ that you can try yourself.
     manageconnections
     parseoutput
     learndevices
+    configuredevices
 
 
 
