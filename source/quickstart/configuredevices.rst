@@ -66,6 +66,8 @@ uut.connect()
 
         >>> print(nxos_interface.build_config(apply=False))
 
+    .. note:: The argument ``(apply=False)`` shows you what *will* be applied on the device if you go ahead with the build.     
+
      *Result*: The system displays the following configuration information::
 
         interface Ethernet4/3
@@ -76,11 +78,14 @@ uut.connect()
 
 #. To build the configuration and apply it to the device::
 
-        >>> nxos_interface.build_config()
+        >>> nxos_interface.build_config(apply=False)
+
+    .. note:: We've included the argument ``(apply=False)`` because you can't actually build the configuration on a mock device.
+
 
 #. To remove the configuration from the device::
 
-        >>> nxos_interface.build_unconfig()
+        >>> nxos_interface.build_unconfig(apply=False)
 
 
 Learn multiple features
