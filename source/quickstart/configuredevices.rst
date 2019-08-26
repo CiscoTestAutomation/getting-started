@@ -89,13 +89,15 @@ This example shows you how to configure a single feature on a single device. You
 
         >>> nxos_interface.build_unconfig(apply=False)
 
-.. note:: If you want to change the configuration of a device, or if you want to partially configure a device, you can tell the |library| which attributes to apply.
+Configure one attribute
+^^^^^^^^^^^^^^^^^^^^^^^^
+If you want to change the configuration of a device, or if you want to partially configure a device, you can tell the |library| which attributes to apply.
 
- By default, the |library| applies the configuration from step 6. To limit the configuration to a single attribute, you can specify the attribute in an argument::
+By default, the |library| applies the configuration from step 6. To limit the configuration to a single attribute, you can specify the attribute in an argument::
 
  >>> nxos_interface.build_config(apply=False, attributes={'ipv4':None})
 
- In this example, the system only applies the configuration of the ``ipv4`` attribute to the device.
+In this example, the system applies *only* the configuration of the ``ipv4`` attribute to the device. Because the system uses a dictionary that stores key-value pairs, ``None`` serves as a placeholder value that has no effect on the configuration.
 
 Configure multiple devices
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -129,6 +131,8 @@ You can apply configuration settings to all the devices in your testbed, rather 
 
 
 #. Configure all of the features on all of your testbed devices, line by line. At this point, we provide examples as you cannot run the ``testbed.build_config`` command on the mock data. This example shows two devices, each with its own interface.
+
+   .. tip:: Remember that you will need to refer to the feature `model <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page to know which attributes (keys) you can configure.
 
    .. code-block::
 
