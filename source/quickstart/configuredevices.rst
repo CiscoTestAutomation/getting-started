@@ -2,14 +2,15 @@
 
 Configure devices
 =====================
-This section describes how to use the ``Conf`` module of the |librarybold| to ... and apply configuration to devices in your network.
+This section describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.
 
-.. _cli-learn:
+    .. include:: ../definitions/def_conf.rst
 
-How the |library| "learns" a feature
+
+.. _cli-conf:
+
+How the |library| configures a device
 -------------------------------------
-.. include:: ../definitions/def_ops.rst
-
 The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
 
 .. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.

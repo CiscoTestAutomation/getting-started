@@ -67,7 +67,7 @@ This section describes the key concepts that you need to understand before you b
     .. include:: ../definitions/def_ops.rst
 
    Conf 
-    The |library| Conf module provides a way for you to configure a network device without having to build the configuration yourself. Instead, you can generate reusable, multi-line configuration strings and apply them to one or more devices all at once.
+    .. include:: ../definitions/def_conf.rst
 
    Robot Framework
     Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
