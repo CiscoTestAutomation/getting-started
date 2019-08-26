@@ -14,10 +14,7 @@ How you use the |library| to configure a device
 ------------------------------------------------
 Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. 
 
-You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. Simply stated, you take care of the *what*, and the |library| takes care of the *how* in two simple steps:
-
-1. Define the device (:term:`object`) attributes.
-2. Tell the |library| to apply the configuration.
+You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. You take care of the *what* and let the |library| take care of the *how*.
 
 To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
@@ -25,10 +22,17 @@ Examples of how to configure devices
 ----------------------------------------
 This section describes how to use the Python interpreter or a Python script to use the ``Conf`` module functionality. Because you use it primarily for automated test scripts, we have not provided a command line option.
 
+The process to configure devices is simple:
+
+ 1. Define the device (:term:`object`) attributes.
+ 2. Tell the |library| to apply the configuration.
+
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
-Configure a single feature
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _config-feature:
+
+Configure a feature on a device
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This example shows you how to configure a single feature on a single device. You can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
@@ -45,13 +49,11 @@ This example shows you how to configure a single feature on a single device. You
 
         >>> from genie.conf.base import Interface
 
-uut.connect()
-
 #. Connect to the device and tell the system to create an NXOS interface::
 
         >>> uut.connect()
 
-# Create an NXOS interface::
+#. Create an NXOS interface::
 
         >>> nxos_interface = Interface(device=uut, name='Ethernet4/3')
 
@@ -66,9 +68,9 @@ uut.connect()
 
         >>> print(nxos_interface.build_config(apply=False))
 
-    .. note:: The argument ``(apply=False)`` shows you what *will* be applied on the device if you go ahead with the build.     
+   The argument ``(apply=False)`` shows you what *will* be applied on the device if you go ahead with the build.     
 
-     *Result*: The system displays the following configuration information::
+   *Result*: The system displays the following configuration information::
 
         interface Ethernet4/3
         no shutdown
@@ -80,89 +82,84 @@ uut.connect()
 
         >>> nxos_interface.build_config(apply=False)
 
-    .. note:: We've included the argument ``(apply=False)`` because you can't actually build the configuration on a mock device.
+   We've included the argument ``(apply=False)`` because you can't actually build the configuration on a mock device. |br| |br| 
 
 
 #. To remove the configuration from the device::
 
         >>> nxos_interface.build_unconfig(apply=False)
 
+.. note:: If you want to change the configuration of a device, or if you want to partially configure a device, you can tell the |library| which attributes to apply.
 
-Learn multiple features
-^^^^^^^^^^^^^^^^^^^^^^^^^
-You can use the "learn" function to get the operational states of multiple or all features, as shown in the following examples. :question:`Should we show Python examples also?`
+ By default, the |library| applies the configuration from step 6. To limit the configuration to a single attribute, you can specify the attribute in an argument::
 
-Learn multiple features on all devices
-******************************************
+ >>> nxos_interface.build_config(apply=False, attributes={'ipv4':None})
 
-Run the command::
+ In this example, the system only applies the configuration of the ``ipv4`` attribute to the device.
 
- (pyats) $ |geniecmd| learn bgp ospf --testbed-file mock.yaml --output output_folder
+Configure multiple devices
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can apply configuration settings to all the devices in your testbed, rather than to a specific device or feature. This means that you can do all of the configuration, and then apply the settings with just one "build". 
 
-*Result*: Within the output directory, the system creates the output files and displays a summary for each device.
+#. In your virtual environment, change to the directory that contains the mock YAML file::
 
-  .. code-block::
+    (pyats) $ cd mock
 
-    +==============================================================================+
-    | Genie Learn Summary for device nx-osv-1                                      |
-    +==============================================================================+
-    |  Connected to nx-osv-1                                                       |
-    |  -   Log: genie_learn/connection_nx-osv-1.txt                                |
-    |------------------------------------------------------------------------------|
-    |  Learnt feature 'bgp'                                                        |
-    |  -  Ops structure:  genie_learn/bgp_nxos_nx-osv-1_ops.txt                    |
-    |  -  Device Console: genie_learn/bgp_nxos_nx-osv-1_console.txt                |
-    |------------------------------------------------------------------------------|
-    |  Learnt feature 'ospf'                                                       |
-    |  -  Ops structure:  genie_learn/ospf_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn/ospf_nxos_nx-osv-1_console.txt               |
-    |==============================================================================|
+#. Load the ``testbed`` API and create your testbed and device objects::
 
-    +==============================================================================+
-    | Genie Learn Summary for device csr1000v-1                                    |
-    +==============================================================================+
-    |  Connected to csr1000v-1                                                     |
-    |  -   Log: genie_learn/connection_csr1000v-1.txt                              |
-    |------------------------------------------------------------------------------|
-    |  Could not learn feature 'bgp'                                               |
-    |  -  Exception:      genie_learn/bgp_nxos_csr1000v-1_exception.txt            |
-    |  -  Ops structure:  genie_learn/bgp_nxos_csr1000v-1_ops.txt                  |
-    |  -  Device Console: genie_learn/bgp_nxos_csr1000v-1_console.txt              |
-    |------------------------------------------------------------------------------|
-    |  Learnt feature 'ospf'                                                       |
-    |  -  Ops structure:  genie_learn/ospf_nxos_csr1000v-1_ops.txt                 |
-    |  -  Device Console: genie_learn/ospf_nxos_csr1000v-1_console.txt             |
-    |==============================================================================|
+    (pyats) $ genie shell --testbed-file mock.yaml
 
-Learn all features on one device
-**********************************
+        >>> uut = testbed.devices['uut']
 
-Run the command::
+#. Get the |library| functionality that you need to create each feature, for example::
 
- (pyats) $ |geniecmd| learn all --testbed-file mock.yaml --devices uut --output output_folder
+        >>> from genie.conf.base import Interface
+        >>> from genie.libs.conf.ospf import Ospf
+        >>> from genie.libs.conf.isis import Isis
+        >>> from genie.libs.conf.rip import Rip
 
-*Result*: The system saves all of the console and structured output files to the specified directory and displays a summary of the results for each feature, as shown in the following snippet. 
+#. Connect to the device and tell the system to create an NXOS interface::
 
-.. code-block:: text
+        >>> uut.connect()
 
-    +=================================================================================+
-    | Genie Learn Summary for device nx-osv-1                                         |
-    +=================================================================================+
-    |  Connected to nx-osv-1                                                          |
-    |  -   Log: genie_learn_all/connection_uut.txt                                    |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'acl'                                                  |
-    |  -  Exception:      genie_learn_all/acl_nxos_nx-osv-1_exception.txt             |
-    |  -  Feature not yet developped for this os                                      |
-    |---------------------------------------------------------------------------------|
-    |  Learnt feature 'bgp'                                                           |
-    |  -  Ops structure:  genie_learn_all/bgp_nxos_nx-osv-1_ops.txt                   |
-    |  -  Device Console: genie_learn_all/bgp_nxos_nx-osv-1_console.txt               |
-    |---------------------------------------------------------------------------------|
-    |  Could not learn feature 'dot1x'                                                |
-    |  -  Exception:      genie_learn_all/dot1x_nxos_nx-osv-1_exception.txt           |
-    |  -  Feature not yet developed for this os                                       |
-    |---------------------------------------------------------------------------------|
+#. Create two NXOS interfaces::
+
+        >>> nxos_interface = Interface(device=uut, name='Ethernet4/3')
+        >>> nxos_interface = Interface(device=uut, name='Ethernet4/4')
+
+
+#. Configure all of the features on all of your testbed devices, line by line. At this point, we provide examples as you cannot run the ``testbed.build_config`` command on the mock data. This example shows two devices, each with its own interface.
+
+   .. code-block::
+
+    testbed.build_config() 
+     >>> [2018-09-25 09:55:39,982] +++ csr1000v-1: config +++                            
+        config term                                                                     
+        Enter configuration commands, one per line.  End with CNTL/Z.                   
+        csr1000v-1(config)#interface GigabitEthernet1                                   
+        csr1000v-1(config-if)# ip address 200.1.1.2 255.255.255.0                       
+        csr1000v-1(config-if)# no shutdown                                              
+        csr1000v-1(config-if)# logging event link-status                                
+        csr1000v-1(config-if)# ipv6 enable                                              
+        csr1000v-1(config-if)# exit                                                     
+        csr1000v-1(config)#end                                                          
+        csr1000v-1#                                                                     
+        [2018-09-25 09:55:41,382] +++ nx-osv-1: config +++                              
+        config term                                                                     
+        Enter configuration commands, one per line.  End with CNTL/Z.                   
+        nx-osv-1(config)# interface Ethernet4/7                                         
+        nx-osv-1(config-if)#  no shutdown                                               
+        nx-osv-1(config-if)#  logging event port link-status                            
+        nx-osv-1(config-if)#  no switchport                                             
+        nx-osv-1(config-if)#  ip address 200.1.1.2 255.255.255.0                        
+        nx-osv-1(config-if)#  exit                                                      
+        nx-osv-1(config)# end                                                           
+        nx-osv-1#                                                                       
+
+   *Result*: This builds and applies the configuration settings all at once to your testbed devices.
+
+.. note:: Remember that the output of the configuration may vary depending on the device context (such as cli or YANG), but the configuration keys remain the same across all devices!
+
 
 
 See also...
