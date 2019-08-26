@@ -4,20 +4,19 @@ Configure devices
 =====================
 This section describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.
 
-    .. include:: ../definitions/def_conf.rst
+.. include:: ../definitions/def_conf.rst
 
+Because the |library| uses a common structure across devices, you can save time and effort when you automate your network testing.
 
 .. _cli-conf:
 
-How the |library| configures a device
--------------------------------------
-The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
+How you use the |library| to configure a device
+------------------------------------------------
+Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device.
 
-.. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
+To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
-To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
-
-Examples of how to learn device features
+Examples of how to configure devices
 ----------------------------------------
 This section describes how you can tell the system to learn one or more features.
 
