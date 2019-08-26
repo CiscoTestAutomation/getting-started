@@ -6,19 +6,21 @@ This section describes how to use the ``Conf`` module of the |librarybold| to qu
 
 .. include:: ../definitions/def_conf.rst
 
-Because the |library| uses a common structure across devices, you can save time and effort when you automate your network testing.
+Because the |library| uses a common, feature-based structure across platforms, you can save time and effort when you automate your network testing.
 
 .. _cli-conf:
 
 How you use the |library| to configure a device
 ------------------------------------------------
-Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device.
+Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. 
+
+You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. Simply stated, you take care of the *what*, and the |library| takes care of the *how*.
 
 To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
 Examples of how to configure devices
 ----------------------------------------
-This section describes how you can tell the system to learn one or more features.
+This section describes ....
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
