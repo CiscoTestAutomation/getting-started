@@ -14,60 +14,73 @@ How you use the |library| to configure a device
 ------------------------------------------------
 Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. 
 
-You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. Simply stated, you take care of the *what*, and the |library| takes care of the *how*.
+You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. Simply stated, you take care of the *what*, and the |library| takes care of the *how* in two simple steps:
+
+1. Define the device (:term:`object`) attributes.
+2. Tell the |library| to apply the configuration.
 
 To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
 Examples of how to configure devices
 ----------------------------------------
-This section describes ....
+This section describes how to use the Python interpreter or a Python script to use the ``Conf`` module functionality. Because you use it primarily for automated test scripts, we have not provided a command line option.
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
-Learn a single feature
-^^^^^^^^^^^^^^^^^^^^^^
-To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
+Configure a single feature
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+This example shows you how to configure a single feature on a single device. You can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
     (pyats) $ cd mock
 
-#. You can use a Python interpreter or the :term:`library command line`.
+#. Load the ``testbed`` API and create your testbed and device objects::
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature and store the output in a directory::
+    (pyats) $ genie shell --testbed-file mock.yaml
 
-       (pyats) $ genie shell --testbed-file mock.yaml
-          >>> dev = testbed.devices['uut']
-          >>> dev.connect()
-          >>> output = dev.learn('ospf') WHAT IS THE OPTION TO PRINT THE OUTPUT TO A FILE FOR LATER DIFF?
+        >>> uut = testbed.devices['uut']
 
-      *Result*: The system displays a summary of the parsed ``show`` commands that ran. |br| |br| 
+#. Get the |library| ``Interface`` functionality, to configure an interface on the ``uut`` device::
 
-    * If you want to use the CLI::
+        >>> from genie.conf.base import Interface
 
-      (pyats) $ |geniecmd| learn ospf --testbed-file mock.yaml --devices uut --output output_folder
+uut.connect()
 
-      *Result*: The system connects to the device, runs the show commands, stores the output in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
-        
-          * Connection log
-          * Structured JSON output
-          * Device console output |br| |br| 
+#. Connect to the device and tell the system to create an NXOS interface::
 
-          .. code-block:: text
+        >>> uut.connect()
 
-                +==============================================================================+
-                | Genie Learn Summary for device nx-osv-1                                      |
-                +==============================================================================+
-                |  Connected to nx-osv-1                                                       |
-                |  -   Log: output_folder/connection_uut.txt                                   |
-                |------------------------------------------------------------------------------|
-                |  Learnt feature 'ospf'                                                       |
-                |  -  Ops structure:  output_folder/ospf_nxos_nx-osv-1_ops.txt                 |
-                |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
-                |==============================================================================|    
+# Create an NXOS interface::
 
-#. To see the structured data, use a text editor to open the file ``output_folder/ospf_nxos_nx-osv-1_ops.txt``.
+        >>> nxos_interface = Interface(device=uut, name='Ethernet4/3')
 
+#. Configure the interface that you just created::
+
+        >>> nxos_interface.ipv4 = '200.1.1.2'
+        >>> nxos_interface.ipv4.netmask ='255.255.255.0'
+        >>> nxos_interface.switchport_enable = False
+        >>> nxos_interface.shutdown = False
+
+#. Verify that the system generated the configuration::
+
+        >>> print(nxos_interface.build_config(apply=False))
+
+     *Result*: The system displays the following configuration information::
+
+        interface Ethernet4/3
+        no shutdown
+        no switchport
+        ip address 200.1.1.2 255.255.255.0
+        exit
+
+#. To build the configuration and apply it to the device::
+
+        >>> nxos_interface.build_config()
+
+#. To remove the configuration from the device::
+
+        >>> nxos_interface.build_unconfig()
 
 
 Learn multiple features
