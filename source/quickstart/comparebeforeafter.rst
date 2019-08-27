@@ -92,10 +92,10 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
 Changes over time
 ^^^^^^^^^^^^^^^^^
-In this example, you can see how to 
+In this example, you can see how to :ref:`parse the output <parse-output>` of a ``show`` command at two different points in time, and then use ``diff`` to compare the output.
 
 
-.. tip :: You can also :ref:`parse the output <parse-output>` at two different points in time and then use ``diff`` to compare the output.
+
 
 
 
