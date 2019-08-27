@@ -69,6 +69,9 @@ This section describes the key concepts that you need to understand before you b
    Conf 
     .. include:: ../definitions/def_conf.rst
 
+   Diff 
+    .. include:: ../definitions/def-diff.rst
+
    Robot Framework
     Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
 

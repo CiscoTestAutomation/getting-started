@@ -2,78 +2,109 @@
 
 Compare network states
 ======================
-.. include:: ../definitions/def_feature.rst 
+Once you know how to :ref:`parse-output` or :ref:`learn device features <learn-features>`, you can begin to unleash the power of the |librarybold| for stateful network validation! This topic describes how to use the ``learn`` and ``Diff`` functionality to collect and compare information about your network, after an event or over time. This helps you to verify that your network is performing as expected.
 
-This section describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
+.. include:: ../definitions/def-diff.rst 
 
-.. _cli-learn:
+How stateful validation works
+-----------------------------
+The |library| provides an easy way for you to collect and compare network information, either in real-time or as scheduled jobs that run your automation scripts. In the following examples, we show you the basics of how to:
 
-How the |library| "learns" a feature
--------------------------------------
-.. include:: ../definitions/def_ops.rst
+ #. Learn the topology of the network (see the topic :ref:`learn-features`). Remember that the ``learn`` function parses the output of show commands into a common data structure that's consistent across devices and platforms.
+ #. :ref:`configure-devices` to change a feature on a device.
+ #. Use the ``Diff`` library to collect and compare before and after states. The result is a Linux-style list of additions, deletions, and changes.
 
-The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
+You can use the ``Diff`` library to monitor your network state over time, to check if anything changes. Just take a new snapshot every day.
 
-.. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
 
-To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
+Examples of stateful validation
+-------------------------------
+The following examples show how you can monitor changes in configuration or changes over time.
 
-Examples of how to learn device features
-----------------------------------------
-This section describes how you can tell the system to learn one or more features.
+.. tip:: For a more detailed, step-by-step introduction, see the workshop `DevNet-2595: Stateful Network Validation using pyATS+Genie and Robot Framework <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_.
 
-.. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
+Changes in configuration
+^^^^^^^^^^^^^^^^^^^^^^^^
+In this example, you'll see how to take snapshots with the ``learn`` function, save them to different directories, and then compare them. 
 
-Learn a single feature
-^^^^^^^^^^^^^^^^^^^^^^
-To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
+.. note:: Because you can't configure the mock data, we'll show you all of the actions and results. The `workshop <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_ provides examples that you can try yourself.
 
-#. In your virtual environment, change to the directory that contains the mock YAML file::
+#. With your devices already configured and running (see :ref:`configure a feature <config-feature>`), take a snapshot of the ``bgp`` feature and save it to the directory (or variable) ``output1``. You can use a Python interpreter or the :term:`library command line`.
 
-    (pyats) $ cd mock
+    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
 
-#. You can use a Python interpreter or the :term:`library command line`.
+       (pyats) $ genie shell --testbed-file tb.yaml
+          >>> output1 = {}
+          >>> for name, dev in tb.devices.items():
+          ...     dev.connect()
+          ...     output1[name] = {}
+          ...     output1[name]['bgp'] = dev.learn('bgp')
+          ...
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``::
-
-       (pyats) $ genie shell --testbed-file mock.yaml
-          >>> dev = testbed.devices['uut']
-          >>> dev.connect()
-          >>> output = dev.learn('ospf')
-
-      *Result*: The system displays a summary of the parsed ``show`` commands that ran. |br| |br| 
+      This example uses a Python ``for`` loop to execute each statement on all devices in the testbed. The system stores the feature information in Python dictionaries, each identified by the device name. |br| |br| 
 
     * If you want to use the CLI::
 
-      (pyats) $ |geniecmd| learn ospf --testbed-file mock.yaml --devices uut --output output_folder
+       (pyats) $ |geniecmd| learn "bgp" --testbed-file tb.yaml --output output1
 
-      *Result*: The system connects to the device, runs the show commands, stores the output in JSON format in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
-        
-          * Connection log
-          * Structured JSON output
-          * Device console output |br| |br| 
+      *Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
-          .. code-block:: text
+#. Change a device configuration. For example, shut down an interface.
 
-                +==============================================================================+
-                | Genie Learn Summary for device nx-osv-1                                      |
-                +==============================================================================+
-                |  Connected to nx-osv-1                                                       |
-                |  -   Log: output_folder/connection_uut.txt                                   |
-                |------------------------------------------------------------------------------|
-                |  Learnt feature 'ospf'                                                       |
-                |  -  Ops structure:  output_folder/ospf_nxos_nx-osv-1_ops.txt                 |
-                |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
-                |==============================================================================|    
+#. Repeat step 1 to take another snapshot, but specify a different output directory or variable, such as ``output_2``.
 
-      To see the structured data, use a text editor to open the file ``output_folder/ospf_nxos_nx-osv-1_ops.txt``.
+#. Compare the two snapshots:
+
+    * Python::
+
+        >>> from genie.utils.diff import Diff
+        >>> diff = Diff(output1.info, output2.info)
+        >>> diff.findDiff()
+        >>> print(diff)
+    
+    * |library| CLI::
+
+       $ (pyats) genie diff output1 output2 
+
+      *Result*: The system displays any differences:
+
+      .. code-block:: text
+
+        more output/diff_bgp_nxos_nxos-osv-1_ops.txt
+        --- output1/bgp_nxos_nxos-osv-1_ops.txt
+        +++ output2/bgp_nxos_nxos-osv-1_ops.txt
+        info:
+        instance:
+        default:
+        vrf:
+            default:
+            neighbor:
+            50.1.1.101:
+            address_family:
+                ipv4 multicast:
+        +         session_state: active
+        -         session_state: idle
+                ipv4 unicast:
+        +         session_state: active
+        -         session_state: idle
+    
+
+
+Changes over time
+^^^^^^^^^^^^^^^^^
+In this example, you can see how to 
+
+
+.. tip :: You can also :ref:`parse the output <parse-output>` at two different points in time and then use ``diff`` to compare the output.
+
+
 
 See also...
 *a list of relevant links*
-|
-* link 1
-* link 2
-* link 3
+ 
+ * Master workshop: https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/workshop.md
+ * More ``Diff`` examples: https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_diff.html#genie-diff
+ * link 3
 
 
 

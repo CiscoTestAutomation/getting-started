@@ -1,0 +1,1 @@
+The |library| Diff library enables you to compare "snapshots" of your network and quickly see what's changed. When you specify two Python dictionaries or objects, the system compares all of the keys in the key-value pairs and identifies differences. You can exclude any keys that you don't want to compare.
