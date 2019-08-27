@@ -31,7 +31,7 @@ The following sections explain both options.
 
 Edit a YAML file directly
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The YAML file must follow the |pyATS| `topology schema <https://developer.cisco.com/docs/pyats/api/>`_. The schema provides for a complete and thorough description of your testbed, including custom key-value pairs. 
+The YAML file must follow the |pyATS| `topology schema <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#topology-schema>`_. The schema provides for a complete and thorough description of your testbed, including custom key-value pairs. 
 
 .. tip:: Only the ``devices`` block is actually required, so it's easy to get started with a simple example.
 
