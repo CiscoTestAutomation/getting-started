@@ -108,7 +108,7 @@ Follow these guidelines to create a valid YAML file:
 
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
- (pyats) $ |geniecmd| create testbed my_devices.xls --output yaml/my_testbed.yaml
+ (pyats) $ genie create testbed my_devices.xls --output yaml/my_testbed.yaml
 
 where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
 
