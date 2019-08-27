@@ -45,17 +45,17 @@ What is the |library| CLI?
 
 When you want to use the CLI, you simply type::
 
- (pyats) $ |geniecmd| <command> [options]
+ (pyats) $ genie <command> [options]
 
 For example, to get the operational state of a :term:`feature` on a device, run the command::
 
- (pyats) $ |geniecmd| learn ospf --testbed-file testbed.yaml
+ (pyats) $ genie learn ospf --testbed-file testbed.yaml
 
 where ``ospf`` is the feature, and ``testbed.yaml`` is the :term:`testbed YAML file` that contains information about your network devices.
 
 To see a complete list of the CLI built-in functions, after you :ref:`configure-environment` and :ref:`install pyATS and the pyATS library <install-pyats>`, run the command::
 
- (pyats) $ |geniecmd| --help
+ (pyats) $ genie --help
 
 When to use the |library|
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
