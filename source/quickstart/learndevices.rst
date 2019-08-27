@@ -45,7 +45,7 @@ To learn one feature on a single device, you can use the device hostname or the 
 
     * If you want to use the CLI::
 
-      (pyats) $ |geniecmd| learn ospf --testbed-file mock.yaml --devices uut --output output_folder
+      (pyats) $ genie learn ospf --testbed-file mock.yaml --devices uut --output output_folder
 
       *Result*: The system connects to the device, runs the show commands, stores the output in JSON format in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
         
