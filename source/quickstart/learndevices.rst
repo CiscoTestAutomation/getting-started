@@ -86,7 +86,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable ``learnt`` and displays the output::
+    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable ``learnt`` and displays the output::
 
        (pyats) $ genie shell --testbed-file mock.yaml
           >>> learnt = {}
@@ -101,7 +101,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
 
     * If you want to use the CLI::
 
-       (pyats) $ |geniecmd| learn bgp ospf --testbed-file mock.yaml --output output_folder
+       (pyats) $ genie learn bgp ospf --testbed-file mock.yaml --output output_folder
 
       *Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
@@ -153,7 +153,7 @@ Learn all features on one device
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable ``output``::
 
        (pyats) $ genie shell --testbed-file mock.yaml
           >>> dev = testbed.devices['uut']
@@ -164,7 +164,7 @@ Learn all features on one device
 
     * If you want to use the CLI::
 
-      (pyats) $ |geniecmd| learn all --testbed-file mock.yaml --devices uut --output output_folder
+      (pyats) $ genie learn all --testbed-file mock.yaml --devices uut --output output_folder
 
       *Result*: The system saves all of the console and structured output files in JSON format to the specified directory and displays a summary of the results, as shown in the following example. 
 
