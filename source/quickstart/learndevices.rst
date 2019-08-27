@@ -34,7 +34,7 @@ To learn one feature on a single device, you can use the device hostname or the 
 
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``::
 
        (pyats) $ genie shell --testbed-file mock.yaml
           >>> dev = testbed.devices['uut']
