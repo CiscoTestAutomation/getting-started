@@ -31,7 +31,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
 #. With your devices already configured and running (see :ref:`configure a feature <config-feature>`), take a snapshot of the ``bgp`` feature and save it to the directory (or variable) ``output1``. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
+    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
 
        (pyats) $ genie shell --testbed-file tb.yaml
           >>> output1 = {}
@@ -45,7 +45,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
     * If you want to use the CLI::
 
-       (pyats) $ |geniecmd| learn "bgp" --testbed-file tb.yaml --output output1
+       (pyats) $ genie learn "bgp" --testbed-file tb.yaml --output output1
 
       *Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
