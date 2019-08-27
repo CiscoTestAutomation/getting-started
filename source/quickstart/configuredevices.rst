@@ -2,7 +2,7 @@
 
 Configure devices
 =====================
-This section describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.
+This section describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.  You take care of the *what* --- the |library| takes care of the *how*!
 
 .. include:: ../definitions/def_conf.rst
 
@@ -14,7 +14,7 @@ How you use the |library| to configure a device
 ------------------------------------------------
 Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. 
 
-You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device. You take care of the *what* and let the |library| take care of the *how*.
+You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device.
 
 To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
@@ -93,7 +93,7 @@ Configure one attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^
 If you want to change the configuration of a device, or if you want to partially configure a device, you can tell the |library| which attributes to apply.
 
-By default, the |library| applies the configuration from step 6. To limit the configuration to a single attribute, you can specify the attribute in an argument::
+By default, the |library| applies the configuration from step 6 of the previous example. To limit the configuration to a single attribute, you can specify the attribute in an argument::
 
  >>> nxos_interface.build_config(apply=False, attributes={'ipv4':None})
 
