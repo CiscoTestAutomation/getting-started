@@ -2,29 +2,71 @@
 
 Compare network states
 ======================
-*Describe the purpose and objectives of this section.*
+.. include:: ../definitions/def_feature.rst 
 
-Important concepts
--------------------
-Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are.
+This section describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
-<Concept 1>
-^^^^^^^^^^^
-*(Each concept can be linked to and reused elsewhere.)*
+.. _cli-learn:
 
-<Concept 2>
-^^^^^^^^^^^
- 
-<Concept n...>
-^^^^^^^^^^^^^^
+How the |library| "learns" a feature
+-------------------------------------
+.. include:: ../definitions/def_ops.rst
 
-Comparison process
-------------------
-*(This content can be re-used elsewhere.) This section describes the process of taking a snapshot, making a network config change, and then comparing (diff) the output.*
+The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare-network-states`.
 
-Example comparison
--------------------
-*(This content can be re-used elsewhere.)*
+.. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
+
+To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
+
+Examples of how to learn device features
+----------------------------------------
+This section describes how you can tell the system to learn one or more features.
+
+.. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
+
+Learn a single feature
+^^^^^^^^^^^^^^^^^^^^^^
+To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
+
+#. In your virtual environment, change to the directory that contains the mock YAML file::
+
+    (pyats) $ cd mock
+
+#. You can use a Python interpreter or the :term:`library command line`.
+
+    * If you want to use Python, you can use ``|geniecmd| shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+
+       (pyats) $ genie shell --testbed-file mock.yaml
+          >>> dev = testbed.devices['uut']
+          >>> dev.connect()
+          >>> output = dev.learn('ospf')
+
+      *Result*: The system displays a summary of the parsed ``show`` commands that ran. |br| |br| 
+
+    * If you want to use the CLI::
+
+      (pyats) $ |geniecmd| learn ospf --testbed-file mock.yaml --devices uut --output output_folder
+
+      *Result*: The system connects to the device, runs the show commands, stores the output in JSON format in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
+        
+          * Connection log
+          * Structured JSON output
+          * Device console output |br| |br| 
+
+          .. code-block:: text
+
+                +==============================================================================+
+                | Genie Learn Summary for device nx-osv-1                                      |
+                +==============================================================================+
+                |  Connected to nx-osv-1                                                       |
+                |  -   Log: output_folder/connection_uut.txt                                   |
+                |------------------------------------------------------------------------------|
+                |  Learnt feature 'ospf'                                                       |
+                |  -  Ops structure:  output_folder/ospf_nxos_nx-osv-1_ops.txt                 |
+                |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
+                |==============================================================================|    
+
+      To see the structured data, use a text editor to open the file ``output_folder/ospf_nxos_nx-osv-1_ops.txt``.
 
 See also...
 *a list of relevant links*

@@ -12,6 +12,7 @@ that you can try yourself.
     parseoutput
     learndevices
     configuredevices
+    comparebeforeafter
 
 
 
