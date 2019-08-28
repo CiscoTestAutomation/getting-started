@@ -20,7 +20,7 @@ Internal Cisco users
 
 *Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
-  (pyats) $ pip list | egrep 'ats|library'
+  (pyats) $ pip list | egrep 'ats|genie'
 
 *Result*: The system displays a list of the packages and the installed versions.
 
@@ -38,7 +38,7 @@ DevNet community users
 
 *Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
 
-  (pyats) $ pip list | egrep 'pyats|library'
+  (pyats) $ pip list | egrep 'pyats|genie'
 
 *Result*: The system displays a list of the packages and the installed versions.
 

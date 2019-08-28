@@ -43,7 +43,7 @@ The process that you follow depends on whether you are an internal, external, or
          #. Verify the installation:
 
             * ``$ pip list | grep pyats``
-            * ``$ pip list | grep library`` |br| |br| 
+            * ``$ pip list | grep genie`` |br| |br| 
 
          #. :ref:`clone-git-examples`.
          #. Run the example: ``$ pyats run job examples/basic/basic_example_job.py``

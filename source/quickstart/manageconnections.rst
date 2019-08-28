@@ -122,7 +122,7 @@ Other ways to create the YAML file
 
    *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option hides the password in the resulting YAML file. |br| |br|
 
- * If you have a JSON dictionary that contains the device data, you can convert it directly into a testbed object::
+ * If you have a Python dictionary that contains the device data, you can convert it directly into a testbed object::
 
     How?
 

@@ -80,7 +80,7 @@ Network connectivity
 Your host platform must have internet access when you want to:
 
  * Install or upgrade |pyATS| (https://pypi.org) or use the Docker image (https://hub.docker.com).
- * Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the :question:`packages (to be decided 2019/08/19 about the terminology)`.
+ * Access the |pyATS| and |library| GitHub repository at https://github.com/CiscoTestAutomation, to use, develop, or contribute to the packages.
 
 For test automation or command execution, you only need device connectivity. You can use Telnet, SSH, REST, RESTCONF, NETCONF, and YANG.
 

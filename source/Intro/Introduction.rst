@@ -101,7 +101,7 @@ How does the |pyATS| ecosystem work?
 |pyATSbold| provides a framework that standardizes:
 
 * How network topologies are defined and modeled
-* How to programmatically interact with devices (by means of connection :question:`libraries`)
+* How to programmatically interact with devices (by means of connection libraries)
 * How test scripts are defined and executed
 * How test runs are performed and how reports are generated
 
