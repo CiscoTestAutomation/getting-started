@@ -51,7 +51,7 @@ The ``devices`` block contains a description of each network device, and must in
     "``port``", "Connection port"
  
 
-The following example shows a YAML file with two devices defined :question:`Should we show SSH instead of telnet, and would that require more credentials in the credentials block? Do we need to show/explain the "enable" block here?` ::
+The following example shows a YAML file with two devices defined::
 
  devices:
   nx-osv-1:
@@ -66,7 +66,7 @@ The following example shows a YAML file with two devices defined :question:`Shou
           defaults:
             class: 'unicon.Unicon'
           cli:
-              protocol: telnet
+              protocol: ssh
               ip: "172.25.192.90"
               port: 17010
 
@@ -82,7 +82,7 @@ The following example shows a YAML file with two devices defined :question:`Shou
           defaults:
             class: 'unicon.Unicon'
           cli:
-              protocol: telnet
+              protocol: ssh
               ip: "172.25.192.90"
               port: 17008
 
@@ -114,19 +114,15 @@ where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`
 
 .. tip:: To hide the password in the YAML file as a secret string, add the ``--encode-password`` option when you run the command.
 
-Other ways to create the YAML file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Other ways to create the testbed
+---------------------------------
  * You can enter the device data manually, without having to first create a YAML or Excel/CSV file::
 
     (pyats) $ genie create testbed --output yaml/my_testbed.yaml --encode-password
 
    *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option hides the password in the resulting YAML file. |br| |br|
 
- * If you have a Python dictionary that contains the device data, you can convert it directly into a testbed object::
-
-    How?
-
-   *Result*: :question:`???`
+ * If you have data in the form of a Python dictionary, you can create a testbed from that dictionary. For example, if you receive JSON-formatted data, you can convert that to a Python dictionary and then load the dictionary. For details about how to do this, see `Create a testbed from a dictionary <http://wwwin-pyats.cisco.com/cisco-shared/genie/latest/cookbooks/genie.html#create-a-testbed-from-a-dictionary>`_.
 
 .. _connect-to-device:
 
