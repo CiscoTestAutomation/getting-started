@@ -2,22 +2,33 @@ Run a test case
 ======================
 *Describe the purpose and objectives of this section.*
 
-Important concepts
--------------------
+What is a |library| test case?
+--------------------------------
 Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are, but they should include |genieprfx| harness, jobs, datafiles, triggers, and verifications.
 
-<Concept 1>
-^^^^^^^^^^^
-*(Each concept can be linked to and reused elsewhere.)*
+Class
+^^^^^^^^^^^^^
 
-<Concept 2>
+Function
+^^^^^^^^^^
+Point to Felipe's doc
+
+Trigger
+^^^^^^^^^
+
+
+
+Verification
 ^^^^^^^^^^^
 
-<Concept n...>
-^^^^^^^^^^^^^^
+What is a test script?
+-----------------------
+
+Example of a test case
+------------------------
 
 Set up your system
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 #. Connect to your devices
 #. Configure your devices
@@ -26,14 +37,14 @@ Set up your system
 
 
 Execute triggers and verifications
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Step one
 #. Step two
 #. Step n
 
-Perform a common cleanup (wording?)
------------------------------------
+Run a common cleanup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Step one
 #. Step two
@@ -43,9 +54,9 @@ Perform a common cleanup (wording?)
 See also...
 *a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+ * More information about functions: https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices
+ * link 2
+ * link 3
 
 
 

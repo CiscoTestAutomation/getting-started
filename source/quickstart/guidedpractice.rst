@@ -13,6 +13,7 @@ that you can try yourself.
     learndevices
     configuredevices
     comparebeforeafter
+    runtestcase
 
 
 
