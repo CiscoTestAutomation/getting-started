@@ -134,7 +134,7 @@ You can apply configuration settings to all the devices in your testbed, rather 
 
    At this point, we provide examples because you cannot run the ``testbed.build_config`` command on the mock data. This example shows two devices, each with its own interface.
 
-   .. tip:: Remember that you will need to refer to the feature `model <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page to know which attributes (keys) you can configure.
+   .. tip:: Refer to the feature `model <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page to see which attributes (keys) you can configure.
 
    .. code-block::
 
