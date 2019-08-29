@@ -45,7 +45,7 @@ This topic describes the key concepts that you need to understand before you beg
     The |library| command line interface (CLI) is a powerful, Linux-based command-line utility that gives you |library| Python functionality directly from a Linux terminal (or emulator). The CLI is easy to use, even if you don't know anything about Python or programming.
 
    Trigger
-    A trigger is an action or sequence of actions performed on a device, which changes the device state or configuration. 
+    .. include:: ../definitions/def_trigger.rst
 
    Verification
     A verification is the execution of a show command to retrieve the current state of one or more devices. A verification typically runs before and after an action (trigger) to compare the previous and current device states.
