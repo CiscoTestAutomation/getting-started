@@ -1,9 +1,9 @@
 Run a test case
 ======================
-This topic 
+This topic describes how you can use the |library| to build and run test cases and, ultimately, use the test cases for automated network testing.
 
-Automated testing with the |library|
--------------------------------------
+Automated testing process
+---------------------------
 Perhaps a diagram of the testing process? (if time permits) - maybe log this as a user story for the future, with a priority 2 - see https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html
 
 connect to all the devices

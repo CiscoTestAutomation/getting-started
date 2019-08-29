@@ -57,7 +57,7 @@ This topic describes the key concepts that you need to understand before you beg
     .. include:: ../definitions/def_parser.rst 
 
    Harness
-    The |library| Harness module controls the flow of your network automation and testing, based on user-provided :term:`arguments` (input). For example, you can input the sequence of setup, triggers, verifications, and tear-down (cleanup) that you want to execute.
+    .. include:: ../definitions/def_harness.rst
 
 
    Devices
@@ -70,7 +70,7 @@ This topic describes the key concepts that you need to understand before you beg
     .. include:: ../definitions/def_conf.rst
 
    Diff 
-    .. include:: ../definitions/def-diff.rst
+    .. include:: ../definitions/def_diff.rst
 
    Robot Framework
     Robot Framework is a generic Python test automation framework that focuses on acceptance test automation using English-like, easy-to-use keywords to define test cases.
