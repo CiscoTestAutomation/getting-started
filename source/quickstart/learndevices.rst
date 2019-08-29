@@ -4,7 +4,7 @@ Learn device features
 =====================
 .. include:: ../definitions/def_feature.rst 
 
-This section describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
+This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
 .. _cli-learn:
 
@@ -20,7 +20,7 @@ To see a complete list of the features that the |library| can learn, and to see 
 
 Examples of how to learn device features
 ----------------------------------------
-This section describes how you can tell the system to learn one or more features.
+This topic describes how you can tell the system to learn one or more features.
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 

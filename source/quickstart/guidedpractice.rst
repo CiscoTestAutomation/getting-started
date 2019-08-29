@@ -2,7 +2,7 @@
 
 Guided practice 
 =============================
-This section provides some basic examples of network automation with the |library| 
+This topic provides some basic examples of network automation with the |library| 
 that you can try yourself.
 
 .. toctree::

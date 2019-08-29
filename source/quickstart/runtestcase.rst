@@ -1,10 +1,52 @@
 Run a test case
 ======================
-*Describe the purpose and objectives of this section.*
+This topic 
 
-What is a |library| test case?
---------------------------------
+Automated testing with the |library|
+-------------------------------------
+Perhaps a diagram of the testing process? (if time permits) - maybe log this as a user story for the future, with a priority 2 - see https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html
+
+connect to all the devices
+configure the devices
+Verify the configuration was applied correctly
+snapshot of the configuration and compared at the end of the run
+snapshot of the operation state of your devices to be compared at the end of the run
+pool of available tests (triggers and verifications, over 500) which works across multiple Operating systems
+connections pool - Learn and send commands to the device in parallel
+traffic Generator
+much more
+
+The flow of Genie Harness is divided into 3 main sections.
+
+Common Setup
+Get the devices ready and collect some information:
+
+Connect to your devices
+Configure your device (optional)
+Setup Traffic Generator if needed
+Take a snapshot of the system
+Triggers and Verifications
+Execute triggers and verification to perform tests on your devices.
+
+Common Cleanup
+Make sure the state of the devices are the same as in common Setup
+
+a. Take a new snapshot and compare with the original snapshots from Common Setup b. Stop traffic
+
+This is the typical Harness flow, however, everything can be customized
+
+HTML log viewer!!!
+
+What is a test case?
+--------------------
 Describe the key |library| and generic concepts that the user needs to understand before they begin to perform these tasks. We'll need to define what these are, but they should include |genieprfx| harness, jobs, datafiles, triggers, and verifications.
+
+Structure of a test case
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reusable triggers (classes)
+Then tell the system the order to run the triggers and what data to pass
+APIs define the functions (steps) within each action
 
 Trigger
 ^^^^^^^^^^^^^
@@ -18,6 +60,13 @@ Point to Felipe's doc
 
 Datafile
 """"""""
+The YAML datafiles control the flow of test execution. - testbed
+mapping (optional) - to connect to more devices than uut
+verification (optional) - there is a default
+trigger (optional) - there is a default
+subsection
+configuration
+pts (profile the system)
 
 Job file
 """""""""

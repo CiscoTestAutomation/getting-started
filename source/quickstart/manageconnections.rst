@@ -2,7 +2,7 @@
 
 Manage device connections
 =============================
-This section describes how to connect to network devices using the |librarybold|. It also gives you a quick example to try using mocked devices.
+This topic describes how to connect to network devices using the |librarybold|. It also gives you a quick example to try using mocked devices.
 
 .. _how-library-connects:
 

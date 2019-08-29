@@ -1,6 +1,6 @@
 Real-world examples
 ======================
-*Describe the purpose and objectives of this section. This should contain a number of step-by-step worked examples of common tasks, along with clear statements of the results and each step, and a statement of the overall result. We could split each example into its own file, if they get too big.*
+*Describe the purpose and objectives of This topic. This should contain a number of step-by-step worked examples of common tasks, along with clear statements of the results and each step, and a statement of the overall result. We could split each example into its own file, if they get too big.*
 
 <Example 1>
 ^^^^^^^^^^^

@@ -2,7 +2,7 @@
 
 Keep |pyATS| up to date
 ========================
-On the last Tuesday of the month, the team releases a new version of |pyATS| and the |library|. This section describes how to get the latest changes.
+On the last Tuesday of the month, the team releases a new version of |pyATS| and the |library|. This topic describes how to get the latest changes.
 
 .. qs-upgrade::
 

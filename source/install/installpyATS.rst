@@ -77,7 +77,7 @@ The process that you follow depends on whether you are an internal, external, or
 
 Install |pyATS| with pip
 -------------------------
-This section describes how to use the package installer for Python (pip) to install the |pyATS| system in your virtual environment.
+This topic describes how to use the package installer for Python (pip) to install the |pyATS| system in your virtual environment.
 
 .. note:: Cisco users should refer to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions.
 

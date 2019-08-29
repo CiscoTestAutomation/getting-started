@@ -2,7 +2,7 @@
 
 Parse device output
 ====================
-This section describes the benefits of using parsed output for network automation, and provides an example of how a :term:`parser` works.
+This topic describes the benefits of using parsed output for network automation, and provides an example of how a :term:`parser` works.
 
 .. _parsed-output-benefits:
 

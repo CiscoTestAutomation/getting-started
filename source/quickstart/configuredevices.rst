@@ -2,7 +2,7 @@
 
 Configure devices
 =====================
-This section describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.  You take care of the *what* --- the |library| takes care of the *how*!
+This topic describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.  You take care of the *what* --- the |library| takes care of the *how*!
 
 .. include:: ../definitions/def_conf.rst
 
@@ -20,7 +20,7 @@ To see a complete list of the structure and keys, visit the `Models <https://pub
 
 Examples of how to configure devices
 ----------------------------------------
-This section describes how to use the Python interpreter or a Python script to use the ``Conf`` module functionality. Because you use it primarily for automated test scripts, we have not provided a command line option.
+This topic describes how to use the Python interpreter or a Python script to use the ``Conf`` module functionality. Because you use it primarily for automated test scripts, we have not provided a command line option.
 
 The process to configure devices is simple:
 

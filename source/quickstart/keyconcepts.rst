@@ -3,7 +3,7 @@
 Important concepts
 =============================
 
-This section describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
+This topic describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
 
 .. glossary::
    :sorted:
