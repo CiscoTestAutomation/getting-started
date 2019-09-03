@@ -1,8 +1,8 @@
 Run a test case
 ======================
-This topic describes how you can use the |library| to build and run test cases and use them for automated network testing. You don't need to know Python --- you can use the :term:`library command line` ``genie run`` functionality from your Linux terminal.
+This topic describes how you can use the |librarybold| to build and run test cases and use them for automated network testing. 
 
-Simply stated, you tell the system the test cases to run, the order to execute them, and the data to pass to the system at runtime.
+You don't need to know Python --- you can use the ``genie run`` functionality from your Linux terminal. Simply stated, you tell the system the test cases to run, the order to execute them, and the data to pass to the system at runtime.
 
 .. _auto-testing-process:
 
@@ -10,7 +10,7 @@ Automated testing process
 ---------------------------
 The |library| provides the building blocks that make it easy for you to automate your network testing. Simply:
 
- * Select from a pool of pre-written test cases.
+ * Select from a pool of pre-written test cases (:ref:`triggers <triggers>`).
  * Tell the system to run them in a specific order, and the data to use for each case. 
  * You can also specify any pre- and post-processing that you want to apply.
 
@@ -33,6 +33,8 @@ Advantages of a modular strategy
  * The automated testing process is *data-driven* --- you don't have to re-write tests, just modify the datafiles.
  * You can choose from a few hundred |library| `open-source functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ to define your test case actions and steps. 
 
+.. _trigers:
+
 Triggers
 ---------
 
@@ -41,11 +43,11 @@ What is a trigger?
 
 .. include:: ../definitions/def_trigger.rst  
 
-You can think of a trigger as equivalent to a |pyATS| *test case*. The |library| provides you with `a pool of triggers for the most common actions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/triggers>`_, already written and available to use out-of-the-box. Select a trigger name from the list to see a description.
+You can think of a trigger as equivalent to a |pyATS| *test case*. The |library| provides you with `a pool of triggers for the most common actions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/triggers>`_, already written and available to use out-of-the-box. Select a trigger name from the `list <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/triggers>`_ to see a description.
 
 Structure of a trigger
 ^^^^^^^^^^^^^^^^^^^^^^^
-If you know or want to learn a bit of Python, you can customize a trigger to meet your requirements. A trigger is a Python :monospace:`(*.py)` file that has a standard structure, as shown in the following example.
+Remember that you can use ``genie run`` with the |library| pool of triggers and verifications. But if you know or want to learn a bit of Python, you can customize a trigger to meet your requirements. A trigger is a Python :monospace:`(*.py)` file that has a standard structure, as shown in the following example.
 
 .. code-block:: python
 
@@ -80,7 +82,7 @@ What is a verification?
 
 How do verifications work?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-By taking an initial snapshot (a parsed show command), and then taking the same snapshot after each trigger runs, the system can compare the snapshots to ensure that the triggers have not caused any unexpected changes to your network configuration or operational state. 
+By taking an initial snapshot (a parsed show command), and then taking the same snapshot after each trigger runs, the system can compare the snapshots to ensure that here are no unexpected changes to your network configuration or operational state. 
 
 .. _datafiles:
 
@@ -90,7 +92,7 @@ The `YAML <https://yaml.org>`_ datafiles control the flow of test execution. Thi
 
 Trigger datafile
 ^^^^^^^^^^^^^^^^
-A trigger datafile is a `YAML <https://yaml.org>`_ file that specifies the following minimum information:
+A trigger datafile is a `YAML <https://yaml.org>`_ file that tells the |library| which test cases to run and where they are:
 
  * Trigger name
  * Trigger source --- the path and *class* (trigger)
@@ -99,7 +101,7 @@ A trigger datafile is a `YAML <https://yaml.org>`_ file that specifies the follo
 
 Each trigger description tells you the mandatory and optional fields of its associated datafile.
 
-.. tip:: If you use the standard |library| triggers, you don't have to provide a trigger datafile. The system will use the default datafile stored in your virtual environment at ``/genie_yamls/<uut_os>/trigger_datafile_<uut_os>.yaml``. The default trigger datafile specifies the device 'uut', which you define in your :term:`testbed yaml file`.
+.. tip:: If you use the standard |library| triggers, you don't have to provide a trigger datafile. The system uses the default datafile stored in your virtual environment at ``/genie_yamls/<uut_os>/trigger_datafile_<uut_os>.yaml``. The default trigger datafile specifies the device 'uut', which you define in your :term:`testbed yaml file`.
 
 For more details, see the `complete trigger datafile schema <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/harness/user/datafile.html#trigger-datafile>`_.
 
@@ -110,27 +112,30 @@ Similar to a  trigger datafile, a verification datafile specifies the following 
  * Verification name
  * Verification source --- the path and *class* (trigger)
  * Devices on which to run the test (use the ``-- device`` argument to specify devices other than 'uut')
- * Any parameters (input) to pass as arguments to the trigger functions
+ * Any parameters (input) to pass as arguments to the verification functions
+
+For more details, see the `complete verification datafile schema <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/harness/user/datafile.html?highlight=datafile%20schema#verification-datafile>`_.
 
 .. _job-file:
 
 Job file
 --------------
-A job file defines the information that the system requires to create and run a dynamic test script:   
+A job file defines how the system creates and runs a dynamic test script:   
 
  * |library| functionality to import
  * gRun command
- * Trigger UIDs to indicate which trigger classes to execute
- * Verification UIDs to indicate which verifications to execute
+ * Trigger UUIDs to indicate which trigger classes to execute
+ * Verification UUIDs to indicate which verifications to execute
 
 .. tip:: For a more detailed example and to see an actual job file, go to https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_triggers.
 
 How to run a test case
 --------------------------
-You can run the following example using the :download:`mock device <mock.zip>`.
+The following examples show you how to run a single test case and a test script that includes multiple test cases.
 
-Run a test case using the command line
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Use the command line to run a single test case
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can run the following example using the :download:`mock device <mock.zip>`.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
@@ -144,7 +149,7 @@ Run a test case using the command line
 
    .. tip:: 
       
-      * The argument ``--html-logs .`` creates the :monospace:`TaskLog.html` file. This is a user-friendly file that you can easily read in a web browser. It organizes the data so that you can drill down for more details as needed.
+      * The argument ``--html-logs .`` creates the :monospace:`TaskLog.html` file. This is a user-friendly file that you can easily read in a web browser. It organizes the data so that you can drill down for more details.
       * If you're a DevNet user and you want to receive an email with the results, add the argument ``--mailto <address>``.
 
    The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the verification ran before and after the trigger.
@@ -152,15 +157,38 @@ Run a test case using the command line
    .. image:: ../images/tasklog_example.png
       
 
-Run a test case using Python
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Use a job file to run a test script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When you use a job file to run multiple test cases, you are using an automated *test script*.
 
+This example shows you how to specify a job file that defines multiple triggers and verifications. For this example, you'll need to :ref:`clone or download the GitHub examples <clone-git-examples>`. We'll use the ``harness_triggers`` example and the mock data provided. 
+
+.. note:: This example shows you how to use a job file, but you can also run multiple test cases using ``genie run``.
+
+#. In your virtual environment, change to the directory that contains the example::
+
+    (pyats) $ cd examples/libraries/harness_triggers
+
+#. Run the following command::
+
+    (pyats) $ pyats run job demo2_harness_triggers_job.py --testbed-file cisco_live.yaml --replay mock_device --html-logs .
+      
+   *Result*: The system displays the test results on-screen and creates an HTML log file named :monospace:`TaskLog.html` in the current directory.
+
+   .. tip:: 
+      
+      * The argument ``--html-logs .`` creates the :monospace:`TaskLog.html` file. This is a user-friendly file that you can easily read in a web browser. It organizes the data so that you can drill down for more details.
+      * If you're a DevNet user and you want to receive an email with the results, add the argument ``--mailto <address>``.
+
+   The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the system ran the verifications once after the common setup and again after each trigger.
+
+   .. image:: ../images/tasklog_example2.png
 
 See also...
 
- * More information about functions: https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices
- * Detailed description of the ``Harness`` module: https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html
- * link 3
+ * `More information about functions <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
+ * `Detailed description of the Harness module <https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html>`_
+ * `Examples of the Harness <https://github.com/CiscoTestAutomation/examples/tree/master/libraries>`_
 
 
 
