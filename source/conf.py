@@ -83,8 +83,11 @@ rst_prolog = """
 
     <style>
     .question {background-color: yellow; font-weight:bold; padding: .25em;}
+    .monospace {font-family: monospace; color: #404040; font-size: 14px;}
+    .border {border: 1px #404040;}
     </style>
 
 .. role:: question
-
+.. role:: monospace
+.. role::  border
 """

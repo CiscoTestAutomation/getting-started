@@ -48,7 +48,7 @@ This topic describes the key concepts that you need to understand before you beg
     .. include:: ../definitions/def_trigger.rst
 
    Verification
-    A verification is the execution of a show command to retrieve the current state of one or more devices. A verification typically runs before and after an action (trigger) to compare the previous and current device states.
+    .. include:: ../definitions/def_verification.rst
 
    Show command
     The term *show command* refers to a type of Linux command that you use to get information about a networking device, such as a router or switch. For example, ``show version`` returns information about the OS version of a device.
