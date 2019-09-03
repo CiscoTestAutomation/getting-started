@@ -83,6 +83,55 @@ In the section :ref:`manage-connections`, you learned :ref:`how the system conne
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
+Parse output using the :ref:`library command line`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can use the :term:`library command line` ``Parse`` functionality to parse the output from a specified ``show`` command. Check the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for a list of available parsers that you can use.
+
+#. In your virtual environment, change to the directory that contains the mock YAML file::
+
+    (pyats) $ cd mock
+
+#. Run the parser::
+
+    (pyats) $ genie parse "show version" --testbed-file mock.yaml --devices uut
+
+   *Result*: The system returns the version information as a series of key-value pairs:
+
+   .. code-block:: text
+
+    {
+        "platform": {
+            "hardware": {
+            "bootflash": "3184776 kB",
+            "chassis": "NX-OSv",
+            "cpu": "QEMU Virtual CPU version 2.5",
+            "device_name": "nx-osv-1",
+            "memory": "3064740 kB",
+            "model": "NX-OSv",
+            "processor_board_id": "TM00010000B",
+            "rp": "NX-OSv Supervisor Module",
+            "slots": "None"
+            },
+            "kernel_uptime": {
+            "days": 6,
+            "hours": 1,
+            "minutes": 12,
+            "seconds": 30
+            },
+            "name": "Nexus",
+            "os": "NX-OS",
+            "software": {
+            "kickstart_compile_time": "1/11/2016 16:00:00 [02/11/2016 10:30:12]",
+            "kickstart_image_file": "bootflash:///titanium-d1-kickstart.7.3.0.D1.1.bin",
+            "kickstart_version": "7.3(0)D1(1)",
+            "system_compile_time": "1/11/2016 16:00:00 [02/11/2016 13:08:11]",
+            "system_image_file": "bootflash:///titanium-d1.7.3.0.D1.1.bin",
+            "system_version": "7.3(0)D1(1)"
+            }
+        }
+        }
+
+
 Parse output in the Python interpreter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
