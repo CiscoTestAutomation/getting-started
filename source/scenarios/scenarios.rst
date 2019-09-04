@@ -6,19 +6,19 @@ Examples
 -------------------
 We provide |pyATS| and |library| examples and mock device data on GitHub at https://github.com/CiscoTestAutomation/examples. To try these examples yourself:
 
- * :ref:`Install pyATS and the pyATS Library <install-pyats>`. 
- * :ref:`clone-git-examples`.
+ #. :ref:`Install pyATS and the pyATS Library <install-pyats>`. 
+ #. :ref:`clone-git-examples`.
 
-* You can find the |library| examples here: https://github.com/CiscoTestAutomation/examples/tree/master/libraries. Each example has a *readme* file that explains its purpose and requirements. 
+You can find the |library| examples here: https://github.com/CiscoTestAutomation/examples/tree/master/libraries. Each example has a *readme* file that explains its purpose and requirements. 
 
-* You can also find examples described in the topic `Genie Solutions <https://pubhub.devnetcloud.com/media/genie-docs/docs/solutions/index.html#genie-solutions>`_.
+You can also find examples described in the topic `Genie Solutions <https://pubhub.devnetcloud.com/media/genie-docs/docs/solutions/index.html#genie-solutions>`_.
 
 
 Workshops
 ---------
-* For a detailed example that includes automation, see the workshop `DevNet-2595: Stateful Network Validation using pyATS+Genie and Robot Framework <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_.
+For a detailed example that includes automation, see the workshop `DevNet-2595: Stateful Network Validation using pyATS+Genie and Robot Framework <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_.
 
-* See the master workshop from Cisco Live US 2019 here: https://github.com/CiscoTestAutomation/CL-DEVWKS-2808. This workshop steps you through a typical |library| workflow.
+See the master workshop from Cisco Live US 2019 here: https://github.com/CiscoTestAutomation/CL-DEVWKS-2808. This workshop steps you through a typical |library| workflow.
 
 Learning labs
 -------------
