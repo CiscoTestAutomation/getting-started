@@ -8,6 +8,7 @@ that you can try yourself.
 .. toctree::
     :maxdepth: 1
 
+    structureofastatement
     manageconnections
     parseoutput
     learndevices

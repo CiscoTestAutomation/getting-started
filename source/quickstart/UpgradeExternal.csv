@@ -1,13 +1,13 @@
-Upgrade option,Includes,Command
-Full,"* All |pyATS| and |library| infrastructure
+Upgrade option,Command,Includes
+Full,``$ pip install pyats[full] --upgrade``,"* All |pyATS| and |library| infrastructure
 * |library| network automation packages
-* Optional extras (templates and the Robot Framework plug-in)",``$ pip install pyats[full] --upgrade``
-Standard,"* All |pyATS| and |library| infrastructure
-* |library| network automation packages",``$ pip install pyats[library] --upgrade``
-Core |pyATS|,* ATS infrastructure,``$ pip install pyats --upgrade``
-Robot Framework,"* Optional Robot Framework package
-* ``pyats.robot`` package (contains |pyATS|-specific keywords)",``$ pip install pyats[robot] --upgrade``
-Template command,"* Enables the use of the ``template`` command, which prompts you for input at runtime",``$ pip install pyats[template] --upgrade``
+* Optional extras (templates and the Robot Framework plug-in)"
+Standard,``$ pip install pyats[library] --upgrade``,"* All |pyATS| and |library| infrastructure
+* |library| network automation packages"
+Core |pyATS|,``$ pip install pyats --upgrade``,* ATS infrastructure
+Robot Framework,``$ pip install pyats[robot] --upgrade``,"* Optional Robot Framework package
+* ``pyats.robot`` package (contains |pyATS|-specific keywords)"
+Template command,``$ pip install pyats[template] --upgrade``,"* Enables the use of the ``template`` command, which prompts you for input at runtime"
 "Individual packages
 
-(for three-part patch versions)",* The specified package,``$ pip install <package_name> --upgrade``
+(for three-part patch versions)",``$ pip install <package_name> --upgrade``,* The specified package

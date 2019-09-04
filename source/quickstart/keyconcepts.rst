@@ -1,9 +1,9 @@
 .. _key-concepts:
 
-Important concepts
-=============================
+Glossary
+===========
 
-This topic describes the key concepts that you need to understand before you begin to use |pyATSbold| and the |librarybold|.
+This glossary defines the terminology that we use to describe |pyATSbold| and the |librarybold|.
 
 .. glossary::
    :sorted:
@@ -32,7 +32,7 @@ This topic describes the key concepts that you need to understand before you beg
 
 
    Testbed 
-    In the |pyATS| ecosystem, a testbed represents a set of connected devices. You run your automated network tests on the testbed that you define.
+    In the |pyATS| ecosystem, a testbed represents a set of devices. You run your automated network tests on the testbed that you define.
 
    Testbed YAML file
     With |pyATS| and the |library|, you describe your devices under test (your testbed) in a `YAML <http://www.yaml.org/start.html>`_ file named ``testbed.yaml``. The file describes your physical devices and how they link together to form the testbed network topology.
@@ -51,7 +51,7 @@ This topic describes the key concepts that you need to understand before you beg
     .. include:: ../definitions/def_verification.rst
 
    Show command
-    The term *show command* refers to a type of Linux command that you use to get information about a networking device, such as a router or switch. For example, ``show version`` returns information about the OS version of a device.
+    The term *show command* refers to a type of Cisco IOS command that you use to retrieve device information. For example, ``show version`` returns information about the OS version of a device.
 
    Parser
     .. include:: ../definitions/def_parser.rst 
@@ -93,7 +93,7 @@ This topic describes the key concepts that you need to understand before you beg
     * Package format - where the code is not open source
     * Package names - ``ats`` internally, ``pyats`` externally
     * Source location for installation files
-    * Architecture (32-bit available internally *only*)
+    * Architecture 64-bit (32-bit available internally *only*)
     * Defaults - no Cisco-specific defaults for external release
 
    Mock devices

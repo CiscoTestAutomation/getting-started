@@ -95,16 +95,16 @@ This topic describes how to use the package installer for Python (pip) to instal
 
 #.  Install |pyATS| and the |library|, using the options described in the following table.
 
-      .. csv-table:: Installation options
-        :file: InstallOptions.csv
-        :header-rows: 1
-        :widths: 25 35 40
+    .. csv-table:: Installation options
+      :file: InstallOptions.csv
+      :header-rows: 1
+      :widths: 25 35 40
 
     .. hint:: Give the installer a few minutes to finish.
 
     *Result*: You're ready to start using |pyATS| and the |library|!
 
-    .. note:: If you see warning messages, or the installation fails, first check your :ref:`system requirements <requirements>`, especially your Linux and Python versions. If you need more help, contact us at |br| pyats-support@cisco.com.
+    .. note:: If you see warning messages, or the installation fails, first check your :ref:`system requirements <requirements>`, especially your Linux and Python versions. If you need more help, contact us at |br| pyats-support-ext@cisco.com.
 
 #. To test the installation, from the current (|pyATS|) directory, clone the Git examples repository::
 

@@ -37,38 +37,38 @@ And this is the output after it's parsed into a Python dictionary.
 
     # parsed_output
     # -------------
-    # {'Eth1/1': {'Ethernet Interface': 'Eth1/1',
-    #             'Mode': 'routed',
-    #             'Port': '--',
-    #             'Reason': 'none',
-    #             'Speed': '1000(D)',
-    #             'Status': 'up',
-    #             'Type': 'eth',
-    #             'VLAN': '1'},
-    #  'Eth1/2': {'Ethernet Interface': 'Eth1/2',
-    #             'Mode': 'routed',
-    #             'Port': '--',
-    #             'Reason': 'none',
-    #             'Speed': '1000(D)',
-    #             'Status': 'up',
-    #             'Type': 'eth',
-    #             'VLAN': '--'},
-    #  'Eth1/3': {'Ethernet Interface': 'Eth1/3',
-    #             'Mode': 'routed',
-    #             'Port': '--',
-    #             'Reason': 'none',
-    #             'Speed': '1000(D)',
-    #             'Status': 'up',
-    #             'Type': 'eth',
-    #             'VLAN': '--'}}
+      {'Eth1/1': {'Ethernet Interface': 'Eth1/1',
+                  'Mode': 'routed',
+                  'Port': '--',
+                  'Reason': 'none',
+                  'Speed': '1000(D)',
+                  'Status': 'up',
+                  'Type': 'eth',
+                  'VLAN': '1'},
+       'Eth1/2': {'Ethernet Interface': 'Eth1/2',
+                  'Mode': 'routed',
+                  'Port': '--',
+                  'Reason': 'none',
+                  'Speed': '1000(D)',
+                  'Status': 'up',
+                  'Type': 'eth',
+                  'VLAN': '--'},
+       'Eth1/3': {'Ethernet Interface': 'Eth1/3',
+                  'Mode': 'routed',
+                  'Port': '--',
+                  'Reason': 'none',
+                  'Speed': '1000(D)',
+                  'Status': 'up',
+                  'Type': 'eth',
+                  'VLAN': '--'}}
 
-Although the "before" example is human readable in this case, the output structure is not consistent across devices. 
+Although the "before" example is human readable in this case, the output structure is *not* useful for automation. The "after" example, by contrast, is a useful dictionary that you can easily interact with in your automation script.
 
 Available parsers
 ^^^^^^^^^^^^^^^^^^
 The |library| provides a parser for most of the Cisco-specific ``show`` commands. You can see a complete list on the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
 
-.. tip:: Once you have the parsed, structured data, which is consistent across devices and operating systems, you can:
+.. tip:: Once you have the parsed, structured data, you can:
 
     * Easily search for specific key-value pairs.
     * Verify if the operational state is as expected.
@@ -188,11 +188,11 @@ The following example shows you how to parse output from the ``show inventory`` 
 
 #. Now that you have the parsed output stored as a Python dictionary in the variable ``p1``, you can use the structured data as you wish. For example, you can display a user-friendly message and the serial number for Slot 1:
 
-    >>> print('My serial for slot1 is:' + p1['name']['Slot 1']['serial_number'])
+    >>> print('My serial for slot1 is: ' + p1['name']['Slot 1']['serial_number'])
 
    *Result*: The system prints the message and data on-screen::
 
-    My serial for slot1 is:TM00010000B
+    My serial for slot1 is: TM00010000B
 
 
 

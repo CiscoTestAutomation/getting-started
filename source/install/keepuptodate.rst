@@ -6,12 +6,12 @@ On the last Tuesday of the month, the team releases a new version of |pyATS| and
 
 .. qs-upgrade::
 
-To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the ``pip install --upgrade`` command **from your virtual environment**.
+To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the relevant upgrade command **from your virtual environment**.
 
 Internal Cisco users
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. tip:: Cisco members of the "pyats-notices" mailer list receive a notification about each release. :question:`How does an internal user sign up to the notices?`
+.. tip:: Cisco members of the *pyats-notices* mailer list receive a notification about each release. To subscribe to the notices, go to the `Cisco mailer <https://mailer.cloudapps.cisco.com/itsm/mailer/welcome.do>`_, search for and select **pyats-users**, and then select **Subscribe**. This automatically registers you for both the *pyats-users* and *pyats-notices* lists.
 
 .. csv-table:: Internal Cisco user upgrade options
     :file: ../quickstart/UpgradeInternal.csv

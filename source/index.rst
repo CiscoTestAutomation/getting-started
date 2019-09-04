@@ -12,14 +12,13 @@ The |getstartedguide| introduces you to the features and functionality of the |p
    :caption: Contents:
 
    /intro/Introduction
-   /quickstart/keyconcepts
    /prereqs/Prerequisites
    /configuration/configureEnv
    /install/installpyATS
    /install/keepuptodate
    /quickstart/guidedpractice
    /scenarios/scenarios
-
+   /quickstart/keyconcepts
 
 Indices and tables
 ==================

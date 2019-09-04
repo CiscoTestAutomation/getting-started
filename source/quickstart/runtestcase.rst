@@ -31,7 +31,7 @@ Advantages of a modular strategy
  * You can write test scripts efficiently, using the reusable, plug and play test cases as building blocks.
  * It's easy to customize the standard test cases to meet your requirements.
  * The automated testing process is *data-driven* --- you don't have to re-write tests, just modify the datafiles.
- * You can choose from a few hundred |library| `open-source functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ to define your test case actions and steps. 
+ * You can choose from a few hundred |library| `open-source API functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ to define your test case actions and steps. 
 
 .. _trigers:
 
@@ -64,7 +64,7 @@ Remember that you can use ``genie run`` with the |library| pool of triggers and 
                     steps ('obj'): steps context manager                                
             '''
             with steps.start('Step 1 check if bgp neighbor is shut down') as step:
-                is_expected = uut.api.is_bgp_neighbors_shutdown
+                is_expected = uut.api.is_bgp_neighbors_shutdown(uut, [‘1.1.1.1’], ‘ipv4’)
                 if is_expected:
                     step.passed('Reason this step passed')
                 else:
@@ -126,6 +126,8 @@ A job file defines how the system creates and runs a dynamic test script:
  * gRun command
  * Trigger UUIDs to indicate which trigger classes to execute
  * Verification UUIDs to indicate which verifications to execute
+
+If you use ``genie run``, you don't need a job file.
 
 .. tip:: For a more detailed example and to see an actual job file, go to https://github.com/CiscoTestAutomation/examples/tree/master/libraries/harness_triggers.
 

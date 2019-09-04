@@ -8,7 +8,7 @@ This topic describes how to connect to network devices using the |librarybold|. 
 
 How the |library| connects to devices
 -------------------------------------
-Because the |library| is based on Python, an object-oriented programming language, it uses an :term:`object` to represent your testbed topology, and another object to represent a device. You connect to a device by specifying the device object name.
+Because the |library| is based on Python, an :term:`object`-oriented programming language, it uses objects to represent your testbed topology.
 
 #. Set up a testbed YAML file that contains your device details.
 #. Use the |library| to create the testbed and device objects.
@@ -41,10 +41,10 @@ The ``devices`` block contains a description of each network device, and must in
     :header: "Key", "Description"
     :widths: 25 75
 
-    "``hostname``", "This *must* be the hostname of the device."
+    "``hostname``", "This *must* be the configured hostname of the device."
     "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
-    "``credentials``", "The username, password, and any other credentials required to log in to the device."
+    "``credentials``", "The username, password, and any other credentials required to log in to the device. |br| |br| For details about how passwords are stored, see the topic `Credential Password Modeling <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#credential-password-modeling>`_. "
     "``type``", "Device type"
     "``ip``", "IP address"
     "``protocol``", "Any one of the supported protocols |br| (currently Telnet, SSH, REST, RESTCONF, NETCONF, and YANG)"
@@ -96,6 +96,8 @@ The following example shows an Excel file with the required columns.
 
 .. image:: geniecreate_example_excel.png 
 
+:download:`You can download a sample Excel file here. <SampleTestbedFile.xlsx>`
+
 Follow these guidelines to create a valid YAML file:
 
     * Separate the ``ip`` and ``port`` with either a space or a colon (:).
@@ -105,14 +107,15 @@ Follow these guidelines to create a valid YAML file:
     * Any additional columns that you define, such as ``alias`` or ``type``, are added to the YAML file as key-value pairs.
     * The columns can be in any order, as long as you include the required columns.
 
-
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
  (pyats) $ genie create testbed my_devices.xls --output yaml/my_testbed.yaml
 
 where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
 
-.. tip:: To hide the password in the YAML file as a secret string, add the ``--encode-password`` option when you run the command.
+.. tip:: Add the ``--encode-password`` option to hide the password in the YAML file as a secret string. Note that this only *obfuscates* the password --- it does *not* make the password cryptographically secure. For more information, see the topic `Secret Strings <https://pubhub.devnetcloud.com/media/pyats/docs/utilities/secret_strings.html#secret-strings>`_.
+
+For more details about the ``genie create`` functionality, see the topic `Genie Create Testbed <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_create.html#genie-create-testbed>`_.
 
 Other ways to create the testbed
 ---------------------------------
@@ -120,15 +123,17 @@ Other ways to create the testbed
 
     (pyats) $ genie create testbed --output yaml/my_testbed.yaml --encode-password
 
-   *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option hides the password in the resulting YAML file. |br| |br|
+   *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option obfuscates the password in the resulting YAML file. |br| |br|
 
  * If you have data in the form of a Python dictionary, you can create a testbed from that dictionary. For example, if you receive JSON-formatted data, you can convert that to a Python dictionary and then load the dictionary. For details about how to do this, see `Create a testbed from a dictionary <http://wwwin-pyats.cisco.com/cisco-shared/genie/latest/cookbooks/genie.html#create-a-testbed-from-a-dictionary>`_.
 
 .. _connect-to-device:
 
-Connect to a mock device
+Connect to a device
 ---------------------------
-You don't need a real device to practice using the |library|. This step-by-step example shows you how to connect to a :term:`mock device`. 
+This step-by-step example shows you how to connect to a device. 
+
+.. note:: You can run the commands in the following examples on real devices, if you have them available. If you don't have a real device to practice with, we offer a :term:`mock device` that you can use with most of the |library| examples. 
 
 #. :download:`Download the zip file that contains the mock data and YAML file <mock.zip>`. |br| |br|
 

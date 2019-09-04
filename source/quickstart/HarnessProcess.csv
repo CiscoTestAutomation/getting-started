@@ -1,12 +1,13 @@
 Stage,Name,Description
 1,Common setup,"Prepare devices for testing:
 
- * Connect
- * Configure (optional)
- * Generate traffic (optional)
- * Take a snapshot"
+* Connect
+* Configure (optional)
+* Generate traffic (optional)
+* Take a snapshot of configuration, operational state, or both (optional)"
 2, Triggers and verifications,Perform tests and run show commands on your devices.
 3,Common cleanup,"Check that device states match the original:
 
-* Take a snapshot
+* Take a snapshot of configuration, operational state, or both (optional)
+* Compare snapshots with the common setup snapshots (optional)
 * Stop generated traffic (optional)"
