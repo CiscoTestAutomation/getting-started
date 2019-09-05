@@ -58,7 +58,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
       *Result*: The system creates the output directory ``output1``, stores the ``ops.txt`` device files in JSON format, and displays a summary for each device:
 
-       .. code-block::
+       .. code-block:: text
 
         +==============================================================================+
         | Genie Learn Summary for device nx-osv-1                                      |
@@ -93,7 +93,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
     
     .. note:: ``+`` indicates an addition, ``-`` indicates a deletion, and ``+`` followed by ``-`` indicates a change.
 
-    .. code-block:: text
+    .. code-block:: python
 
         more output/diff_bgp_nxos_nxos-osv-1_ops.txt
         --- output1/bgp_nxos_nxos-osv-1_ops.txt
@@ -138,7 +138,7 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
       *Result*: The system creates the output directory ``po1``, stores the ``parsed.txt`` file in JSON format, and displays a summary for the device:
 
-       .. code-block::
+       .. code-block:: text
 
         +==============================================================================+
         | Genie Parse Summary for nx-osv-1                                             |
@@ -157,7 +157,9 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
 #. Compare the two snapshots:
 
-    * Python::
+    * Python:
+
+     .. code-block:: python
 
         >>> from genie.utils.diff import Diff
         >>> diff = Diff(po1, po2)
@@ -170,7 +172,7 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
     *Result*: The system displays any differences.
 
-     .. code-block::
+     .. code-block:: python
 
          GigabitEthernet2:
         +      nbrs_count: 0

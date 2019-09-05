@@ -19,14 +19,14 @@ The following example shows device output before it's parsed.
 
 .. code-block:: text
 
-    --------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------
     Port   VRF          Status IP Address                              Speed    MTU
-    --------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------
 
-    --------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------
     Ethernet      VLAN    Type Mode   Status  Reason                   Speed     Port
     Interface                                                                    Ch #
-    --------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------
     Eth1/1        1       eth  routed up      none                       1000(D) --
     Eth1/2        --      eth  routed up      none                       1000(D) --
     Eth1/3        --      eth  routed up      none                       1000(D) --
@@ -160,7 +160,7 @@ The following example shows you how to parse output from the ``show inventory`` 
 
    *Result*: The system returns the inventory information as a series of key-value pairs:
 
-   .. code-block:: text
+   .. code-block:: python
 
     [2019-08-20 16:05:58,388] +++ nx-osv-1: executing command 'show inventory' +++
     show inventory

@@ -136,7 +136,7 @@ You can apply configuration settings to all the devices in your testbed, rather 
 
    .. tip:: Refer to the feature `model <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page to see which attributes (keys) you can configure.
 
-   .. code-block::
+   .. code-block:: python
 
     testbed.build_config() 
      >>> [2018-09-25 09:55:39,982] +++ csr1000v-1: config +++                            

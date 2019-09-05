@@ -32,7 +32,7 @@ Platform
 ^^^^^^^^^
 The |pyATS| ecosystem runs in a |linux_reg| or Linux-type environment. You can install |pyATS| on any of the following platforms:
 
-* Any flavor of Linux, including |ubuntu_reg|, CentOS, and Fedora, for example
+* Most flavors of Linux, including |ubuntu_reg|, CentOS, and Fedora, for example
 * macOS (previously Mac OS X)
 * Docker containers (`get our container here <https://hub.docker.com/r/ciscotestautomation/pyats/>`_)
 * `Windows Subsystem for Linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_

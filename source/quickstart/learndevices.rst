@@ -34,12 +34,14 @@ To learn one feature on a single device, you can use the device hostname or the 
 
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``:
 
-       (pyats) $ genie shell --testbed-file mock.yaml
-          >>> dev = testbed.devices['uut']
-          >>> dev.connect()
-          >>> output = dev.learn('ospf')
+       .. code-block:: 
+
+          (pyats) $ genie shell --testbed-file mock.yaml
+            >>> dev = testbed.devices['uut']
+            >>> dev.connect()
+            >>> output = dev.learn('ospf')
 
       *Result*: The system displays a summary of the parsed ``show`` commands that ran. |br| |br| 
 
@@ -107,7 +109,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
 
       The following example shows what you would see if ``mock.yaml`` contained more than one device.
 
-      .. code-block::
+      .. code-block:: text
 
         +==============================================================================+
         | Genie Learn Summary for device nx-osv-1                                      |

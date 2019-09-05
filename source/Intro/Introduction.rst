@@ -36,8 +36,8 @@ The |library| provides all the tools needed for network test automation, includi
 * a pool of reusable :term:`parsers <Parser>`
 * a pool of reusable :term:`triggers <Trigger>`
 * a pool of reusable APIs
-* a simple :term:`command line interface <Library command line>` (no Python knowledge needed)
-* many more useful libraries
+* a simple :term:`command line interface <Library command line>` (no Python knowledge needed), and
+* many more useful libraries.
 
 
 .. _genie-cli:

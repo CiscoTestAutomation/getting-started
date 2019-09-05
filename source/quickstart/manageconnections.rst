@@ -63,8 +63,6 @@ The following example shows a YAML file with two devices defined::
               username: admin
               password: admin
       connections:
-          defaults:
-            class: 'unicon.Unicon'
           cli:
               protocol: ssh
               ip: "172.25.192.90"
@@ -79,8 +77,6 @@ The following example shows a YAML file with two devices defined::
               username: cisco
               password: cisco
       connections:
-          defaults:
-            class: 'unicon.Unicon'
           cli:
               protocol: ssh
               ip: "172.25.192.90"

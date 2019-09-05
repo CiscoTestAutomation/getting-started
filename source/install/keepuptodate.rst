@@ -28,7 +28,7 @@ Internal Cisco users
 
 DevNet community users
 ^^^^^^^^^^^^^^^^^^^^^^^
-.. tip:: You can find the latest information about releases on Twitter at #pyATS.
+.. tip:: You can find the latest information about releases on Twitter at #pyATS. For information about all things |pyATS|, see our discussion on `Webex Teams <https://eurl.io/#r18UzrQVr>`_.
 
 .. csv-table:: DevNet user upgrade options
     :file: ../quickstart/UpgradeExternal.csv

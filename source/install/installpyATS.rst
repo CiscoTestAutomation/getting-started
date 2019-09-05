@@ -60,17 +60,17 @@ The process that you follow depends on whether you are an internal, external, or
 
         * Internal Cisco users:
           
-            * ``$ pip install ats.robot``
-            * ``$ pip install library.libs.robot``
+          ``$ pip install ats[robot]``
 
         * DevNet users: 
           
-            * ``$ pip install pyats.robot``
-            * ``$ pip install library.libs.robot``
+          ``$ pip install pyats[robot]``
 
         * Docker users:
           
-            * The Robot Framework is already installed.
+            * Use the tag **latest-robot** (https://hub.docker.com/r/ciscotestautomation/pyats/tags).
+
+.. tip:: Once you install the |pyATS| ecosystem, remember to :ref:`keep your system up to date <upgrade-pyats>`.
 
 
 .. _install-with-pip:
@@ -124,53 +124,27 @@ This topic describes how to use the package installer for Python (pip) to instal
 Install the Robot Framework plugin
 ----------------------------------
 
-You can use the plugin after you install an additional component::
+You can use the plugin after you install an additional component.
 
-$ pip install pyats[robot]
+* Internal Cisco users::
+   
+   $ pip install ats[robot]
 
+* DevNet users::
+   
+   $ pip install pyats[robot]
+
+* Docker users:
+
+  Use the tag **latest-robot** (https://hub.docker.com/r/ciscotestautomation/pyats/tags).
 
 .. _docker-label:
 
 Run |pyATS| with Docker
 ------------------------------------------------------
 If you know how to use Docker, you can work with our pre-built docker image, which includes both |pyATS| and the |library|. You can find the image and instructions at
-https://hub.docker.com/r/ciscotestautomation/pyats/.
+https://hub.docker.com/r/ciscotestautomation/pyats.
 
-A number of image variants are available:
-
-- Alpine Linux (lightweight)
-- Standard image based on Python:3.6
-- Standard image based on Python:3.6, with Robot Framework
-
-#.  Download the image::
-
-      $ docker pull ciscotestautomation/pyats:version
-
-    where *version* is the current |pyATS| version. 
-    
-    |br|
-
-#.  Start the |pyATS| container.
-
-    * The pyATS docker container defaults to a Python interactive shell::
-
-        $ docker run -it ciscotestautomation/pyats:latest
-
-    * Alternatively, you can start the container in a shell::
-
-        $ docker run -it ciscotestautomation/pyats:latest /bin/bash
-
-#.  Run the basic example and get output::
-
-      $ docker run -it ciscotestautomation/pyats:latest pyats run job /pyats/examples/basic/job/basic_example_job.py
-
-    The pyATS virtual environment is sourced automatically, and your workspace is preset to be ``/pyats``. Note that this workspace directory (virtual environment) is declared to be a docker volume, so its content will persist between container reloads.
-
-    |br|
-
-#.  For more details and Docker options, go to https://hub.docker.com/r/ciscotestautomation/pyats/ .
-
-.. tip:: Once you install the |pyATS| ecosystem, remember to :ref:`keep your system up to date <upgrade-pyats>`.
 
 .. _clone-git-examples:
 
