@@ -169,11 +169,8 @@ You can apply configuration settings to all the devices in your testbed, rather 
 
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `Description of the Conf module <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Conf/index.html#conf-guide>`_
 
 
 

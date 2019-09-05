@@ -126,8 +126,7 @@ The following diagram shows a high-level view of the system architecture.
 
 
 See also...
-*a list of relevant links once we know what these are*
 
-* link 1
-* link 2
-* link 3
+* `pyATS documentation <https://pubhub.devnetcloud.com/media/pyats/docs/index.html#pyats-documentation>`_
+* `pyATS Library (formerly "Genie") documentation <https://pubhub.devnetcloud.com/media/genie-docs/docs/index.html#genie-documentation>`_
+* `Information about the Library command line interface <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/index.html#genie-command-line>`_

@@ -188,7 +188,7 @@ This example shows you how to specify a job file that defines multiple triggers 
 
 See also...
 
- * `More information about functions <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
+ * `More information about API network functions <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
  * `Detailed description of the Harness module <https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html>`_
  * `Examples of the Harness <https://github.com/CiscoTestAutomation/examples/tree/master/libraries>`_
 

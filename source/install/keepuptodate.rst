@@ -45,8 +45,6 @@ DevNet community users
 .. attention:: The major and minor versions must all match. It's okay if the patch version varies.
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `pyATS change log <https://developer.cisco.com/docs/pyats/api/>`_
+* `pyATS Library change log <https://developer.cisco.com/docs/genie-docs/>`_

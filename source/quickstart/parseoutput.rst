@@ -281,11 +281,11 @@ This example shows you how easy it is to put all of your statements into a singl
 
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `Library parse command <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_parse.html#genie-parse>`_
+* `Simple description of a Python dictionary <https://www.w3schools.com/python/python_dictionaries.asp>`_
+* `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
+
 
 
 

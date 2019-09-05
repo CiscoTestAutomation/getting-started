@@ -186,9 +186,9 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
 See also...
  
- * Master workshop: https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/workshop.md
- * More ``Diff`` examples: https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_diff.html#genie-diff
- * Use case for parsed output: https://pubhub.devnetcloud.com/media/genie-docs/docs/solutions/index.html#genie-solutions
+ * `Master workshop <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/workshop.md>`_
+ * `More Diff examples <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_diff.html#genie-diff>`_
+ * `Use case for parsed output <https://pubhub.devnetcloud.com/media/genie-docs/docs/solutions/index.html#genie-solutions>`_
 
 
 

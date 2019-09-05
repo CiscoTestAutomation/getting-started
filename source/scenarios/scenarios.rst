@@ -25,14 +25,6 @@ Learning labs
 If you have a `Cisco DevNet <https://developer.cisco.com/>`_ account, or if you're a Cisco employee, you can access the |library| `Learning Labs <https://developer.cisco.com/learning/lab/intro-to-genie/step/1>`_, which guide you through the basics. 
 
 
-See also...
-*a list of relevant links*
-
-* link 1
-* link 2
-* link 3
-
-
 
 
 

@@ -175,11 +175,10 @@ This step-by-step example shows you how to connect to a device.
 .. tip:: Remember - you can put all of these commands into a single script. We'll show you how in the :ref:`parse-output` section. 
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `Detailed description of the testbed file <https://realpython.com/start-here/>`_
+* `Detailed description of the pyATS Library topology <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Conf/user/topology.html?highlight=testbed%20yaml%20file#topology>`_
+
 
 
 

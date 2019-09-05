@@ -168,8 +168,7 @@ We've provided some examples to help you start using the |library| for some simp
 
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `Wiki for internal Cisco users <https://wiki.cisco.com/pages/viewpage.action?pageId=80375302>`_
+* `Robot Framework website <https://robotframework.org/>`_
+* `How to clone a GitHub repository <https://help.github.com/en/articles/cloning-a-repository>`_

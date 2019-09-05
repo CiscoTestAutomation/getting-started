@@ -70,8 +70,7 @@ For test automation or command execution, you only need device connectivity. You
     I checked on the devnet site and didn't see anything to add about data privacy.
 
 See also...
-*a list of relevant links once we know what these will be*
 
-* link 1
-* link 2
-* link 3
+* `Cisco DevNet <https://developer.cisco.com/>`_
+* `The Python Tutorial <https://docs.python.org/3.7/tutorial/>`_
+* `GitHub Learning Labs <https://lab.github.com/>`_

@@ -79,8 +79,6 @@ We strongly recommend that you install |pyATS| and the |library| from within a v
 
 
 See also...
-*a list of relevant links*
 
-* link 1
-* link 2
-* link 3
+* `Wiki for internal Cisco users <https://wiki.cisco.com/pages/viewpage.action?pageId=80375302>`_
+* `Python virtual environments and packages <https://docs.python.org/3/tutorial/venv.html>`_
