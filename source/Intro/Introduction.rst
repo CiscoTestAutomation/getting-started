@@ -5,19 +5,19 @@ This topic provides a high-level view of the |pyATS| ecosystem and describes how
 
 What is the |pyATS| ecosystem?
 -------------------------------------
-|pyATSbold| and the |librarybold| together define an ecosystem that streamlines and standardizes how you set up and run automated network tests. |pyATS| and the |library| provide sanity, feature, solution, system, and scale test automation for products that range from routers and switches to access points, firewalls, and cable CPEs.
+|pyATSbold| and the |librarybold| together define an ecosystem that streamlines and standardizes how you set up and run automated network tests. |pyATS| and the |library| provide sanity, feature, solution, system, and scale test automation for any type of device or virtual device. |pyATS| is currently used with devices such as routers and switches, access points, firewalls, Linux servers, phones, cable CPEs, and many more.
 
 Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at the core of Cisco's Test Automation Solution. It's currently used
 
-* by more than **3000** internal Cisco engineers and developers
-* and :question:`nnnn` external network engineers,
+* by more than **3500** internal Cisco engineers and developers
+* with over **2000** downloads per month,
 * for more than **2 million** test runs every month.
 
 The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components.
 
 .. tip:: The |pyATS| ecosystem is available under Apache License Version 2.0
 
-The following diagram describes the ecosystem in more detail :question:`needs to be updated`.
+The following diagram describes the ecosystem in more detail.
 
 .. image:: ../images/layers.png
 
@@ -25,17 +25,20 @@ The |pyATS| ecosystem can learn and profile an entire feature's configuration an
 
 What is |pyATS|?
 ^^^^^^^^^^^^^^^^
-|pyATSbold| is the test framework foundation for the ecosystem. |pyATS| specializes in data-driven and reusable testing for Agile, rapid development iterations.
+|pyATS| is the test framework foundation for the ecosystem. |pyATS| specializes in data-driven and reusable testing for Agile, rapid development iterations.
 
 This powerful, highly-pluggable |python_reg| framework enables developers to start with small, simple and linear test cases, and then scale up to large, complex and asynchronous test suites.
 
 What is the |library|?
 ^^^^^^^^^^^^^^^^^^^^^^
-The |librarybold| is a Python library that provides all the tools needed for network test automation :question:`is this true?`, including
+The |library| provides all the tools needed for network test automation, including
 
-* a simple :ref:`command line interface <genie-cli>` (no Python knowledge needed)
-* a pool of reusable test cases, and
-* a Pythonic library for more complex scripting. :question:`We've already described the library itself as Pythonic, and as containing libraries. Can we reword any of this?`
+* a pool of reusable :term:`parsers <Parser>`
+* a pool of reusable :term:`triggers <Trigger>`
+* a pool of reusable APIs
+* a simple :term:`command line interface <Library command line>` (no Python knowledge needed)
+* many more useful libraries
+
 
 .. _genie-cli:
 
@@ -71,7 +74,7 @@ Key benefits of |pyATS|
 -----------------------
 The |pyATS| ecosystem provides an agnostic infrastructure for rapid test development and execution. All OS/Platform and management protocol support is defined and injected through plugins, library implementations, and extensions. This includes support for third-party platforms and protocols.
 
-Network engineers and NetDevOps can be productive day one with the |library|'s readily available, holistic, and model-driven :question:`libraries`, which
+Network engineers and NetDevOps can be productive day one with the |library|'s readily available, holistic, and model-driven libraries, which
 
 * facilitate rapid development
 * encourage the use of re-usable tests, and
@@ -98,14 +101,14 @@ Network engineer key benefits
 
 How does the |pyATS| ecosystem work?
 ----------------------------------------
-|pyATSbold| provides a framework that standardizes:
+|pyATS| provides a framework that standardizes:
 
 * How network topologies are defined and modeled
 * How to programmatically interact with devices (by means of connection libraries)
 * How test scripts are defined and executed
 * How test runs are performed and how reports are generated
 
-The |librarybold| builds on |pyATS| to provide:
+The |library| builds on |pyATS| to provide:
 
 * An easy-to-use Linux style command-line interface (CLI)
 * Ready-to-use libraries that implement |pyATS| features

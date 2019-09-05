@@ -20,9 +20,4 @@ The |getstartedguide| introduces you to the features and functionality of the |p
    /scenarios/scenarios
    /quickstart/keyconcepts
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
