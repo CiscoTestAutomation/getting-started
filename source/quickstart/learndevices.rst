@@ -68,7 +68,7 @@ To learn one feature on a single device, you can use the device hostname or the 
                 |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
                 |==============================================================================|    
 
-      To see the structured data, use a text editor to open the file ``output_folder/ospf_nxos_nx-osv-1_ops.txt``.
+      To see the structured data, use a text editor to open the file :monospace:`output_folder/ospf_nxos_nx-osv-1_ops.txt`.
 
 
 
@@ -107,7 +107,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
 
       *Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
-      The following example shows what you would see if ``mock.yaml`` contained more than one device.
+      The following example shows what you would see.
 
       .. code-block:: text
 
