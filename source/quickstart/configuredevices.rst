@@ -5,6 +5,7 @@ Configure devices
 This topic describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.  You take care of the *what* --- the |library| takes care of the *how*!
 
 .. include:: ../definitions/def_conf.rst
+   :start-line: 3
 
 Because the |library| uses a common, feature-based structure across platforms, you can save time and effort when you automate your network testing.
 

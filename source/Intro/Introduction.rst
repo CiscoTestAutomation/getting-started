@@ -45,6 +45,7 @@ The |library| provides all the tools needed for network test automation, includi
 What is the |library| CLI?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. include:: ../definitions/def_genie_cli.rst
+   :start-line: 5
 
 When you want to use the CLI, you simply type::
 

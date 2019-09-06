@@ -1,3 +1,6 @@
+Definition of the |library| code structure
+============================================
+
 The |librarybold| contains two types of packages:
 
 #. *Infrastructure* -- The core and base class, released as pip packages. We do *not* make the source code available.

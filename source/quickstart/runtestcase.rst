@@ -33,7 +33,7 @@ Advantages of a modular strategy
  * The automated testing process is *data-driven* --- you don't have to re-write tests, just modify the datafiles.
  * You can choose from a few hundred |library| `open-source API functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ to define your test case actions and steps. 
 
-.. _trigers:
+.. _triggers:
 
 Triggers
 ---------
@@ -42,6 +42,7 @@ What is a trigger?
 ^^^^^^^^^^^^^^^^^^
 
 .. include:: ../definitions/def_trigger.rst  
+   :start-line: 5
 
 You can think of a trigger as equivalent to a |pyATS| *test case*. The |library| provides you with `a pool of triggers for the most common actions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/triggers>`_, already written and available to use out-of-the-box. Select a trigger name from the `list <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/triggers>`_ to see a description.
 
@@ -79,6 +80,7 @@ Verifications
 What is a verification?
 ^^^^^^^^^^^^^^^^^^^^^^^^
 .. include:: ../definitions/def_verification.rst
+   :start-line: 5
 
 How do verifications work?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

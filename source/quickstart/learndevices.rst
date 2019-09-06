@@ -3,6 +3,7 @@
 Learn device features
 =====================
 .. include:: ../definitions/def_feature.rst 
+   :start-line: 3
 
 This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
@@ -11,6 +12,7 @@ This topic describes how to use the ``learn`` function of the |librarybold| ``Op
 How the |library| "learns" a feature
 -------------------------------------
 .. include:: ../definitions/def_ops.rst
+   :start-line: 3
 
 The output is stored with the same :term:`key-value pair` structure across devices. The stored output makes it possible for you to take a snapshot of the network state at different points in time, and then to :ref:`compare network states <compare-network-states>`.
 

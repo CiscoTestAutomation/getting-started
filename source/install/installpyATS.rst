@@ -7,7 +7,9 @@ This topic describes how to install the |pyATSbold| ecosystem within your virtua
 Code structure
 ---------------
 .. include:: /definitions/def_pyats_code_infrastructure.rst
+   :start-line: 3
 .. include:: /definitions/def_pyatslibrary_code_structure.rst
+   :start-line: 3
 
 
 Installation process

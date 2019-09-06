@@ -7,6 +7,7 @@ Once you know how to :ref:`parse device output <parse-output>` or :ref:`learn de
 This topic describes how to use the ``Diff`` functionality to monitor your network and to verify that your network is performing as expected.
 
 .. include:: ../definitions/def_diff.rst 
+   :start-line: 3
 
 .. tip:: You don't need to know Python -- the :ref:`Library CLI <genie-cli>` includes a ``Diff`` command that you can run in your Linux terminal.
 

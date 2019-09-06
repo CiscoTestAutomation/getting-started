@@ -11,6 +11,7 @@ Benefits of parsed device output
 Device output can vary widely between different devices and for different show commands.
 
 .. include:: ../definitions/def_parser.rst 
+   :start-line: 3
 
 Before and after examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^
