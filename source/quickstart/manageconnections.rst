@@ -86,7 +86,7 @@ The following example shows a YAML file with two devices defined::
 
 Use Excel to create the YAML file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can define all of your device data in a CSV (.csv) or Excel (.xls, .xlsx) file. The |geniecmd| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
+You can define all of your device data in a CSV :monospace:`(.csv)` or Excel :monospace:`(.xls, .xlsx)` file. The |geniecmd| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
 
 The following example shows an Excel file with the required columns.
 

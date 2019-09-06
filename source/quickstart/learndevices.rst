@@ -2,10 +2,10 @@
 
 Learn device features
 =====================
+This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
+
 .. include:: ../definitions/def_feature.rst 
    :start-line: 3
-
-This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
 .. _cli-learn:
 

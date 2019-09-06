@@ -6,11 +6,11 @@ Configure your environment
 
 Internal Cisco users
 --------------------
-Cisco engineers and developers can skip this topic, because the internal installer sets up a virtual environment for you. For more information about how to install |pyATS| and the |library|, see the topic :ref:`install-pyats`.
+Cisco engineers and developers can skip this topic, because the internal installer sets up a virtual environment for you. For more information about how to install |pyATSbold| and the |librarybold|, see the topic :ref:`install-pyats`.
 
 Docker users
 -------------
-If you use Docker, you can run |pyATS| and the |library| from a Docker image. Get the image and instructions at https://hub.docker.com/r/ciscotestautomation/pyats/.
+If you use Docker, you can run |pyATSbold| and the |librarybold| from a Docker image. Get the image and instructions at https://hub.docker.com/r/ciscotestautomation/pyats/.
 
 For more information about how to use |pyATS| and the |library| see the :ref:`quick-start`.
 

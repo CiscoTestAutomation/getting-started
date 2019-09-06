@@ -2,7 +2,7 @@
 
 Structure of a |pyATS| statement
 ----------------------------------
-Although you don't need to know Python to use the |pyATS| ecosystem, it might help you to understand the structure of the Python-based commands described in this guide. 
+Although you don't need to know Python to use the |pyATSbold| ecosystem, it might help you to understand the structure of the Python-based commands described in this guide. 
 
 .. tip:: Remember, you can use the :term:`library command line` for network automation and never have to enter a Python command!
 
