@@ -25,9 +25,10 @@ Before you install |pyATS|, you must:
 
 Check your version of Python
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    .. note:: Make sure your system has a supported version of Python installed:
+.. note:: Make sure your system has a supported version of Python installed:
         
         .. include:: ../prereqs/supportedpythonversions.rst
+           :start-line: 5
 
 To check your installed version::
 

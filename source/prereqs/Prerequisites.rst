@@ -38,6 +38,7 @@ The |pyATS| ecosystem runs in a |linux_reg| or Linux-type environment. You can i
 * `Windows Subsystem for Linux <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_
 
 .. include:: supportedLinux.rst
+   :start-line: 3
 
 .. note:: 
 
@@ -50,6 +51,7 @@ System and software
 |pyATS| and the |library| are written in Python. You don't need to know Python, but your system must have one of the following Python versions installed:
 
     .. include:: supportedpythonversions.rst
+       :start-line: 5
 
 .. note:: Python 3.4 has reached its end of life and is now deprecated. |pyATS| and the |library| no longer support Python 3.4.
 
