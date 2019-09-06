@@ -117,32 +117,33 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
         | Genie Learn Summary for device nx-osv-1                                      |
         +==============================================================================+
         |  Connected to nx-osv-1                                                       |
-        |  -   Log: genie_learn/connection_nx-osv-1.txt                                |
+        |  -   Log: output_folder/connection_nx-osv-1.txt                              |
         |------------------------------------------------------------------------------|
         |  Learnt feature 'bgp'                                                        |
-        |  -  Ops structure:  genie_learn/bgp_nxos_nx-osv-1_ops.txt                    |
-        |  -  Device Console: genie_learn/bgp_nxos_nx-osv-1_console.txt                |
+        |  -  Ops structure:  output_folder/bgp_nxos_nx-osv-1_ops.txt                  |
+        |  -  Device Console: output_folder/bgp_nxos_nx-osv-1_console.txt              |
         |------------------------------------------------------------------------------|
         |  Learnt feature 'ospf'                                                       |
-        |  -  Ops structure:  genie_learn/ospf_nxos_nx-osv-1_ops.txt                   |
-        |  -  Device Console: genie_learn/ospf_nxos_nx-osv-1_console.txt               |
+        |  -  Ops structure:  output_folder/ospf_nxos_nx-osv-1_ops.txt                 |
+        |  -  Device Console: output_folder/ospf_nxos_nx-osv-1_console.txt             |
         |==============================================================================|
+
 
         +==============================================================================+
         | Genie Learn Summary for device csr1000v-1                                    |
         +==============================================================================+
         |  Connected to csr1000v-1                                                     |
-        |  -   Log: genie_learn/connection_csr1000v-1.txt                              |
+        |  -   Log: output_folder/connection_csr1000v-1.txt                            |
         |------------------------------------------------------------------------------|
-        |  Could not learn feature 'bgp'                                               |
-        |  -  Exception:      genie_learn/bgp_nxos_csr1000v-1_exception.txt            |
-        |  -  Ops structure:  genie_learn/bgp_nxos_csr1000v-1_ops.txt                  |
-        |  -  Device Console: genie_learn/bgp_nxos_csr1000v-1_console.txt              |
+        |  Learnt feature 'bgp'                                                        |
+        |  -  Ops structure:  output_folder/bgp_iosxe_csr1000v-1_ops.txt               |
+        |  -  Device Console: output_folder/bgp_iosxe_csr1000v-1_console.txt           |
         |------------------------------------------------------------------------------|
         |  Learnt feature 'ospf'                                                       |
-        |  -  Ops structure:  genie_learn/ospf_nxos_csr1000v-1_ops.txt                 |
-        |  -  Device Console: genie_learn/ospf_nxos_csr1000v-1_console.txt             |
+        |  -  Ops structure:  output_folder/ospf_iosxe_csr1000v-1_ops.txt              |
+        |  -  Device Console: output_folder/ospf_iosxe_csr1000v-1_console.txt          |
         |==============================================================================|
+
 
       To see the structured data, use a text editor to open any of the ``ops.txt`` files.
 
