@@ -176,7 +176,7 @@ This step-by-step example shows you how to connect to a device.
 
 See also...
 
-* `Detailed description of the testbed file <https://realpython.com/start-here/>`_
+* `Detailed description of the testbed file <https://pubhub.devnetcloud.com/media/pyats/docs/topology/creation.html#testbed-file>`_
 * `Detailed description of the pyATS Library topology <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Conf/user/topology.html?highlight=testbed%20yaml%20file#topology>`_
 
 
