@@ -1,5 +1,5 @@
 Definition of a trigger
-========================
+=======================
 
 .. _genie-trigger:
 

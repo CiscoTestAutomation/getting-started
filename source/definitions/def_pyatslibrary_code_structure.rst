@@ -1,5 +1,5 @@
 Definition of the |library| code structure
-============================================
+==========================================
 
 The |librarybold| contains two types of packages:
 
