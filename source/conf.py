@@ -37,6 +37,11 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# -- Options for PDF output -------------------------------------------------
+#
+pdf_documents = [('index')]
+
+
 
 # -- Options for HTML output -------------------------------------------------
 
