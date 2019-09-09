@@ -4,20 +4,37 @@
    contain the root `toctree` directive.
 
 Get started with pyATS
-============================================
+======================
+
 The |getstartedguide| introduces you to the features and functionality of the |pyATSbold| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATSbold| and the |librarybold|.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Getting Started
 
-   /intro/Introduction
-   /prereqs/Prerequisites
-   /configuration/configureEnv
-   /install/installpyATS
-   /install/keepuptodate
-   /quickstart/guidedpractice
-   /scenarios/scenarios
-   /quickstart/keyconcepts
+    /intro/Introduction
+    /prereqs/Prerequisites
+    /configuration/configureEnv
+    /install/installpyATS
+    /install/keepuptodate
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Guided Practice
+
+    /quickstart/structureofastatement
+    /quickstart/manageconnections
+    /quickstart/parseoutput
+    /quickstart/learndevices
+    /quickstart/configuredevices
+    /quickstart/comparebeforeafter
+    /quickstart/runtestcase
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Resources
+
+    /scenarios/scenarios
+    /quickstart/keyconcepts
 
 

@@ -18,7 +18,7 @@ The process that you follow depends on whether you are an internal, external, or
 
 .. list-table:: |pyATS| installation process
    :header-rows: 1
-   :widths: 35 65
+   :widths: 30 70
 
    * - Type of user
      - Installation process
@@ -100,7 +100,7 @@ This topic describes how to use the package installer for Python (pip) to instal
     .. csv-table:: Installation options
       :file: InstallOptions.csv
       :header-rows: 1
-      :widths: 25 35 40
+      :widths: 20 35 45
 
     .. hint:: Give the installer a few minutes to finish.
 
