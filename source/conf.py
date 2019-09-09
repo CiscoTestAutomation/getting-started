@@ -60,6 +60,7 @@ html_css_files = [
 ]
 html_theme_path = ["_themes", ]
 html_show_sourcelink = False
+html_copy_source = False
 rst_prolog = """
 .. |pyATS| replace:: pyATS
 .. |pyATSbold| replace:: **pyATS**
