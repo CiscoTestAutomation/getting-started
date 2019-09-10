@@ -12,8 +12,8 @@ The |getstartedguide| introduces you to the features and functionality of the |p
     :maxdepth: 2
     :caption: Getting Started
 
-    /intro/Introduction
-    /prereqs/Prerequisites
+    /intro/introduction
+    /prereqs/prerequisites
     /configuration/configureEnv
     /install/installpyATS
     /install/keepuptodate
