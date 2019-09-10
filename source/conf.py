@@ -58,6 +58,9 @@ html_css_files = [
     'css/theme.css',
     'css/custom.css',
 ]
+html_js_files = [
+    'js/custom.js',
+]
 html_theme_path = ["_themes", ]
 html_show_sourcelink = False
 html_copy_source = False
