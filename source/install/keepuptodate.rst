@@ -8,6 +8,8 @@ On the last Tuesday of the month, the team releases a new version of |pyATSbold|
 
 To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the relevant upgrade command **from your virtual environment**.
 
+.. note:: The |library| is the new name for what was previously known as "Genie." You might still see some commands that refer to ``genie``.
+
 Internal Cisco users
 ^^^^^^^^^^^^^^^^^^^^^
 

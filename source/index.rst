@@ -6,7 +6,7 @@
 Get started with pyATS
 ======================
 
-The |getstartedguide| introduces you to the features and functionality of the |pyATSbold| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATSbold| and the |librarybold|.
+The |getstartedguide| introduces you to the features and functionality of the |pyATSbold| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATSbold| and the |librarybold| (formerly "Genie").
 
 .. toctree::
     :maxdepth: 2

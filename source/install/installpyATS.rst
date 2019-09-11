@@ -11,6 +11,7 @@ Code structure
 .. include:: /definitions/def_pyatslibrary_code_structure.rst
    :start-line: 3
 
+.. note:: The |library| is the new name for what was previously known as "Genie." You might still see some commands that refer to ``genie``.
 
 Installation process
 ---------------------
