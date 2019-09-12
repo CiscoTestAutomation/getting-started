@@ -18,7 +18,23 @@ The output is stored with the same :term:`key-value pair` structure across devic
 
 .. tip:: Why use ``learn`` instead of a :term:`parser`? The parsed output for different devices can result in different data structures. The ``learn`` function, by contrast, results in a *consistent* set of keys, which means that you can write *one* script that works on different devices.
 
+.. _supported-features:
+
+Supported features
+-------------------
 To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
+
+If you try to "learn" a feature that we don't yet support, the system returns the following exception:
+
+ .. code-block:: text
+
+    |---------------------------------------------------------------------------------|
+    |  Could not learn feature 'acl'                                                  |
+    |  -  Exception:      genie_learn_all/acl_nxos_nx-osv-1_exception.txt             |
+    |  -  Feature not yet developed for this os                                       |
+    |---------------------------------------------------------------------------------|
+
+If you want to request support for a new feature, please contact us at pyats-support-ext@cisco.com
 
 Examples of how to learn device features
 ----------------------------------------
@@ -183,7 +199,7 @@ Learn all features on one device
         |---------------------------------------------------------------------------------|
         |  Could not learn feature 'acl'                                                  |
         |  -  Exception:      genie_learn_all/acl_nxos_nx-osv-1_exception.txt             |
-        |  -  Feature not yet developped for this os                                      |
+        |  -  Feature not yet developed for this os                                      |
         |---------------------------------------------------------------------------------|
         |  Learnt feature 'bgp'                                                           |
         |  -  Ops structure:  genie_learn_all/bgp_nxos_nx-osv-1_ops.txt                   |
@@ -195,6 +211,8 @@ Learn all features on one device
         |---------------------------------------------------------------------------------|
 
       To see the structured data, use a text editor to open any of the ``ops.txt`` files.
+
+.. note:: If we don't support a feature on a device, the system returns an exception, as shown in this example. For more information, see the section :ref:`supported-features`.
 
 See also...
 

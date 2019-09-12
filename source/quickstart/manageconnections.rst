@@ -123,6 +123,20 @@ Other ways to create the testbed
 
  * If you have data in the form of a Python dictionary, you can create a testbed from that dictionary. For example, if you receive JSON-formatted data, you can convert that to a Python dictionary and then load the dictionary. For details about how to do this, see `Create a testbed from a dictionary <http://wwwin-pyats.cisco.com/cisco-shared/genie/latest/cookbooks/genie.html#create-a-testbed-from-a-dictionary>`_.
 
+.. _validate-yaml:
+
+Validate the YAML file
+----------------------
+If you want to check that your testbed YAML file meets the |pyATS| requirements, run the following command::
+
+ (pyats) $ pyats validate testbed [file]
+
+where [file] is the name of your testbed file. 
+
+This validates the content of your file and displays any errors in the schema or format.
+
+For more details, see the topic `pyats validate testbed <https://pubhub.devnetcloud.com/media/pyats/docs/cli/pyats_validate.html#pyats-validate-testbed>`_.
+
 .. _connect-to-device:
 
 Connect to a device

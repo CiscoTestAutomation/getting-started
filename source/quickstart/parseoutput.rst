@@ -13,6 +13,8 @@ Device output can vary widely between different devices and for different show c
 .. include:: ../definitions/def_parser.rst 
    :start-line: 3
 
+For more information about the ``metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/index.html#genie-metaparser-package>`_.
+
 Before and after examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 

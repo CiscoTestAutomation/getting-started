@@ -1,11 +1,16 @@
-# pyATS User Guide
+# pyATS Getting Started Guide
 
-This is the pyATS development user guide repository. 
+This is the pyATS getting started guide source code.
+The content of this repository is published on Cisco 
+DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
 
-## Requirements
+## Contributions
 
-Sphinx: https://www.sphinx-doc.org/en/master/
+Everyone is welcomed to contribute (open PR) and/or open issues against the  
+pyATS getting started guide in this GitHub repository.
 
+Your changes will be reviewed, and once merged, the main hosted documentation
+will be updated.
 
 ## Installation
 
@@ -14,10 +19,10 @@ Sphinx: https://www.sphinx-doc.org/en/master/
 cd ~/pyats
 
 # clone this repo
-git clone ssh://git@bitbucket-eng-sjc1.cisco.com:7999/pyats-core/userguide.git
+git clone https://github.com/CiscoTestAutomation/getting-started/
 
 # install the required dependencies
-pip install -r userguide/requirement.txt
+pip install -r getting-started/requirement.txt
 
 ```
 
@@ -35,7 +40,7 @@ build/              where the output built HTML is
 ```
 
 
-## To Run
+## To Build Local docs
 
 ```bash
 

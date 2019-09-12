@@ -39,6 +39,7 @@ The |library| provides all the tools needed for network test automation, includi
 * a simple :term:`command line interface <Library command line>` (no Python knowledge needed), and
 * many more useful libraries.
 
+.. note:: The |library| is the new name for what was previously known as "Genie." You might still see some commands that refer to ``genie``.
 
 .. _genie-cli:
 
