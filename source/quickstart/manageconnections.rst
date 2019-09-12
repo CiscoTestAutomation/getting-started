@@ -37,13 +37,14 @@ The YAML file must follow the |pyATS| `topology schema <https://pubhub.devnetclo
 
 The ``devices`` block contains a description of each network device, and must include the following keys.
 
-.. csv-table:: Required device block details
+.. csv-table:: Device block details
     :header: "Key", "Description"
     :widths: 25 75
 
     "``hostname``", "This *must* be the configured hostname of the device."
     "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
+    "``platform``", "(Recommended) 
     "``credentials``", "The username, password, and any other credentials required to log in to the device. |br| |br| For details about how passwords are stored, see the topic `Credential Password Modeling <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#credential-password-modeling>`_. "
     "``type``", "Device type"
     "``ip``", "IP address"
@@ -57,6 +58,7 @@ The following example shows a YAML file with two devices defined::
   nx-osv-1:
       type: 'router'
       os: 'nxos'
+      platform: 'cat9000'
       alias: 'uut'
       credentials:
           default:
@@ -70,7 +72,8 @@ The following example shows a YAML file with two devices defined::
 
   csr1000v-1:
       type: 'router'
-      os: "iosxe"
+      os: 'iosxe'
+      platform: 'asr1000'
       alias: 'helper'
       credentials:
           default:
