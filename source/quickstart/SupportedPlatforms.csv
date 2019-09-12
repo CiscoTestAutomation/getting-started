@@ -1,0 +1,12 @@
+OS,Platform
+iosxe,"* asr . . . |br|
+* c . . . |br|
+* cat . . . |br|
+* csr . . ."
+ios,"* diol |br|
+* iol"
+linux,* linux
+nxos,"* n . . . |br| 
+* nxosv"
+iosxr,"* ncs . . . |br|
+* xrv . . ."
