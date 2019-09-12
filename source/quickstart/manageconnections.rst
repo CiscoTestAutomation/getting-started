@@ -35,15 +35,16 @@ The YAML file must follow the |pyATS| `topology schema <https://pubhub.devnetclo
 
 .. tip:: Only the ``devices`` block is actually required, so it's easy to get started with a simple example.
 
-The ``devices`` block contains a description of each network device, and must include the following keys.
+The ``devices`` block contains a description of each network device, and must include the following keys. (:term:`Platform` is recommended but not required.)
 
-.. csv-table:: Required device block details
+.. csv-table:: Device block details
     :header: "Key", "Description"
     :widths: 25 75
 
     "``hostname``", "This *must* be the configured hostname of the device."
     "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
     "``os``", "Device operating system"
+    "``platform``", "(Recommended) The name of the hardware or chassis, or the name of the virtual hardware. The system uses the os/platform values to determine the connection plugin and services."
     "``credentials``", "The username, password, and any other credentials required to log in to the device. |br| |br| For details about how passwords are stored, see the topic `Credential Password Modeling <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#credential-password-modeling>`_. "
     "``type``", "Device type"
     "``ip``", "IP address"
@@ -57,6 +58,7 @@ The following example shows a YAML file with two devices defined::
   nx-osv-1:
       type: 'router'
       os: 'nxos'
+      platform: n9kv
       alias: 'uut'
       credentials:
           default:
@@ -66,11 +68,12 @@ The following example shows a YAML file with two devices defined::
           cli:
               protocol: ssh
               ip: "172.25.192.90"
-              port: 17010
+
 
   csr1000v-1:
       type: 'router'
-      os: "iosxe"
+      os: 'iosxe'
+      platform: asr1k
       alias: 'helper'
       credentials:
           default:
@@ -80,7 +83,7 @@ The following example shows a YAML file with two devices defined::
           cli:
               protocol: ssh
               ip: "172.25.192.90"
-              port: 17008
+
 
 .. attention:: Remember that YAML is white-space and case-sensitive.
 
@@ -92,7 +95,7 @@ The following example shows an Excel file with the required columns.
 
 .. image:: geniecreate_example_excel.png 
 
-:download:`You can download a sample Excel file here. <SampleTestbedFile.xlsx>`
+:download:`You can download a sample Excel file here. <SampleTestbedFile.xlsx>` This sample includes the recommended ``platform`` column.
 
 Follow these guidelines to create a valid YAML file:
 
@@ -100,7 +103,7 @@ Follow these guidelines to create a valid YAML file:
     * The ``password`` column is the default password used to log in to the device.
     * If you leave the password blank, the system prompts you for the password when you connect to the device.
     * To enter privileged EXEC mode with the ``enable`` command, add a column with the header ``enable_password``. The value can be the same as or different from the default password.
-    * Any additional columns that you define, such as ``alias`` or ``type``, are added to the YAML file as key-value pairs.
+    * Any additional columns that you define, such as ``platform``, ``alias`` or ``type``, are added to the YAML file as key-value pairs.
     * The columns can be in any order, as long as you include the required columns.
 
 When you're ready to create the YAML file, from your virtual environment, run the command::

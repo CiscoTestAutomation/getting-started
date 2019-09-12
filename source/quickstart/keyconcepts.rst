@@ -102,6 +102,7 @@ This glossary defines the terminology that we use to describe |pyATSbold| and th
    Unicon
     Unicon is a framework for developing device control libraries for routers, switches and servers. It is developed purely in Python, with no dependency on Tcl-based infrastructure. Unicon is also test framework agnostic and can be used with |pyATS|. We use *Unicon.playback* to create :term:`mock devices`.
 
-
+   Platform
+    The name of the hardware or chassis, or the name of the virtual hardware. The system uses the ``os`` and ``platform`` values to determine the |library| functionality to load and the correct connection plugin and services to use.
 
 
