@@ -1,6 +1,6 @@
-# pyATS User Guide
+# pyATS Getting Started Guide
 
-This is the pyATS development user guide repository. 
+This is the pyATS getting started guide source code
 
 ## Requirements
 
@@ -14,10 +14,10 @@ Sphinx: https://www.sphinx-doc.org/en/master/
 cd ~/pyats
 
 # clone this repo
-git clone ssh://git@bitbucket-eng-sjc1.cisco.com:7999/pyats-core/userguide.git
+git clone https://github.com/CiscoTestAutomation/getting-started/
 
 # install the required dependencies
-pip install -r userguide/requirement.txt
+pip install -r getting-started/requirement.txt
 
 ```
 
