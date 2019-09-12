@@ -1,6 +1,7 @@
 # pyATS Getting Started Guide
 
-This is the pyATS getting started guide source code
+This is the pyATS getting started guide source code.
+The content of this repository is published on Cisco DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
 
 ## Requirements
 
