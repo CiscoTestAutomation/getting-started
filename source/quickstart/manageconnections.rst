@@ -17,6 +17,16 @@ Because the |library| is based on Python, an :term:`object`-oriented programming
 
 For a more detailed example that you can try, see :ref:`connect-to-device`.
 
+Supported devices
+------------------
+
+The |library| supports the following os/platform combinations.
+
+.. csv-table:: Supported OS/platform combinations
+   :file: SupportedPlatforms.csv
+   :widths: 30, 70
+   :header-rows: 1
+
 
 .. _manageconnections-setup-testbed:
 
