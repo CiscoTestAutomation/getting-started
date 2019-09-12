@@ -1,12 +1,16 @@
 # pyATS Getting Started Guide
 
 This is the pyATS getting started guide source code.
-The content of this repository is published on Cisco DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
+The content of this repository is published on Cisco 
+DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
 
-## Requirements
+## Contributions
 
-Sphinx: https://www.sphinx-doc.org/en/master/
+Everyone is welcomed to contribute (open PR) and/or open issues against the  
+pyATS getting started guide in this GitHub repository.
 
+Your changes will be reviewed, and once merged, the main hosted documentation
+will be updated.
 
 ## Installation
 
@@ -36,7 +40,7 @@ build/              where the output built HTML is
 ```
 
 
-## To Run
+## To Build Local docs
 
 ```bash
 
