@@ -6,7 +6,7 @@ DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
 
 ## Contributions
 
-Everyone is welcomed to contribute (open PR) and/or open issues against the  
+Everyone is welcome to contribute (open PR) and/or open issues against the  
 pyATS getting started guide in this GitHub repository.
 
 Your changes will be reviewed, and once merged, the main hosted documentation
