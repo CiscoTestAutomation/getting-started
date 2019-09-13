@@ -39,7 +39,7 @@ exclude_patterns = []
 
 # -- Options for PDF output -------------------------------------------------
 #
-pdf_documents = [('index')]
+pdf_documents = [('index_dg')]
 
 
 
