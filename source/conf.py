@@ -17,9 +17,10 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Get Started with pyATS'
+project = 'pyATS Development Guide'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
+master_doc = 'index_dg'
 
 # -- General configuration ---------------------------------------------------
 
@@ -27,7 +28,7 @@ author = 'Cisco Systems Inc.'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosectionlabel', 'sphinxcontrib.spelling',
+    'sphinx.ext.autosectionlabel', 'sphinxcontrib.spelling', 'sphinx.ext.intersphinx',
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -37,9 +38,12 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+
+
+
 # -- Options for PDF output -------------------------------------------------
 #
-pdf_documents = [('index_dg')]
+pdf_documents = [('index')]
 
 
 

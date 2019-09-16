@@ -12,6 +12,7 @@ This guide describes how you can customize the features and functionality of the
 
    /quickstart/structureofastatement
    /writescripts/writepythonscript
+   /writeparser/writeparser
 
 .. toctree::
    :maxdepth: 2

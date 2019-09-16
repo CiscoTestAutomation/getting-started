@@ -20,6 +20,8 @@ The |library| provides a better solution!
 
 .. tip:: Remember, the |library| gives you *structured* output that makes reuse possible.
 
+.. _write-basic-script:
+
 Write a basic script
 ---------------------
 This example shows you how to write a basic script to check the state of a device interface.
@@ -209,6 +211,30 @@ Result:
   |                                End of Script                                 |
   +------------------------------------------------------------------------------+
 
+.. _write-complex-script:
+
+Write an advanced script
+------------------------
+This example shows how you can write a more advanced script that uses the |library| functionality for more complex actions. 
+
+.. tip:: If you have a highly complex automation that you want to execute, remember that you can use the |library| data-driven :term:`triggers <trigger>` and :term:`verifications <verification>`. These are reusable and will save you time, because you don't have to hard code multiple scripts.
+
+#. Complete steps 1-4 of :ref:`write-basic-script`.
+
+   .. code-block:: python
+
+      from genie.testbed import load
+      from pyats.log.utils import banner
+      print(banner("Loading testbed"))
+      testbed = load('testbed.yaml')
+      print("\n\nSuccessfully loaded testbed '{}'\n\n".format(testbed.name))
+      device = testbed.devices['N95_1']
+      device.connect()
+      print("\n\nSuccessfully connected to device 'N95_1'\n\n")
+
+   *Result*: You are now connected to the device. |br| |br|
+
+#. asdf
 
 Use case crc-errors (show crc-errors)
 
@@ -221,7 +247,6 @@ parse
 configure
 learn
 
-two examples, one simple, one complex
 
 
 Example of looping
