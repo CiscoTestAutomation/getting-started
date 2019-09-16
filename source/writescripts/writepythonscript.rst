@@ -4,7 +4,7 @@ Write a Python script
 ======================
 As a network engineer or programmer, you can write your own Python scripts that use the |pyATSbold| libraries to automate your network testing. A script is simply a Python file that lists different actions and lets you run them with a single command. In |pyATS| terms, a script is an aggregation of :term:`triggers <trigger>` and :term:`verifications <verification>`.
 
-This topic describes how to write a basic script and how to add complexity to that script. You can run the example scripts on the :download:`mock devices <filename.zip>` or on your real network devices (if you have them).
+This topic describes how to write a basic script and how to add complexity to that script. You can run the example scripts on the `Cisco DevNet sandbox IOS XE device <https://devnetsandbox.cisco.com/RM/Diagram/Index/27d9747a-db48-4565-8d44-df318fce37ad?diagramType=Topology>`_ or on your real network devices (if you have them).
 
 Why write a test script?
 ------------------------
