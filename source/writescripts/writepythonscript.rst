@@ -10,7 +10,7 @@ Why write a test script?
 ------------------------
 *Automation* means that you can programmatically establish connections to your testbed devices and perform operations on them. Test scripts automate your network testing --- you simply define a list of commands once and then reuse the script as often as required, on-demand or at scheduled intervals.
 
-For example, let's say that you have a device with over 100 interfaces, and that you need to monitor these daily to make sure they are up. You could, of course, manually execute a command on each interface. This is time consuming, however, and introduces the possibility of human error, which could adversely affect the state of your network. 
+For example, let's say that you have a device with over 100 interfaces, and that you need to monitor these daily to make sure they are up. You could, of course, manually execute a show command and then read through hundreds of lines of code to find the state of each interface. This is time consuming, however, and introduces the possibility of human error, which could adversely affect the state of your network. 
 
 The |library| provides a better solution!
 
@@ -38,7 +38,7 @@ This example shows you how to write a basic script to check the state of a devic
 
 #. If you'd like your script to display formatted messages as it runs, you can use the ``banner`` functionality.
 
-   .. note:: Internal Cisco users use ``ats`` rather than ``pyats``.
+   .. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
 
    .. code-block:: python
 

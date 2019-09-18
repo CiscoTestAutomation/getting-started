@@ -2,9 +2,9 @@
 
 Write a parser
 ======================
-This topic describes why and how to write your own parsers to create Python dictionaries. These dictionaries have data structures that facilitate automated testing. 
+This topic describes why and how to write your own parsers to meet your network automation requirements. 
 
-.. tip:: Remember to share your new parser with the rest of the |pyATS| user community! See the topic :ref:`contribute` for more information.
+.. tip:: Remember to share your new parser with the rest of the |pyATS| user community. See the topic :ref:`contribute` for more information.
 
 What is a parser?
 -----------------
@@ -17,149 +17,255 @@ What is a parser?
 
 Why write a parser?
 -------------------
-Change the key value pairs from standard? Write a parser for a show command that doesn't have a |library| model?
+The |library| provides you with many out-of-the box `parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for use with the most frequently-used Cisco show commands and OS/platform combinations. You can tailor these parsers by `excluding specific <https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/parsers.html?highlight=parser%20exclude#get-exclude-keys-for-a-parser-python>`_ keys from the parsed output. 
 
-.. tip:: Remember, the |library| parser functionality gives you *structured* output that makes reuse possible.
+But if you want to customize a parser, or if you need to parse output for a feature that does not yet have a |library| model, you can easily write your own parser.
 
 How the |library| parsers work
 ------------------------------
+Each parser performs three main actions:
 
-Parser process
-^^^^^^^^^^^^^^
-Collect device data
-Loop over each line
-Regex to add to dictionary
+1. Run a show command and collect the device output.
+2. "Loop" over (read) each line of output data.
+3. Look for patterns in the output, and add any matching patterns to a Python dictionary.
 
-Regular expressions
-^^^^^^^^^^^^^^^^^^^
-You definitely need to know regex to write a parser.
+The result is standardized, *structured* output that works with network automation scripts, regardless of OS or communication protocol.
 
- (sometimes shortened to regexp, regex, or re) are a tool for matching patterns in text. Regular expressions are the core backbone of all parsers.
+The following sections describe this process in more detail.
 
-If you are unfamiliar with what regular expressions are, here are a few good primers:
+.. _pattern-matching
 
-https://www.learnpython.org/en/Regular_Expressions
-https://regexone.com/references/python
-https://www.dataquest.io/blog/regex-cheatsheet/ 
-Once you are familiar with what regular expressions are, the following online tools can help you build and test Python regular expressions:
+Pattern matching
+^^^^^^^^^^^^^^^^
+The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for many patterns, including "bandwidth", and returns the information in JSON format as a key-value pair within the overall set of key-value pairs::
 
-https://pythex.org/
-https://regex101.com/
+ {
+  "GigabitEthernet1": {
+    "arp_timeout": "04:00:00",
+    "arp_type": "arpa",
+    "auto_negotiate": true,
+    "bandwidth": 1000000,
+    ...
 
-Python library "re"
+The |library| parsers use regular expressions (regex) to match patterns in the device output. Regular expressions are the backbone of all parsers, so you must know how to use them before you can write a parser.
 
-|library| parsers
+See, for example, the following references:
 
-Genie has two packages that are dedicated to the task of parsing (pattern matching) device output data (text). These packages are:
+* https://www.learnpython.org/en/Regular_Expressions
+* https://regexone.com/references/python
+* https://www.dataquest.io/blog/regex-cheatsheet/ 
 
-genie.metaparser: 
-Metaparser is the core of Genie parsers and is used to standardize parsing any format of device data (CLI output, XML output, NETCONF/Yang output).
-It is responsible for ensuring that a parser returns a fixed data-structure known as the parser's schema.
+The following online tools can help you build and test Python regular expressions:
 
-genie.libs.parser:
-This package contains Python classes that breakdown raw Cisco device data (CLI output, XML output, etc.) by parsing the data using regular expressions into software-readable Python data-structures (dictionary) that match a defined schema.
-One parser class can be used to parse CLI output, XML output or NETCONF output of a device command. However, the parser for each output must return the same Python data-structure defined in the schema.
-The https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser contains all the Python parser classes developed in this package.
+* https://pythex.org/
+* https://regex101.com/
 
-https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
+|library| parser packages
+^^^^^^^^^^^^^^^^^^^^^^^^^
+The |library| uses the following two packages to parse (pattern match) device output data (text):
 
-Schema and parser class
------------------------
-(From w3schools: A Class is like an object constructor, or a "blueprint" for creating objects.)
+#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema` (definition of the key-value pairs).
+ 
+#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser has an associated schema that defines the data structure of the parsed output, which is the same regardless of the protocol.
 
-Schema class: Basically shows the key-value pair data structure that will result from parsing the device output.
-Parser class: Basically the class with definition of how to parse, inherits from the schema to return the format as a Python dictionary with the structure defined in the schema.
+The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
+
+.. image:: ../images/structure.png
+
+.. _schema:
 
 Create a parser schema
 ----------------------
-With a model
-^^^^^^^^^^^^
- |library| ops model: https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models, for example bgp?
+Stated simply, a schema defines the key-value pairs included in a Python dictionary of parsed output. 
 
-Is the schema in JSON format? As an example, perhaps https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers/show%20lisp%20session IOSXE (for external) , choose platform, "show lisp session", explain what 'optional' means (keys that are not always expected to be found in device output are marked as "Optional". All other keys have a specific name (key) and value type (integer, string, boolean, list etc.). Ask the user to go there so they get used to finding these. Then, go to GitHub to get the actual code, modify to suit your purposes. And perhaps contribute <link>.
+Example of a schema
+^^^^^^^^^^^^^^^^^^^
+You can see all of the available parser schemas on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
 
-Without a model
-^^^^^^^^^^^^^^^
-How to figure out the schema
-1. show command output
-2. show command with xml output
-3. from YANG data model
+1. At the top of the page, search for a show command, such as :monospace:`show interfaces`.
+2. Select an OS, in this example, *IOSXE*.
+3. Select *show interfaces*, and then scroll down to the IOSXE schema.
 
-Consider parent and child keys, and when the levels depend on arguments defined at runtime when you execute the show command.
+The following illustration shows part of the schema. *Optional* indicates keys that are not always included in the expected output.
 
-vrf, address_family/protocol(ipv4 or ipv6),  instance, interface
+.. image:: ../images/schema_example.png
+
+Create a schema based on a model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
+
+#. For this example, select *interface*, and then select **MODEL** to open a PDF file that contains the interface model.
+
+#. Navigate to the **Interface Ops structure** section.
+
+   .. image:: ../images/ops_structure.png
+      :scale: 50 %
+
+   *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|  
+
+#. In a text editor, define the schema class, and then add the keys that you want your parser to return. Use JSON format and save the file as a :monospace:`*.py` file, as shown in the following example:
+
+   .. code-block:: python
+
+    class ShowInterfacesSchema(MetaParser):
+    """schema for show interfaces
+                  show interfaces <interface>"""
+
+    schema = {
+            Any(): {
+                'oper_status': str,
+                Optional('line_protocol'): str,
+                'enabled': bool,
+                Optional('connected'): bool,
+                Optional('description'): str,
+                'type': str,
+                ...
+
+   .. note:: You must specify the value type, such as integer, string, boolean, or list.
+   
+   You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_. 
+
+Create a schema without a model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If you want to create a new schema, you can identify the keys that you need in a number of ways, including:
+
+* Use the ``show`` command output.
+* Use the XML output option with a ``show`` command to display the output as key-value pairs.
+* Use the YANG data model to identify the relevant keys.
+
+Identify keys from the show command
+***********************************
+For this example, :download:`download the zip file <mock_parser.zip>` and extract the contents to a directory of your choice, such as :monospace:`mock_parser`.
+
+#. Go to the directory that contains the extracted files::
+
+    $ cd mock_parser
+
+#. In your Python interpreter, load the :term:`testbed YAML file`, connect to a device, and run the show command.
+
+   .. code-block:: python
+
+    from genie.testbed import load
+    testbed = load('mock_parser.yaml')
+    dev = testbed.devices['iosxe1']
+    dev.connect()
+
+#. Execute the ``show interfaces`` command.
+
+   .. code-block:: python
+
+    dev.execute('show interfaces')
+
+   *Result*: The system displays the unparsed output. The following example show some of the output that you can use to identify keys for your parser::
+
+    GigabitEthernet1 is up, line protocol is up
+        Hardware is CSR vNIC, address is 0800.2729.3800 (bia 0800.2729.3800)
+        Internet address is 10.0.2.15/24
+        MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+            reliability 255/255, txload 1/255, rxload 1/255
+        Encapsulation ARPA, loopback not set
+        Keepalive set (10 sec)
+        Full Duplex, 1000Mbps, link type is auto, media type is Virtual
+        output flow-control is unsupported, input flow-control is unsupported
+        ARP type: ARPA, ARP Timeout 04:00:00
+        Last input 00:00:00, output 00:00:00, output hang never
+        Last clearing of "show interface" counters never
+
+#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. In this example, the information for :monospace:`GigabitEthernet1` should be below the name. Your schema might look something like this:
+
+   .. code-block:: python
+        'interfaces': {
+            'GigabitEthernet1': {
+                'oper_status': str,
+                'line_protocol': str,
+                'hardware': str,
+                'mac_address': str,
+                ...
+
+
+#. You can also check for ways to group the data based on counter input and output, as well as other statistics. For the following output:
+
+   .. code-block:: python
+
+        4243 packets input, 361948 bytes, 0 no buffer
+        Received 0 broadcasts (0 IP multicasts)
+        0 runts, 0 giants, 0 throttles
+        0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+        0 watchdog, 0 multicast, 0 pause input
+        3616 packets output, 1637917 bytes, 0 underruns
+        0 output errors, 0 collisions, 0 interface resets
+        0 unknown protocol drops
+        0 babbles, 0 late collision, 0 deferred
+        0 lost carrier, 0 no carrier, 0 pause output
+        0 output buffer failures, 0 output buffers swapped out
+
+   your schema could be::
+
+    'counters': {  # categorize the value as 'counters'
+        'input': {   # categorize the 'input' related values
+            'packets': int,
+            'bytes': int,
+            
+        },
+        'output': {
+            'packets': int,
+            'bytes': int,
+        }
+
+   .. note:: You should also consider when show command arguments defined at runtime might determine parent and child keys. These arguments might include vrf, address_family/protocol(ipv4 or ipv6), instance, or interface name.
+
+Identify keys from XML output
+******************************
+NXOS device ``show`` commands have an XML option that formats the output as key-value pairs. If you have an IOSXE or IOSXR device, you can usually find a similar NXOS command to run so that you can see the XML output:
 
 .. code-block:: text
 
-    'vrf': {
-        "VRF1": {
-            'address_family': {
-                'ipv4': {
-                    'instance': {
-                        'process1': {
-                            'interfaces': {
-                                'Ethernet1': {
-                                    'key1': value,
-                                    'key2': value,
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+ nx-osv9000-1# show interface | xml
+
+*Result*::
+
+    <?xml version="1.0" encoding="ISO-8859-1"?>
+    <nf:rpc-reply xmlns="http://www.cisco.com/nxos:1.0:if_manager" xmlns:nf="urn:iet
+    f:params:xml:ns:netconf:base:1.0">
+    <nf:data>
+    <show>
+    <interface>
+        <__XML__OPT_Cmd_show_interface_quick>
+        <__XML__OPT_Cmd_show_interface___readonly__>
+        <__readonly__>
+        <TABLE_interface>
+            <ROW_interface>
+            <interface>mgmt0</interface>
+            <state>up</state>
+            <admin_state>up</admin_state>
+            <eth_hw_desc>Ethernet</eth_hw_desc>
+            <eth_hw_addr>5e01.c005.0000</eth_hw_addr>
+            <eth_bia_addr>5e01.c005.0000</eth_bia_addr>
+            <eth_ip_addr>10.0.0.0</eth_ip_addr>
+
+In this example, your schema could include the keys "state", "admin_state", "eth_hw_desc", and so on.
+
+Identify keys from the YANG data model
+**************************************
+asdf
 
 
 
 
 Use | xml with show commands to get xml key value pairs that you can use to write your schema
 
-Get schema idea from show command output. Please check indentation in the output, indentation always tells you if you need to have a level key
-Example: As you can see, information should be under 'Ethernet 0' in this case.
-
-Router# show interfaces
-Ethernet 0 is up, line protocol is up
-  Hardware is MCI Ethernet, address is 0000.0c00.750c (bia 0000.0c00.750c)
-  Internet address is 10.108.28.8, subnet mask is 255.255.255.0
-  MTU 1500 bytes, BW 10000 Kbit, DLY 100000 usec, rely 255/255, load 1/255
-  Encapsulation ARPA, loopback not set, keepalive set (10 sec)
-  ARP type: ARPA, ARP Timeout 4:00:00
-(snip)
-Schema could be:
-
-'interfaces': {
-     'Ethernet 0': {
-         'state': 'up',
-         'protocol': 'up',
-         'hardware': 'MCI Ethernet',
-         'address': '0000.0c00.750c',
-another thing, please check how you can do grouping the data based on output such as 'input'vs'output', 'counters', 'statistics'. Below lines look like having patterns for both 'input' and 'output'
-
-1127576 packets input, 447251251 bytes, 0 no buffer
-Received 354125 broadcasts, 0 runts, 0 giants, 57186* throttles
-0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
-5332142 packets output, 496316039 bytes, 0 underruns
-0 output errors, 432 collisions, 0 interface resets, 0 restarts
-Schema could be:
-
-'counters': {  # categorize the value as 'counters'
-    'input': {   # categorize the 'input' related values
-        'packets': 1127576,
-        'bytes': 447251251,
-        (snip)
-    },
-    'output': {
-        'packets': 5332142,
-        'bytes': 496316039,
-    }
 
 
 
-Schema class, parser class
+
+
+
 
 Write a parser class with RegEx
 --------------------------------
+
+Parser class: Basically the class with definition of how to parse, inherits from the schema to return the format as a Python dictionary with the structure defined in the schema.
+
 This class contains the regular expressions that can parse each line of the device output into the Python dictionary defined in the Parser Schema Class. The Parser Class inherits from the Parser Schema Class to ensure that the Python dictionary returned by the class is exactly in the format of the defined schema. The following is a Parser Class that returns the Python dictionary defined in the Parser Schema Class above: You need to know what you're looking for from the output in order to set up the correct RegEx search/compile.
 
 # Python (this imports the Python re module for RegEx)
@@ -224,8 +330,8 @@ class ShowLispSession(ShowLispSessionSchema):
 
 As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema.
 
-Write a parser with the parsergen package
------------------------------------------
+Write a parser class with parsergen
+-----------------------------------
 Parses both tabular and non-tabular show command output (either or both).
 The Parsergen Class is particularly useful where Genie Ops does not have a model for the particular state you are looking to parse.
 
@@ -344,4 +450,4 @@ See the topic :ref:`contribute` for more details.
 See also...
 
 * `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
-* asdf
+* `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
