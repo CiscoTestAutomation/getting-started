@@ -299,70 +299,124 @@ Identify keys from the YANG data model
 
 Write a parser class with RegEx
 --------------------------------
+When you write a new parser class, you define the regular expressions used to match patterns in each line of the device output. The parser then adds the matched values as key-value pairs to a Python dictionary, as defined by the associated schema class. The parser class inherits from the schema class to ensure that the Python dictionary returned by the parser follows exactly the format of the defined schema. 
 
-Parser class: Basically the class with definition of how to parse, inherits from the schema to return the format as a Python dictionary with the structure defined in the schema.
+The following example shows a schema and parser class for the ``show lisp session`` command. Take a look at the example, and then we'll explain how it works.
 
-This class contains the regular expressions that can parse each line of the device output into the Python dictionary defined in the Parser Schema Class. The Parser Class inherits from the Parser Schema Class to ensure that the Python dictionary returned by the class is exactly in the format of the defined schema. The following is a Parser Class that returns the Python dictionary defined in the Parser Schema Class above: You need to know what you're looking for from the output in order to set up the correct RegEx search/compile.
+.. code-block:: python
 
-# Python (this imports the Python re module for RegEx)
-import re
- 
-# ==============================
-# Parser for 'show lisp session'
-# ==============================
-class ShowLispSession(ShowLispSessionSchema):
- 
-    ''' Parser for "show lisp session"'''
- 
-    cli_command = 'show lisp session'
- 
-    def cli(self, output=None):
-        if output is None:
-            out = self.device.execute(self.cli_command)
-        else:
-            out = output
- 
-        # Init vars (this is the dictionary, indicated by {})
-        parsed_dict = {}
- 
-        # Sessions for VRF default, total: 3, established: 3 (this is the python regex, re.compile compiles the regex pattern into a regular expression object, then use that to search or match)
-        p1 = re.compile(r'Sessions +for +VRF +(?P<vrf>(\S+)),'
-                         ' +total: +(?P<total>(\d+)),'
-                         ' +established: +(?P<established>(\d+))$')
- 
-        # Peer                           State      Up/Down        In/Out    Users
-        # 2.2.2.2                        Up         00:51:38        8/13     3
-        p2 = re.compile(r'(?P<peer>(\S+)) +(?P<state>(Up|Down)) +(?P<time>(\S+))'
-                         ' +(?P<in>(\d+))\/(?P<out>(\d+)) +(?P<users>(\d+))$')
- 
-        for line in out.splitlines():
-            line = line.strip()
- 
-            # Sessions for VRF default, total: 3, established: 3
-            m = p1.match(line)
-            if m:
-                group = m.groupdict()
-                vrf = group['vrf']
-                vrf_dict = parsed_dict.setdefault('vrf', {}).\
-                            setdefault(vrf, {}).setdefault('sessions', {})
-                vrf_dict['total'] = int(group['total'])
-                vrf_dict['established'] = int(group['established'])
-                continue
- 
-            # 8.8.8.8                        Up         00:52:15        8/13     3
-            m = p2.match(line)
-            if m:
-                group = m.groupdict()
-                peer = group['peer']
-                peer_dict = vrf_dict.setdefault('peers', {}).setdefault(peer, {})
-                peer_dict['state'] = group['state'].lower()
-                peer_dict['time'] = group['time']
-                peer_dict['total_in'] = int(group['in'])
-                peer_dict['total_out'] = int(group['out'])
-                peer_dict['users'] = int(group['users'])
-                continue
- 
-        return parsed_dict
+    # Metaparser
+    from genie.metaparser import MetaParser
+    from genie.metaparser.util.schemaengine import Any, Or, Optional
+    
+    # ==============================
+    # Schema for 'show lisp session'
+    # ==============================
+    class ShowLispSessionSchema(MetaParser):
+    
+        ''' Schema for "show lisp session" '''
+    
+    # These are the key-value pairs to add to the parsed dictionary
+        schema = {
+            'vrf':
+                {Any():
+                    {'sessions':
+                        {'total': int,
+                        'established': int,
+                        'peers':
+                            {Any():
+                                {'state': str,
+                                'time': str,
+                                'total_in': int,
+                                'total_out': int,
+                                Optional('users'): int,
+                                },
+                            },
+                        },
+                    },
+                },
+            }
+    
+    # Python (this imports the Python re module for RegEx)
+    import re
+    
+    # ==============================
+    # Parser for 'show lisp session'
+    # ==============================
+    
+    # The parser class inherits from the schema class
+    class ShowLispSession(ShowLispSessionSchema):
+    
+        ''' Parser for "show lisp session"'''
+    
+        cli_command = 'show lisp session'
+    
+        def cli(self, output=None):
+            if output is None:
+                out = self.device.execute(self.cli_command)
+            else:
+                out = output
+    
+            # This is the dictionary object, indicated by {}
+            parsed_dict = {}
+    
+            # This is the python regex, re.compile compiles the regex pattern into a regex object, 
+            # and the object is then used to match patterns.
+            
+            # The regex for p1 matches the schema keys to the level of vrf sessions established
+            p1 = re.compile(r'Sessions +for +VRF +(?P<vrf>(\S+)),'
+                            ' +total: +(?P<total>(\d+)),'
+                            ' +established: +(?P<established>(\d+))$')
+    
+            # The regex for p2 matches the lower-level patterns for each peer
+            p2 = re.compile(r'(?P<peer>(\S+)) +(?P<state>(Up|Down)) +(?P<time>(\S+))'
+                            ' +(?P<in>(\d+))\/(?P<out>(\d+)) +(?P<users>(\d+))$')
+    
+            # This defines the "for" loop, so that the parser reads each line of output
+            for line in out.splitlines():
+                line = line.strip()
+    
+                # ??? Sessions for VRF default, total: 3, established: 3
+                m = p1.match(line)
+                if m:
+                    group = m.groupdict()
+                    vrf = group['vrf']
+                    vrf_dict = parsed_dict.setdefault('vrf', {}).\
+                                setdefault(vrf, {}).setdefault('sessions', {})
+                    vrf_dict['total'] = int(group['total'])
+                    vrf_dict['established'] = int(group['established'])
+                    continue
+    
+                # ??? 8.8.8.8                        Up         00:52:15        8/13     3
+                m = p2.match(line)
+                if m:
+                    group = m.groupdict()
+                    peer = group['peer']
+                    peer_dict = vrf_dict.setdefault('peers', {}).setdefault(peer, {})
+                    peer_dict['state'] = group['state'].lower()
+                    peer_dict['time'] = group['time']
+                    peer_dict['total_in'] = int(group['in'])
+                    peer_dict['total_out'] = int(group['out'])
+                    peer_dict['users'] = int(group['users'])
+                    continue
+    
+            return parsed_dict
+
+
+
+As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema. You need to know what you're looking for from the output in order to set up the correct RegEx search/compile.
+.. note:: You need to know the patterns that you want to match before you write the parser class. These patterns are some or all of the keys defined in the schema class.
+
+#. In the same text file as your schema, first define the parser class and its associated schema::
+
+    class ShowInterfaces(ShowInterfacesSchema):
+
+#. Define the show command that you want to parse::
+
+    class ShowInterfaces(ShowInterfacesSchema):
+
+        cli_command = ['show interfaces','show interfaces {interface}']
+
 
 As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema.
 
