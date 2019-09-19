@@ -37,7 +37,7 @@ The following sections describe this process in more detail.
 
 Pattern matching
 ^^^^^^^^^^^^^^^^
-The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for many patterns, including "bandwidth", and returns the information in JSON format as a key-value pair within the overall set of key-value pairs::
+The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information in JSON format as a set of key-value pairs. as shown in the following example::
 
  {
   "GigabitEthernet1": {
@@ -49,7 +49,7 @@ The |library| parsers look for specific patterns in the device output and then s
 
 The |library| parsers use regular expressions (regex) to match patterns in the device output. Regular expressions are the backbone of all parsers, so you must know how to use them before you can write a parser.
 
-See, for example, the following references:
+The following references provide detailed information about how to use regular expressions:
 
 * https://www.learnpython.org/en/Regular_Expressions
 * https://regexone.com/references/python
@@ -64,9 +64,9 @@ The following online tools can help you build and test Python regular expression
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 The |library| uses the following two packages to parse (pattern match) device output data (text):
 
-#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema` (definition of the key-value pairs).
+#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema <schema>` (definition of the key-value pairs).
  
-#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser has an associated schema that defines the data structure of the parsed output, which is the same regardless of the protocol.
+#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser has an associated schema that defines the data structure of the parsed output, so that the data structure is the same regardless of the protocol.
 
 The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
 
@@ -76,17 +76,17 @@ The following illustration shows how the Metaparser and parser classes work toge
 
 Create a parser schema
 ----------------------
-Stated simply, a schema defines the key-value pairs included in a Python dictionary of parsed output. 
+A schema defines the key-value pairs stored in the Python dictionary that a parser creates. 
 
 Example of a schema
 ^^^^^^^^^^^^^^^^^^^
 You can see all of the available parser schemas on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
 
 1. At the top of the page, search for a show command, such as :monospace:`show interfaces`.
-2. Select an OS, in this example, *IOSXE*.
-3. Select *show interfaces*, and then scroll down to the IOSXE schema.
+2. Select an OS, in this example, **IOSXE**.
+3. Select **show interfaces**, and then scroll down to the IOSXE schema.
 
-The following illustration shows part of the schema. *Optional* indicates keys that are not always included in the expected output.
+The following illustration shows part of the schema. **Optional** indicates keys that are not always included in the expected output.
 
 .. image:: ../images/schema_example.png
 
@@ -94,16 +94,16 @@ Create a schema based on a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
 
-#. For this example, select *interface*, and then select **MODEL** to open a PDF file that contains the interface model.
+#. For this example, select **interface**, and then select **MODEL** to open a PDF file that contains the interface model.
 
 #. Navigate to the **Interface Ops structure** section.
 
    .. image:: ../images/ops_structure.png
       :scale: 50 %
 
-   *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|  
+   |br| |br| *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|  
 
-#. In a text editor, define the schema class, and then add the keys that you want your parser to return. Use JSON format and save the file as a :monospace:`*.py` file, as shown in the following example:
+#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example. Use JSON format and save the file as a :monospace:`*.py` file.
 
    .. code-block:: python
 
@@ -173,7 +173,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 
 #. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. 
 
-   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In this example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address`, for example, won't be overwritten by the address of a different interface.
+   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In this example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address`, for example, won't be overwritten by the mac_address of a different interface.
 
    Your schema might look something like this:
 
@@ -250,7 +250,7 @@ NXOS device ``show`` commands have an XML option that formats the output as key-
             <eth_bia_addr>5e01.c005.0000</eth_bia_addr>
             <eth_ip_addr>10.0.0.0</eth_ip_addr>
 
-In this example, your schema could include the keys "state", "admin_state", "eth_hw_desc", and so on.
+In this example, your schema could include the keys :monospace:`state`, :monospace:`admin_state`, :monospace:`eth_hw_desc`, and others.
 
 Identify keys from the YANG data model
 **************************************
@@ -374,24 +374,7 @@ The ``parsergen`` package is a generic parser for show commands. You can use the
 
 Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NXE/VXLAN platform.
 
-#. In a Python interpreter, look at the output from the show command::
-
-    dev.execute('show nve vni')
-
-   *Result*::
-
-    [2019-09-19 10:26:04,291] +++ iosxe1: executing command 'show nve vni' +++
-    show nve vni
-    Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf
-    nve1       6010       N/A             Up         L2DP  1     CLI N/A
-    nve2       6020       N/A             Up         L2DP  2     CLI N/A
-    nve3       6030       N/A             Up         L2DP  3     CLI N/A
-    switch#
-    'Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf                      \r\nnve1       6010       N/A             Up         L2DP  1     CLI N/A                      \r\nnve2       6020       N/A             Up         L2DP  2     CLI N/A                      \r\nnve3       6030       N/A             Up         L2DP  3     CLI N/A'
-
-   You can see the device output as tabular data. |br| |br|
-
-#. Import the required |library| and Python functionality (``re`` is the Python regex functionality):
+#. In a Python interpreter, import the required |library| and Python functionality (``re`` is the Python regex functionality):
 
    .. code-block:: python
 
@@ -472,59 +455,13 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
    (pyats) $ python3 parsergen_script.py
 
-Full Script
-
-#Import Genie libraries
-from genie.conf import Genie
-from genie import parsergen
-import re
-
-from pprint import pprint
-
-#Create Testbed Object with Genie
-testbed = Genie.init('mocked_first.yaml')
-
-#Create Device Object
-uut = testbed.devices.iosxe1
-
-#Use connect method to initiate connection to the device under test
-uut.connect()
-
-#Execute command show nve nvi on connected device
-output = uut.device.execute('show nve vni')
-
-#Create list of Header names of the table from show nve nvi - must match exactly to that which is output on cli
-header = ['Interface', 'VNI', 'Multicast-group', 'VNI state', 'Mode', 'BD', 'cfg', 'vrf']
-
-#Use Parsergen to parse the output and create structured output (dictionary of operational stats)
-result = parsergen.oper_fill_tabular(device_output=output, device_os='iosxe', header_fields=header, index=[0])
-
-#Pretty Print the Dictionary
-pprint(result.entries)
-
-#Check the type to see that it's a dictionary
-type(result.entries)
-
-Make JSON
-
-
-
-
-#. asdf
-
-    .. code-block:: python
-
-       from genie.testbed import load
-
-
-
-#. asdf
-
 Create and execute a unit test
 -------------------------------
-If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must :ref:`write a unit test <write-unit-tests>` and attach the results for each parser that you want to contribute.
+If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must and attach the test results for each parser that you want to contribute.
 
 See the topic :ref:`contribute` for more details.
+
+Make JSON is part of contributing a new parser, because it adds the new parser to the functionality on the web page that displays the list of available parsers.
 
 See also...
 
