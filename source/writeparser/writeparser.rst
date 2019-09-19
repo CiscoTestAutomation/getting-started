@@ -141,7 +141,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 
     $ cd mock_parser
 
-#. In your Python interpreter, load the :term:`testbed YAML file`, connect to a device, and run the show command.
+#. In your Python interpreter, load the :term:`testbed YAML file`, and connect to a device.
 
    .. code-block:: python
 
@@ -171,19 +171,27 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
         Last input 00:00:00, output 00:00:00, output hang never
         Last clearing of "show interface" counters never
 
-#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. In this example, the information for :monospace:`GigabitEthernet1` should be below the name. Your schema might look something like this:
+#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. 
+
+   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In this example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address`, for example, won't be overwritten by the address of a different interface.
+
+   Your schema might look something like this:
 
    .. code-block:: python
+
         'interfaces': {
-            'GigabitEthernet1': {
+            'interface_name': {
                 'oper_status': str,
                 'line_protocol': str,
                 'hardware': str,
                 'mac_address': str,
-                ...
+                ... 
+
+ 
 
 
-#. You can also check for ways to group the data based on counter input and output, as well as other statistics. For the following output:
+
+#. You can also check for ways to group the data based on counters, input and output, as well as other statistics. For the following output:
 
    .. code-block:: python
 
@@ -199,7 +207,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
         0 lost carrier, 0 no carrier, 0 pause output
         0 output buffer failures, 0 output buffers swapped out
 
-   your schema could be::
+   Your schema could be::
 
     'counters': {  # categorize the value as 'counters'
         'input': {   # categorize the 'input' related values
@@ -212,7 +220,6 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
             'bytes': int,
         }
 
-   .. note:: You should also consider when show command arguments defined at runtime might determine parent and child keys. These arguments might include vrf, address_family/protocol(ipv4 or ipv6), instance, or interface name.
 
 Identify keys from XML output
 ******************************
@@ -247,19 +254,48 @@ In this example, your schema could include the keys "state", "admin_state", "eth
 
 Identify keys from the YANG data model
 **************************************
-asdf
 
+#. Install the ``pyang`` package in your virtual environment::
 
+    pip install pyang
 
+#. Clone the git repository for the YANG model::
 
-Use | xml with show commands to get xml key value pairs that you can use to write your schema
+    git clone https://github.com/YangModels/yang.git
 
+#. Look for the latest model (at the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
 
+    find . | grep arp
 
+#. View the model and identify the keys::
 
+    pyang -f tree ./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang
 
+   *Result*: You can see the YANG model with the keys and data types::
 
+     module: ietf-arp
+        +--rw arp
+            +--rw dynamic-learning?   boolean
 
+        augment /if:interfaces/if:interface/ip:ipv4:
+            +--rw arp
+            +--rw expiry-time?        uint32
+            +--rw dynamic-learning?   boolean
+            +--rw proxy-arp
+            |  +--rw mode?   enumeration
+            +--rw gratuitous-arp
+            |  +--rw enable?     boolean
+            |  +--rw interval?   uint32
+            +--ro statistics
+                +--ro discontinuity-time?    yang:date-and-time
+                +--ro in-requests-pkts?      yang:counter32
+                +--ro in-replies-pkts?       yang:counter32
+                +--ro in-gratuitous-pkts?    yang:counter32
+                +--ro out-requests-pkts?     yang:counter32
+                +--ro out-replies-pkts?      yang:counter32
+                +--ro out-gratuitous-pkts?   yang:counter32
+        augment /if:interfaces/if:interface/ip:ipv4/ip:neighbor:
+            +--ro remaining-expiry-time?   uint32
 
 Write a parser class with RegEx
 --------------------------------
@@ -330,68 +366,111 @@ class ShowLispSession(ShowLispSessionSchema):
 
 As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema.
 
-Write a parser class with parsergen
------------------------------------
-Parses both tabular and non-tabular show command output (either or both).
-The Parsergen Class is particularly useful where Genie Ops does not have a model for the particular state you are looking to parse.
+Write a parser class with the parsergen package
+-----------------------------------------------
+The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
-The Genie Parsergen Class can deal with both Tabular and Non Tabular device output from a networking device. We shall initially explore Tabular parsing (need to use the example yaml file and test exactly how this works as it's not entirely clear from the passive voice).
+The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse this class to create tests for any values found within the output. 
 
-Consider the output from the show command 'show nve vni'
+Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NXE/VXLAN platform.
 
-Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf                      
-nve1       6001       N/A             Up         L2DP  1     CLI N/A 
-The testbed object 'uut.device' has a method of execute. Execute will run the command on the device and return a string as the result of the command
+#. In a Python interpreter, look at the output from the show command::
 
-from genie import parsergen (add the other import functions from the script, then run the commands as in the full script, attach the script as a .py?)
+    dev.execute('show nve vni')
 
-output = uut.device.execute('show nve vni')
+   *Result*::
 
-Create a list identifying the headers of the expected column output: (not 'is created')
+    [2019-09-19 10:26:04,291] +++ iosxe1: executing command 'show nve vni' +++
+    show nve vni
+    Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf
+    nve1       6010       N/A             Up         L2DP  1     CLI N/A
+    nve2       6020       N/A             Up         L2DP  2     CLI N/A
+    nve3       6030       N/A             Up         L2DP  3     CLI N/A
+    switch#
+    'Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf                      \r\nnve1       6010       N/A             Up         L2DP  1     CLI N/A                      \r\nnve2       6020       N/A             Up         L2DP  2     CLI N/A                      \r\nnve3       6030       N/A             Up         L2DP  3     CLI N/A'
 
-header = ['Interface', 'VNI', 'Multicast-group', 'VNI state', 'Mode', 'BD', 'cfg', 'vrf']
-We will now use the parsergen oper_fill_tabular method to parse the string and store as structured data
+   You can see the device output as tabular data. |br| |br|
 
-result = parsergen.oper_fill_tabular(device_output=output, device_os='iosxe', header_fields=header, index=[0])
+#. Import the required |library| and Python functionality (``re`` is the Python regex functionality):
 
-(0 is the index which is the Interface value/name)
+   .. code-block:: python
 
-Now print the structured data returned
+     from genie.testbed import load
+     from genie import parsergen
+     import re
+     from pprint import pprint
 
-import pprint
+#. Load the testbed, create the device object, and connect to the device:
 
-pprint.result.entries
-{'nve1': {'BD': '1',
-          'Interface': 'nve1',
-          'Mode': 'L2DP',
-          'Multicast-group': 'N/A',
-          'VNI': '6010',
-          'VNI state': 'Up',
-          'cfg': 'CLI',
-          'vrf': 'N/A'},
- 'nve2': {'BD': '2',
-          'Interface': 'nve2',
-          'Mode': 'L2DP',
-          'Multicast-group': 'N/A',
-          'VNI': '6020',
-          'VNI state': 'Up',
-          'cfg': 'CLI',
-          'vrf': 'N/A'},
- 'nve3': {'BD': '3',
-          'Interface': 'nve3',
-          'Mode': 'L2DP',
-          'Multicast-group': 'N/A',
-          'VNI': '6030',
-          'VNI state': 'Up',
-          'cfg': 'CLI',
-          'vrf': 'N/A'}}
+   .. code-block:: python
 
-Determine the type of the result object entries attribute
+     testbed = load('mock_parser.yaml')
+     uut = testbed.devices['iosxe1']
+     uut.connect()
 
-type(result.entries)
-As you will see the returned data is now structured data in the form of a dictionary
-(The output is:)
-<class 'dict'>
+#. Execute the show command and store the output in the variable ``output``:
+
+   .. code-block:: python
+
+    output = uut.device.execute('show nve vni')
+
+   *Result*: You can see the tabular output::
+
+    Interface  VNI        Multicast-group VNI state  Mode  BD    cfg vrf
+    nve1       6010       N/A             Up         L2DP  1     CLI N/A
+    nve2       6020       N/A             Up         L2DP  2     CLI N/A
+    nve3       6030       N/A             Up         L2DP  3     CLI N/A
+
+#. Now you can store a list of header names from the table as a variable. The names must exactly match the output:
+
+   .. code-block:: python
+
+    header = ['Interface', 'VNI', 'Multicast-group', 'VNI state', 'Mode', 'BD', 'cfg', 'vrf']
+
+#. Use ``parsergen`` to parse the output, with the interface name as index 0. This process creates a Python dictionary of operational statistics per interface:
+
+   .. code-block:: python
+
+    result = parsergen.oper_fill_tabular(device_output=output, device_os='iosxe', header_fields=header, index=[0])
+
+#. Print the value of the ``result`` object that contains the dictionary:
+
+   .. code-block:: python
+
+    pprint(result.entries)
+
+   *Result*: Easy-to-read and easy-to-automate structured data:
+   
+   .. code-block:: text
+
+    {'nve1': {'BD': '1',
+            'Interface': 'nve1',
+            'Mode': 'L2DP',
+            'Multicast-group': 'N/A',
+            'VNI': '6010',
+            'VNI state': 'Up',
+            'cfg': 'CLI',
+            'vrf': 'N/A'},
+    'nve2': {'BD': '2',
+            'Interface': 'nve2',
+            'Mode': 'L2DP',
+            'Multicast-group': 'N/A',
+            'VNI': '6020',
+            'VNI state': 'Up',
+            'cfg': 'CLI',
+            'vrf': 'N/A'},
+    'nve3': {'BD': '3',
+            'Interface': 'nve3',
+            'Mode': 'L2DP',
+            'Multicast-group': 'N/A',
+            'VNI': '6030',
+            'VNI state': 'Up',
+            'cfg': 'CLI',
+            'vrf': 'N/A'}}
+
+.. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to the same directory as your testbed YAML file, and then run the following command::
+
+   (pyats) $ python3 parsergen_script.py
 
 Full Script
 
