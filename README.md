@@ -1,13 +1,15 @@
 # pyATS Getting Started Guide
 
-This is the pyATS getting started guide source code.
-The content of this repository is published on Cisco 
+This is the pyATS getting started guide and development guide source code.
+The content of this repository, once reviewed and approved, is published on Cisco 
 DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
+
+Please note that this repository contains WORK IN PROGRESS. We cannot guarantee that the information is accurate until we publish the content to https://developer.cisco.com.
 
 ## Contributions
 
-Everyone is welcomed to contribute (open PR) and/or open issues against the  
-pyATS getting started guide in this GitHub repository.
+Everyone can contribute (open a PR) and/or open issues against the  
+pyATS documentation in this GitHub repository.
 
 Your changes will be reviewed, and once merged, the main hosted documentation
 will be updated.
