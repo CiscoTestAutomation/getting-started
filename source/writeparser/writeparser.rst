@@ -351,32 +351,36 @@ The following example shows a schema and parser class for the ``show lisp sessio
     
         cli_command = 'show lisp session'
     
+        # Defines a function to run the cli_command
         def cli(self, output=None):
             if output is None:
                 out = self.device.execute(self.cli_command)
             else:
                 out = output
     
-            # This is the dictionary object, indicated by {}
+            # Initializes the Python dictionary variable
             parsed_dict = {}
     
-            # This is the python regex, re.compile compiles the regex pattern into a regex object, 
-            # and the object is then used to match patterns.
-            
-            # The regex for p1 matches the schema keys to the level of vrf sessions established
+            # Defines the regex for the first line of device output, which is:
+            # Sessions for VRF default, total: 3, established: 3
+
             p1 = re.compile(r'Sessions +for +VRF +(?P<vrf>(\S+)),'
                             ' +total: +(?P<total>(\d+)),'
                             ' +established: +(?P<established>(\d+))$')
     
-            # The regex for p2 matches the lower-level patterns for each peer
+            # Defines the regex for the next line of device output, which is:
+            # Peer                           State      Up/Down        In/Out    Users
+            # 2.2.2.2                        Up         00:51:38        8/13     3
+            
             p2 = re.compile(r'(?P<peer>(\S+)) +(?P<state>(Up|Down)) +(?P<time>(\S+))'
                             ' +(?P<in>(\d+))\/(?P<out>(\d+)) +(?P<users>(\d+))$')
     
-            # This defines the "for" loop, so that the parser reads each line of output
+            # Defines the "for" loop, to pattern match each line of output
+
             for line in out.splitlines():
                 line = line.strip()
     
-                # ??? Sessions for VRF default, total: 3, established: 3
+                # Processes the matched patterns for the first line of output
                 m = p1.match(line)
                 if m:
                     group = m.groupdict()
@@ -387,7 +391,7 @@ The following example shows a schema and parser class for the ``show lisp sessio
                     vrf_dict['established'] = int(group['established'])
                     continue
     
-                # ??? 8.8.8.8                        Up         00:52:15        8/13     3
+                # Processes the matched patterns for the second line of output
                 m = p2.match(line)
                 if m:
                     group = m.groupdict()
@@ -407,6 +411,7 @@ The following table describes the structure of the parser class in more detail.
 .. csv-table:: Structure of a parser class
    :file: parser_class_structure.csv
    :header-rows: 1
+   :widths: 48 52
 
 .. note:: You need to know the patterns that you want to match before you write the parser class. These patterns can be some or all of the keys defined in the schema class.
 
