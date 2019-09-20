@@ -297,6 +297,8 @@ Identify keys from the YANG data model
         augment /if:interfaces/if:interface/ip:ipv4/ip:neighbor:
             +--ro remaining-expiry-time?   uint32
 
+.. _regex-parser:
+
 Write a parser class with RegEx
 --------------------------------
 When you write a new parser class, you define the regular expressions used to match patterns in each line of the device output. The parser then adds the matched values as key-value pairs to a Python dictionary, as defined by the associated schema class. The parser class inherits from the schema class to ensure that the Python dictionary returned by the parser follows exactly the format of the defined schema. 
@@ -504,11 +506,110 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
    (pyats) $ python3 parsergen_script.py
 
-Create and execute a unit test
--------------------------------
-If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute.
+.. _parser-unit-test:
 
-See the topic :ref:`contribute` for more details.
+Test your new parser
+--------------------
+If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute. 
+
+The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
+
+The following example shows how to create a unit test file for :ref:`the show lisp session example <regex-parser>`.
+
+.. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
+
+.. code-block:: python
+
+    # Import the Python mock functionality
+    import unittest
+    from unittest.mock import Mock
+    
+    # pyATS
+    from pyats.topology import Device
+    from pyats.topology import loader
+    
+    # Metaparser
+    from genie.metaparser.util.exceptions import SchemaEmptyParserError, SchemaMissingKeyError
+    
+    # iosxe show_lisp
+    from genie.libs.parser.iosxe.show_lisp import ShowLispSession
+    
+    # =================================
+    # Unit test for 'show lisp session'
+    # =================================
+    class test_show_lisp_session(unittest.TestCase):
+    
+        '''Unit test for "show lisp session"'''
+    
+        device = Device(name='aDevice')
+        
+        empty_output = {'execute.return_value': ''}
+    
+        # Specify the expected result for the first line of output
+        golden_parsed_output1 = {
+            'vrf':
+                {'default':
+                    {'sessions':
+                        {'established': 3,
+                        'peers':
+                            {'2.2.2.2':
+                                {'state': 'up',
+                                'time': '00:51:38',
+                                'total_in': 8,
+                                'total_out': 13,
+                                'users': 3},
+                            '6.6.6.6':
+                                {'state': 'up',
+                                'time': '00:51:53',
+                                'total_in': 3,
+                                'total_out': 10,
+                                'users': 1},
+                            '8.8.8.8':
+                                {'state': 'up',
+                                'time': '00:52:15',
+                                'total_in': 8,
+                                'total_out': 13,
+                                'users': 3}},
+                        'total': 3},
+                    },
+                },
+            }
+    
+        # Specify the expected unparsed show command output
+        golden_output1 = {'execute.return_value': '''
+            204-MSMR#show lisp session
+            Sessions for VRF default, total: 3, established: 3
+            Peer                           State      Up/Down        In/Out    Users
+            2.2.2.2                        Up         00:51:38        8/13     3
+            6.6.6.6                        Up         00:51:53        3/10     1
+            8.8.8.8                        Up         00:52:15        8/13     3
+            '''}
+    
+        def test_show_lisp_session_full1(self):
+            self.maxDiff = None
+            self.device = Mock(**self.golden_output1)
+            obj = ShowLispSession(device=self.device)
+            parsed_output = obj.parse()
+            self.assertEqual(parsed_output, self.golden_parsed_output1)
+    
+        def test_show_lisp_session_empty(self):
+            self.maxDiff = None
+            self.device = Mock(**self.empty_output)
+            obj = ShowLispSession(device=self.device)
+            with self.assertRaises(SchemaEmptyParserError):
+                parsed_output = obj.parse()
+
+To create your own unit test, complete the following steps.
+
+#. Make sure to save your parser file in the :monospace:`parser/<os>` directory, for example, :monospace:`/genie/libs/parser/iosxe/show_lisp_new.py`.
+
+#. Open a new text file, and save it as :monospace:`test_show_lisp_new.py`.
+
+#. In this new file, import the functionality shown in the example, and specify your new parser file and class, where :monospace:`ShowLispSessionNew` is the new parser class::
+
+    from genie.libs.parser.iosxe.show_lisp_new import ShowLispSessionNew
+
+
 
 Make JSON is part of contributing a new parser, because it adds the new parser to the functionality on the web page that displays the list of available parsers.
 
@@ -516,3 +617,4 @@ See also...
 
 * `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
 * `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
+* :ref:`contribute`
