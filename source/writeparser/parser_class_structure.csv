@@ -1,0 +1,16 @@
+﻿Line,Description
+:monospace:`class ShowLispSession(ShowLispSessionSchema):`,Defines the parser class and the schema class that it inherits.
+:monospace:`cli_command = 'show lisp session'`,Tells the parser to run a specific show command.
+":monospace:`def cli(self, output=None):`","This is a Python function that tells the parser to execute the cli_command, store the output in the variable ``out``, and perform the pattern matching to create the Python dictionary."
+:monospace:`parsed_dict = {}`,Stores the parsed and structured output in the Python dictionary object named ``parsed_dict``.
+":monospace:`p1 = re.compile...` |br|
+:monospace:`p2 = re.compile…`","Defines the regex for each line of device output. ``re.compile`` is a Python module that performs regex matching operations.
+
+For ``p1``, the search pattern matches on the keys from the schema, specifically, ???
+
+Why are there two? What do they actually contain?"
+":monospace:`for line in out.splitlines():` |br|
+:monospace:`line = line.strip()`","Tells the parser to ""loop"" over each line of the device output and test each line against the regex pattern."
+:monospace:`m = p1.match(line)`,Creates an object ``m`` that ???
+:monospace:`if m:` (and the code that follows),"If a line matches the regex pattern, tells the parser to create the key-value pairs defined in the schema."
+:monospace:`return parsed_dict`,Ends the execution of the parser and returns the parsed output as a Python dictionary.

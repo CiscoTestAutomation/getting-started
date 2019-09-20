@@ -301,7 +301,7 @@ Write a parser class with RegEx
 --------------------------------
 When you write a new parser class, you define the regular expressions used to match patterns in each line of the device output. The parser then adds the matched values as key-value pairs to a Python dictionary, as defined by the associated schema class. The parser class inherits from the schema class to ensure that the Python dictionary returned by the parser follows exactly the format of the defined schema. 
 
-The following example shows a schema and parser class for the ``show lisp session`` command. Take a look at the example, and then we'll explain how it works.
+The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are within the same python file. Take a look at the example, and then we'll explain how it works.
 
 .. code-block:: python
 
@@ -402,23 +402,13 @@ The following example shows a schema and parser class for the ``show lisp sessio
     
             return parsed_dict
 
+The following table describes the structure of the parser class in more detail.
 
+.. csv-table:: Structure of a parser class
+   :file: parser_class_structure.csv
+   :header-rows: 1
 
-As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema. You need to know what you're looking for from the output in order to set up the correct RegEx search/compile.
-.. note:: You need to know the patterns that you want to match before you write the parser class. These patterns are some or all of the keys defined in the schema class.
-
-#. In the same text file as your schema, first define the parser class and its associated schema::
-
-    class ShowInterfaces(ShowInterfacesSchema):
-
-#. Define the show command that you want to parse::
-
-    class ShowInterfaces(ShowInterfacesSchema):
-
-        cli_command = ['show interfaces','show interfaces {interface}']
-
-
-As seen above, the regular expressions for each line of device output are defined and compiled within the parser class (p1, p2, etc). We then loop over each line of device output and test each line against the regular expressions defined within the Parser class. If the line matches the regular expression pattern, we go ahead and create/set the Python dictionary keys as per the defined Schema.
+.. note:: You need to know the patterns that you want to match before you write the parser class. These patterns can be some or all of the keys defined in the schema class.
 
 Write a parser class with the parsergen package
 -----------------------------------------------
