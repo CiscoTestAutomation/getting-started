@@ -501,7 +501,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
 Create and execute a unit test
 -------------------------------
-If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must and attach the test results for each parser that you want to contribute.
+If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute.
 
 See the topic :ref:`contribute` for more details.
 
