@@ -13,6 +13,11 @@ Why contribute?
 GitHub basics
 ------------------
 
+.. _submit-pr:
+
+Submit a pull request
+^^^^^^^^^^^^^^^^^^^^^
+
 .. _make-dev-undev:
 
 Make develop/undevelop

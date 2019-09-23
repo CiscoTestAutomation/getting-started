@@ -2,7 +2,7 @@
 
 Write a parser
 ======================
-This topic describes why and how to write your own parsers to meet your network automation requirements. 
+This topic describes why and how to write your own parsers to meet your network automation requirements.
 
 .. tip:: Remember to share your new parser with the rest of the |pyATS| user community. See the topic :ref:`contribute` for more information.
 
@@ -23,6 +23,11 @@ But if you want to customize a parser, or if you need to parse output for a feat
 
 How the |library| parsers work
 ------------------------------
+A parser is composed of two Python classes:
+
+1. Schema class
+2. Parser class
+
 Each parser performs three main actions:
 
 1. Run a show command and collect the device output.
@@ -37,7 +42,7 @@ The following sections describe this process in more detail.
 
 Pattern matching
 ^^^^^^^^^^^^^^^^
-The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information in JSON format as a set of key-value pairs. as shown in the following example::
+The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information in JSON format as a set of key-value pairs, as shown in the following example of a section of parsed output::
 
  {
   "GigabitEthernet1": {
@@ -45,7 +50,7 @@ The |library| parsers look for specific patterns in the device output and then s
     "arp_type": "arpa",
     "auto_negotiate": true,
     "bandwidth": 1000000,
-    ...
+
 
 The |library| parsers use regular expressions (regex) to match patterns in the device output. Regular expressions are the backbone of all parsers, so you must know how to use them before you can write a parser.
 
@@ -66,7 +71,7 @@ The |library| uses the following two packages to parse (pattern match) device ou
 
 #. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema <schema>` (definition of the key-value pairs).
  
-#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser has an associated schema that defines the data structure of the parsed output, so that the data structure is the same regardless of the protocol.
+#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser class has an associated schema that defines the data structure of the parsed output, so that the data structure is the same regardless of the protocol.
 
 The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
 
@@ -76,11 +81,11 @@ The following illustration shows how the Metaparser and parser classes work toge
 
 Create a parser schema
 ----------------------
-A schema defines the key-value pairs stored in the Python dictionary that a parser creates. 
+A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. When you create or extend a parser, you must first identify the keys to include in the parsed output.
 
 Example of a schema
 ^^^^^^^^^^^^^^^^^^^
-You can see all of the available parser schemas on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
+.. note:: You can see all of the available parsers on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. Select an item from the list to see the schema.
 
 1. At the top of the page, search for a show command, such as :monospace:`show interfaces`.
 2. Select an OS, in this example, **IOSXE**.
@@ -92,6 +97,8 @@ The following illustration shows part of the schema. **Optional** indicates keys
 
 Create a schema based on a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If you want to create a new schema, you can base it on the keys for an existing feature.
+
 #. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
 
 #. For this example, select **interface**, and then select **MODEL** to open a PDF file that contains the interface model.
@@ -103,7 +110,7 @@ Create a schema based on a model
 
    |br| |br| *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|  
 
-#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example. Use JSON format and save the file as a :monospace:`*.py` file.
+#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema defintion. Use JSON format and save the file as a :monospace:`*.py` file.
 
    .. code-block:: python
 
@@ -119,7 +126,7 @@ Create a schema based on a model
                 Optional('connected'): bool,
                 Optional('description'): str,
                 'type': str,
-                ...
+                
 
    .. note:: You must specify the value type, such as integer, string, boolean, or list.
    
@@ -156,7 +163,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 
     dev.execute('show interfaces')
 
-   *Result*: The system displays the unparsed output. The following example show some of the output that you can use to identify keys for your parser::
+   *Result*: The system displays the unparsed output. The following example shows some of the output that you can use to identify keys for your parser::
 
     GigabitEthernet1 is up, line protocol is up
         Hardware is CSR vNIC, address is 0800.2729.3800 (bia 0800.2729.3800)
@@ -173,9 +180,9 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 
 #. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. 
 
-   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In this example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address`, for example, won't be overwritten by the mac_address of a different interface.
+   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In the following example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address` value for Interface1 won't be overwritten by the :monospace:`mac_address` value for Interface2.
 
-   Your schema might look something like this:
+   Your schema might begin with the following lines:
 
    .. code-block:: python
 
@@ -185,7 +192,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
                 'line_protocol': str,
                 'hardware': str,
                 'mac_address': str,
-                ... 
+                 
 
  
 
@@ -263,7 +270,7 @@ Identify keys from the YANG data model
 
     git clone https://github.com/YangModels/yang.git
 
-#. Look for the latest model (at the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
+#. Look for the latest model. (At the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
 
     find . | grep arp
 
@@ -301,9 +308,9 @@ Identify keys from the YANG data model
 
 Write a parser class with RegEx
 --------------------------------
-When you write a new parser class, you define the regular expressions used to match patterns in each line of the device output. The parser then adds the matched values as key-value pairs to a Python dictionary, as defined by the associated schema class. The parser class inherits from the schema class to ensure that the Python dictionary returned by the parser follows exactly the format of the defined schema. 
+When you write a new parser class, you define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
 
-The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are within the same python file. Take a look at the example, and then we'll explain how it works.
+The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are defined in the same Python file. Take a look at the example, and then we'll explain how it works.
 
 .. code-block:: python
 
@@ -421,7 +428,7 @@ Write a parser class with the parsergen package
 -----------------------------------------------
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
-The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse this class to create tests for any values found within the output. 
+The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values. 
 
 Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NXE/VXLAN platform.
 
@@ -455,13 +462,13 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
     nve2       6020       N/A             Up         L2DP  2     CLI N/A
     nve3       6030       N/A             Up         L2DP  3     CLI N/A
 
-#. Now you can store a list of header names from the table as a variable. The names must exactly match the output:
+#. Define a variable ``header`` that contains the list of header names from the table. The names must exactly match the output:
 
    .. code-block:: python
 
     header = ['Interface', 'VNI', 'Multicast-group', 'VNI state', 'Mode', 'BD', 'cfg', 'vrf']
 
-#. Use ``parsergen`` to parse the output, with the interface name as index 0. This process creates a Python dictionary of operational statistics per interface:
+#. Use ``parsergen`` to parse the output, where index 0 is the :monospace:`Interface` column header. This process creates a Python dictionary of operational statistics per interface:
 
    .. code-block:: python
 
@@ -545,7 +552,7 @@ The following example shows how to create a unit test file for :ref:`the show li
         
         empty_output = {'execute.return_value': ''}
     
-        # Specify the expected result for the first line of output
+        # Specify the expected result for the parsed output
         golden_parsed_output1 = {
             'vrf':
                 {'default':
@@ -575,7 +582,7 @@ The following example shows how to create a unit test file for :ref:`the show li
                 },
             }
     
-        # Specify the expected unparsed show command output
+        # Specify the expected unparsed output
         golden_output1 = {'execute.return_value': '''
             204-MSMR#show lisp session
             Sessions for VRF default, total: 3, established: 3
@@ -588,30 +595,59 @@ The following example shows how to create a unit test file for :ref:`the show li
         def test_show_lisp_session_full1(self):
             self.maxDiff = None
             self.device = Mock(**self.golden_output1)
-            obj = ShowLispSession(device=self.device)
+            obj = ShowLispSessionNew(device=self.device)
             parsed_output = obj.parse()
             self.assertEqual(parsed_output, self.golden_parsed_output1)
     
         def test_show_lisp_session_empty(self):
             self.maxDiff = None
             self.device = Mock(**self.empty_output)
-            obj = ShowLispSession(device=self.device)
+            obj = ShowLispSessionNew(device=self.device)
             with self.assertRaises(SchemaEmptyParserError):
                 parsed_output = obj.parse()
 
+    if __name__ == '__main__':
+    unittest.main()
+
 To create your own unit test, complete the following steps.
 
-#. Make sure to save your parser file in the :monospace:`parser/<os>` directory, for example, :monospace:`/genie/libs/parser/iosxe/show_lisp_new.py`.
+#. Make sure to save your parser file in the directory for the device OS::
 
-#. Open a new text file, and save it as :monospace:`test_show_lisp_new.py`.
+   /genie/libs/parser/iosxe/show_lisp_new.py
 
-#. In this new file, import the functionality shown in the example, and specify your new parser file and class, where :monospace:`ShowLispSessionNew` is the new parser class::
+#. Open a new text file, and save it in a directory of your choice.
 
+#. In this new file, import the functionality shown in the example. Also, import your new parser class. In this example, :monospace:`show_lisp_new` is the parser file and :monospace:`ShowLispSessionNew` is the new parser class:
+
+   .. code-block:: python
+
+    import unittest
+    from unittest.mock import Mock
+    from ats.topology import Device
+    from ats.topology import loader
+    from genie.metaparser.util.exceptions import SchemaEmptyParserError, SchemaMissingKeyError
     from genie.libs.parser.iosxe.show_lisp_new import ShowLispSessionNew
 
+#. Define the expected parsed and unparsed output. We refer to this as the "golden" output.
 
+#. Define the tests as shown in the example, and use your new parser class name for the ``obj`` variable.
 
-Make JSON is part of contributing a new parser, because it adds the new parser to the functionality on the web page that displays the list of available parsers.
+#. Execute the tests:
+
+   .. code-block:: bash
+
+    python test_show_lisp_new.py -v
+
+   *Result*:
+
+   .. image:: ../images/unit_test_results.png
+   
+   |br| |br|
+
+#. Take a screen capture of the test results and save them as an image file. When you :ref:`submit your pull request <submit-pr>`, you must attach the unit test results.
+
+   .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
+
 
 See also...
 
