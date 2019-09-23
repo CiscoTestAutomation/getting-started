@@ -8,11 +8,20 @@ This guide describes how you can use the features and functionality of |pyATSbol
 
 .. toctree::
    :maxdepth: 2
-   :caption: Write Scripts
+   :caption: Write a script
 
    /quickstart/structureofastatement
    /writescripts/writepythonscript
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contribute to pyATS
+
    /writeparser/writeparser
+   /writetrigger/writetrigger
+   /contribute/contribute
+
 
 .. toctree::
    :maxdepth: 2
