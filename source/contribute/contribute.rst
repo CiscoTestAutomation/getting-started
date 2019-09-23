@@ -28,16 +28,16 @@ You'll need to know a few basic GitHub commands and processes so that you can do
     :header-rows: 1
     :widths: 20 80
 
+#. Fork a repository (see https://help.github.com/en/articles/fork-a-repo). (Checking on master versus dev branch and also Bitbucket). 
 
+   *Result*: This step creates a copy of the repository that you can work on without affecting anyone else's work.
 
-Create a fork
-^^^^^^^^^^^^^
 Master: Only released code or about to be released
 Dev: Only stable, reviewed and and ready to ship code should be committed here. Before committing to this branch make sure you run all the unitest and they all pass. (Please submit a pull request BEFORE committing code here. If you do without, the commit will be removed)
 your_branch: All code development should be done in different branch. This is helpful for quickly changing work.
 
 Fork a repo:
-https://help.github.com/en/articles/fork-a-repo
+
 
 Download the source files
 ^^^^^^^^^^^^^^^^^^^^^^^^^
