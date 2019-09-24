@@ -8,25 +8,38 @@ Our |library| feature libraries and components are all open source. We welcome y
     :header: "Module", "Description"
     :widths: 10 90
 
-    "Conf", "Conf objects are built as per the IETF/open-config standards."
-    "Ops", "Ops objects are built as per the IETF/open-config standards."
+    "Conf", "Conf objects are built as per the IETF/OpenConfig standards."
+    "Ops", "Ops objects are built as per the IETF/OpenConfig standards."
     "Robot", "The libraries are related to the Robot Framework."
     "SDK", "These are the libraries and datafiles for the test cases (:term:`Triggers <trigger>` and :term:`Verifications <verification>`)."
 
-.. _why-contribute
+.. _why-contribute:
 
 Why contribute?
 ---------------
 
+.. _development-process:
 
 Development process
 -------------------
-Before you begin this process, check Verify if an existing structure (feature structure, ex: BGP, OSPF,..) exists at genielibs/src/conf and genielibs/src/ops. If not, create a new one following conf structure building guide and ops structure building guide guides.
+
+Check the existing components
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Before you begin this process, check to see if an existing ``conf`` or ``ops`` :term:`feature` structure, :term:`trigger`, or :term:`parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<module>-pkg/src/genie/libs/<module>/`, where :monospace:`<module>` is the module that you want to check.
+
+If you need to create a new feature within the ``conf`` or ``ops`` modules, follow these guidelines:
+
+* `conf guidelines <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_
+* `ops guidelines <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_
+
+If you want to write a new trigger or verification, check to see if an existing trigger or verification exists for the same action (such as ShutNoshut, ConfigUnconfig), by feature (such as BGP or OSPF): `/genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
+
+For verifications, which are typically parsers, check by OS and show command: `genieparser/src/genie/libs/parser <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser>`_
+
+
 
 
 .. _GitHub-basics:
-
-
 
 GitHub basics
 ^^^^^^^^^^^^^
@@ -47,7 +60,7 @@ In GitHub, *branches* separate different versions of the same repository, so tha
    * If *no*, go to https://github.com/join and create your account. 
     |br|
 
-#. Find the repository for the item that you want to add or extend.
+#. Find the repository for the component that you want to add or extend.
 
    .. csv-table:: Repository locations
     :file: repo_descriptions.csv
@@ -67,17 +80,26 @@ In GitHub, *branches* separate different versions of the same repository, so tha
 
    where *repo_name* is the name of the repository you want to work on. |br| |br|
 
-Now you are ready to contribute!
+    .. note:: For internal Cisco users on Bitbucket, make sure you are on the :monospace:`dev` branch of the repo when you clone it.
+
+Now, you are ready to contribute!
 
 Edit or add files
 ^^^^^^^^^^^^^^^^^
-After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can move into develop mode, make your changes, and request approval.
+After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can move into develop mode, make your changes, and request approval (open a pull request).
+
+All code follows the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
+
+* Strictly follow the PEP 8 naming conventions.
+* Abide by the 80 character limit per line.
+* Leave two blank lines between classes, two lines between functions, and one line between methods.
+* Write the imports in the following order: Python native libraries, third party libraries, and |library| modules.
 
 #. Uninstall the modules::
 
     pip uninstall genie.libs.conf genie.libs.ops genie.libs.sdk genie.libs.robot
 
-   *Result*: The system prompts you to uninstall each module. Enter :monospace:`y` to proceed.
+   *Result*: The system prompts you to uninstall each module. Enter :monospace:`y` to proceed. |br| |br|
 
 #. Change directories::
 
@@ -87,9 +109,9 @@ After you download the repo from GitHub (DevNet) or Bitbucket (internal), you ca
 
     make develop
 
-   *Result*: The system installs dependencies and sets up the development environment for the ``conf``, ``ops``, ``robot``, and ``sdk`` modules.
+   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``conf``, ``ops``, ``robot``, and ``sdk`` modules. |br| |br|
 
-#. Edit or add a file.
+#. Write your own code as required.
 
    See the following topics for details about how to:
 
@@ -98,7 +120,13 @@ After you download the repo from GitHub (DevNet) or Bitbucket (internal), you ca
 
 Run unit tests
 ^^^^^^^^^^^^^^
-You must run unit tests on all new code. Your changes must not break existing unit tests, and you must include the test results when you open a pull request.
+.. important:: You must run unit tests on all new code. Your changes must not break existing unit tests, and you must include the test results when you :ref:`open a pull request <open-pull-request>`.
+
+To run the unittest;
+    cd genielibs/src/conf/tests/
+    runAll
+    cd genielibs/src/ops/tests/
+    runAll
 
 Update the changelog
 ^^^^^^^^^^^^^^^^^^^^
@@ -106,6 +134,8 @@ Before committing any trigger/verification/conf/ops object, you have to add it t
 
 Commit your changes
 ^^^^^^^^^^^^^^^^^^^
+
+.. _open-pull-request:
 
 Open a pull request
 ^^^^^^^^^^^^^^^^^^^
@@ -126,12 +156,7 @@ Open a pull request
 
 #. Open a pull request to notify the |library| team that your code is ready to review. (Command line or browser?)
 
-PEP8 is used as the reference for code style through out the project. However, the following items needed to be highlighted:
 
-Strictly follow naming conventions in PEP8.
-Abide by the 80 characters limit per line. Few exceptions can be allowed.
-Leave 2 blank lines between classes, 2 lines between functions, and 1 line between methods.
-Write the imports in the following order: Python native libraries, third parties, Genie libraries.
 
 
 
