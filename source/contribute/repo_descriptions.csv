@@ -1,8 +1,8 @@
 ﻿Item,Repository
 Trigger,`genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
 Parser,`genieparser/src/genie/libs/parser <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser>`_
-Ops module,`genielibs/pkgs/ops-pkg/src/genie/libs/ops <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/ops-pkg/src/genie/libs/ops>`_
-Conf module,`genielibs/pkgs/conf-pkg/src/genie/libs/conf <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/conf-pkg/src/genie/libs/conf>`_
+Ops package,`genielibs/pkgs/ops-pkg/src/genie/libs/ops <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/ops-pkg/src/genie/libs/ops>`_
+Conf package,`genielibs/pkgs/conf-pkg/src/genie/libs/conf <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/conf-pkg/src/genie/libs/conf>`_
 Robot Framework,`genielibs/pkgs/robot-pkg/src/genie/libs/robot <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/robot-pkg/src/genie/libs/robot>`_
 Functions (APIs),`genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/apis  <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/apis>`_
 Other,`genielibs/pkgs/sdk-pkg/src/genie/libs/sdk  <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk>`_
