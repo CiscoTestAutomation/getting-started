@@ -517,6 +517,16 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
 Test your new parser
 --------------------
+Run your parser on a real device to make sure that you get the expected parsed output. The following example shows how to do this in pure Python:
+
+.. code-block:: python
+
+ from genie.testbed import load
+ tb = load('yourtestbed.yaml')
+ dev = tb.devices['uut']
+ dev.connect()
+ p1 = dev.parse('show inventory')
+
 If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute. 
 
 The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
@@ -644,7 +654,7 @@ To create your own unit test, complete the following steps.
    
    |br| |br|
 
-#. Take a screen capture of the test results and save them as an image file. When you :ref:`submit your pull request <submit-pr>`, you must attach the unit test results.
+#. Take a screen capture of the test results and save them as an image file. When you :ref:`open a pull request <open-pull-request>`, you must attach the unit test results.
 
    .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
 
