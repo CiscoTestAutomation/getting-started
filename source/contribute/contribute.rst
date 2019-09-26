@@ -2,6 +2,8 @@
 
 Contribution guidelines
 =======================
+The more our users contribute to the pool of feature libraries and components, the more varied, scalable, and robust the |library| becomes. This saves you time and effort when you set up your own network automation.
+
 We offer the |library| feature libraries and components as open-source code, and we welcome your contributions to any of the following packages:
 
 .. csv-table:: Open source package descriptions
@@ -13,22 +15,15 @@ We offer the |library| feature libraries and components as open-source code, and
     "Robot", "These libraries support the Robot Framework."
     "SDK", "These libraries and datafiles define the test cases (:term:`Triggers <trigger>` and :term:`Verifications <verification>`)."
 
-.. tip:: The more our users contribute to the pool of feature libraries and components, the more varied, scalable, and robust the |library| becomes. This saves you time and effort when you set up your own network automation.
-
-
-
 Check the existing components
 -----------------------------
-Before you begin this process, check to see if an existing ``conf`` or ``ops`` :term:`feature` structure, :term:`trigger`, or :term:`parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
+Before you begin this process, check to see if an existing ``conf`` or ``ops`` structure, :term:`trigger`, or :term:`parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
 
-If you need to create a new feature within the ``conf`` or ``ops`` packages, follow these guidelines:
+* If you need to create a new feature within the ``conf`` or ``ops`` packages, follow the `conf <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_ or `ops <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_ guidelines.
 
-* `conf guidelines <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_
-* `ops guidelines <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_
+* If you want to write a new trigger, check to see if an existing trigger exists for the same action (such as ShutNoshut, ConfigUnconfig). Check by feature (such as BGP or OSPF) at `/genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
 
-If you want to write a new trigger or verification, check to see if an existing trigger or verification exists for the same action (such as ShutNoshut, ConfigUnconfig), by feature (such as BGP or OSPF): `/genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
-
-For verifications (parsers), check by OS and show command: `genieparser/src/genie/libs/parser <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser>`_
+For verifications (parsers), check by OS and show command at `genieparser/src/genie/libs/parser <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser>`_
 
 
 Clone the source code repository
@@ -38,15 +33,15 @@ Clone the source code repository
 
 GitHub basics
 ^^^^^^^^^^^^^
-You'll need to know a few basic GitHub commands and processes so that you can download, change, and upload a feature library or component.
+You need to know a few basic GitHub commands and processes to download, change, and upload a feature library or component.
 
-.. note:: Internal Cisco developers and engineers follow the same general process as described here, but use Bitbucket rather than GitHub to commit changes. We then synchronize the two when we release on the last Tuesday of every month.
+.. note:: Internal Cisco developers and engineers use Bitbucket rather than GitHub to commit changes. The |library| team synchronizes the Bitbucket and GitHub repos as part of each monthly release.
 
 In GitHub, *branches* separate different versions of the same repository (repo), so that more than one person can make changes at the same time. We use the following branches:
 
-* master --- contains code that is already released or ready to be released
-* dev --- (internal, Bitbucket users only) contains code that is stable, reviewed, and ready to release
-* your_fork --- contains a copy of the repository that you can work on
+* *master* --- contains code that is already released or ready to be released.
+* *dev* --- (internal, Bitbucket users only) contains code that is stable, reviewed, and ready to release.
+* *your_fork* --- contains a copy of the repository that you can work on.
 
 .. _clone-repo:
 
@@ -79,20 +74,32 @@ Clone the repo
 
    where *repo_name* is the name of the repository you want to work on. |br| |br|
 
-    .. note:: For internal Cisco users on Bitbucket, make sure you are on the :monospace:`dev` branch of the repo when you clone it.
-
-Now, you are ready to contribute! Once you have written your new code, you can :ref:`open a pull request <open-pull-request>` to ask the |library| team to accept your changes.
+.. note:: For internal Cisco users on Bitbucket, make sure you are on the :monospace:`dev` branch of the repo when you clone it.
 
 Write new code
 --------------
-After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can move into develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
+After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
 
 All code follows the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
 
 * Strictly follow the PEP 8 naming conventions.
-* Abide by the 80 character limit per line.
+* Abide by the 80-character limit per line.
 * Leave two blank lines between classes, two lines between functions, and one line between methods.
-* Write the imports in the following order: Python native libraries, third party libraries, and |library| modules.
+* Write the imports in the following order: 
+
+    * Python native libraries
+    * Third-party libraries
+    * |library| modules
+
+Tools to check your code
+^^^^^^^^^^^^^^^^^^^^^^^^
+You can use the following tools to check the PEP 8 and style conventions.
+
+.. csv-table:: Testing tools
+   :header: "Tool", "Installation |br| (from your virtual environment)", "Execution"
+
+   "pep8", ":monospace:`pip install pep8`", ":monospace:`deactivate` |br| :monospace:`pep8 myfile`"
+   "pylint", ":monospace:`pip install pylint`", ":monospace:`deactivate` |br| :monospace:`pylint myfile`"
 
 Conf or Ops packages
 ^^^^^^^^^^^^^^^^^^^^
@@ -121,6 +128,7 @@ Conf or Ops packages
 
     * :ref:`write-parser`
     * :ref:`write-trigger`
+
 
 Parsers
 ^^^^^^^
@@ -154,7 +162,9 @@ Internal Cisco users
 
     pip install cisco-distutils
 
-#. For ``conf``, change to the :monospace:`conf/tests` directory::
+#. For ``conf``, change to the :monospace:`conf/tests` directory,
+
+   .. code-block::
 
     cd genielibs/src/conf/tests/
 
@@ -164,7 +174,9 @@ Internal Cisco users
 
    *Result*: The system displays the test results. |br| |br|
 
-#. For ``ops``, change to the :monospace:`ops/tests` directory::
+#. For ``ops``, change to the :monospace:`ops/tests` directory,
+
+   .. code-block::
 
     cd genielibs/src/ops/tests/
 
@@ -178,14 +190,14 @@ Internal Cisco users
 
 #. Did all of the tests pass?
 
-    * If *yes*, go to the next step.
+    * If *yes*, you can now :ref:`update the changelogs <update-changelog>`.
     * If *no*, check the errors, re-write your code, and try again.
-
-#. (Talk with SME about the script that creates and diffs verifications.)
 
 External DevNet users
 ^^^^^^^^^^^^^^^^^^^^^
-#. For ``conf``, change to the :monospace:`conf/tests` directory::
+#. For ``conf``, change to the :monospace:`conf/tests` directory,
+
+   .. code-block::
 
     cd genielibs/src/conf/tests/
 
@@ -195,7 +207,9 @@ External DevNet users
 
    *Result*: The system displays any failed tests and the number of tests run. |br| |br|
 
-#. For ``ops``, change to the :monospace:`ops/tests` directory::
+#. For ``ops``, change to the :monospace:`ops/tests` directory,
+
+   .. code-block::
 
     cd genielibs/src/ops/tests/
 
@@ -249,14 +263,18 @@ Commit procedure
 
    * If *no*, go to the next step. |br| |br|
 
-#. Commit your changes and include a descriptive message. You can commit all of your changes at once::
+#. Commit your changes and include a descriptive message. You can commit all of your changes at once,
+
+   .. code-block::
 
     git commit -a -m 'My descriptive message.'
 
-   or "stage" each change as you make it... ::
+   or "stage" each change as you make it,
 
-    git add <modified_filename1>
-    git add <modified_filename2>
+   .. code-block::
+
+    git add modified_filename1
+    git add modified_filename2
 
    and then commit all of the changes::
 
@@ -272,28 +290,36 @@ Commit procedure
 
       git push origin master
 
-
-
 .. _open-pull-request:
 
 Open a pull request
 -------------------
-Open a pull request to notify the |library| team that your code is ready to review and merge into the main repository.
+Open a pull request when you want the |library| team to review your code and merge it into the main repository.
 
+#. From a web browser, go to your fork in the relevant repo. |br| |br|
 
+#. Select **New pull request**.
 
+   .. image:: /images/pull_request.png
+   
+   |br|
 
+#. On the page where you compare changes, select the **base repository** and branch that you want to merge *into*.
 
+   * Internal Cisco users -- select the :monospace:`dev` branch.
+   * External DevNet users -- select the :monospace:`master` branch. |br| |br| 
 
+#. Select your fork as the **head repository**, and then select the **compare** branch that you worked on. |br| |br|
 
+#. Drag and drop screen captures of your unit tests into the description box. For detailed information, see `the GitHub help page <https://help.github.com/en/articles/file-attachments-on-issues-and-pull-requests>`_. |br| |br|
 
+#. Select **Create pull request**.
 
-
-
-
-
-
+   *Result*: The |library| team receives a notification to review the request.
 
 See also...
 
 * `GitHub's "Hello World" get started guide <https://guides.github.com/activities/hello-world/#branch>`_
+* `API guidelines and good practices <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
+* `Conf Guide <https://pubhub.devnetcloud.com/media/pyats-packages/docs/genie/Conf/index.html#conf-guide>`_
+* `Ops Guide <https://pubhub.devnetcloud.com/media/pyats-packages/docs/genie/Ops/index.html#ops-guide>`_
