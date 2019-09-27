@@ -24,112 +24,135 @@ The |library| provides a better solution!
 
 Write a basic script
 ---------------------
-This example shows you how to write a basic script to check the state of a device interface.
+This example shows you how to write and run a basic script to check the state of a device interface.
 
 .. note:: This example uses pure Python. For information about how to use the |library| command line interface, see the |getstartedguide| topic :ref:`genie-cli`
 
-#. First, decide on the functionality that you need from |pyATS| and the |library|, and import it. Remember that you always need to load the :term:`testbed YAML file`.
+Sample script - basic
+^^^^^^^^^^^^^^^^^^^^^
+We provide you with an example of a commented script that:
+
+* checks the status of a network interface
+* changes the configuration, and 
+* re-checks the interface status.
+
+We also provide you with pre-recorded output so that you can see the results. :download:`Download the sample <simple_script1.zip>` file, and then extract the files to a directory of your choice. Take a look at the :monospace:`testbed.yaml`, and open :monospace:`simple_script1.py` in a text editor to see additional :monospace:`log.info` statements that make the on-screen output clear.
+
+To run the script:
+
+#. In your Linux terminal, source the environment variables.
+
+   * For Bash::
+
+      source script1_env.sh
+
+   * For C shell::
+
+      source script1_env.csh
+
+#. Run the script::
+
+    python3 simple_script1.py
+
+
+Steps to write a basic script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The following procedure describes the steps that you take to write the same sample script.
+
+#. Open a text editor and start a new :monospace:`.py` file.
+
+#. First, import the functionality that you need from Python, |pyATS|, and the |library|. For a description of the more commonly used functionality that you might want to import, see the topic `Useful Libraries <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#useful-libraries>`_.
+
+Remember that you always need to load the :term:`testbed YAML file`.
+
+   .. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
 
     .. code-block:: python
 
-       from genie.testbed import load
+      # Python
+      import sys
+      import time
+      import logging
 
-   .. tip:: For a description of the more commonly used functionality that you might want to import, see the topic `Useful Libraries <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#useful-libraries>`_.
+      # Enable logger
+      logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
+      log = logging.getLogger(__name__)
+
+      # Import pyATS the pyATS library
+      from genie.testbed import load
+
 
 #. If you'd like your script to display formatted messages as it runs, you can use the ``banner`` functionality.
-
-   .. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
 
    .. code-block:: python
 
        from pyats.log.utils import banner
 
-#. You imported the ``load`` functionality in step 1, so now you can actually load the testbed file and display useful messages.
+#. You imported the ``load`` functionality in step 1, so now you can load the testbed file and display useful messages.
 
    .. code-block:: python
 
-      print(banner("Loading testbed"))
+      log.info(banner("Loading testbed"))
       testbed = load('testbed.yaml')
-      print("\n\nSuccessfully loaded testbed '{}'\n\n".format(testbed.name))
+      log.info("\nPASS: Successfully loaded testbed '{}'\n".format(testbed.name))
 
-#. Now connect to one of the devices in the testbed. In this example, ``N95_1`` is the hostname of a device in the :term:`testbed yaml file`.
-
-   .. code-block:: python
-
-      device = testbed.devices['N95_1']
-      device.connect()
-      print("\n\nSuccessfully connected to device 'N95_1'\n\n")
-
-#. Check the current state of the interface and parse the output into a data structure with :term:`key-value pairs <key-value pair>`. We expect that the interface ``Ethernet1/1`` is currently down.
+#. Now connect to one of the devices in the testbed. In this example, ``nx-osv-1`` is the hostname of a device in the :term:`testbed yaml file`.
 
    .. code-block:: python
 
-      pre_output = device.parse("show interface Ethernet1/1 brief")
+      device = testbed.devices['nx-osv-1']
+      device.connect(via='cli')
+
+#. Check the current state of the interface and parse the output into a data structure with :term:`key-value pairs <key-value pair>`. We expect that the interface ``Ethernet2/1`` is currently down.
+
+   .. code-block:: python
+
+      pre_output = device.parse("show interface Ethernet2/1 brief")
 
 #. With the data parsed into a structure with key-value pairs and stored as the :term:`object` ``pre_output``, check the value of the ``status`` key.
 
    .. code-block:: python
 
-      pre_status = pre_output['interface']['ethernet']['Eth1/1']['status']
+      pre_status = pre_output['interface']['ethernet']['Eth2/1']['status']
       if pre_status == 'down':
-          print("\n\nInterface Ethernet1/1 status is 'down' as expected\n\n")
+          log.info("\nPASS: Interface Ethernet2/1 status is 'down' as expected\n")
       else:
-          print("\n\nInterface Ethernet1/1 status is not 'down' as expected\n\n")
-          exit()
+          log.error("\nFAIL: Interface Ethernet2/1 status is not 'down' as expected\n")
+      exit()
 
 #. Bring the interface up using the ``Conf`` module.
 
    .. code-block:: python
 
-      device.configure("interface Ethernet1/1\n"
-                  " no shutdown")
-      print("\n\nSuccessfully unshut interface Ethernet1/1\n\n")
+      device.configure("interface Ethernet2/1\n"
+                 " no shutdown")
 
-#. Re-check the interface state -- parse the output and store it in the ``post_output`` object, and print the result.
+#. Use ``sleep`` to give the configuration time to take effect.
+
+   .. code-block:: python
+
+      time.sleep(15)
+
+#. Re-check the interface state -- parse the output and store it in the ``post_output`` object.
 
    .. code-block::  python
 
-      post_output = device.parse("show interface Ethernet1/1 brief")
-      post_status = post_output['interface']['ethernet']['Eth1/1']['status']
+      post_output = device.parse("show interface Ethernet2/1 brief")
+
+#. Verify that the interface is now :monospace:`up`.
+
+   .. code-block:: python
+
+      post_status = post_output['interface']['ethernet']['Eth2/1']['status']
       if post_status == 'up':
-          print("\n\nInterface Ethernet1/1 status is 'up' as expected\n\n")
+          log.info("\nPASS: Interface Ethernet2/1 status is 'up' as expected\n")
       else:
-          print("\n\nInterface Ethernet1/1 status is not 'up' as expected\n\n")       
+          log.error("\nPASS: Interface Ethernet2/1 status is not 'up' as expected\n")       
+
+#. Save the file as :monospace:`myscript1.py`.
 
 And there you have it! 
 
-To run the script, first :download:`download and extract the relevant testbed and script files <simple_script.zip>`. Open :monospace:`simple_script.py` in a text editor to see additional print statements that make the on-screen output clear.
-
-When you're ready to see the output, from the directory where you put the extracted files, run::
-
-  (pyats) python3 simple_script.py
-
-Result:
-
-.. code-block:: text
-
-    coming soon
-
-   *Result*: You are now connected to the device. |br| |br|
-
-#. asdf
-
-Use case crc-errors (show crc-errors)
-
-
-
-Assume they don't know python
-connect
-execute
-parse
-configure
-learn
-
-
-
-Example of looping
-
-multiple 'for' loops
 
 See also...
 
