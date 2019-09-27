@@ -145,15 +145,29 @@ You can run the following example using the :download:`mock device <mock.zip>`.
 
     (pyats) $ cd mock
 
-#. Use ``genie run`` and specify the testbed, trigger, verification, device, and log details::
+#. Use ``genie run`` and specify the testbed, trigger, verification, and device, and log details::
 
-    (pyats) $ genie run --testbed-file mock.yaml --trigger-uids="TriggerShutNoShutBgp" --verification-uids="Verify_BgpProcessVrfAll" --devices uut --html-logs .
+    (pyats) $ genie run --testbed-file mock.yaml --trigger-uids="TriggerShutNoShutBgp" --verification-uids="Verify_BgpProcessVrfAll" --devices uut
     
    *Result*: The system displays the test results on-screen and creates an HTML log file named :monospace:`TaskLog.html` in the current directory.
 
+.. _log-viewer:
+
    .. tip:: 
       
-      * The argument ``--html-logs .`` creates the :monospace:`TaskLog.html` file. This is a user-friendly file that you can easily read in a web browser. It organizes the data so that you can drill down for more details.
+      * To see a user-friendly file that you can easily read in a web browser, run the command::
+      
+         pyats logs list
+
+        Look for the file you want to see, and then run::
+
+         pyats logs view -n
+
+        where *n* is the log index, for example::
+
+         pyats logs view -8
+         
+        The log viewer organizes the data so that you can drill down for more details. |br| |br|
       * If you're a DevNet user and you want to receive an email with the results, add the argument ``--mailto <address>``.
 
    The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the verification ran before and after the trigger.
@@ -175,13 +189,14 @@ This example shows you how to specify a job file that defines multiple triggers 
 
 #. Run the following command::
 
-    (pyats) $ pyats run job demo2_harness_triggers_job.py --testbed-file cisco_live.yaml --replay mock_device --html-logs .
+    (pyats) $ pyats run job demo2_harness_triggers_job.py --testbed-file cisco_live.yaml --replay mock_device
       
    *Result*: The system displays the test results on-screen and creates an HTML log file named :monospace:`TaskLog.html` in the current directory.
 
    .. tip:: 
       
-      * The argument ``--html-logs .`` creates the :monospace:`TaskLog.html` file. This is a user-friendly file that you can easily read in a web browser. It organizes the data so that you can drill down for more details.
+      * You can use the :ref:`log viewer <log-viewer>` to see a user-friendly log in your web browser.
+
       * If you're a DevNet user and you want to receive an email with the results, add the argument ``--mailto <address>``.
 
    The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the system ran the verifications once after the common setup and again after each trigger.
@@ -193,6 +208,7 @@ See also...
  * `More information about API network functions <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
  * `Detailed description of the Harness module <https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/harness.html>`_
  * `Examples of the Harness <https://github.com/CiscoTestAutomation/examples/tree/master/libraries>`_
+ * `pyATS logs <https://pubhub.devnetcloud.com/media/pyats/docs/cli/pyats_logs.html#pyats-logs>`_
 
 
 
