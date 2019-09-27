@@ -55,6 +55,15 @@ System and software
 
 .. note:: Python 3.4 has reached its end of life and is now deprecated. |pyATS| and the |library| no longer support Python 3.4.
 
+After you install Python, check to make sure that you have the following packages:
+
+* python3-venv
+* python3-dev
+* libpython3-dev
+* build-essential
+
+.. note:: You can check for installed packages using the standard Linux commands. In Ubuntu, for example, run ``apt list --installed``.
+
 The section :ref:`configure-environment` includes instructions on how to :ref:`check your version of Python <check-python>` and :ref:`set up a Python virtual environment <set-up-venv>`.
 
 Network connectivity
