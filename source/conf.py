@@ -20,7 +20,7 @@
 project = 'pyATS Development Guide'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
-master_doc = 'index_dg'
+master_doc = 'index_dg'`
 
 # -- General configuration ---------------------------------------------------
 
