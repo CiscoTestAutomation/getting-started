@@ -321,5 +321,5 @@ See also...
 
 * `GitHub's "Hello World" get started guide <https://guides.github.com/activities/hello-world/#branch>`_
 * `API guidelines and good practices <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html#api-guidelines-and-good-practices>`_
-* `Conf Guide <https://pubhub.devnetcloud.com/media/pyats-packages/docs/genie/Conf/index.html#conf-guide>`_
-* `Ops Guide <https://pubhub.devnetcloud.com/media/pyats-packages/docs/genie/Ops/index.html#ops-guide>`_
+* `Conf Guide <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Conf/index.html#conf-guide>`_
+* `Ops Guide <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Ops/index.html#ops-guide>`_
