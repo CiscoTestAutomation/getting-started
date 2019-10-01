@@ -6,9 +6,9 @@ As a network engineer or programmer, you can write your own Python scripts that 
 
 This topic describes how to write a basic script and how to add complexity to that script. You can run the example scripts on the `Cisco DevNet sandbox IOS XE device <https://devnetsandbox.cisco.com/RM/Diagram/Index/27d9747a-db48-4565-8d44-df318fce37ad?diagramType=Topology>`_ or on your real network devices (if you have them).
 
-Why write a test script?
+Why write a script?
 ------------------------
-*Automation* means that you can programmatically establish connections to your testbed devices and perform operations on them. Test scripts automate your network testing --- you simply define a list of commands once and then reuse the script as often as required, on-demand or at scheduled intervals.
+*Automation* means that you can programmatically establish connections to your devices and perform operations on them. Scripts automate your network operations --- you simply define a list of commands once and then reuse the script as often as required, on-demand or at scheduled intervals.
 
 For example, let's say that you have a device with over 100 interfaces, and that you need to monitor these daily to make sure they are up. You could, of course, manually execute a show command and then read through hundreds of lines of code to find the state of each interface. This is time consuming, however, and introduces the possibility of human error, which could adversely affect the state of your network. 
 
@@ -65,8 +65,6 @@ The following procedure describes the steps that you take to write the same samp
 
 Remember that you always need to load the :term:`testbed YAML file`.
 
-   .. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
-
     .. code-block:: python
 
       # Python
@@ -78,7 +76,7 @@ Remember that you always need to load the :term:`testbed YAML file`.
       logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
       log = logging.getLogger(__name__)
 
-      # Import pyATS the pyATS library
+      # Import functionality from the pyATS library
       from genie.testbed import load
 
 
