@@ -4,7 +4,7 @@ Write a Python script
 ======================
 As a network engineer or programmer, you can write your own Python scripts that use the |pyATSbold| libraries to automate your network testing. A script is simply a Python file that lists different actions and lets you run them with a single command. In |pyATS| terms, a script is an aggregation of :term:`triggers <trigger>` and :term:`verifications <verification>`.
 
-This topic describes how to write a basic script and how to add complexity to that script. You can run the example scripts on the `Cisco DevNet sandbox IOS XE device <https://devnetsandbox.cisco.com/RM/Diagram/Index/27d9747a-db48-4565-8d44-df318fce37ad?diagramType=Topology>`_ or on your real network devices (if you have them).
+This topic describes how to write a basic script and how to add complexity to that script.
 
 Why write a script?
 ------------------------
@@ -16,7 +16,6 @@ The |library| provides a better solution!
 
 * Write a script that automates the process using the |librarybold| functionality to connect, configure, and verify the device state. 
 * Rerun the script as needed, either as a scheduled job or on demand. 
-* Because the |library|'s reusable :term:`triggers <trigger>` and :term:`verifications <verification>` are data-driven (not hard-coded), you can simply feed in data to specify other devices or :term:`features <feature>`, error-free. 
 
 .. tip:: Remember, the |library| gives you *structured* output that makes reuse possible.
 
@@ -52,8 +51,9 @@ To run the script:
 
 #. Run the script::
 
-    python3 simple_script1.py
+    python simple_script1.py
 
+.. _steps-write-script:
 
 Steps to write a basic script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,8 +151,107 @@ Remember that you always need to load the :term:`testbed YAML file`.
 
 And there you have it! 
 
+Write an advanced script
+------------------------
+
+Sample script - advanced
+^^^^^^^^^^^^^^^^^^^^^^^^
+We provide you with an example of a commented script that:
+
+* connects to two devices
+* gets the number of established BGP neighbors on the first device
+* learns the BGP feature on the first device
+* shuts down the BGP neighbor on the first device
+* learns the BGP feature again after the configuration change
+* uses the |library| ``diff`` functionality to verify that the BGP neighbor is down
+* restores the BGP neighbor
+* learns the BGP feature again after the second configuration change
+* uses the |library| ``diff`` functionality to verify that there are minimal differences in the device operational state, and
+* verifies the number of BGP neighbors on the first device.
+
+We also provide you with pre-recorded output so that you can see the results. :download:`Download the sample <simple_script2.zip>` file, and then extract the files to a directory of your choice. Take a look at the :monospace:`testbed.yaml`, and open :monospace:`simple_script2.py` in a text editor to see the commented sections.
+
+To run the script:
+
+#. In your Linux terminal, source the environment variables.
+
+   * For Bash::
+
+      source script2_env.sh
+
+   * For C shell::
+
+      source script2_env.csh
+
+#. Run the script::
+
+    python simple_script2.py
+
+Steps to write an advanced script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Open the file :monospace:`simple_script2.py`, and note the following differences from the basic script.
+
+#. For this example, import additional functionality so that you can use ``Diff`` and an API that we provide to get BGP information:
+
+   .. code-block:: python
+
+    from genie.testbed import load
+    from ats.log.utils import banner
+    from genie.utils.diff import Diff
+    from genie.libs.sdk.apis.iosxe.bgp.get import get_bgp_session_count
+
+#. Notice the "for" loop, which finds and connects to the devices described in the testbed YAML file:
+
+   .. code-block:: python
+
+    for dev in testbed.devices:
+
+      # Find and connect to IOSXE and NXOS devices
+      device = testbed.devices[dev]
+      if device.os == 'iosxe':
+            dev_xe = device
+            dev_xe.connect(via='cli')
+      elif device.os == 'nxos':
+            dev_nx = device
+            dev_nx.connect(via='cli')
+
+#. This example learns the BGP feature (issues and parses a series of show commands):
+
+   .. code-block:: python
+
+    pre_bgp_ops = dev_xe.learn("bgp")
+
+   The script also learns the feature again after the configuration changes. |br| |br|
+
+#. ``Diff`` compares the operational state of the device before and after the configuration changes:
+
+   .. code-block:: python
+
+      log.info(banner("Use Genie Diff to verify BGP neighbor is shutdown on XE device '{}'".\
+                  format(dev_xe.name)))
+
+      bgp_diff = Diff(pre_bgp_ops.info, post_bgp_ops1.info)
+      bgp_diff.findDiff()
+      log.info("Genie Diffs observed, BGP neighbor is shutdown/missing:\n\n" + str(bgp_diff) + "\n")
+
+#. Use an API to get the BGP session count:
+
+   .. code-block:: python
+
+      log.info(banner("Verify number of established BGP neighbors on XE device '{}'".\
+                  format(dev_xe.name)))
+
+      curr_bgp_estab_nbrs = get_bgp_session_count(device=dev_xe, in_state='established')
+
+      if curr_bgp_estab_nbrs == orig_bgp_estab_nbrs:
+      log.info("\nPASS: Total number of established BGP neighbors is {}\n".\
+                  format(curr_bgp_estab_nbrs))
+      else:
+      log.error("\FAIL: Total number of established BGP neighbors is {}\n".\
+                  format(curr_bgp_estab_nbrs))
 
 See also...
 
 * `How the Python import works <https://docs.python.org/3/tutorial/modules.html?highlight=import>`_
-* :download:`Download the sample <simple_script1.zip>` file
+* :download:`Download the first sample <simple_script1.zip>` zip file
+* :download:`Download the second sample <simple_script2.zip>` zip file
