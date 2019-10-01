@@ -155,3 +155,4 @@ And there you have it!
 See also...
 
 * `How the Python import works <https://docs.python.org/3/tutorial/modules.html?highlight=import>`_
+* :download:`Download the sample <simple_script1.zip>` file
