@@ -10,10 +10,10 @@ We offer the |library| feature libraries and components as open-source code, and
     :header: "Package", "Description"
     :widths: 10 90
 
-    "Conf", "Conf objects adhere to the IETF/OpenConfig standards."
-    "Ops", "Ops objects adhere to the IETF/OpenConfig standards."
+    "Conf", "Configuration library"
+    "Ops", "Operational state library"
     "Robot", "These libraries support the Robot Framework."
-    "SDK", "These libraries and datafiles define the test cases (:term:`Triggers <trigger>` and :term:`Verifications <verification>`)."
+    "SDK", "These libraries and datafiles define the test cases (:term:`Triggers <trigger>` and :term:`Verifications <verification>`), API functions, and parsers."
 
 Check the existing components
 -----------------------------
@@ -37,11 +37,11 @@ You need to know a few basic GitHub commands and processes to download, change, 
 
 .. note:: Internal Cisco developers and engineers use Bitbucket rather than GitHub to commit changes. The |library| team synchronizes the Bitbucket and GitHub repos as part of each monthly release.
 
-In GitHub, *branches* separate different versions of the same repository (repo), so that more than one person can make changes at the same time. We use the following branches:
+In GitHub, *branches* separate different versions of the same repository (repo), so that more than one person can make changes at the same time. We use the following:
 
-* *master* --- contains code that is already released or ready to be released.
-* *dev* --- (internal, Bitbucket users only) contains code that is stable, reviewed, and ready to release.
-* *your_fork* --- contains a copy of the repository that you can work on.
+* *master* branch --- contains code that is already released or ready to be released.
+* *dev* branch --- (internal, Bitbucket users only) contains code that is stable, reviewed, and ready to release.
+* *fork* --- contains a complete copy of the original repository. This is what you use to make your changes.
 
 .. _clone-repo:
 
@@ -68,7 +68,7 @@ Clone the repo
 
    *Result*: This step creates a copy of the repository that you can work on without affecting anyone else's work. |br| |br|
 
-#. Download the source files::
+#. Clone the repository::
 
     git clone repo_name
 
@@ -80,11 +80,11 @@ Write new code
 --------------
 After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
 
-All code follows the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
+As a guide, follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
 
-* Strictly follow the PEP 8 naming conventions.
-* Abide by the 80-character limit per line.
-* Leave two blank lines between classes, two lines between functions, and one line between methods.
+* PEP 8 naming conventions
+* 80-character limit per line
+* Two blank lines between classes, two lines between functions, and one line between methods
 * Write the imports in the following order: 
 
     * Python native libraries
@@ -108,9 +108,7 @@ Conf or Ops packages
 
 #. Uninstall the packages::
 
-    pip uninstall genie.libs.conf genie.libs.ops genie.libs.sdk genie.libs.robot
-
-   *Result*: The system prompts you to uninstall each package. Enter :monospace:`y` to proceed. |br| |br|
+    pip uninstall genie.libs.conf genie.libs.ops genie.libs.sdk genie.libs.robot -y
 
 #. Change directories::
 
@@ -133,6 +131,10 @@ Conf or Ops packages
 Parsers
 ^^^^^^^
 #. :ref:`Clone the relevant repository <clone-repo>`. |br| |br|
+
+#. Uninstall the packages::
+
+    pip uninstall genie.libs.parser -y
 
 #. Change directories::
 
@@ -191,7 +193,7 @@ Internal Cisco users
 #. Did all of the tests pass?
 
     * If *yes*, you can now :ref:`update the changelogs <update-changelog>`.
-    * If *no*, check the errors, re-write your code, and try again.
+    * If *no*, check the errors, fix your code, and try again.
 
 External DevNet users
 ^^^^^^^^^^^^^^^^^^^^^
@@ -273,8 +275,8 @@ Commit procedure
 
    .. code-block::
 
-    git add modified_filename1
-    git add modified_filename2
+    git add mod1
+    git add mod2
 
    and then commit all of the changes::
 
