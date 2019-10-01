@@ -42,7 +42,7 @@ The following sections describe this process in more detail.
 
 Pattern matching
 ^^^^^^^^^^^^^^^^
-The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information in JSON format as a set of key-value pairs, as shown in the following example of a section of parsed output::
+The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information as a set of key-value pairs, as shown in the following example of a section of parsed output::
 
  {
   "GigabitEthernet1": {
@@ -71,7 +71,7 @@ The |library| uses the following two packages to parse (pattern match) device ou
 
 #. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema <schema>` (definition of the key-value pairs).
  
-#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. Different parser classes parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser class has an associated schema that defines the data structure of the parsed output, so that the data structure is the same regardless of the protocol.
+#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. A parser can parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser's associated schema defines the data structure of the parsed output.
 
 The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
 
@@ -511,7 +511,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
 .. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to the same directory as your testbed YAML file, and then run the following command::
 
-   (pyats) $ python3 parsergen_script.py
+   (pyats) $ python parsergen_script.py
 
 .. _parser-unit-test:
 
@@ -532,8 +532,6 @@ If you want to contribute your new parser to the open-source |pyATS| feature lib
 The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
 
 The following example shows how to create a unit test file for :ref:`the show lisp session example <regex-parser>`.
-
-.. note:: Internal Cisco users must use ``ats`` rather than ``pyats``.
 
 .. code-block:: python
 
