@@ -35,7 +35,7 @@ We provide you with an example of a commented script that:
 * changes the configuration, and 
 * re-checks the interface status.
 
-We also provide you with pre-recorded output so that you can see the results. :download:`Download the sample <simple_script1.zip>` file, and then extract the files to a directory of your choice. Take a look at the :monospace:`testbed.yaml`, and open :monospace:`simple_script1.py` in a text editor to see additional :monospace:`log.info` statements that make the on-screen output clear.
+We also provide you with pre-recorded output so that you can see the results. :download:`Download the first sample <simple_script1.zip>` file, and then extract the files to a directory of your choice. Take a look at the :monospace:`testbed.yaml`, and open :monospace:`simple_script1.py` in a text editor to see additional :monospace:`log.info` statements that make the on-screen output clear.
 
 To run the script:
 
@@ -59,11 +59,11 @@ Steps to write a basic script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The following procedure describes the steps that you take to write the same sample script.
 
-#. Open a text editor and start a new :monospace:`.py` file.
+#. Open a text editor and start a new :monospace:`.py` file. |br| |br|
 
-#. First, import the functionality that you need from Python, |pyATS|, and the |library|. For a description of the more commonly used functionality that you might want to import, see the topic `Useful Libraries <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#useful-libraries>`_.
+#. Import the functionality that you need from Python, |pyATS|, and the |library|. For a description of the more commonly used functionality that you might want to import, see the topic `Useful Libraries <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#useful-libraries>`_.
 
-Remember that you always need to load the :term:`testbed YAML file`.
+   Remember that you always need to load the :term:`testbed YAML file`.
 
     .. code-block:: python
 
@@ -86,7 +86,7 @@ Remember that you always need to load the :term:`testbed YAML file`.
 
        from pyats.log.utils import banner
 
-#. You imported the ``load`` functionality in step 1, so now you can load the testbed file and display useful messages.
+#. You imported the ``load`` functionality in step 2, so now you can load the testbed file and display useful messages.
 
    .. code-block:: python
 
@@ -101,13 +101,13 @@ Remember that you always need to load the :term:`testbed YAML file`.
       device = testbed.devices['nx-osv-1']
       device.connect(via='cli')
 
-#. Check the current state of the interface and parse the output into a data structure with :term:`key-value pairs <key-value pair>`. We expect that the interface ``Ethernet2/1`` is currently down.
+#. Check the current state of the interface and parse the output into a data structure that has :term:`key-value pairs <key-value pair>`. We expect that the interface ``Ethernet2/1`` is currently down.
 
    .. code-block:: python
 
       pre_output = device.parse("show interface Ethernet2/1 brief")
 
-#. With the data parsed into a structure with key-value pairs and stored as the :term:`object` ``pre_output``, check the value of the ``status`` key.
+#. With the data parsed and stored as the :term:`object` ``pre_output``, check the value of the ``status`` key.
 
    .. code-block:: python
 
@@ -163,13 +163,13 @@ We provide you with an example of a commented script that:
 * learns the BGP feature on the first device
 * shuts down the BGP neighbor on the first device
 * learns the BGP feature again after the configuration change
-* uses the |library| ``diff`` functionality to verify that the BGP neighbor is down
+* uses the |library| ``Diff`` functionality to verify that the BGP neighbor is down
 * restores the BGP neighbor
 * learns the BGP feature again after the second configuration change
-* uses the |library| ``diff`` functionality to verify that there are minimal differences in the device operational state, and
+* uses the |library| ``Diff`` functionality to verify that there are minimal differences in the device operational state, and
 * verifies the number of BGP neighbors on the first device.
 
-We also provide you with pre-recorded output so that you can see the results. :download:`Download the sample <simple_script2.zip>` file, and then extract the files to a directory of your choice. Take a look at the :monospace:`testbed.yaml`, and open :monospace:`simple_script2.py` in a text editor to see the commented sections.
+We also provide you with pre-recorded output so that you can see the results. :download:`Download the second sample <simple_script2.zip>` file, and then extract the files to a directory of your choice. In a text editor, open and read through the :monospace:`testbed.yaml` and :monospace:`simple_script2.py` files.
 
 To run the script:
 
@@ -191,7 +191,7 @@ Steps to write an advanced script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Open the file :monospace:`simple_script2.py`, and note the following differences from the basic script.
 
-#. For this example, import additional functionality so that you can use ``Diff`` and an API that we provide to get BGP information:
+#. This example imports additional functionality so that you can use ``Diff`` and an API that gets BGP information:
 
    .. code-block:: python
 
@@ -215,15 +215,15 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
             dev_nx = device
             dev_nx.connect(via='cli')
 
-#. This example learns the BGP feature (issues and parses a series of show commands):
+#. This script uses the ``Ops`` module ``learn`` functionality to learn the BGP feature (issue and parse a series of show commands):
 
    .. code-block:: python
 
     pre_bgp_ops = dev_xe.learn("bgp")
 
-   The script also learns the feature again after the configuration changes. |br| |br|
+   The script uses the learn functionality again later to learn the feature after configuration changes. |br| |br|
 
-#. ``Diff`` compares the operational state of the device before and after the configuration changes:
+#. ``Diff`` compares the operational state of the device before and after configuration changes:
 
    .. code-block:: python
 
@@ -234,12 +234,9 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
       bgp_diff.findDiff()
       log.info("Genie Diffs observed, BGP neighbor is shutdown/missing:\n\n" + str(bgp_diff) + "\n")
 
-#. Use an API to get the BGP session count:
+#. The script uses an API function to get the BGP session count:
 
    .. code-block:: python
-
-      log.info(banner("Verify number of established BGP neighbors on XE device '{}'".\
-                  format(dev_xe.name)))
 
       curr_bgp_estab_nbrs = get_bgp_session_count(device=dev_xe, in_state='established')
 
@@ -249,6 +246,7 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
       else:
       log.error("\FAIL: Total number of established BGP neighbors is {}\n".\
                   format(curr_bgp_estab_nbrs))
+
 
 See also...
 
