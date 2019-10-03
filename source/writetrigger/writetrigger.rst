@@ -58,7 +58,7 @@ In the following example, you can see the structure of the trigger. This trigger
 #. One Python file can have more than one trigger class.
 #. Triggers inherit from the base :monospace:`Trigger` class, which contains common setup and cleanup tasks and checks. These tasks help you to identify any unexpected changes to testbed devices that are not under test. For more information about common setup and cleanup, see the topic :ref:`auto-testing-process` in the *Get Started with pyATS* guide. 
 #. Trigger setup steps typically check for any prerequisites and configure the device to meet the required pre-test conditions.
-#. If any setup step under :monospace:`@aetest.setup` fails, the rest of the trigger does not run.
+#. For each trigger, if a step marked as :monospace:`@aetest.setup` fails, the steps marked as :monospace:`aetest.test` do not run.
 #. The |library| triggers typically have a test step to change a device configuration or operational state, and a recovery test step to restore the pre-test conditions.
 
 Have a look at the following example, and then we'll explain it step-by-step in the section :ref:`write-simple-trigger`.
