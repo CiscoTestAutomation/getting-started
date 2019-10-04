@@ -55,7 +55,7 @@ System and software
 
 .. note:: Python 3.4 has reached its end of life and is now deprecated. |pyATS| and the |library| no longer support Python 3.4.
 
-After you install Python, check to make sure that you have the following packages:
+For Ubuntu, we recommend that you check for the following packages:
 
 * python3-venv
 * python3-dev
