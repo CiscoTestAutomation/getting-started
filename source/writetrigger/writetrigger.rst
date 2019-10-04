@@ -59,7 +59,12 @@ In the following example, you can see the structure of the trigger. This trigger
 #. Triggers inherit from the base :monospace:`Trigger` class, which contains common setup and cleanup tasks and checks. These tasks help you to identify any unexpected changes to testbed devices that are not under test. For more information about common setup and cleanup, see the topic :ref:`auto-testing-process` in the *Get Started with pyATS* guide. 
 #. Trigger setup steps typically check for any prerequisites and configure the device to meet the required pre-test conditions.
 #. For each trigger, if a step marked as :monospace:`@aetest.setup` fails, the steps marked as :monospace:`aetest.test` do not run.
-#. The |library| triggers typically have a test step to change a device configuration or operational state, and a recovery test step to restore the pre-test conditions.
+#. The |library| triggers typically have a
+
+   * test step, to change a device configuration or operational state, and
+   * a recovery step, to restore the pre-test conditions.
+
+#. Within a step, you can call any of `our pre-built API functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_. These are clearly-named, reusable actions that can save you time and effort. For more information, see the topic `Functions <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/apis/index.html?highlight=apis#functions>`_.
 
 Have a look at the following example, and then we'll explain it step-by-step in the section :ref:`write-simple-trigger`.
 
