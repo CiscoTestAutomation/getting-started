@@ -51,7 +51,10 @@ The following diagram shows how the triggers, datafiles, and job files interact 
 .. image:: ../images/harness_run_job.png
 
 Example of a trigger file
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
+
+Structure of a trigger
+^^^^^^^^^^^^^^^^^^^^^^
 In the following example, you can see the structure of the trigger. This trigger shuts and unshuts BGP on the :monospace:`uut` device defined in the testbed YAML file. Note that:
 
 #. A trigger is a Python class. 
@@ -161,6 +164,36 @@ Have a look at the following example, and then we'll explain it step-by-step in 
             if output['bgp_protocol_state'] != 'running':
                 self.failed("Reconfigure of Bgp {bgp_id} did not work as it is not "
                             "running".format(bgp_id=self.bgp_id))
+
+Run the example trigger
+^^^^^^^^^^^^^^^^^^^^^^^
+Complete the following steps to see the trigger in action on a mock device.
+
+#. In your virtual environment, create a directory with the name :monospace:`testcases`::
+
+    mkdir testcases
+
+#. :download:`Download the attached zip file <trigger.zip>`, and then extract the files to the :monospace:`testcases` directory. |br| |br|
+
+#. Change to the :monospace:`testcases` directory::
+
+    cd testcases
+
+#. Because this example uses a mock device, you must source the trigger example.
+
+   * For Bash::
+    
+       source trigger_example.sh
+
+   * For C shell::
+
+       source trigger_example.csh
+
+#. Run the job::
+
+    pyats run job example_job.py --testbed-file testbed.yaml --devices uut
+
+   *Result*: The harness runs the trigger specified in the job file (:monospace:`example_job.py`), listed in the trigger datafile (:monospace:`trigger_datafile.yaml`), and defined by the trigger file (:monospace:`shutnoshut.py`).
 
 Write your own trigger
 ----------------------
