@@ -179,21 +179,30 @@ Complete the following steps to see the trigger in action on a mock device.
 
     cd testcases
 
-#. Because this example uses a mock device, you must source the trigger example.
+#. Because this example uses a mock device, you must set the Python path and source the trigger example.
 
    * For Bash::
     
+       export PYTHONPATH=$VIRTUAL_ENV
        source trigger_example.sh
 
    * For C shell::
 
+       setenv PYTHONPATH $VIRTUAL_ENV
        source trigger_example.csh
 
 #. Run the job::
 
     pyats run job example_job.py --testbed-file testbed.yaml --devices uut
 
-   *Result*: The harness runs the trigger specified in the job file (:monospace:`example_job.py`), listed in the trigger datafile (:monospace:`trigger_datafile.yaml`), and defined by the trigger file (:monospace:`shutnoshut.py`).
+   .. note:: If you're a DevNet user and you want to receive an email with the results, add the argument ``--mailto yourname@company.domain``.
+
+   *Result*: The harness runs the trigger specified in :monospace:`example_job.py`, using arguments from :monospace:`trigger_datafile.yaml`, and defined by :monospace:`shutnoshut.py`.
+
+   Your terminal shows the step-by-step actions and the following detailed list of results:
+
+   .. image:: /images/trigger_results.png
+      :width: 75% 
 
 Write your own trigger
 ----------------------
