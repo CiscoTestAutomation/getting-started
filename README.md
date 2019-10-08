@@ -8,7 +8,6 @@ Please note that this repository contains WORK IN PROGRESS. We cannot guarantee 
 
 ## Contributions
 
-
 Everyone can contribute (open a PR) and/or open issues against the  
 pyATS documentation in this GitHub repository.
 

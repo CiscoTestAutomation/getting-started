@@ -17,10 +17,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyATS Development Guide'
+project = 'Get Started with pyATS'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
-master_doc = 'index_dg'
 
 # -- General configuration ---------------------------------------------------
 
@@ -28,7 +27,7 @@ master_doc = 'index_dg'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosectionlabel', 'sphinxcontrib.spelling', 'sphinx.ext.intersphinx',
+    'sphinx.ext.autosectionlabel', 'sphinxcontrib.spelling',
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -37,9 +36,6 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
-
-
 
 # -- Options for PDF output -------------------------------------------------
 #
@@ -85,22 +81,15 @@ rst_prolog = """
 .. |python_reg| unicode:: Python U+00AE
 .. |parser_site| replace:: https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
 .. |br| raw:: html
-
   <br />
-
 .. |line6| raw:: html
-
   <p style="border:1px solid #e1e4e5;"><code style="border:none; color:#e74c3c;">print('Slot 1 serial number:' </br>&nbsp;+ p1['name']['Slot 1']['serial_number'])</code></p>
-
-
 .. raw:: html
-
     <style>
     .question {background-color: yellow; font-weight:bold; padding: .25em;}
     .monospace {font-family: monospace; color: #404040; font-size: 14px;}
     .border {border: 1px #404040;}
     </style>
-
 .. role:: question
 .. role:: monospace
 .. role::  border

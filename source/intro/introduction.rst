@@ -7,7 +7,7 @@ What is the |pyATS| ecosystem?
 -------------------------------------
 |pyATSbold| and the |librarybold| together define an ecosystem that streamlines and standardizes how you set up and run automated network tests. |pyATS| and the |library| provide sanity, feature, solution, system, and scale test automation for any type of device or virtual device. |pyATS| is currently used with devices such as routers and switches, access points, firewalls, Linux servers, phones, cable CPEs, and many more.
 
-Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at the core of Cisco's Test Automation Solution. It's currently used by many Cisco and DevNet engineers and developers.
+Originally developed for internal Cisco engineers, the |pyATS| ecosystem is at the core of Cisco's Test Automation Solution. It's currently used by Cisco engineering, DevNet engineers, network engineers, and developers.
 
 The |pyATS| ecosystem empowers your team to create and run consistent, repeatable, iterative, and reusable tests. |pyATS| provides the test framework, and the |library| offers ready-to-use test components.
 
