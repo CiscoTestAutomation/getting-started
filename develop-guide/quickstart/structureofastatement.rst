@@ -1,0 +1,1 @@
+../../common/quickstart/structureofastatement.rst
