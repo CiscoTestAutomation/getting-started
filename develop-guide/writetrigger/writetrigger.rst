@@ -374,7 +374,7 @@ Example of a trigger with verifications
 ---------------------------------------
 A trigger verifies the expected results. For example, a trigger can check that BGP is down after you take the action to shut it down.
 
-You can use :term:`verifications <verification>` to check for *unexpected* results, such as changes to the feature that you didn't initiate. When you add a verification to your test case, it runs before and after every trigger. This enables you to compare the parsed output before and after a change to a device.
+You can use :term:`verifications <verification>` to check for *unexpected* results, such as changes to the feature that you didn't initiate. When you add a verification to your test case, it runs before and after every trigger. This enables you to compare the device’s operational state before and after the trigger (change to a device) and to verify that nothing unexpected happened.
 
 .. note:: To see a list of all available verifications, go to https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/verifications.
 

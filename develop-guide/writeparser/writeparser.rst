@@ -204,7 +204,7 @@ The |library| ``parsergen`` package provides a one-step parsing mechanism that c
 
 The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values. 
 
-Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NXE/VXLAN platform.
+Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NVE/VXLAN platform.
 
 #. In a Python interpreter, import the required |library| and Python functionality (``re`` is the Python regex functionality):
 
@@ -330,8 +330,6 @@ The following example shows how to create a unit test file for :ref:`the show li
     
         '''Unit test for "show lisp session"'''
     
-        device = Device(name='aDevice')
-        
         empty_output = {'execute.return_value': ''}
     
         # Specify the expected result for the parsed output
@@ -397,7 +395,7 @@ To create your own unit test, complete the following steps.
 
    /genie/libs/parser/iosxe/show_lisp_new.py
 
-#. Open a new text file, and save it in a directory of your choice.
+#. Open a new text file, and save it in the :monospace:`tests` folder for the OS.
 
 #. In this new file, import the functionality shown in the example. Also, import your new parser class. In this example, :monospace:`show_lisp_new` is the parser file and :monospace:`ShowLispSessionNew` is the new parser class:
 
