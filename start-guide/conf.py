@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Get Started with pyATS'
+project = 'pyATS Development Guide'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
 
@@ -81,16 +81,24 @@ rst_prolog = """
 .. |python_reg| unicode:: Python U+00AE
 .. |parser_site| replace:: https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
 .. |br| raw:: html
+
   <br />
+
 .. |line6| raw:: html
+
   <p style="border:1px solid #e1e4e5;"><code style="border:none; color:#e74c3c;">print('Slot 1 serial number:' </br>&nbsp;+ p1['name']['Slot 1']['serial_number'])</code></p>
+
 .. raw:: html
+
     <style>
     .question {background-color: yellow; font-weight:bold; padding: .25em;}
     .monospace {font-family: monospace; color: #404040; font-size: 14px;}
     .border {border: 1px #404040;}
     </style>
+
 .. role:: question
+
 .. role:: monospace
+
 .. role::  border
 """
