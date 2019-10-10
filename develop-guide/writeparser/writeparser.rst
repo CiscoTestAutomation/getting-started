@@ -77,12 +77,18 @@ The following illustration shows how the Metaparser and parser classes work toge
 
 .. image:: ../images/structure.png
 
+.. note:: The |library| standard parsers use regular expressions for scalability. You can, however, write a parser that uses any of the following tools:
+
+  * `TextFSM <https://github.com/google/textfsm/wiki/TextFSM>`_
+  * `Template Text Parser (TTP) <https://ttp.readthedocs.io/en/latest/>`_
+  * :ref:`Parsergen <parsergen>`
+
 
 .. _regex-parser:
 
 Write a parser class with RegEx
 --------------------------------
-When you write a new parser class, you define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
+When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
 
 The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are defined in the same Python file. Take a look at the example, and then we'll explain how it works.
 
@@ -197,6 +203,8 @@ The following table describes the structure of the parser class in more detail.
    :widths: 48 52
 
 .. note:: You need to know the patterns that you want to match before you write the parser class. These patterns can be some or all of the keys defined in the schema class.
+
+.. _parsergen:
 
 Write a parser class with the parsergen package
 -----------------------------------------------
@@ -432,7 +440,13 @@ To create your own unit test, complete the following steps.
 
 Create a parser schema
 ----------------------
-A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. When you create or extend a parser, you must first identify the keys to include in the parsed output.
+A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. 
+
+When you create or extend a parser, you must first identify the keys to include in the parsed output. Using a schema is optional, but because you can easily see the data structure in a schema, you gain the following benefits:
+
+* *Time-saving*: You can quickly see the data structure without having to read hundreds of lines of regex output. This saves you time when troubleshooting.
+* *Future-proof* and robust: When you or others modify code, you're less likely to break something.
+* *Scalable*: It's more efficient to modify a schema than to have multiple developers working with just the regex output.
 
 Example of a schema
 ^^^^^^^^^^^^^^^^^^^
