@@ -25,7 +25,7 @@ Write a basic script
 ---------------------
 This example shows you how to write and run a basic script to check the state of a device interface.
 
-.. note:: This example uses pure Python. For information about how to use the |library| command line interface, see the |getstartedguide| topic :ref:`genie-cli`
+.. note:: This example uses pure Python. For information about how to use the |library| command line interface, see the |getstartedguide| topic `What is the pyATS Library CLI? <https://pubhub.devnetcloud.com/media/pyats-getting-started/docs/intro/introduction.html#what-is-the-library-cli>`_.
 
 Sample script - basic
 ^^^^^^^^^^^^^^^^^^^^^

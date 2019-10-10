@@ -12,7 +12,7 @@ What is a parser?
 .. include:: ../definitions/def_parser.rst
     :start-line: 3
 
-* For a basic introduction to the |library| parsers, see the topic :ref:`parse-output`.
+* For a basic introduction to the |library| parsers, see the topic `Parse device output <https://pubhub.devnetcloud.com/media/pyats-getting-started/docs/quickstart/parseoutput.html#parse-device-output>`_ in the *Get Started with pyATS* guide.
 * For more information about the ``metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/index.html#genie-metaparser-package>`_.
 
 Why write a parser?
