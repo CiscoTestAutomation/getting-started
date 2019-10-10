@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyATS Development Guide'
+project = 'pyATS Getting Started Guide'
 copyright = '2019, Cisco Systems Inc.'
 author = 'Cisco Systems Inc.'
 
