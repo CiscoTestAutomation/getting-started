@@ -1,0 +1,72 @@
+testbed:
+  name: VIRL-TESTBED1
+  passwords:
+    enable: lab
+    tacacs: lab
+  servers:
+    tftp:
+      address: virl
+      password: VIRL
+      server: virl
+      username: virl
+
+devices:
+
+  csr1000v-1:
+    alias: csr1000v-1
+    type: CSR1000v
+    os: iosxe
+    platform: iosxe
+    credentials:
+      default:
+        password: ENC(w5PDosOUw5fDog==)
+        username: cisco
+      enable:
+        password: ENC(w5PDosOUw5fDog==)
+        username: cisco
+    connections:
+      defaults:
+        class: 'unicon.Unicon'
+      cli:
+        ip: 172.25.192.90
+        port: 17000
+        protocol: telnet
+      vty:
+        ip: 10.255.9.109
+        protocol: telnet
+        proxy: jump_host
+    custom:
+      abstraction:
+        order:
+        - os
+        - platform
+
+  nx-osv-1:
+    alias: nx-osv-1
+    type: NX-OSv
+    os: nxos
+    platform: nxosv
+    credentials:
+      default:
+        password: ENC(w5PDosOUw5fDog==)
+        username: cisco
+      enable:
+        password: ENC(w5PDosOUw5fDog==)
+        username: cisco
+    connections:
+      defaults:
+        class: 'unicon.Unicon'
+      cli:
+        ip: 172.25.192.90
+        port: 17002
+        protocol: telnet
+      vty:
+        ip: 10.255.9.108
+        protocol: telnet
+        proxy: jump_host
+    custom:
+      abstraction:
+        order:
+        - os
+        - platform
+
