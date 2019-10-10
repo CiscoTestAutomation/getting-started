@@ -522,6 +522,8 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
     dev = testbed.devices['iosxe1']
     dev.connect()
 
+   .. note:: Ignore the prompt to continue to connect.
+
 #. Execute the ``show interfaces`` command.
 
    .. code-block:: python
