@@ -291,7 +291,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
             'cfg': 'CLI',
             'vrf': 'N/A'}}
 
-.. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to the same directory as your testbed YAML file, and then run the following command::
+.. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to a directory of your choice, cd to that directory, and then run the following command::
 
    (pyats) $ python parsergen_script.py
 
