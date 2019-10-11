@@ -57,6 +57,16 @@ To run the script:
 
     python simple_script1.py
 
+#. Clear the mock environment variable that you set in step 1.
+
+   * For Bash::
+
+      unset UNICON_REPLAY
+
+   * For C shell::
+
+      unsetenv UNICON_REPLAY
+
 .. _steps-write-script:
 
 Steps to write a basic script
@@ -89,6 +99,7 @@ The following procedure describes the steps that you take to write the same samp
    .. code-block:: python
 
        from pyats.log.utils import banner
+
 
 #. You imported the ``load`` functionality in step 2, so now you can load the testbed file and display useful messages.
 
@@ -155,6 +166,10 @@ The following procedure describes the steps that you take to write the same samp
 
 And there you have it! 
 
+.. note:: You can add a Python debugger to your code at any point that you want to stop and debug:
+
+      ``import pdb; pdb.set_trace()``
+
 Write an advanced script
 ------------------------
 
@@ -191,6 +206,17 @@ To run the script:
 #. Run the script::
 
     python simple_script2.py
+
+
+#. Clear the mock environment variable that you set in step 1.
+
+   * For Bash::
+
+      unset UNICON_REPLAY
+
+   * For C shell::
+
+      unsetenv UNICON_REPLAY
 
 Steps to write an advanced script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -253,6 +279,11 @@ Open the file :monospace:`simple_script2.py`, and note the following **differenc
               log.info("\nPASS: Interface {intf} status is: '{s}'".format(intf=interface, s=status))
           elif status == 'down':
               log.error("\nFAIL: Interface {intf} status is: '{s}'".format(intf=interface, s=status))
+
+.. note:: You can add a Python debugger to your code at any point that you want to stop and debug:
+
+      ``import pdb; pdb.set_trace()``
+
 
 See also...
 
