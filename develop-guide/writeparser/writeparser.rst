@@ -595,6 +595,26 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
             'bytes': int,
         }
 
+#. To see the output with a more readable structure, you can use Python's "pretty-print" module:
+
+   .. code-block:: python
+
+    output = dev.parse('show interfaces')
+    import pprint
+    pprint.pprint(output)
+
+   *Result*: The following snippet shows the output formatted so that it's easier to read::
+
+    {'GigabitEthernet1': {'arp_timeout': '04:00:00',
+                      'arp_type': 'arpa',
+                      'auto_negotiate': True,
+                      'bandwidth': 1000000,
+                      'counters': {'in_broadcast_pkts': 0,
+                                   'in_crc_errors': 0,
+                                   'in_errors': 0,
+                                   'in_frame': 0,
+
+   .. note:: You can use ``dev.parse`` even without a schema, because ``genie.libs.parse`` can parse at least some of the output.
 
 Identify keys from XML output
 ******************************
