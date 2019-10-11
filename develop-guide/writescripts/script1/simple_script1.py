@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(message)s')
 log = logging.getLogger(__name__)
 
-# Import pyATS & Genie
+# Import pyATS and the pyATS Library
 from genie.testbed import load
 from ats.log.utils import banner
 

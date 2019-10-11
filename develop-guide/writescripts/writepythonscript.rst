@@ -6,6 +6,10 @@ As a network engineer or programmer, you can write your own Python scripts that 
 
 This topic describes how to write a basic script and how to add complexity to that script.
 
+.. attention:: Before you run the example scripts provided in this section, make sure you have the latest |library| packages, **version 19.10 or higher**:
+
+     ``pip install pyats[library] --upgrade``
+
 Why write a script?
 ------------------------
 *Automation* means that you can programmatically establish connections to your devices and perform operations on them. Scripts automate your network operations --- you simply define a list of commands once and then reuse the script as often as required, on-demand or at scheduled intervals.
@@ -111,7 +115,7 @@ The following procedure describes the steps that you take to write the same samp
 
    .. code-block:: python
 
-      pre_status = pre_output['interface']['ethernet']['Eth2/1']['status']
+      pre_status = pre_output['interface']['ethernet']['Ethernet2/1']['status']
       if pre_status == 'down':
           log.info("\nPASS: Interface Ethernet2/1 status is 'down' as expected\n")
       else:
@@ -141,7 +145,7 @@ The following procedure describes the steps that you take to write the same samp
 
    .. code-block:: python
 
-      post_status = post_output['interface']['ethernet']['Eth2/1']['status']
+      post_status = post_output['interface']['ethernet']['Ethernet2/1']['status']
       if post_status == 'up':
           log.info("\nPASS: Interface Ethernet2/1 status is 'up' as expected\n")
       else:
@@ -156,7 +160,7 @@ Write an advanced script
 
 Sample script - advanced
 ^^^^^^^^^^^^^^^^^^^^^^^^
-We provide you with an example of a commented script that:
+We provide you with an example of a commented script that
 
 * connects to two devices
 * gets the number of established BGP neighbors on the first device
@@ -166,8 +170,9 @@ We provide you with an example of a commented script that:
 * uses the |library| ``Diff`` functionality to verify that the BGP neighbor is down
 * restores the BGP neighbor
 * learns the BGP feature again after the second configuration change
-* uses the |library| ``Diff`` functionality to verify that there are minimal differences in the device operational state, and
-* verifies the number of BGP neighbors on the first device.
+* uses the |library| ``Diff`` functionality to verify that there are minimal differences in the device operational state
+* verifies the number of BGP neighbors on the first device, and
+* checks the interface status of all interfaces on the device.
 
 We also provide you with pre-recorded output so that you can see the results. :download:`Download the second sample <simple_script2.zip>` file, and then extract the files to a directory of your choice. In a text editor, open and read through the :monospace:`testbed.yaml` and :monospace:`simple_script2.py` files.
 
@@ -189,7 +194,7 @@ To run the script:
 
 Steps to write an advanced script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Open the file :monospace:`simple_script2.py`, and note the following differences from the basic script.
+Open the file :monospace:`simple_script2.py`, and note the following **differences** from the basic script.
 
 #. This example imports additional functionality so that you can use ``Diff`` and an API that gets BGP information:
 
@@ -200,20 +205,7 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
     from genie.utils.diff import Diff
     from genie.libs.sdk.apis.iosxe.bgp.get import get_bgp_session_count
 
-#. Notice the "for" loop, which finds and connects to the devices described in the testbed YAML file:
 
-   .. code-block:: python
-
-    for dev in testbed.devices:
-
-      # Find and connect to IOSXE and NXOS devices
-      device = testbed.devices[dev]
-      if device.os == 'iosxe':
-            dev_xe = device
-            dev_xe.connect(via='cli')
-      elif device.os == 'nxos':
-            dev_nx = device
-            dev_nx.connect(via='cli')
 
 #. This script uses the ``Ops`` module ``learn`` functionality to learn the BGP feature (issue and parse a series of show commands):
 
@@ -222,6 +214,20 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
     pre_bgp_ops = dev_xe.learn("bgp")
 
    The script uses the learn functionality again later to learn the feature after configuration changes. |br| |br|
+
+#. The script uses an API function to get the number of established BGP neighbors:
+
+   .. code-block:: python
+
+      orig_bgp_estab_nbrs = dev_xe.api.get_bgp_session_count(in_state='established')
+
+
+#. Make a configuration change in the feature BGP, and then relearn the changes:
+
+   .. code-block:: python
+
+      dev_xe.configure("router bgp 65000\n"
+                       " neighbor 10.2.2.2 shutdown")
 
 #. ``Diff`` compares the operational state of the device before and after configuration changes:
 
@@ -234,19 +240,19 @@ Open the file :monospace:`simple_script2.py`, and note the following differences
       bgp_diff.findDiff()
       log.info("Genie Diffs observed, BGP neighbor is shutdown/missing:\n\n" + str(bgp_diff) + "\n")
 
-#. The script uses an API function to get the BGP session count:
+
+#. Notice the "for" loop, which checks the status of all interfaces on the XE device:
 
    .. code-block:: python
 
-      curr_bgp_estab_nbrs = get_bgp_session_count(device=dev_xe, in_state='established')
-
-      if curr_bgp_estab_nbrs == orig_bgp_estab_nbrs:
-      log.info("\nPASS: Total number of established BGP neighbors is {}\n".\
-                  format(curr_bgp_estab_nbrs))
-      else:
-      log.error("\FAIL: Total number of established BGP neighbors is {}\n".\
-                  format(curr_bgp_estab_nbrs))
-
+      intf_output = dev_xe.parse('show ip interface brief')
+      
+      for interface in intf_output['interface']:
+          status = intf_output['interface'][interface]['status']
+          if status == 'up':
+              log.info("\nPASS: Interface {intf} status is: '{s}'".format(intf=interface, s=status))
+          elif status == 'down':
+              log.error("\nFAIL: Interface {intf} status is: '{s}'".format(intf=interface, s=status))
 
 See also...
 

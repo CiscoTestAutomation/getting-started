@@ -28,11 +28,11 @@ devices:
       defaults:
         class: 'unicon.Unicon'
       cli:
-        ip: 172.25.192.90
-        port: 17000
+        ip: 1.1.1.1
+        port: 12345
         protocol: telnet
       vty:
-        ip: 10.255.9.109
+        ip: 2.2.2.2
         protocol: telnet
         proxy: jump_host
     custom:
@@ -57,11 +57,11 @@ devices:
       defaults:
         class: 'unicon.Unicon'
       cli:
-        ip: 172.25.192.90
-        port: 17002
+        ip: 3.3.3.3
+        port: 54321
         protocol: telnet
       vty:
-        ip: 10.255.9.108
+        ip: 4.4.4.4
         protocol: telnet
         proxy: jump_host
     custom:

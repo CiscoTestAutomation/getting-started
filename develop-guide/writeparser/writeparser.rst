@@ -512,6 +512,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 #. Go to the directory that contains the extracted files::
 
     $ cd mock_parser
+    $ python
 
 #. In your Python interpreter, load the :term:`testbed YAML file`, and connect to a device.
 
