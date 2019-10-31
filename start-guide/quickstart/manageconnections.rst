@@ -20,7 +20,7 @@ For a more detailed example that you can try, see :ref:`connect-to-device`.
 Supported devices
 ------------------
 
-The |library| supports the following os/platform combinations.
+The |library| supports the following os/platform combinations. `Full list of supported platform <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/introduction.html#supported-platforms>`_ 
 
 .. csv-table:: Supported OS/platform combinations
    :file: SupportedPlatforms.csv
