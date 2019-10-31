@@ -78,7 +78,7 @@ Clone the repo
 
 Write new code
 --------------
-After you download the repo from GitHub (DevNet) or Bitbucket (internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
+After you clone the repo from GitHub (DevNet) or Bitbucket (internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
 
 As a guide, follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
 

@@ -59,7 +59,7 @@ In the following example, you can see the structure of the trigger. This trigger
 
 #. A trigger is a Python class. 
 #. One Python file can have more than one trigger class.
-#. Triggers inherit from the base :monospace:`Trigger` class, which contains common setup and cleanup tasks and checks. These tasks help you to identify any unexpected changes to testbed devices that are not under test. For more information about common setup and cleanup, see the topic :ref:`auto-testing-process` in the *Get Started with pyATS* guide. 
+#. Triggers inherit from the base :monospace:`Trigger` class, which contains common setup and cleanup tasks and checks. These tasks help you to identify any unexpected changes to testbed devices that are not under test. For more information about common setup and cleanup, see the topic `Automated testing process <https://pubhub.devnetcloud.com/media/pyats-getting-started/docs/quickstart/runtestcase.html#automated-testing-process>`_ in the *Get Started with pyATS* guide. 
 #. Trigger setup steps typically check for any prerequisites and configure the device to meet the required pre-test conditions.
 #. For each trigger, if a step marked as :monospace:`@aetest.setup` fails, the steps marked as :monospace:`aetest.test` do not run.
 #. The |library| triggers typically have a
@@ -369,6 +369,11 @@ The Python job file specifies the trigger datafile and triggers to run:
        gRun(trigger_uids=('TriggerShutNoShutBgp'),
            trigger_datafile='new_trigger_datafile.yaml')
 
+To run the job file:
+
+.. code-block:: python
+
+  pyats run job example_job.py --testbed-file testbed.yaml --devices uut
 
 Example of a trigger with verifications
 ---------------------------------------
@@ -472,3 +477,72 @@ You can use :term:`verifications <verification>` to check for *unexpected* resul
     pyats run job job.py --testbed-file tb.yaml
 
    where :monospace:`tb.yaml` is your testbed file.
+
+Quick Trigger
+-------------
+
+The *Quick Trigger* is a YAML-driven template that makes it easy for you to run a test case without having to know any programming. The quick trigger --- called *Blitz* because it's lightning fast --- does the following actions:
+
+* Configure a device.
+* Parse the device output to verify if the device state is as expected.
+* Unconfig or modify the initial configuration.
+* Parse the output to recheck the operational state.
+
+Designed for "quick and dirty" development, the quick trigger verifies key-value pairs and uses regex parsing for full flexibility across OS and platforms. As with any pyATS Library trigger, other triggers can inherit from the `Blitz` class. Go ahead and build on top of it!
+
+To use the quick trigger template, add the YAML content to the `trigger_datafile.yaml`, as shown in the following example for BGP on a router:
+
+.. code-block:: YAML
+
+    TriggerBlitzShutNoShutBgp:
+    source:
+      pkg: genie.libs.sdk
+      class: triggers.blitz.blitz.Blitz
+    devices: ['uut']
+    configure: 
+      devices:
+        uut: |
+          router bgp 65000
+          shutdown
+    validate_configure:
+      devices:
+        uut: 
+          1:
+            command: show bgp process vrf all
+            parsed: 
+             - "[bgp_protocol_state][shutdown]"
+          2:
+            command: show bgp process vrf all
+            parsed: 
+             - "[bgp_protocol_state][(?!running)]"
+          3:
+            command: show bgp process vrf all
+            include: 
+             - '8610'
+            exclude: 
+            - 'Wrong stuff'
+    unconfigure: 
+      devices:
+        uut: |
+          router bgp 65000
+          no shutdown
+      sleep: 20
+    validate_unconfigure:
+      devices:
+        uut: 
+          1:
+            command: show bgp process vrf all
+            parsed:
+             - "[bgp_protocol_state][running]"
+
+If you want to call a device API function, add the following syntax to the `trigger_datafile.yaml`:
+
+.. code-block:: YAML
+
+    devices:
+    my_device:
+      1:
+        api: get_interface_mtu_size
+        arguments:
+          device: my_device
+          interface: Ethernet1

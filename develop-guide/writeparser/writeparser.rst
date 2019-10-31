@@ -12,7 +12,7 @@ What is a parser?
 .. include:: ../definitions/def_parser.rst
     :start-line: 3
 
-* For a basic introduction to the |library| parsers, see the topic :ref:`parse-output`.
+* For a basic introduction to the |library| parsers, see the topic `Parse device output <https://pubhub.devnetcloud.com/media/pyats-getting-started/docs/quickstart/parseoutput.html#parse-device-output>`_ in the *Get Started with pyATS* guide.
 * For more information about the ``metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/index.html#genie-metaparser-package>`_.
 
 Why write a parser?
@@ -77,12 +77,18 @@ The following illustration shows how the Metaparser and parser classes work toge
 
 .. image:: ../images/structure.png
 
+.. note:: The |library| standard parsers use regular expressions for scalability. You can, however, write a parser that uses any of the following tools:
+
+  * `TextFSM <https://github.com/google/textfsm/wiki/TextFSM>`_
+  * `Template Text Parser (TTP) <https://ttp.readthedocs.io/en/latest/>`_
+  * :ref:`Parsergen <parsergen>`
+
 
 .. _regex-parser:
 
 Write a parser class with RegEx
 --------------------------------
-When you write a new parser class, you define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
+When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
 
 The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are defined in the same Python file. Take a look at the example, and then we'll explain how it works.
 
@@ -198,6 +204,8 @@ The following table describes the structure of the parser class in more detail.
 
 .. note:: You need to know the patterns that you want to match before you write the parser class. These patterns can be some or all of the keys defined in the schema class.
 
+.. _parsergen:
+
 Write a parser class with the parsergen package
 -----------------------------------------------
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
@@ -283,7 +291,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
             'cfg': 'CLI',
             'vrf': 'N/A'}}
 
-.. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to the same directory as your testbed YAML file, and then run the following command::
+.. tip:: You can run all of these commands as a script. :download:`Download the attached zip file <parsergen_script.zip>`, extract the file to a directory of your choice, cd to that directory, and then run the following command::
 
    (pyats) $ python parsergen_script.py
 
@@ -432,7 +440,13 @@ To create your own unit test, complete the following steps.
 
 Create a parser schema
 ----------------------
-A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. When you create or extend a parser, you must first identify the keys to include in the parsed output.
+A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. 
+
+When you create or extend a parser, you must first identify the keys to include in the parsed output. Using a schema is optional, but because you can easily see the data structure in a schema, you gain the following benefits:
+
+* *Time-saving*: You can quickly see the data structure without having to read hundreds of lines of regex output. This saves you time when troubleshooting.
+* *Future-proof* and robust: When you or others modify code, you're less likely to break something.
+* *Scalable*: It's more efficient to modify a schema than to have multiple developers working with just the regex output.
 
 Example of a schema
 ^^^^^^^^^^^^^^^^^^^
@@ -498,6 +512,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
 #. Go to the directory that contains the extracted files::
 
     $ cd mock_parser
+    $ python
 
 #. In your Python interpreter, load the :term:`testbed YAML file`, and connect to a device.
 
@@ -507,6 +522,8 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
     testbed = load('mock_parser.yaml')
     dev = testbed.devices['iosxe1']
     dev.connect()
+
+   .. note:: Ignore the prompt to continue to connect.
 
 #. Execute the ``show interfaces`` command.
 
@@ -578,6 +595,26 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
             'bytes': int,
         }
 
+#. To see the output with a more readable structure, you can use Python's "pretty-print" module:
+
+   .. code-block:: python
+
+    output = dev.parse('show interfaces')
+    import pprint
+    pprint.pprint(output)
+
+   *Result*: The following snippet shows the output formatted so that it's easier to read::
+
+    {'GigabitEthernet1': {'arp_timeout': '04:00:00',
+                      'arp_type': 'arpa',
+                      'auto_negotiate': True,
+                      'bandwidth': 1000000,
+                      'counters': {'in_broadcast_pkts': 0,
+                                   'in_crc_errors': 0,
+                                   'in_errors': 0,
+                                   'in_frame': 0,
+
+   .. note:: You can use ``dev.parse`` even without a schema, because ``genie.libs.parse`` can parse at least some of the output.
 
 Identify keys from XML output
 ******************************
