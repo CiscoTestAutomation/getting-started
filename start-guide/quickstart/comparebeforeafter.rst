@@ -127,7 +127,7 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
     * If you want to use Python, use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to a device and parse the specified command::
 
        (pyats) $ genie shell --testbed-file tb.yaml
-          >>> dev = tb.devices['uut']
+          >>> dev = testbed.devices['uut']
           >>> dev.connect()
           >>> po1 = dev.parse('show ip ospf interface brief')
 
