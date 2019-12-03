@@ -25,8 +25,8 @@ Let's see how to perform some basic operations on a Device using the Device's ``
 
 #. Execute a Device ``api`` function (operation) to get all the routes::
 
-    >>> device.api.get_routes()
-    [2019-12-03 12:41:33,504] +++ csr1000v-1: executing command 'show ip route' +++
+    >>> routes = device.api.get_routes()
+    [2019-12-03 13:02:28,738] +++ csr1000v-1: executing command 'show ip route' +++
     show ip route
     Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
            D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
@@ -54,6 +54,8 @@ Let's see how to perform some basic operations on a Device using the Device's ``
     C        10.255.0.0/16 is directly connected, GigabitEthernet1
     L        10.255.8.19/32 is directly connected, GigabitEthernet1
     switch#
+    >>>
+    >>> print(routes)
     ['0.0.0.0/0', '10.0.1.0/24', '10.0.1.1/32', '10.0.2.0/24', '10.0.2.1/32', '10.1.1.1/32', '10.11.11.11/32', '10.2.2.2/32', '10.22.22.22/32', '10.255.0.0/16', '10.255.8.19/32']
     >>>
 
