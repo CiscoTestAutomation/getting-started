@@ -1,10 +1,8 @@
-.. _device-apis:
+.. _perform-operations-on-device:
 
-Perform Device Operations
-=========================
+Perform operations on device
+============================
 This topic describes how to use |librarybold| Device ``api`` function to perform a multitude of operations on a Device such as adding or removing configuration, verifying configuration states, retrieving current system state or configuration etc.
-
-.. _device-operation-exec:
 
 How to execute Device APIs
 --------------------------
@@ -26,6 +24,7 @@ Let's see how to perform some basic operations on a Device using the Device's ``
 #. Execute a Device ``api`` function (operation) to get all the routes::
 
     >>> routes = device.api.get_routes()
+
     [2019-12-03 13:02:28,738] +++ csr1000v-1: executing command 'show ip route' +++
     show ip route
     Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
@@ -62,6 +61,7 @@ Let's see how to perform some basic operations on a Device using the Device's ``
 #. Execute a Device ``api`` function (operation) to shutdown an interface::
 
     >>> device.api.shut_interface(interface='GigabitEthernet3')
+
     [2019-12-03 09:48:49,970] +++ Router: config +++
     config term
     Enter configuration commands, one per line.  End with CNTL/Z.
@@ -71,18 +71,14 @@ Let's see how to perform some basic operations on a Device using the Device's ``
     Router#
     >>>
 
-.. _supported-apis:
+Supported Device APIs
+---------------------
+For a complete list of operations (APIs) that the |library| can perform on a Device, visit the `APIs <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ page.
 
-Supported APIs
---------------
-For a complete list of operations (APIs) that the |library| can perform on a Device, visit the `Apis <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ page.
+To view which APIs are supported for a Device from Python prompt::
 
-#. To view which APIs are supported for a Device from Python prompt::
+    >>> dir(device.api)
 
-    >>> for item in dir(device.api):
-    ...     if "__" not in item: print(item)
-    ...
-    _get_submodule
     analyze_rate
     analyze_udp_in_mpls_packets
     bits_to_netmask
@@ -105,7 +101,7 @@ For a complete list of operations (APIs) that the |library| can perform on a Dev
     config_interface_mtu
     ...
 
-If you try to perform a function that we don't yet support, the |library| returns the following exception:
+If you try to perform an operation that we don't yet support, the |library| returns the following exception:
 
  .. code-block:: python
 
@@ -119,4 +115,4 @@ If you try to perform a function that we don't yet support, the |library| return
     AttributeError: Could not find an API called 'get_system_uptime'
     >>>
 
-If you want to request support for a new device API, please contact us at pyats-support-ext@cisco.com
+If you want to request support for a new Device ``api``, please contact us at pyats-support-ext@cisco.com
