@@ -29,7 +29,7 @@ The |getstartedguide| introduces you to the features and functionality of the |p
     /quickstart/configuredevices
     /quickstart/comparebeforeafter
     /quickstart/runtestcase
-    /quicstart/deviceapis
+    /quickstart/deviceapis
 
 .. toctree::
     :maxdepth: 1
