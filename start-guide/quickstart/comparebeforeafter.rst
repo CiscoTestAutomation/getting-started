@@ -32,7 +32,7 @@ Remember that ``learn`` runs multiple ``show`` commands and creates a consistent
 .. tip:: For a detailed example that includes automation, see the workshop `DevNet-2595: Stateful Network Validation using pyATS+Genie and Robot Framework <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_.
 
 Compare learned snapshots
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 In this example, you'll see how to take snapshots with the ``learn`` function, save the snapshots to different directories, and then compare the data.
 
 .. note:: We'll show you all of the actions and results, because mock data doesn't work with this example. The `workshop <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_ provides examples that you can try yourself.
@@ -41,9 +41,9 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
     * If you want to use Python, use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
 
-       (pyats) $ genie shell --testbed-file tb.yaml
+       (pyats) $ genie shell --testbed-file mock.yaml
           >>> output1 = {}
-          >>> for name, dev in tb.devices.items():
+          >>> for name, dev in testbed.devices.items():
           ...     dev.connect()
           ...     output1[name] = {}
           ...     output1[name]['bgp'] = dev.learn('bgp')
@@ -55,7 +55,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
     * If you want to use the CLI::
 
-       (pyats) $ genie learn "bgp" --testbed-file tb.yaml --output output1
+       (pyats) $ genie learn "bgp" --testbed-file mock.yaml --output output1
 
       *Result*: The system creates the output directory ``output1``, stores the ``ops.txt`` device files in JSON format, and displays a summary for each device:
 
@@ -67,11 +67,21 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
         |  Connected to nx-osv-1                                                       |
         |  -   Log: output1/connection_nx-osv-1.txt                                    |
         |------------------------------------------------------------------------------|
-        |  Learnt feature 'bgp'                                                       |
-        |  -  Ops structure:  output1/bgp_nxos_nx-osv-1_ops.txt                       |
-        |  -  Device Console: output1/bgp_nxos_nx-osv-1_console.txt                   |
+        |  Learnt feature 'bgp'                                                        |
+        |  -  Ops structure:  output1/bgp_nxos_nx-osv-1_ops.txt                        |
+        |  -  Device Console: output1/bgp_nxos_nx-osv-1_console.txt                    |
         |==============================================================================|
 
+        +==============================================================================+
+        | Genie Learn Summary for device csr1000v-1                                    |
+        +==============================================================================+
+        |  Connected to csr1000v-1                                                     |
+        |  -   Log: output2/connection_csr1000v-1.txt                                  |
+        |------------------------------------------------------------------------------|
+        |  Learnt feature 'bgp'                                                        |
+        |  -  Ops structure:  output2/bgp_iosxe_csr1000v-1_ops.txt                     |
+        |  -  Device Console: output2/bgp_iosxe_csr1000v-1_console.txt                 |
+        |==============================================================================|
 
 #. Change the configuration of a feature on a device, or shut down/bring up an interface.
 
@@ -86,12 +96,16 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
         >>> diff.findDiff()
         >>> print(diff)
     
+    .. tip:: Refer to `Genie Python Diff <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#diff>`_.
+
     * |library| CLI::
 
        $ (pyats) genie diff output1 output2 
 
     *Result*: The system displays any differences. 
     
+    .. tip:: Refer to `Genie CLI Diff <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_diff.html>`_.
+
     .. note:: ``+`` indicates an addition, ``-`` indicates a deletion, and ``+`` followed by ``-`` indicates a change.
 
     .. code-block:: python
