@@ -495,54 +495,54 @@ To use the quick trigger template, add the YAML content to the `trigger_datafile
 .. code-block:: YAML
 
     TriggerBlitzShutNoShutBgp:
-    source:
-      pkg: genie.libs.sdk
-      class: triggers.blitz.blitz.Blitz
-    devices: ['uut']
-    configure: 
-      devices:
-        uut: |
-          router bgp 65000
-          shutdown
-    validate_configure:
-      devices:
-        uut: 
-          1:
-            command: show bgp process vrf all
-            parsed: 
-             - "[bgp_protocol_state][shutdown]"
-          2:
-            command: show bgp process vrf all
-            parsed: 
-             - "[bgp_protocol_state][(?!running)]"
-          3:
-            command: show bgp process vrf all
-            include: 
-             - '8610'
-            exclude: 
-            - 'Wrong stuff'
-    unconfigure: 
-      devices:
-        uut: |
-          router bgp 65000
-          no shutdown
-      sleep: 20
-    validate_unconfigure:
-      devices:
-        uut: 
-          1:
-            command: show bgp process vrf all
-            parsed:
-             - "[bgp_protocol_state][running]"
+      source:
+        pkg: genie.libs.sdk
+        class: triggers.blitz.blitz.Blitz
+      devices: ['uut']
+      configure: 
+        devices:
+          uut: |
+            router bgp 65000
+            shutdown
+      validate_configure:
+        devices:
+          uut: 
+            1:
+              command: show bgp process vrf all
+              parsed: 
+               - "[bgp_protocol_state][shutdown]"
+            2:
+              command: show bgp process vrf all
+              parsed: 
+               - "[bgp_protocol_state][(?!running)]"
+            3:
+              command: show bgp process vrf all
+              include: 
+               - '8610'
+              exclude: 
+               - 'Wrong stuff'
+      unconfigure: 
+        devices:
+          uut: |
+            router bgp 65000
+            no shutdown
+        sleep: 20
+      validate_unconfigure:
+        devices:
+          uut: 
+            1:
+              command: show bgp process vrf all
+              parsed:
+               - "[bgp_protocol_state][running]"
 
 If you want to call a device API function, add the following syntax to the `trigger_datafile.yaml`:
 
 .. code-block:: YAML
 
     devices:
-    my_device:
-      1:
-        api: get_interface_mtu_size
-        arguments:
-          device: my_device
-          interface: Ethernet1
+      my_device:
+        1:
+          api: get_interface_mtu_size
+          arguments:
+            device: my_device
+            interface: Ethernet1
