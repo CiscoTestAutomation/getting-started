@@ -134,7 +134,7 @@ Other ways to create the testbed
 
    *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option obfuscates the password in the resulting YAML file. |br| |br|
 
- * If you have data in the form of a Python dictionary, you can create a testbed from that dictionary. For example, if you receive JSON-formatted data, you can convert that to a Python dictionary and then load the dictionary. For details about how to do this, see `Create a testbed from a dictionary <http://wwwin-pyats.cisco.com/cisco-shared/genie/latest/cookbooks/genie.html#create-a-testbed-from-a-dictionary>`_.
+ * If you have data in the form of a Python dictionary, you can create a testbed from that dictionary. For example, if you receive JSON-formatted data, you can convert that to a Python dictionary and then load the dictionary. For details about how to do this, see `Create a testbed from a dictionary <https://pubhub.devnetcloud.com/media/genie-docs/docs/cookbooks/genie.html#create-a-testbed-from-a-dictionary>`_.
 
 .. _validate-yaml:
 
