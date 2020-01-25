@@ -481,59 +481,150 @@ You can use :term:`verifications <verification>` to check for *unexpected* resul
 Quick Trigger
 -------------
 
-The *Quick Trigger* is a YAML-driven template that makes it easy for you to run a test case without having to know any programming. The quick trigger --- called *Blitz* because it's lightning fast --- does the following actions:
+The *Quick Trigger* is a YAML-driven template that makes it easy for you to run
+a test case without having to know any programming. The quick trigger ---
+called *Blitz* because it's lightning fast --- does the following actions:
 
 * Configure a device.
 * Parse the device output to verify if the device state is as expected.
 * Unconfig or modify the initial configuration.
 * Parse the output to recheck the operational state.
+* Yang integration
+* <It is fully customizable, new actions can be added>
 
-Designed for "quick and dirty" development, the quick trigger verifies key-value pairs and uses regex parsing for full flexibility across OS and platforms. As with any pyATS Library trigger, other triggers can inherit from the `Blitz` class. Go ahead and build on top of it!
+Designed for quick development, the quick trigger verifies key-value pairs and
+uses parsing for full flexibility across OS and platforms. As with any
+pyATS Library trigger, other triggers can inherit from the `Blitz` class. Go
+ahead and build on top of it!
 
-To use the quick trigger template, add the YAML content to the `trigger_datafile.yaml`, as shown in the following example for BGP on a router:
+To use the quick trigger template, add the YAML content to the
+`trigger_datafile.yaml`  as shown in the following example for BGP on a router.
+The yaml is commented out explaining what each section does
 
 .. code-block:: YAML
 
-    TriggerBlitzShutNoShutBgp:
+  # Name of the testcase
+  TestBgpShutdown:
+      # Location of the blitz trigger
       source:
         pkg: genie.libs.sdk
         class: triggers.blitz.blitz.Blitz
-      devices: ['uut']
-      configure: 
-        devices:
-          uut: |
-            router bgp 65000
-            shutdown
-      validate_configure:
-        devices:
-          uut: 
-            1:
-              command: show bgp process vrf all
-              parsed: 
-               - "[bgp_protocol_state][shutdown]"
-            2:
-              command: show bgp process vrf all
-              parsed: 
-               - "[bgp_protocol_state][(?!running)]"
-            3:
-              command: show bgp process vrf all
-              include: 
-               - '8610'
-              exclude: 
-               - 'Wrong stuff'
-      unconfigure: 
-        devices:
-          uut: |
-            router bgp 65000
-            no shutdown
-        sleep: 20
-      validate_unconfigure:
-        devices:
-          uut: 
-            1:
-              command: show bgp process vrf all
-              parsed:
-               - "[bgp_protocol_state][running]"
+  
+      # Field containing all the Testcase sections
+      test_sections:
+  
+        # Section name - Can be any name, it will show as the first section of
+        # the testcase
+          - apply_configuration:
+              # List of actions
+              - configure:
+                  device: R3_nx
+                  command: |
+                    router bgp 65000
+                    shutdown
+              - sleep:
+                  sleep_time: 5
+  
+          # Second section name
+          - verify_configuration:
+              # Action #1
+              # Send show command to the device and verify if part 
+              # of a string is in the output or not
+              parallel:
+                  - execute:
+                      device: R3_nx
+                      command: show bgp process vrf all
+                      include:
+                          # Verify Shutdown is within the show run output
+                        - 'Shutdown'
+                      exclude:
+                          # Verify Running is not within the show run output
+                        - 'Running'
+                  # Action #2
+                  # Send show command and use our available parsers to make sure
+                  # the bgp protocol state is shutdown
+                  - parse:
+                      device: R3_nx
+                      # All action supports banner field to add to the log
+                      banner: Verify bgp process is shutdown
+                      command: show bgp process vrf all
+                      output:
+                          - "[bgp_protocol_state][shutdown]"
+  
+          - Revert_configuration:
+              # Configure action, which accepts command as an argument
+              - configure:
+                  device: R3_nx
+                  banner: Un-Shutting down bgp 65000
+                  command: |
+                    router bgp 65000
+                    no shutdown
+  
+          - verify_revert:
+              # Send show command and verify if part of a string is in the output or not
+              - execute:
+                  device: R3_nx
+                  command: show bgp process vrf all
+                  include:
+                      # Verify Running is within the show run output
+                      - 'Running'
+                  exclude:
+                      # Verify Shutdown is not within the show run output
+                      - 'Shutdown'
+              # Send show command and use our available parsers to make sure
+              # it is the bgp protocol state which is running
+              - parse:
+                  device: R3_nx
+                  command: show bgp process vrf all
+                  output:
+                      - "[bgp_protocol_state][running]"
+
+
+Quick Trigger Actions
+^^^^^^^^^^^^^^^^^^^^^
+
+Here is the list of all available actions. These actions are to be placed at this level:
+
+.. code-block:: YAML
+
+  # Name of the testcase
+  Testcase1:
+      # Location of the blitz trigger
+      source:
+        pkg: genie.libs.sdk
+        class: triggers.blitz.blitz.Blitz
+
+      # Field containing all the sections
+      test_sections:
+
+        # Section name - Can be any name, it will show as the first section 
+        # of the testcase
+        - apply_configuration:
+            - >>>> <ACTION> <<<< 
+            - >>>> <ACTION> <<<< 
+            - >>>> <ACTION> <<<< 
+            - >>>> <ACTION> <<<< 
+        - section_two::
+            - >>>> <ACTION> <<<< 
+            - >>>> <ACTION> <<<< 
+        ...
+
+Execute
+_______
+
+TODO
+
+Configure
+_________
+
+TODO
+
+Api
+___
+
+TODO
+
+...
 
 If you want to call a device API function, add the following syntax to the `trigger_datafile.yaml`:
 
@@ -546,3 +637,10 @@ If you want to call a device API function, add the following syntax to the `trig
           arguments:
             device: my_device
             interface: Ethernet1
+
+Quick Trigger parallel
+^^^^^^^^^^^^^^^^^^^^^^
+
+TODO
+
+
