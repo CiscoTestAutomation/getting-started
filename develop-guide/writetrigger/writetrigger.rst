@@ -587,60 +587,179 @@ Here is the list of all available actions. These actions are to be placed at thi
 
 .. code-block:: YAML
 
-  # Name of the testcase
-  Testcase1:
-      # Location of the blitz trigger
-      source:
-        pkg: genie.libs.sdk
-        class: triggers.blitz.blitz.Blitz
+    # Name of the testcase
+    Testcase1:
 
-      # Field containing all the sections
-      test_sections:
+        # Location of the blitz trigger
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
 
-        # Section name - Can be any name, it will show as the first section 
-        # of the testcase
-        - apply_configuration:
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-        - section_two::
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
+        # Field containing all the sections
+        test_sections:
+
+            # Section name - Can be any name, it will show as the first section
+            # of the testcase
+            - apply_configuration:
+                devices:
+
+                    # Device to use
+                    - uut:
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
+
+            - section_two:
+                devices:
+                    - uut:
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
         ...
 
 Execute
 _______
 
-TODO
+The Execute action is used to execute a command on the device. To verify the
+output contains specific information you can pass any string under the include
+key or the exclude key. Both include and exclude are optional and without them
+only the command will execute.
+
+.. code-block:: YAML
+
+    - execute: # ACTION
+        device: device_name
+        command: show version
+
+        # Can have as many items under include or exclude that you want
+        include:
+            - 'we expect this string to be in the output'
+        exclude:
+            - 'we expect this string NOT to be in the output'
+        ...
+
+Parse
+_____
+
+The Parse action is used to get the parsed output of a command. To verify the
+parsed output contains specific information you pass a string representation
+of a dictionary (see below) under either the include or exclude key.
+
+.. code-block:: YAML
+
+    - parse: # ACTION
+        device: device_name
+        command: show version
+
+        # Can have as many items under include or exclude that you want
+        include:
+            - '[version][os][IOS-XE]'
+        exclude:
+            - '[version][os][THIS OS DOESNT EXIST]'
+        ...
 
 Configure
 _________
 
-TODO
+The Configure action is used to configure the device as shown below.
+
+.. code-block:: YAML
+
+    - configure: # ACTION
+        device: device_name
+        command: |
+            router bgp 65000
+            shutdown
+        ...
 
 Api
 ___
 
-TODO
-
-...
-
-If you want to call a device API function, add the following syntax to the `trigger_datafile.yaml`:
+The Api action is used to call a device API function. In the below example we are
+verifying the GigabitEthernet1 interface has an mtu size of 1500. The output key
+is optional if you do not want to verify anything.
 
 .. code-block:: YAML
 
-    devices:
-      my_device:
-        1:
-          api: get_interface_mtu_size
-          arguments:
-            device: my_device
-            interface: Ethernet1
+    - api: # ACTION
+        continue: True
+        function: get_interface_mtu_size
+        arguments:
+            interface: GigabitEthernet1
+        output:
+            value: 1500
+        ...
+
+Sleep
+_____
+
+The Sleep action is used to pause the execution for a specified amount of time.
+
+.. code-block:: YAML
+
+    - sleep: # ACTION
+        sleep_time: 5 # value in seconds
+        ...
+
+Yang
+____
+
+TODO
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
-TODO
+Parallel execution of actions is easy with Blitz. You can execute actions
+in parallel and you can also execute actions on multiple devices in parallel.
+Refer to the below example on how.
 
+.. code-block:: YAML
+
+    # Name of the testcase
+    Testcase1:
+
+        # Location of the blitz trigger
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
+
+        # Field containing all the sections
+        test_sections:
+
+
+            # This section shows an example of executing actions on two or more
+            # devices in parallel
+            - section_one:
+                parallel:
+                    devices:
+                        - uut:
+                            - >>>> <ACTION> <<<<
+                            - >>>> <ACTION> <<<<
+                            - >>>> <ACTION> <<<<
+                        - another_device:
+                            - >>>> <ACTION> <<<<
+                            - >>>> <ACTION> <<<<
+
+            # This section shows an example of executing actions on the same
+            # device in parallel
+            - section_two:
+                devices:
+                    - uut:
+                        parallel:
+                            - >>>> <ACTION> <<<<
+                            - >>>> <ACTION> <<<<
+
+            # This section shows an example of executing actions in parallel
+            # on two or more devices also in parallel
+            - section_three:
+                parallel:
+                    devices:
+                        - uut:
+                            parallel:
+                                - >>>> <ACTION> <<<<
+                                - >>>> <ACTION> <<<<
+                        - another_device:
+                            parallel:
+                                - >>>> <ACTION> <<<<
+                                - >>>> <ACTION> <<<<
+        ...
 
