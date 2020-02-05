@@ -591,6 +591,7 @@ Here is the list of all available actions. These actions are to be placed at thi
     Testcase1:
 
         # Location of the blitz trigger
+        # Leave this as is for most use cases
         source:
             pkg: genie.libs.sdk
             class: triggers.blitz.blitz.Blitz
@@ -747,7 +748,7 @@ The Learn action is used to learn a feature on a specific device.
 You also can validate the outcome of this action similar to api action 
 and parse action.
 
-... code-block:: YAML
+.. code-block:: YAML
 
     - learn:
         continue: True
@@ -867,6 +868,7 @@ You still can use the stored value anywhere in the file, yet if it is not follow
 This might affect your validation and test case outcome.
 
 .. code-block:: YAML
+
     # section-example_1
     - apply_configuration:    
           - api:
