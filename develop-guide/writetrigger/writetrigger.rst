@@ -747,9 +747,9 @@ The Sleep action is used to pause the execution for a specified amount of time.
 Yang
 ____
 
-TODO
+Documentation in development
 
-learn
+Learn
 _____
 
 The Learn action is used to learn a feature on a specific device.
@@ -775,7 +775,7 @@ Parallel execution of actions is easy with Blitz. You can execute actions
 in parallel and you can also execute actions on multiple devices in parallel.
 Refer to the below example on how.
 
-... code-block:: YAML
+.. code-block:: YAML
 
     # Name of the testcase
     Testcase1:
