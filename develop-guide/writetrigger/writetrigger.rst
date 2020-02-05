@@ -587,60 +587,330 @@ Here is the list of all available actions. These actions are to be placed at thi
 
 .. code-block:: YAML
 
-  # Name of the testcase
-  Testcase1:
-      # Location of the blitz trigger
-      source:
-        pkg: genie.libs.sdk
-        class: triggers.blitz.blitz.Blitz
+    # Name of the testcase
+    Testcase1:
 
-      # Field containing all the sections
-      test_sections:
+        # Location of the blitz trigger
+        # Leave this as is for most use cases
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
 
-        # Section name - Can be any name, it will show as the first section 
-        # of the testcase
-        - apply_configuration:
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
-        - section_two::
-            - >>>> <ACTION> <<<< 
-            - >>>> <ACTION> <<<< 
+        # Field containing all the sections
+        test_sections:
+
+            # Section name - Can be any name, it will show as the first section
+            # of the testcase
+                - apply_configuration:
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
+
+            - section_two:
+                - verify_configuration:
+                        - >>>> <ACTION> <<<<
+                        - >>>> <ACTION> <<<<
         ...
+
+Below you can find the list of all available actions
 
 Execute
 _______
 
-TODO
+The Execute action is used to execute a command on the device. To verify the
+output contains specific information you can pass any string under the 'include'
+key or the 'exclude' key. Both 'include' and 'exclude' are optional and without them
+only the command will execute.
+
+.. code-block:: YAML
+
+    - execute: # ACTION
+        device: device_name
+        command: show version
+
+        # Can have as many items under include or exclude that you want
+        include:
+            - 'we expect this string to be in the output'
+        exclude:
+            - 'we expect this string NOT to be in the output'
+        ...
+
+Parse
+_____
+
+The Parse action is used to get the parsed output of a command. To verify the
+parsed output that contains a specific information, you pass a string representation
+of a dictionary (see below) under either the 'include' or 'exclude key.
+The las key would be the expected value. Here under 'include' the value of this key([IOS-XE]),
+and under 'exclude' [THIS OS DOESNT EXIST] are expected values. If you provide
+[(.*)] as key it returns the entire key: pair value following the last key behind it.
+It is also possible to search for the value of an specific key within the
+parsed keywords using 'keys' keyword. To verify the value you can use 'output' key
+and assign a 'value' for verification. You also have the liberty of chosing your own 
+opeartion (when validating numerical values) from the following list of operators {=, >=, <=, <, >, !=}.
+For any other type you can check whether the expected ouput is equal or not equal the result.
+The 'ouput' key is optional and without it the parse action would still provide appropriate response.  
+
+.. code-block:: YAML
+
+    - parse: # ACTION
+        device: device_name
+        command: show version
+
+        # Can have as many items under include or exclude that you want
+        include:
+            - '[version][os][IOS-XE]'
+        exclude:
+            - '[version][os][THIS OS DOESNT EXIST]'
+        keys:
+         - "[version][version_short][(.*)]"
+        output:
+          value: 16
+          operation: '>='
+        ...
+
+You can find a list of all the available parsers in the following link:
+
+https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
 
 Configure
 _________
 
-TODO
+The Configure action is used to configure the device as shown below.
+
+.. code-block:: YAML
+
+    - configure: # ACTION
+        device: device_name
+        command: |
+            router bgp 65000
+            shutdown
+        ...
 
 Api
 ___
 
-TODO
-
-...
-
-If you want to call a device API function, add the following syntax to the `trigger_datafile.yaml`:
+The Api action is used to call a device API function. In the below example we are
+verifying the GigabitEthernet1 interface has an mtu size of 1500. The 'output' key
+is optional if you do not want to verify anything. The 'operation' key is to allow 
+you to verify the numerical results (i.e whether the expected output equal the results).
+The defualt operation key is [=]. 
 
 .. code-block:: YAML
 
-    devices:
-      my_device:
-        1:
-          api: get_interface_mtu_size
-          arguments:
-            device: my_device
-            interface: Ethernet1
+    # validating numerical reuslts
+    - api: # ACTION
+        continue: True
+        function: get_interface_mtu_size
+        arguments:
+            interface: GigabitEthernet1
+        output:
+            value: 1500
+            operation: {=, >=, <=, >, <, !=}
+
+        ...
+
+You can also check that whether non-numerical results are either 'equal or not equal' of the
+expected results. The following example display an action that also verifies its resulted dictionary.
+
+.. code-block:: YAML
+
+    # validating non-numerical reuslts
+    - api: # ACTION
+        continue: True
+        function: get_interface_mtu_size
+        arguments:
+            interface: GigabitEthernet1
+        output:
+            value: 
+              range: '<1500-9216>'
+              min: 1500
+              max: 9216
+
+        ...
+
+You can find a list of all the available api's in the following link:
+
+https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis
+
+Sleep
+_____
+
+The Sleep action is used to pause the execution for a specified amount of time.
+
+.. code-block:: YAML
+
+    - sleep: # ACTION
+        sleep_time: 5 # value in seconds
+        ...
+
+Yang
+____
+
+TODO
+
+learn
+_____
+
+The Learn action is used to learn a feature on a specific device.
+You also can validate the outcome of this action similar to api action 
+and parse action.
+
+.. code-block:: YAML
+
+    - learn:
+        continue: True
+        device: PE1
+        feature: bgp
+        keys:
+          - "[instance][default][vrf][default][cluster_id][(.*)]"
+          
+        ...
+
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
-TODO
+Parallel execution of actions is easy with Blitz. You can execute actions
+in parallel and you can also execute actions on multiple devices in parallel.
+Refer to the below example on how.
+
+... code-block:: YAML
+
+    # Name of the testcase
+    Testcase1:
+
+        # Location of the blitz trigger
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
+
+        # Field containing all the sections
+        test_sections:
+
+            # This section shows an example of executing actions
+            # When defining the action you can set the device that execute the action
+            
+            # section
+            - apply_configuration:
+                - configure:
+                    device: PE1
+                    command: |
+                      router bgp 65000
+                - api: 
+                    continue: True
+                    device: PE1
+                    function: get_interface_mtu_config_range
+                    arguments:
+                      device: PE1
+                      interface: GigabitEthernet1
+
+
+            # This section shows an example of multiple actions that are running in parallel. 
+            # Different devices can execute these actions on parallel.
+            
+            # section
+            - verify_configuration
+                - parallel:
+                    - api:
+                        continue: True
+                        device: PE1
+                        function: get_interface_mtu_size
+                        arguments:
+                          interface: GigabitEthernet1
+                    - parse:
+                        command: show version
+                        device: PE2
+                        keys: 
+                          - "[version][version_short][(.*)]"
+                    - learn:
+                        continue: True
+                        device: PE1
+                        feature: bgp
+                        keys:
+                          - "[instance][default][vrf][default][cluster_id][(.*)]"
+
+            # This section shows an example of executing actions parallel and non parallel at the same time
+            # Actions 'execute' and 'sleep' are being executed on a sequential manner 
+            # While 'api' and 'parse' are executed at the same time
+            
+            # section
+            - apply_configuration:
+                - execute:
+                    continue: True
+                    device: PE1
+                    command: show version
+                - parallel:
+                    - api:
+                        continue: True
+                        device: PE1
+                        function: get_interface_mtu_config_range
+                        arguments:
+                          device: P2
+                          interface: GigabitEthernet1
+                    - parse:
+                        command: show bgp process vrf all
+                        device: P1
+                        keys: 
+                          - "[bgp_protocol_state][shutdown]"
+                - sleep:
+                    sleep_time: 5
+        ...
+
+Saving and loading variable 'Markup'
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using this specific markup, users can save api, execute, configure, 
+and learn actions' outputs into a single variable and later load it into
+another variable or use it in another variable inside the YAML data-file. 
+For instance, you can use the output of an api to validate the outcome of
+another action.
+
+Another instance would be to use the results of an action and use it within 
+command keywords of other actions (i.e configure action in section-example_2).
+It is also possible to save output of a configure, learn, execute, and parse 
+action and load it anywhere in the YAML file. The final and an important note
+about loading variables that if you want to stay truthful to the data type and
+use it as what is, it is better to store data in a {key: value} pair format
+(section-example_1).
+You still can use the stored value anywhere in the file, yet if it is not following the
+{key: value} pair format the stored value will cast its type to a string. 
+This might affect your validation and test case outcome.
+
+.. code-block:: YAML
+
+    # section-example_1
+    - apply_configuration:    
+          - api:
+              continue: True
+              device: PE1
+              function: get_interface_mtu_config_range
+              save_variable_name: output
+              arguments:
+                interface: GigabitEthernet1
+          - parse:
+              command: show version
+              device: R3_nx
+              command: show bgp process vrf all
+              keys:
+                - "[bgp_protocol_state][shutdown]"
+              output:
+                value: '%VARIABLES{output}'
+
+    # section-example_2
+    - apply_configuration:    
+          - api:
+              continue: True
+              device: PE1
+              function: get_interface_mtu_size
+              save_variable_name: output
+              arguments:
+                interface: GigabitEthernet1
+          - configure:
+              device: PE1
+              command: |
+                router bgp '%VARIABLES{output}'
+
+        ...
 
 
