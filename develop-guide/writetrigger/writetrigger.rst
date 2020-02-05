@@ -581,6 +581,41 @@ The yaml is commented out explaining what each section does
 
         ...
 
+Trigger timeout/interval ratio adjustments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can adjust your YAML file to run its action within a certain time (max_time). You
+can also adjust its interval of occurrences (check_interval). Mostly actions learn, parse 
+and execute would take advantage of this feature. 
+These, values can be further cutomized by adding a general ratio value (max_time_ratio, 
+and check_interval_ratio) within the testbed file.
+
+
+.. code-block:: YAML
+
+    # Name of the testcase
+    Testcase1:
+
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
+
+        # Field containing all the sections
+        test_sections:
+
+            # Section name - Can be any name, it will show as the first section
+            # of the testcase
+                - apply_configuration:
+                    - execute:
+                        continue: True
+                        command: show version
+                        include:
+                          - 'w'
+                        max_time: 5
+                        check_interval: 1 
+
+        ...
+
 Quick Trigger Actions
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -643,15 +678,19 @@ _____
 The Parse action is used to get the parsed output of a command. To verify the
 parsed output that contains a specific information, you pass a string representation
 of a dictionary (see below) under either the 'include' or 'exclude key.
-The las key would be the expected value. Here under 'include' the value of this key([IOS-XE]),
-and under 'exclude' [THIS OS DOESNT EXIST] are expected values. If you provide
-[(.*)] as key it returns the entire key: pair value following the last key behind it.
-It is also possible to search for the value of an specific key within the
-parsed keywords using 'keys' keyword. To verify the value you can use 'output' key
-and assign a 'value' for verification. You also have the liberty of chosing your own 
+The last key would be the expected value. Here under 'include' the value of this key ([IOS-XE]),
+and under 'exclude' ([THIS OS DOESNT EXIST]) are expected values. If you provide
+[(.*)] as key it returns the entire {key: value} pairs that following the last key behind [(.*)].
+
+It is also possible to receive the output of an specific key within the
+parsed keywords using 'keys' keyword. and verify the value using 'output' key.
+You can assign a 'value' for verification. 
+
+You also have the liberty of chosing your own 
 opeartion (when validating numerical values) from the following list of operators {=, >=, <=, <, >, !=}.
-For any other type you can check whether the expected ouput is equal or not equal the result.
+For any other data-type you can check whether the expected ouput is equal or not equal the result.
 The 'ouput' key is optional and without it the parse action would still provide appropriate response.  
+The defualt operation key is [=].
 
 .. code-block:: YAML
 
@@ -694,9 +733,8 @@ ___
 
 The Api action is used to call a device API function. In the below example we are
 verifying the GigabitEthernet1 interface has an mtu size of 1500. The 'output' key
-is optional if you do not want to verify anything. The 'operation' key is to allow 
-you to verify the numerical results (i.e whether the expected output equal the results).
-The defualt operation key is [=]. 
+is optional if you do not want to verify anything. The verification can be done as 
+same is it is being done in parse action.
 
 .. code-block:: YAML
 
@@ -712,8 +750,7 @@ The defualt operation key is [=].
 
         ...
 
-You can also check that whether non-numerical results are either 'equal or not equal' of the
-expected results. The following example display an action that also verifies its resulted dictionary.
+The following example display an action that also verifies its resulted dictionary.
 
 .. code-block:: YAML
 
@@ -766,7 +803,10 @@ and parse action.
         feature: bgp
         keys:
           - "[instance][default][vrf][default][cluster_id][(.*)]"
-          
+        include:
+            - '[instance][default][vrf]'
+        exclude:
+            - '[instance][default][THIS OS DOESNT EXIST]'
         ...
 
 
@@ -871,10 +911,12 @@ another action.
 Another instance would be to use the results of an action and use it within 
 command keywords of other actions (i.e configure action in section-example_2).
 It is also possible to save output of a configure, learn, execute, and parse 
-action and load it anywhere in the YAML file. The final and an important note
-about loading variables that if you want to stay truthful to the data type and
-use it as what is, it is better to store data in a {key: value} pair format
-(section-example_1).
+action and load it anywhere in the YAML file. 
+
+An important note about loading variables that if you want to stay truthful 
+to the data type and use it as what is, it is better to store data in a 
+{key: value} pair format (section-example_1).
+
 You still can use the stored value anywhere in the file, yet if it is not following the
 {key: value} pair format the stored value will cast its type to a string. 
 This might affect your validation and test case outcome.
