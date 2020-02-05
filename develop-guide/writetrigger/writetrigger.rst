@@ -669,6 +669,10 @@ The 'ouput' key is optional and without it the parse action would still provide 
           operation: '>='
         ...
 
+You can find a list of all the available parsers in the following link:
+
+https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
+
 Configure
 _________
 
@@ -703,6 +707,7 @@ The defualt operation key is [=].
         output:
             value: 1500
             operation: {=, >=, <=, >, <, !=}
+
         ...
 
 You can also check that whether non-numerical results are either 'equal or not equal' of the
@@ -724,6 +729,9 @@ expected results. The following example display an action that also verifies its
 
         ...
 
+You can find a list of all the available api's in the following link:
+
+https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis
 
 Sleep
 _____
@@ -756,7 +764,9 @@ and parse action.
         feature: bgp
         keys:
           - "[instance][default][vrf][default][cluster_id][(.*)]"
+          
         ...
+
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -848,7 +858,7 @@ Refer to the below example on how.
         ...
 
 Saving and loading variable 'Markup'
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Using this specific markup, users can save api, execute, configure, 
 and learn actions' outputs into a single variable and later load it into
