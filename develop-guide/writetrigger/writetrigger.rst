@@ -677,19 +677,22 @@ _____
 The Parse action is used to get the parsed output of a command. To verify the
 parsed output that contains a specific information, you pass a string representation
 of a dictionary (see below) under either the 'include' or 'exclude key.
-The last key would be the expected value. Here under 'include' the value of this key ([IOS-XE]),
-and under 'exclude' ([THIS OS DOESNT EXIST]) are expected values. If you provide
-[(.*)] as key it returns the entire {key: value} pairs that following the last key behind [(.*)].
+
+The last key in the string representation is the expected value. Here under 'include' 
+the value of key ([IOS-XE]), and under 'exclude' ([THIS OS DOESNT EXIST]) are expected values. 
+If you provide ([(.*)]) as key it returns the entire {key: value} pairs that following
+the last key behind ([(.*)]) and in this case ([version][version_short]).
 
 It is also possible to receive the output of an specific key within the
 parsed keywords using 'keys' keyword. and verify the value using 'output' key.
 You can assign a 'value' for verification. 
 
-You also have the liberty of chosing your own 
-opeartion (when validating numerical values) from the following list of operators {=, >=, <=, <, >, !=}.
-For any other data-type you can check whether the expected ouput is equal or not equal the result.
-The 'ouput' key is optional and without it the parse action would still provide appropriate response.  
+You also have the liberty of chosing an opeartion with regards to validating the your output. 
+When validating numerical values the operators should be from the following list {=, >=, <=, <, >, !=}. 
+For any other data-type you can check whether the expected ouput is equal or not equal the result. 
 The defualt operation key is [=].
+
+The 'ouput' key is optional and without it the parse action would still provide appropriate responses. 
 
 .. code-block:: YAML
 
@@ -749,7 +752,7 @@ same is it is being done in parse action.
 
         ...
 
-The following example display an action that also verifies its resulted dictionary.
+The following example displays an action that also verifies its resulted dictionary.
 
 .. code-block:: YAML
 
