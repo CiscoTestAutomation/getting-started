@@ -530,26 +530,25 @@ The yaml is commented out explaining what each section does
               # Action #1
               # Send show command to the device and verify if part 
               # of a string is in the output or not
-              parallel:
-                  - execute:
-                      device: R3_nx
-                      command: show bgp process vrf all
-                      include:
-                          # Verify Shutdown is within the show run output
-                        - 'Shutdown'
-                      exclude:
-                          # Verify Running is not within the show run output
-                        - 'Running'
-                  # Action #2
-                  # Send show command and use our available parsers to make sure
-                  # the bgp protocol state is shutdown
-                  - parse:
-                      device: R3_nx
-                      # All action supports banner field to add to the log
-                      banner: Verify bgp process is shutdown
-                      command: show bgp process vrf all
-                      output:
-                          - "[bgp_protocol_state][shutdown]"
+              - execute:
+                  device: R3_nx
+                  command: show bgp process vrf all
+                  include:
+                      # Verify Shutdown is within the show run output
+                    - 'Shutdown'
+                  exclude:
+                      # Verify Running is not within the show run output
+                    - 'Running'
+              # Action #2
+              # Send show command and use our available parsers to make sure
+              # the bgp protocol state is shutdown
+              - parse:
+                  device: R3_nx
+                  # All action supports banner field to add to the log
+                  banner: Verify bgp process is shutdown
+                  command: show bgp process vrf all
+                  output:
+                      - "[bgp_protocol_state][shutdown]"
   
           - Revert_configuration:
               # Configure action, which accepts command as an argument
