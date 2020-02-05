@@ -579,6 +579,7 @@ The yaml is commented out explaining what each section does
                   output:
                       - "[bgp_protocol_state][running]"
 
+        ...
 
 Quick Trigger Actions
 ^^^^^^^^^^^^^^^^^^^^^
@@ -602,14 +603,15 @@ Here is the list of all available actions. These actions are to be placed at thi
             # Section name - Can be any name, it will show as the first section
             # of the testcase
                 - apply_configuration:
-                        - >>>> <ACTION> <<<<
-                        - >>>> <ACTION> <<<<
-                        - >>>> <ACTION> <<<<
+                        - ">>>> <ACTION> <<<<"
+                        - ">>>> <ACTION> <<<<"
+                        - ">>>> <ACTION> <<<<"
 
             - section_two:
                 - verify_configuration:
-                        - >>>> <ACTION> <<<<
-                        - >>>> <ACTION> <<<<
+                        - ">>>> <ACTION> <<<<"
+                        - ">>>> <ACTION> <<<<"
+                        
         ...
 
 Below you can find the list of all available actions
@@ -706,7 +708,7 @@ The defualt operation key is [=].
             interface: GigabitEthernet1
         output:
             value: 1500
-            operation: {=, >=, <=, >, <, !=}
+            operation: "{=, >=, <=, >, <, !=}"
 
         ...
 
@@ -775,7 +777,7 @@ Parallel execution of actions is easy with Blitz. You can execute actions
 in parallel and you can also execute actions on multiple devices in parallel.
 Refer to the below example on how.
 
-... code-block:: YAML
+.. code-block:: YAML
 
     # Name of the testcase
     Testcase1:
