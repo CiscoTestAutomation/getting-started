@@ -580,45 +580,12 @@ The yaml is commented out explaining what each section does
 
         ...
 
-Trigger timeout/interval ratio adjustments
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can adjust your YAML file to run its action within a certain time (max_time). You
-can also adjust its interval of occurrences (check_interval). Mostly actions learn, parse 
-and execute would take advantage of this feature. 
-These, values can be further cutomized by adding a general ratio value (max_time_ratio, 
-and check_interval_ratio) within the testbed file.
+Actions
+^^^^^^^
 
-
-.. code-block:: YAML
-
-    # Name of the testcase
-    Testcase1:
-
-        source:
-            pkg: genie.libs.sdk
-            class: triggers.blitz.blitz.Blitz
-
-        # Field containing all the sections
-        test_sections:
-
-            # Section name - Can be any name, it will show as the first section
-            # of the testcase
-                - apply_configuration:
-                    - execute:
-                        continue: True
-                        command: show version
-                        include:
-                          - 'w'
-                        max_time: 5
-                        check_interval: 1 
-
-        ...
-
-Quick Trigger Actions
-^^^^^^^^^^^^^^^^^^^^^
-
-Here is the list of all available actions. These actions are to be placed at this level:
+Here is the list of all available actions. These actions are to be placed at
+this level:
 
 .. code-block:: YAML
 
@@ -636,16 +603,14 @@ Here is the list of all available actions. These actions are to be placed at thi
 
             # Section name - Can be any name, it will show as the first section
             # of the testcase
-                - apply_configuration:
-                        - ">>>> <ACTION> <<<<"
-                        - ">>>> <ACTION> <<<<"
-                        - ">>>> <ACTION> <<<<"
+            - apply_configuration:
+                - ">>>> <ACTION> <<<<"
+                - ">>>> <ACTION> <<<<"
+                - ">>>> <ACTION> <<<<"
 
             - section_two:
-                - verify_configuration:
-                        - ">>>> <ACTION> <<<<"
-                        - ">>>> <ACTION> <<<<"
-                        
+                - ">>>> <ACTION> <<<<"
+                - ">>>> <ACTION> <<<<"
         ...
 
 Below you can find the list of all available actions
@@ -653,73 +618,62 @@ Below you can find the list of all available actions
 Execute
 _______
 
-The Execute action is used to execute a command on the device. To verify the
-output contains specific information you can pass any string under the 'include'
-key or the 'exclude' key. Both 'include' and 'exclude' are optional and without them
-only the command will execute.
+The `Execute` action is used to send a command to the device. Keyword `include`
+and `exclude` are to be used to verify if specific string exists or do not
+exists in the output. Both keys are optional.
 
 .. code-block:: YAML
 
     - execute: # ACTION
-        device: device_name
+        # (Either device hostname or device alias)
+        device: R1 
+        # Send show version to the device
         command: show version
 
         # Can have as many items under include or exclude that you want
         include:
-            - 'we expect this string to be in the output'
+            - '12.9.1'
+            - 'CSR1000V'
+            # Regular expression can also be provided
+            - TODO Regex
         exclude:
-            - 'we expect this string NOT to be in the output'
+            - 'Should not be in the output'
         ...
 
 Parse
 _____
 
-The Parse action is used to get the parsed output of a command. To verify the
-parsed output that contains a specific information, you pass a string representation
-of a dictionary (see below) under either the 'include' or 'exclude key.
+The `parse` action use pyATS `Parsers
+<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
+The parsers return structure data in a dictionary format. It allows to verify
+if certain key have an expected output, where `execute` verify that it is
+somewhere in the output, irrelevant of the structure.
 
-The last key in the string representation is the expected value. Here under 'include' 
-the value of key ([IOS-XE]), and under 'exclude' ([THIS OS DOESNT EXIST]) are expected values. 
-If you provide ([(.*)]) as key it returns the entire {key: value} pairs that following
-the last key behind ([(.*)]) and in this case ([version][version_short]).
-
-It is also possible to receive the output of an specific key within the
-parsed keywords using 'keys' keyword. and verify the value using 'output' key.
-You can assign a 'value' for verification. 
-
-You also have the liberty of chosing an opeartion with regards to validating the your output. 
-When validating numerical values the operators should be from the following list {=, >=, <=, <, >, !=}. 
-For any other data-type you can check whether the expected ouput is equal or not equal the result. 
-The defualt operation key is [=].
-
-The 'ouput' key is optional and without it the parse action would still provide appropriate responses. 
 
 .. code-block:: YAML
 
     - parse: # ACTION
-        device: device_name
+        device: R2
         command: show version
 
         # Can have as many items under include or exclude that you want
         include:
-            - '[version][os][IOS-XE]'
+            - key: "[version][version]"
+              value: 16.9.1
+            - key: "[version][main_mem]"
+              # Make sure the memory is greater than 1217420
+              operation: >= 1217420
         exclude:
-            - '[version][os][THIS OS DOESNT EXIST]'
-        keys:
-         - "[version][version_short][(.*)]"
-        output:
-          value: 16
-          operation: '>='
+            - key: "[platform]"
+              output: VIRTUAL XE
         ...
 
-You can find a list of all the available parsers in the following link:
-
-https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers
+The follow operation is supported `"{=, >=, <=, >, <, !=}"`
 
 Configure
 _________
 
-The Configure action is used to configure the device as shown below.
+The `configure` action is used to configure the device.
 
 .. code-block:: YAML
 
@@ -728,15 +682,14 @@ The Configure action is used to configure the device as shown below.
         command: |
             router bgp 65000
             shutdown
-        ...
 
 Api
 ___
 
-The Api action is used to call a device API function. In the below example we are
-verifying the GigabitEthernet1 interface has an mtu size of 1500. The 'output' key
-is optional if you do not want to verify anything. The verification can be done as 
-same is it is being done in parse action.
+The `api` action use pyATS `api
+<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
+
+The 'output' key is optional if you do not want to verify anything.
 
 .. code-block:: YAML
 
@@ -747,10 +700,11 @@ same is it is being done in parse action.
         arguments:
             interface: GigabitEthernet1
         output:
-            value: 1500
-            operation: "{=, >=, <=, >, <, !=}"
-
+            - value: 1500
+              operation: <= 2000
         ...
+
+The follow operation is supported `"{=, >=, <=, >, <, !=}"`
 
 The following example displays an action that also verifies its resulted dictionary.
 
@@ -770,19 +724,33 @@ The following example displays an action that also verifies its resulted diction
 
         ...
 
-You can find a list of all the available api's in the following link:
-
-https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis
-
 Sleep
 _____
 
-The Sleep action is used to pause the execution for a specified amount of time.
+The `sleep` action is used to pause the execution for a specified amount of time.
 
 .. code-block:: YAML
 
     - sleep: # ACTION
-        sleep_time: 5 # value in seconds
+        # Sleep for 5 seconds
+        sleep_time: 5
+        ...
+
+Learn
+_____
+
+The `learn` action is used to learn a feature on a specific device, returning a
+OS agnostic structure.  You also can validate the outcome of this action
+similar to api action and parse action.
+
+.. code-block:: YAML
+
+    - learn:
+        device: R1
+        feature: bgp
+        include:
+            - key: "[x][info]['instance']['default']['bgp_id']"
+              value: 65000
         ...
 
 Yang
@@ -790,34 +758,12 @@ ____
 
 Documentation in development
 
-Learn
-_____
-
-The Learn action is used to learn a feature on a specific device.
-You also can validate the outcome of this action similar to api action 
-and parse action.
-
-.. code-block:: YAML
-
-    - learn:
-        continue: True
-        device: PE1
-        feature: bgp
-        keys:
-          - "[instance][default][vrf][default][cluster_id][(.*)]"
-        include:
-            - '[instance][default][vrf]'
-        exclude:
-            - '[instance][default][THIS OS DOESNT EXIST]'
-        ...
-
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Parallel execution of actions is easy with Blitz. You can execute actions
-in parallel and you can also execute actions on multiple devices in parallel.
-Refer to the below example on how.
+All action can be executed in parallel and can also execute actions on multiple
+devices in parallel.
 
 .. code-block:: YAML
 
@@ -910,18 +856,18 @@ another variable or use it in another variable inside the YAML data-file.
 For instance, you can use the output of an api to validate the outcome of
 another action.
 
-Another instance would be to use the results of an action and use it within 
-command keywords of other actions (i.e configure action in section-example_2).
-It is also possible to save output of a configure, learn, execute, and parse 
-action and load it anywhere in the YAML file. 
+Another instance is to use the results of an action and use it within command
+keywords of other actions (i.e configure action in section-example_2).  It is
+also possible to save output of a configure, learn, execute, and parse action
+and load it anywhere in the YAML file. 
 
-An important note about loading variables that if you want to stay truthful 
-to the data type and use it as what is, it is better to store data in a 
-{key: value} pair format (section-example_1).
+An important note about loading variables that if you want to stay truthful to
+the data type and use it as what is, it is better to store data in a {key:
+value} pair format (section-example_1).
 
-You still can use the stored value anywhere in the file, yet if it is not following the
-{key: value} pair format the stored value will cast its type to a string. 
-This might affect your validation and test case outcome.
+You still can use the stored value anywhere in the file, yet if it is not
+following the {key: value} pair format the stored value will cast its type to a
+string.  This might affect your validation and test case outcome.
 
 .. code-block:: YAML
 
@@ -960,3 +906,54 @@ This might affect your validation and test case outcome.
         ...
 
 
+Trigger timeout/interval ratio adjustments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each action performs verification to make sure it has performed as expected.
+These timeouts can be modified with a ratio from the testbed datafile.
+
+.. code-block:: YAML
+
+    # Name of the testcase
+    Testcase1:
+
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
+
+        # Field containing all the sections
+        test_sections:
+
+            # Section name - Can be any name, it will show as the first section
+            # of the testcase
+                - apply_configuration:
+                    - execute:
+                        continue: True
+                        command: show version
+                        include:
+                          - 'w'
+                        max_time: 5
+                        check_interval: 1 
+        ...
+
+.. code-block:: YAML
+
+  devices:
+    PE2:
+      connections:
+        ssh:
+          ip: 10.255.1.17
+          protocol: ssh
+      credentials:
+        default:
+          password: cisco
+          username: cisco
+        enable:
+          password: cisco
+      custom:
+        max_time_ratio: '0.5'
+        check_interval_ratio: 0.5
+      os: iosxe
+      type: CSR1000v
+
+Now the max_time and will half'd. 
