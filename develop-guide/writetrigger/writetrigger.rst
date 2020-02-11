@@ -509,6 +509,9 @@ The yaml is commented out explaining what each section does
       source:
         pkg: genie.libs.sdk
         class: triggers.blitz.blitz.Blitz
+
+      # Devices to run on - Default is uut
+      devices: ['uut']
   
       # Field containing all the Testcase sections
       test_sections:
