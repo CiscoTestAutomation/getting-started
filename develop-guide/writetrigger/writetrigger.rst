@@ -550,9 +550,10 @@ The yaml is commented out explaining what each section does
                   # All action supports banner field to add to the log
                   banner: Verify bgp process is shutdown
                   command: show bgp process vrf all
-                  output:
-                      - "[bgp_protocol_state][shutdown]"
-  
+                  include:
+                    - get_values('shutdown')
+                  exclude:
+                    - not_contains('bgp_protocol_state')
           - Revert_configuration:
               # Configure action, which accepts command as an argument
               - configure:
@@ -561,7 +562,6 @@ The yaml is commented out explaining what each section does
                   command: |
                     router bgp 65000
                     no shutdown
-  
           - verify_revert:
               # Send show command and verify if part of a string is in the output or not
               - execute:
@@ -578,11 +578,7 @@ The yaml is commented out explaining what each section does
               - parse:
                   device: R3_nx
                   command: show bgp process vrf all
-                  output:
-                      - "[bgp_protocol_state][running]"
-
         ...
-
 
 Actions
 ^^^^^^^
@@ -623,7 +619,7 @@ _______
 
 The `Execute` action is used to send a command to the device. Keyword `include`
 and `exclude` are to be used to verify if specific string exists or do not
-exists in the output. Both keys are optional.
+exists in the output. Both keys are optional. 
 
 .. code-block:: YAML
 
@@ -632,13 +628,12 @@ exists in the output. Both keys are optional.
         device: R1 
         # Send show version to the device
         command: show version
-
         # Can have as many items under include or exclude that you want
         include:
             - '12.9.1'
             - 'CSR1000V'
             # Regular expression can also be provided
-            - TODO Regex
+            - '\d+'
         exclude:
             - 'Should not be in the output'
         ...
@@ -652,7 +647,6 @@ The parsers return structure data in a dictionary format. It allows to verify
 if certain key have an expected output, where `execute` verify that it is
 somewhere in the output, irrelevant of the structure.
 
-
 .. code-block:: YAML
 
     - parse: # ACTION
@@ -661,17 +655,18 @@ somewhere in the output, irrelevant of the structure.
 
         # Can have as many items under include or exclude that you want
         include:
-            - key: "[version][version]"
-              value: 16.9.1
-            - key: "[version][main_mem]"
+            # Using Dq (the new dictionary querying tool), you can verify whether 
+            # a specific Keyword exists within your parsed output
+            # Dq manual: https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq
+            - raw("[version][version]")
+            - contains("version").value_operator('mem_size' '>=', 1217420)
               # Make sure the memory is greater than 1217420
-              operation: >= 1217420
         exclude:
-            - key: "[platform]"
-              output: VIRTUAL XE
+            - get_values('platform')
+              # The output: [VIRTUAL XE]
         ...
 
-The follow operation is supported `"{=, >=, <=, >, <, !=}"`
+The following operations are supported `"{=, >=, <=, >, <, !=}"`
 
 Configure
 _________
@@ -692,24 +687,10 @@ ___
 The `api` action use pyATS `api
 <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
 
-The 'output' key is optional if you do not want to verify anything.
+You can use include/exclude(same as parse and execute) to verify, whether
+a variable exists in an api output.
 
-.. code-block:: YAML
-
-    # validating numerical reuslts
-    - api: # ACTION
-        continue: True
-        function: get_interface_mtu_size
-        arguments:
-            interface: GigabitEthernet1
-        output:
-            - value: 1500
-              operation: <= 2000
-        ...
-
-The follow operation is supported `"{=, >=, <=, >, <, !=}"`
-
-The following example displays an action that also verifies its resulted dictionary.
+Api's that has 'dictionary' output can be queried in the same manner as parse.
 
 .. code-block:: YAML
 
@@ -719,12 +700,40 @@ The following example displays an action that also verifies its resulted diction
         function: get_interface_mtu_size
         arguments:
             interface: GigabitEthernet1
-        output:
-            value: 
-              range: '<1500-9216>'
-              min: 1500
-              max: 9216
+        include:
+            - contains('max')
+            - get_values('range')
+        exclude:
+            - contains('min-max')
+        ...
 
+Other Api's (with integer or string outputs), can be verified as same as in 
+the example below.  
+
+.. code-block:: YAML
+
+    # validating numerical reuslts
+    - api: # ACTION
+        continue: True
+        function: get_interface_mtu_size
+        arguments:
+            interface: GigabitEthernet1
+        include:
+            - <= 2000
+        ...
+
+The follow operation is supported `"{=, >=, <=, >, <, !=}"`
+
+TGN 
+____
+
+The 'tgn' action now allows you to call traffic generator(tgn) apis as well
+
+.. code-block:: YAML
+
+    - api: # ACTION
+        continue: True
+        function: get_traffic_stream_objects
         ...
 
 Sleep
@@ -752,8 +761,20 @@ similar to api action and parse action.
         device: R1
         feature: bgp
         include:
-            - key: "[x][info]['instance']['default']['bgp_id']"
-              value: 65000
+            - raw("[info][instance][default][vrf][default][cluster_id]")
+        ...
+
+Print
+______
+
+Print action allows you to print any vairable into the console.
+
+.. code-block:: YAML
+
+    - print:
+        continue: True
+        print_item1: "%VARIABLES{parse_output}"
+        print_item2: "%VARIABLES{configure_output}"
         ...
 
 Yang
@@ -823,11 +844,66 @@ blitz.
         # An example of running TriggerSleep
         TriggerSleep:
             devices: [my_device]
+Saving and loading variable using 'Markup'
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using this specific markup, users can apply different filters on actions' outputs
+and save them into a variable and later load it in another action inside 
+the YAML data-file, whether.
+
+.. code-block:: YAML
+
+    # Looking for the parse_output variable in the action execute
+    - apply_configuration:    
+          - parse:
+              continue: True
+              command: show version
+              device: PE2
+              save: 
+                - variable_name: parse_output
+                  filter: contains('version').get_values('type_of_disk', index=1)
+                - variable_name: another_parser_output
+                  filter: get_values('mem_size')
+                - variable_name: an_another_parser_output
+                # You can save the entire output of an action
+                # without applying a filter 
+          - execute:
+              continue: True
+              device: PE1
+              command: show version
+              max_time: 1
+              check_interval: 1
+              reply:
+                - pattern: r'.*Protocol +\[ip\]:.*
+                  action: 'sendline(1.1.1.1)'
+              include:
+                - "w"
+                - "%VARIABLES{parse_output}"
+
+    # Using the api output as part of the command that would be configured on device PE1
+    # The api output would be casted to string
+    - apply_configuration:    
+          - api:
+              continue: True
+              device: PE1
+              function: get_interface_mtu_size
+              save:
+                - variable_name: api_output
+              arguments:
+                interface: GigabitEthernet1
+          - configure:
+              device: PE1
+              command: |
+                router bgp '%VARIABLES{api_output}'
+        ...
+
+Both filter and include/exclude features are using a dictionary querying tool called `Dq
+<https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`_.
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
-All action can be executed in parallel and can also execute actions on multiple
+All actions can be executed in parallel and can also execute actions on multiple
 devices in parallel.
 
 .. code-block:: YAML
@@ -876,14 +952,14 @@ devices in parallel.
                     - parse:
                         command: show version
                         device: PE2
-                        keys: 
-                          - "[version][version_short][(.*)]"
+                        include: 
+                          - contains("version_short")
                     - learn:
                         continue: True
                         device: PE1
                         feature: bgp
-                        keys:
-                          - "[instance][default][vrf][default][cluster_id][(.*)]"
+                        include:
+                          - contains("info")
 
             # This section shows an example of executing actions parallel and non parallel at the same time
             # Actions 'execute' and 'sleep' are being executed on a sequential manner 
@@ -906,70 +982,12 @@ devices in parallel.
                     - parse:
                         command: show bgp process vrf all
                         device: P1
-                        keys: 
-                          - "[bgp_protocol_state][shutdown]"
                 - sleep:
                     sleep_time: 5
         ...
 
-Saving and loading variable using 'Markup'
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Using this specific markup, users can save api, execute, configure, 
-and learn actions' outputs into a single variable and later load it into
-another variable or use it in another variable inside the YAML data-file. 
-For instance, you can use the output of an api to validate the outcome of
-another action.
-
-Another instance is to use the results of an action and use it within command
-keywords of other actions (i.e configure action in section-example_2).  It is
-also possible to save output of a configure, learn, execute, and parse action
-and load it anywhere in the YAML file. 
-
-An important note about loading variables that if you want to stay truthful to
-the data type and use it as what is, it is better to store data in a {key:
-value} pair format (section-example_1).
-
-You still can use the stored value anywhere in the file, yet if it is not
-following the {key: value} pair format the stored value will cast its type to a
-string.  This might affect your validation and test case outcome.
-
-.. code-block:: YAML
-
-    # section-example_1
-    - apply_configuration:    
-          - api:
-              continue: True
-              device: PE1
-              function: get_interface_mtu_config_range
-              save_variable_name: output
-              arguments:
-                interface: GigabitEthernet1
-          - parse:
-              command: show version
-              device: R3_nx
-              command: show bgp process vrf all
-              keys:
-                - "[bgp_protocol_state][shutdown]"
-              output:
-                value: '%VARIABLES{output}'
-
-    # section-example_2
-    - apply_configuration:    
-          - api:
-              continue: True
-              device: PE1
-              function: get_interface_mtu_size
-              save_variable_name: output
-              arguments:
-                interface: GigabitEthernet1
-          - configure:
-              device: PE1
-              command: |
-                router bgp '%VARIABLES{output}'
-
-        ...
-
+Please note that you cannot save a variable in parallel and immediately use it in another action 
+that is being executed in parallel.
 
 Trigger timeout/interval ratio adjustments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
