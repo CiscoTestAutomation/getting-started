@@ -772,6 +772,8 @@ provide the location of the saved configuration.
     - configure_replace:
         device: my_device
         config: bootflash:/golden_config
+
+        # Iteration and interval is used for a retry mechanism
         iteration: <int> #optional, default is 2
         interval: <int> #optional, default is 30
 
