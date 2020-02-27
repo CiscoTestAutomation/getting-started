@@ -761,6 +761,68 @@ ____
 
 Documentation in development
 
+configure_replace
+_________________
+
+The `configure_replace` action is used to replace the running-config. Just
+provide the location of the saved configuration.
+
+.. code-block:: YAML
+
+    - configure_replace:
+        device: my_device
+        config: bootflash:/golden_config
+
+        # Iteration and interval is used for a retry mechanism
+        iteration: <int> #optional, default is 2
+        interval: <int> #optional, default is 30
+
+save_config_snapshot
+____________________
+
+The `save_config_snapshot` action is used to save a snapshot of the current
+device configuration. The config can later be used with the
+`restore_config_snapshot` action.
+
+.. code-block:: YAML
+
+    - save_config_snapshot:
+        device: my_device
+
+restore_config_snapshot
+_______________________
+
+The `restore_config_snapshot` action is used to restore a snapshot taken
+from the `save_config_snapshot` action. If you want to re-use the same
+snapshot you can specify to not delete it (shown below).
+
+.. code-block:: YAML
+
+    - restore_config_snapshot:
+        device: my_device
+        delete_snapshot: False #optional, default is True
+
+run_genie_sdk
+_____________
+
+The `run_genie_sdk` action is used to run other triggers from within
+blitz.
+
+.. note::
+
+    You must extend the main trigger_datafile for any of those triggers
+    to be accessible. Put this at the top of your trigger_datafile:
+    `extends: '%ENV{VIRTUAL_ENV}/genie_yamls/trigger_datafile.yaml'`
+
+.. code-block:: YAML
+
+    - run_genie_sdk:
+        <trigger_name>:
+            <any trigger arguments>
+
+        # An example of running TriggerSleep
+        TriggerSleep:
+            devices: [my_device]
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
