@@ -550,16 +550,10 @@ The yaml is commented out explaining what each section does
                   # All action supports banner field to add to the log
                   banner: Verify bgp process is shutdown
                   command: show bgp process vrf all
-<<<<<<< HEAD
                   include:
                     - get_values('shutdown')
                   exclude:
                     - not_contains('bgp_protocol_state')
-=======
-                  output:
-                      - "[bgp_protocol_state][shutdown]"
-  
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
           - Revert_configuration:
               # Configure action, which accepts command as an argument
               - configure:
@@ -590,16 +584,11 @@ The yaml is commented out explaining what each section does
 
         ...
 
-<<<<<<< HEAD
-=======
-
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
 Actions
 ^^^^^^^
 
 Here is the list of all available actions. These actions are to be placed at
 this level:
-<<<<<<< HEAD
 
 .. code-block:: YAML
 
@@ -708,137 +697,10 @@ Api's that has 'dictionary' output can be queried in the same manner as parse.
 
 .. code-block:: YAML
 
-=======
-
-.. code-block:: YAML
-
-    # Name of the testcase
-    Testcase1:
-
-        # Location of the blitz trigger
-        # Leave this as is for most use cases
-        source:
-            pkg: genie.libs.sdk
-            class: triggers.blitz.blitz.Blitz
-
-        # Field containing all the sections
-        test_sections:
-
-            # Section name - Can be any name, it will show as the first section
-            # of the testcase
-            - apply_configuration:
-                - ">>>> <ACTION> <<<<"
-                - ">>>> <ACTION> <<<<"
-                - ">>>> <ACTION> <<<<"
-
-            - section_two:
-                - ">>>> <ACTION> <<<<"
-                - ">>>> <ACTION> <<<<"
-        ...
-
-Below you can find the list of all available actions
-
-Execute
-_______
-
-The `Execute` action is used to send a command to the device. Keyword `include`
-and `exclude` are to be used to verify if specific string exists or do not
-exists in the output. Both keys are optional.
-
-.. code-block:: YAML
-
-    - execute: # ACTION
-        # (Either device hostname or device alias)
-        device: R1 
-        # Send show version to the device
-        command: show version
-
-        # Can have as many items under include or exclude that you want
-        include:
-            - '12.9.1'
-            - 'CSR1000V'
-            # Regular expression can also be provided
-            - TODO Regex
-        exclude:
-            - 'Should not be in the output'
-        ...
-
-Parse
-_____
-
-The `parse` action use pyATS `Parsers
-<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
-The parsers return structure data in a dictionary format. It allows to verify
-if certain key have an expected output, where `execute` verify that it is
-somewhere in the output, irrelevant of the structure.
-
-
-.. code-block:: YAML
-
-    - parse: # ACTION
-        device: R2
-        command: show version
-
-        # Can have as many items under include or exclude that you want
-        include:
-            - key: "[version][version]"
-              value: 16.9.1
-            - key: "[version][main_mem]"
-              # Make sure the memory is greater than 1217420
-              operation: >= 1217420
-        exclude:
-            - key: "[platform]"
-              output: VIRTUAL XE
-        ...
-
-The follow operation is supported `"{=, >=, <=, >, <, !=}"`
-
-Configure
-_________
-
-The `configure` action is used to configure the device.
-
-.. code-block:: YAML
-
-    - configure: # ACTION
-        device: device_name
-        command: |
-            router bgp 65000
-            shutdown
-
-Api
-___
-
-The `api` action use pyATS `api
-<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
-
-The 'output' key is optional if you do not want to verify anything.
-
-.. code-block:: YAML
-
-    # validating numerical reuslts
-    - api: # ACTION
-        continue: True
-        function: get_interface_mtu_size
-        arguments:
-            interface: GigabitEthernet1
-        output:
-            - value: 1500
-              operation: <= 2000
-        ...
-
-The follow operation is supported `"{=, >=, <=, >, <, !=}"`
-
-The following example displays an action that also verifies its resulted dictionary.
-
-.. code-block:: YAML
-
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
     # validating non-numerical reuslts
     - api: # ACTION
         continue: True
         function: get_interface_mtu_size
-<<<<<<< HEAD
         arguments:
             interface: GigabitEthernet1
         include:
@@ -875,16 +737,6 @@ The 'tgn' action now allows you to call traffic generator(tgn) apis as well
     - api: # ACTION
         continue: True
         function: get_traffic_stream_objects
-=======
-        arguments:
-            interface: GigabitEthernet1
-        output:
-            value: 
-              range: '<1500-9216>'
-              min: 1500
-              max: 9216
-
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
         ...
 
 Sleep
@@ -912,7 +764,6 @@ similar to api action and parse action.
         device: R1
         feature: bgp
         include:
-<<<<<<< HEAD
             - raw("[info][instance][default][vrf][default][cluster_id]")
         ...
 
@@ -927,10 +778,6 @@ Print action allows you to print any vairable into the console.
         continue: True
         print_item1: "%VARIABLES{parse_output}"
         print_item2: "%VARIABLES{configure_output}"
-=======
-            - key: "[x][info]['instance']['default']['bgp_id']"
-              value: 65000
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
         ...
 
 Yang
@@ -939,7 +786,6 @@ ____
 Documentation in development
 
 
-<<<<<<< HEAD
 
 Saving and loading variable using 'Markup'
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1001,12 +847,6 @@ Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
 All actions can be executed in parallel and can also execute actions on multiple
-=======
-Quick Trigger parallel
-^^^^^^^^^^^^^^^^^^^^^^
-
-All action can be executed in parallel and can also execute actions on multiple
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
 devices in parallel.
 
 .. code-block:: YAML
@@ -1055,24 +895,14 @@ devices in parallel.
                     - parse:
                         command: show version
                         device: PE2
-<<<<<<< HEAD
                         include: 
                           - contains("version_short")
-=======
-                        keys: 
-                          - "[version][version_short][(.*)]"
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
                     - learn:
                         continue: True
                         device: PE1
                         feature: bgp
-<<<<<<< HEAD
                         include:
                           - contains("info")
-=======
-                        keys:
-                          - "[instance][default][vrf][default][cluster_id][(.*)]"
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
 
             # This section shows an example of executing actions parallel and non parallel at the same time
             # Actions 'execute' and 'sleep' are being executed on a sequential manner 
@@ -1095,78 +925,12 @@ devices in parallel.
                     - parse:
                         command: show bgp process vrf all
                         device: P1
-<<<<<<< HEAD
-=======
-                        keys: 
-                          - "[bgp_protocol_state][shutdown]"
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
                 - sleep:
                     sleep_time: 5
         ...
 
-<<<<<<< HEAD
 Please note that you cannot save a variable in parallel and immideately use it in another action 
 that is being executed in parallel.
-=======
-Saving and loading variable using 'Markup'
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Using this specific markup, users can save api, execute, configure, 
-and learn actions' outputs into a single variable and later load it into
-another variable or use it in another variable inside the YAML data-file. 
-For instance, you can use the output of an api to validate the outcome of
-another action.
-
-Another instance is to use the results of an action and use it within command
-keywords of other actions (i.e configure action in section-example_2).  It is
-also possible to save output of a configure, learn, execute, and parse action
-and load it anywhere in the YAML file. 
-
-An important note about loading variables that if you want to stay truthful to
-the data type and use it as what is, it is better to store data in a {key:
-value} pair format (section-example_1).
-
-You still can use the stored value anywhere in the file, yet if it is not
-following the {key: value} pair format the stored value will cast its type to a
-string.  This might affect your validation and test case outcome.
-
-.. code-block:: YAML
-
-    # section-example_1
-    - apply_configuration:    
-          - api:
-              continue: True
-              device: PE1
-              function: get_interface_mtu_config_range
-              save_variable_name: output
-              arguments:
-                interface: GigabitEthernet1
-          - parse:
-              command: show version
-              device: R3_nx
-              command: show bgp process vrf all
-              keys:
-                - "[bgp_protocol_state][shutdown]"
-              output:
-                value: '%VARIABLES{output}'
-
-    # section-example_2
-    - apply_configuration:    
-          - api:
-              continue: True
-              device: PE1
-              function: get_interface_mtu_size
-              save_variable_name: output
-              arguments:
-                interface: GigabitEthernet1
-          - configure:
-              device: PE1
-              command: |
-                router bgp '%VARIABLES{output}'
-
-        ...
-
->>>>>>> bc6e3cca8d40b5eb197b59c9644427ba7984ca25
 
 Trigger timeout/interval ratio adjustments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
