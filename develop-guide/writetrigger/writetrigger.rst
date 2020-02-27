@@ -659,6 +659,7 @@ somewhere in the output, irrelevant of the structure.
         include:
             # Using Dq (the new dictionary querying tool), you can verify whether 
             # a specific Keyword exists within your parsed output
+            # Dq manual: https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq
             - raw("[version][version]")
             - contains("version").value_operator('mem_size' '>=', 1217420)
               # Make sure the memory is greater than 1217420
@@ -987,7 +988,7 @@ devices in parallel.
                     sleep_time: 5
         ...
 
-Please note that you cannot save a variable in parallel and immideately use it in another action 
+Please note that you cannot save a variable in parallel and immediately use it in another action 
 that is being executed in parallel.
 
 Trigger timeout/interval ratio adjustments
