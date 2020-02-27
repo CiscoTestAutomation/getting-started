@@ -578,8 +578,6 @@ The yaml is commented out explaining what each section does
               - parse:
                   device: R3_nx
                   command: show bgp process vrf all
-                  output:
-                      - "[bgp_protocol_state][running]"
         ...
 
 Actions
