@@ -1,21 +1,22 @@
 .. _install-pyats:
 
-Install |pyATS|
-========================
-This topic describes how to install the |pyATSbold| ecosystem within your virtual environment.
+Installation
+============
 
-Code structure
----------------
-.. include:: /definitions/def_pyats_code_infrastructure.rst
-   :start-line: 3
-.. include:: /definitions/def_pyatslibrary_code_structure.rst
-   :start-line: 3
+.. sidebar:: See also...
 
-.. note:: The |library| is the new name for what was previously known as "Genie." You might still see some commands that refer to ``genie``.
+    - `Python virtual environments <https://docs.python.org/3/tutorial/venv.html>`_
 
-Installation process
----------------------
-The process that you follow depends on whether you are an internal, external, or Docker user, and whether you want to use the Robot Framework.
+    - `pyenv <https://github.com/pyenv/pyenv>`_
+
+This topic describes how to install the |pyATSbold| within your system.
+
+.. warning::
+    
+    For all internal Cisco engineering users, skip this section, and refer to the 
+    `engineering internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions
+    on installing pyATS within Cisco.
+
 
 .. list-table:: |pyATS| installation process
    :header-rows: 1
@@ -23,30 +24,18 @@ The process that you follow depends on whether you are an internal, external, or
 
    * - Type of user
      - Installation process
-   * - Internal Cisco user
-     -
-        #. Check the :ref:`requirements`.
-        #. Sign in to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions. The installation script will:
-         
-            * check your environment
-            * create the virtual environment
-            * install all |pyATS| and |library| packages and dependencies, and
-            * clone the selected Git repositories from Bitbucket.
 
-        
-
-   * - DevNet community user
+   * - Virtual Environment
      -
          #. Check the :ref:`requirements`.
          #. :ref:`configure-environment`.
          #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`:
 
-            ``pip install pyats[library]`` |br| |br|
+            ``pip install pyats[full]`` |br| |br|
 
          #. Verify the installation:
 
-            * ``$ pip list | grep pyats``
-            * ``$ pip list | grep genie`` |br| |br| 
+            * ``$ pyats version check``
 
          #. :ref:`clone-git-examples`.
          #. Run the example: ``$ pyats run job examples/basic/basic_example_job.py``
@@ -57,32 +46,84 @@ The process that you follow depends on whether you are an internal, external, or
          #. Start the |pyATS| container.
          #. Run the examples.
 
-   * - Robot Framework
-     -
-       Install the Robot Framework plugin.
-
-        * Internal Cisco users:
-          
-          ``$ pip install ats[robot]``
-
-        * DevNet users: 
-          
-          ``$ pip install pyats[robot]``
-
-        * Docker users:
-          
-            * Use the tag **latest-robot** (https://hub.docker.com/r/ciscotestautomation/pyats/tags).
-
 .. tip:: Once you install the |pyATS| ecosystem, remember to :ref:`keep your system up to date <upgrade-pyats>`.
 
 
 .. _install-with-pip:
 
-Install |pyATS| with pip
--------------------------
-This topic describes how to use the package installer for Python (pip) to install the |pyATS| system in your virtual environment.
+Virtual Environment
+-------------------
 
-.. note:: Cisco users should refer to the `internal Wiki <https://wiki.cisco.com/display/PYATS/Installation>`_ for detailed instructions.
+pyATS development team recomments you to always develop and run Python scripts
+with a Python virtual environment. This section describes how to check your
+Python version, and creating a virtual environment using your available binary.
+
+.. _check-python:
+
+Python Version
+^^^^^^^^^^^^^^
+.. note:: Make sure your system has a supported version of Python installed:
+        
+        .. include:: ../prereqs/supportedpythonversions.rst
+           :start-line: 5
+
+To check your installed version::
+
+$ python --version
+
+*Result*: The system returns the installed version number::
+
+$ Python 3.7.4
+
+.. tip::
+
+    ``pyenv`` a great utility for managing multiple Python versions within your
+    system. 
+
+.. _set-up-venv:
+
+Create Virtual Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A Python Virtual Environment is simply a directory (folder). Within this virtual 
+environment, you install the |pyATS| and |library| packages, dependencies, and 
+libraries, including everything else you need to run the system.
+
+.. note:: In our examples, we use the directory ``pyats``, but you can give your directory a different name.
+
+#.  Create a new directory::
+
+        $ mkdir pyats
+
+
+#.  Go to the new directory::
+
+        $ cd pyats
+
+#.  Initialize a virtual environment in this directory::
+
+        $ python3 -m venv .
+
+    *Result*: This creates a project "folder" (space) within the current directory. The folder keeps all dependencies, features, and components together in one place. |br| |br|
+    
+
+#.   Activate the virtual environment::
+
+        $ source bin/activate .
+
+    *Result*: The system displays the directory in parentheses before the command prompt::
+
+        (pyats)$
+
+    When you install the |pyATS| ecosystem within this virtual environment, the packages remain separate from those in other project spaces.
+
+    .. hint:: When you're done with your |pyATS| session, you can close the terminal window or exit the environment::
+
+        $ deactivate
+
+
+Pip Install
+^^^^^^^^^^^
 
 #.  If you haven't already done so, activate your virtual environment::
 
@@ -123,36 +164,69 @@ This topic describes how to use the package installer for Python (pip) to instal
 
   *Result*: |pyATS| runs three sample test cases, displays a summary of the results, and emails you the summary.
 
+.. _upgrade-pyats:
 
-Install the Robot Framework plugin
-----------------------------------
+Update Environment
+^^^^^^^^^^^^^^^^^^
+On the last Tuesday of the month, the team releases a new version of |pyATSbold|. 
+This topic describes how to get the latest changes.
 
-You can use the plugin after you install an additional component.
+To upgrade the |pyATS| and |library| :doc:`infrastructure </definitions/def_pyats_code_infrastructure>`, and any or all of the :doc:`feature libraries and components </definitions/def_pyatslibrary_code_structure>`, run the relevant upgrade command **from your virtual environment**.
 
-* Internal Cisco users::
-   
-   $ pip install ats[robot]
+.. tip:: You can find the latest information about releases on Twitter at #pyATS. 
 
-* DevNet users::
-   
-   $ pip install pyats[robot]
+For information about all things |pyATS|, see our discussion on `Webex Teams <https://eurl.io/#r18UzrQVr>`_.
 
-* Docker users:
+You can check and upgrade your pyATS installation straigth from the command line:
 
-  Use the tag **latest-robot** (https://hub.docker.com/r/ciscotestautomation/pyats/tags).
+.. code-block:: shell
+
+    # to check your current pyats version
+    (pyats)$ pyats version check
+
+    # to check if any packages are out-dated
+    (pyats)$ pyats version check --outdated
+
+    # to update version
+    (pyats)$ pyats version update
+
+Otherwise, you can also update the packages manually using Pip:
+
+.. csv-table:: Pip upgrade options
+    :file: ../quickstart/UpgradeExternal.csv
+    :header-rows: 1
+    :widths: 25 35 40
+
+
+*Result*: The installer checks for and upgrades any dependencies, and gives you the latest version of the |pyATS| and |library| core and library packages. To check the version::
+
+  (pyats) $ pyats version check
+
+*Result*: The system displays a list of the packages and the installed versions.
+
+.. attention:: The major and minor versions must all match. It's okay if the patch version varies.
+
+See also...
+
+* `pyATS change log <https://developer.cisco.com/docs/pyats/api/>`_
+* `pyATS Library change log <https://developer.cisco.com/docs/genie-docs/>`_
+
 
 .. _docker-label:
 
-Run |pyATS| with Docker
-------------------------------------------------------
+Using Docker
+------------
 If you know how to use Docker, you can work with our pre-built docker image, which includes both |pyATS| and the |library|. You can find the image and instructions at
 https://hub.docker.com/r/ciscotestautomation/pyats.
 
+.. code-block:: text
+
+    bash$ docker pull ciscotestautomation/pyats:latest
 
 .. _clone-git-examples:
 
-Download or clone the Git examples repository
------------------------------------------------
+Examples Repository
+-------------------
 We've provided some examples to help you start using the |library| for some simple scenarios that demonstrate how the |library| works.
 
 .. note:: Make sure that you have |pyats| and the |library| :doc:`fully installed </install/installpyATS>`.

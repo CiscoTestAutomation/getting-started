@@ -1,6 +1,6 @@
 .. _compare-network-states:
 
-Compare network states
+Compare Network States
 ======================
 Once you know how to :ref:`parse device output <parse-output>` or :ref:`learn device features <learn-features>`, you can begin to unleash the power of the |librarybold| for stateful network validation! 
 
@@ -39,9 +39,9 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
 #. With your devices already configured and running, take a snapshot of the ``bgp`` feature and save it to the directory (or variable) ``output1``. You can use a Python interpreter or the :term:`Library command line`.
 
-    * If you want to use Python, use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
+    * If you want to use Python, use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
 
-       (pyats) $ genie shell --testbed-file mock.yaml
+       (pyats) $ pyats shell --testbed-file mock.yaml
           >>> output1 = {}
           >>> for name, dev in testbed.devices.items():
           ...     dev.connect()
@@ -55,7 +55,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
     * If you want to use the CLI::
 
-       (pyats) $ genie learn "bgp" --testbed-file mock.yaml --output output1
+       (pyats) $ pyats learn "bgp" --testbed-file mock.yaml --output output1
 
       *Result*: The system creates the output directory ``output1``, stores the ``ops.txt`` device files in JSON format, and displays a summary for each device:
 
@@ -138,9 +138,9 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
 #. With your device already configured and running, take a snapshot and save it to the directory (or variable) ``po1``. You can use a Python interpreter or the :term:`Library command line`.
 
-    * If you want to use Python, use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to a device and parse the specified command::
+    * If you want to use Python, use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to a device and parse the specified command::
 
-       (pyats) $ genie shell --testbed-file tb.yaml
+       (pyats) $ pyats shell --testbed-file tb.yaml
           >>> dev = testbed.devices['uut']
           >>> dev.connect()
           >>> po1 = dev.parse('show ip ospf interface brief')
@@ -149,7 +149,7 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
     * If you want to use the CLI::
 
-       (pyats) $ genie parse "show ip ospf interface brief" --testbed-file tb.yaml --devices uut --output po1
+       (pyats) $ pyats parse "show ip ospf interface brief" --testbed-file tb.yaml --devices uut --output po1
 
       *Result*: The system creates the output directory ``po1``, stores the ``parsed.txt`` file in JSON format, and displays a summary for the device:
 

@@ -1,22 +1,17 @@
 .. _parse-output:
 
-Parse device output
-====================
+Parse Device Output
+===================
 This topic describes the benefits of using parsed output for network automation, and provides an example of how a :term:`parser` works.
 
 .. _parsed-output-benefits:
 
-Benefits of parsed device output
----------------------------------
 Device output can vary widely between different devices and for different show commands.
 
 .. include:: ../definitions/def_parser.rst 
    :start-line: 3
 
-For more information about the ``metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/index.html#genie-metaparser-package>`_.
-
-Before and after examples
-^^^^^^^^^^^^^^^^^^^^^^^^^
+For more information about the ``genie.metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-docs/docs/metaparser/index.html#>`_.
 
 The following example shows device output before it's parsed.
 
@@ -67,8 +62,8 @@ And this is the output after it's parsed into a Python dictionary.
 
 Although the "before" example is human readable in this case, the output structure is *not* useful for automation. The "after" example, by contrast, is a useful dictionary that you can easily interact with in your automation script.
 
-Available parsers
-^^^^^^^^^^^^^^^^^^
+Available Parsers
+-----------------
 The |library| provides a parser for most of the Cisco-specific ``show`` commands. You can see a complete list on the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_.
 
 .. tip:: Once you have the parsed, structured data, you can:
@@ -80,14 +75,14 @@ The |library| provides a parser for most of the Cisco-specific ``show`` commands
 
 .. _example-parse-output:
 
-Examples of how to parse output from a show command
-----------------------------------------------------
+Parsing Examples
+----------------
 In the section :ref:`manage-connections`, you learned :ref:`how the system connects to devices <how-library-connects>`. Once you connect to a device, you can run ``show`` commands and parse the output.
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
-Parse output using the :ref:`library command line`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using Command Line
+^^^^^^^^^^^^^^^^^^
 You can use the :term:`library command line` ``Parse`` functionality to parse the output from a specified ``show`` command. Check the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for a list of available parsers that you can use.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
@@ -96,7 +91,7 @@ You can use the :term:`library command line` ``Parse`` functionality to parse th
 
 #. Run the parser::
 
-    (pyats) $ genie parse "show version" --testbed-file mock.yaml --devices uut
+    (pyats) $ pyats parse "show version" --testbed-file mock.yaml --devices uut
 
    *Result*: The system returns the version information as a series of key-value pairs:
 
@@ -135,8 +130,8 @@ You can use the :term:`library command line` ``Parse`` functionality to parse th
         }
 
 
-Parse output in the Python interpreter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In Python Interactive Shell
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The following example shows you how to parse output from the ``show inventory`` command, using a :term:`mock device`. 
 
@@ -206,8 +201,8 @@ The following example shows you how to parse output from the ``show inventory`` 
 
 .. _example-run-parse-script:
 
-Parse output with a Python script
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In a Python Script
+^^^^^^^^^^^^^^^^^^
 This example shows you how easy it is to put all of your statements into a single script that you can run from your virtual environment.
 
 #. Open ``new_script.py`` in a text editor.

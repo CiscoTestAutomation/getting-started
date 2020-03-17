@@ -1,7 +1,8 @@
 .. _perform-operations-on-device:
 
-Perform operations on device
-============================
+Helpful Device APIs
+===================
+
 This topic describes how to use |librarybold| Device ``api`` function to perform a multitude of operations on a Device such as adding or removing configuration, verifying configuration states, retrieving current system state or configuration etc.
 
 How to execute Device APIs

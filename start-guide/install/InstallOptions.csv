@@ -4,7 +4,7 @@ Full,``$ pip install pyats[full]``,"* All |pyATS| and |library| infrastructure
 * Optional extras (templates and the Robot Framework plug-in)"
 Standard,``$ pip install pyats[library]``,"* All |pyATS| and |library| infrastructure
 * |library| network automation packages"
-Core |pyATS|,``$ pip install pyats``,* ATS infrastructure
+Core |pyATS|,``$ pip install pyats``,* pyATS bare-bone infrastructure
 Robot Framework,``$ pip install pyats[robot]``,"* Optional Robot Framework package
 * ``pyats.robot`` package (contains |pyATS|-specific keywords)"
 Template command,``$ pip install pyats[template]``,"* Enables use of the ``template`` command, which prompts you for input at runtime"

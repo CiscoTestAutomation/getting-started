@@ -1,12 +1,10 @@
-.. pyATS User Guide documentation master file, created by
-   sphinx-quickstart on Fri Jul 19 16:42:28 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Geting Started with pyATS
+=========================
 
-Get started with pyATS
-======================
-
-The |getstartedguide| introduces you to the features and functionality of the |pyATSbold| solution for network test automation. Designed for test script developers and network engineers, this guide will help you to get up and running with |pyATSbold| and the |librarybold| (formerly "Genie").
+The |getstartedguide| introduces you to the features and functionality of the 
+|pyATSbold| solution for network test automation. Designed for test script 
+developers and network engineers, this guide will help you to get up and running
+with |pyATSbold| and the |librarybold| (formerly "Genie").
 
 .. toctree::
     :maxdepth: 2
@@ -14,13 +12,11 @@ The |getstartedguide| introduces you to the features and functionality of the |p
 
     /intro/introduction
     /prereqs/prerequisites
-    /configuration/configureEnv
     /install/installpyATS
-    /install/keepuptodate
 
 .. toctree::
     :maxdepth: 1
-    :caption: Guided Practice
+    :caption: Basic Concepts
 
     /quickstart/structureofastatement
     /quickstart/manageconnections
@@ -30,6 +26,19 @@ The |getstartedguide| introduces you to the features and functionality of the |p
     /quickstart/comparebeforeafter
     /quickstart/runtestcase
     /quickstart/deviceapis
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Best Practices
+
+    bestpractices/intro
+    bestpractices/design
+    bestpractices/style
+    bestpractices/general
+    bestpractices/test
+    bestpractices/lib
+    bestpractices/topology
+    bestpractices/job
 
 .. toctree::
     :maxdepth: 1

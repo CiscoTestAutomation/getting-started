@@ -6,3 +6,4 @@ Supported versions of Python
 * Python 3.5.x
 * Python 3.6.x
 * Python 3.7.x
+* Python 3.8.x
