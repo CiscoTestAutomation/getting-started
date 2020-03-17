@@ -299,6 +299,8 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
 Test your new parser
 --------------------
+Remember to execute `make json` every time you create a new parser. 
+
 Run your parser on a real device to make sure that you get the expected parsed output. The following example shows how to do this in pure Python:
 
 .. code-block:: python
