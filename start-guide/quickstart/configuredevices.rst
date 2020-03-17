@@ -1,26 +1,57 @@
 .. _configure-devices:
 
-Configure devices
-=====================
-This topic describes how to use the ``Conf`` module of the |librarybold| to quickly and easily apply configuration changes when you want to automate your network testing.  You take care of the *what* --- the |library| takes care of the *how*!
+Configure Devices
+=================
 
+This topic describes how to push configuration to your network devices, by
+configuration CLIs directly, and by using the ``Conf`` module of the 
+|librarybold| to quickly and easily.  
+
+Directly
+--------
+
+The simplest way to push configuration to your network devices is to send raw
+configuration strings (as you would've typed it in device CLI) directly.
+
+Once your device is connected (following :ref:`connect-to-device`), you should
+be able to access a device's ``configure()`` method:
+
+.. code-block:: python
+
+    device.configure('''
+        interface Ethernet1/1
+        no shutdown
+    ''')
+
+You can pass multi-line configurations to the ``configure()`` method, and the
+configuration would be applied accordingly. 
+
+Because this method accepts configuration as a raw string, you are responsible
+of generating the correct configuration syntax and context. This can be done 
+using various programming techniques such as variable subsitution, and/or 
+string templating (eg, Jinja2).
+
+.. _cli-conf:
+
+Using Genie Conf Objects
+------------------------
+
+    You take care of the *what* --- the |library| takes care of the *how*!
+
+    
 .. include:: ../definitions/def_conf.rst
    :start-line: 3
 
 Because the |library| uses a common, feature-based structure across platforms, you can save time and effort when you automate your network testing.
 
-.. _cli-conf:
-
-How you use the |library| to configure a device
-------------------------------------------------
 Like the :term:`parser`, the |library| ``Conf`` module uses the same :term:`key-value pair` structure across devices. This results in a *consistent* set of keys, which means that you can write *one* script that works to configure different devices. 
 
 You simply define the feature attributes, and the |library| figures out how to apply the configuration to each different device.
 
 To see a complete list of the structure and keys, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page, select a :term:`feature`, and then select **MODEL**.
 
-Examples of how to configure devices
-----------------------------------------
+Examples
+^^^^^^^^
 This topic describes how to use the Python interpreter or a Python script to use the ``Conf`` module functionality. Because you use it primarily for automated test scripts, we have not provided a command line option.
 
 The process to configure devices is simple:
@@ -32,8 +63,9 @@ The process to configure devices is simple:
 
 .. _config-feature:
 
-Configure a feature on a device
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configure Feature on Device
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 This example shows you how to configure a single feature on a single device. You can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
@@ -42,7 +74,7 @@ This example shows you how to configure a single feature on a single device. You
 
 #. Load the ``testbed`` API and create your testbed and device objects::
 
-    (pyats) $ genie shell --testbed-file mock.yaml
+    (pyats) $ pyats shell --testbed-file mock.yaml
 
         >>> uut = testbed.devices['uut']
 
@@ -90,8 +122,9 @@ This example shows you how to configure a single feature on a single device. You
 
         >>> nxos_interface.build_unconfig(apply=False)
 
-Configure one attribute
-^^^^^^^^^^^^^^^^^^^^^^^^
+Change One Attribute
+^^^^^^^^^^^^^^^^^^^^
+
 If you want to change the configuration of a device, or if you want to partially configure a device, you can tell the |library| which attributes to apply.
 
 By default, the |library| applies the configuration from step 6 of the previous example. To limit the configuration to a single attribute, you can specify the attribute in an argument::
@@ -100,8 +133,9 @@ By default, the |library| applies the configuration from step 6 of the previous 
 
 In this example, the system applies *only* the configuration of the ``ipv4`` attribute to the device. Because the system uses a dictionary that stores key-value pairs, ``None`` serves as a placeholder value that has no effect on the configuration.
 
-Configure multiple devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configure Multiple Devices
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 You can apply configuration settings to all the devices in your testbed, rather than to a specific device or feature. This means that you can do all of the configuration, and then apply the settings with just one "build". 
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
@@ -110,7 +144,7 @@ You can apply configuration settings to all the devices in your testbed, rather 
 
 #. Load the ``testbed`` API and create your testbed and device objects::
 
-    (pyats) $ genie shell --testbed-file mock.yaml
+    (pyats) $ pyats shell --testbed-file mock.yaml
 
         >>> uut = testbed.devices['uut']
 

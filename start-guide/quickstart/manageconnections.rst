@@ -1,37 +1,34 @@
 .. _manage-connections:
 
-Manage device connections
-=============================
-This topic describes how to connect to network devices using the |librarybold|. It also gives you a quick example to try using mocked devices.
+Device Connection
+=================
+
+This topic describes how to connect to network devices using pyATS. 
+It also gives you a quick example to try using mocked devices.
 
 .. _how-library-connects:
 
-How the |library| connects to devices
--------------------------------------
-Because the |library| is based on Python, an :term:`object`-oriented programming language, it uses objects to represent your testbed topology.
+Basics
+------
+Because the |library| is based on Python, an :term:`object`-oriented programming
+language, it uses objects to represent your testbed topology.
 
 #. Set up a testbed YAML file that contains your device details.
 #. Use the |library| to create the testbed and device objects.
 #. Tell the |library| which device to connect to.
 #. Connect and run commands.
 
-For a more detailed example that you can try, see :ref:`connect-to-device`.
+Supported Devices
+-----------------
 
-Supported devices
-------------------
-
-The |library| supports the following os/platform combinations. `Full list of supported platform <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/introduction.html#supported-platforms>`_ 
-
-.. csv-table:: Supported OS/platform combinations
-   :file: SupportedPlatforms.csv
-   :widths: 30, 70
-   :header-rows: 1
-
+The |library| supports the following os/platform combinations. 
+`Full list of supported platform <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/supported_platforms.html>`_ 
 
 .. _manageconnections-setup-testbed:
 
-Set up a testbed YAML file
-------------------------------
+Creating Testbed YAML File
+--------------------------
+
 There are a few different ways to create a testbed file, but the two simplest are:
 
 * Use a text editor to copy and edit an existing YAML file.
@@ -39,8 +36,9 @@ There are a few different ways to create a testbed file, but the two simplest ar
 
 The following sections explain both options.
 
-Edit a YAML file directly
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Writing Testbed File Manually
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 The YAML file must follow the |pyATS| `topology schema <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#topology-schema>`_. The schema provides for a complete and thorough description of your testbed, including custom key-value pairs. 
 
 .. tip:: Only the ``devices`` block is actually required, so it's easy to get started with a simple example.
@@ -62,44 +60,49 @@ The ``devices`` block contains a description of each network device, and must in
     "``port``", "Connection port"
  
 
-The following example shows a YAML file with two devices defined::
+The following example shows a YAML file with two devices defined:
 
- devices:
-  nx-osv-1:
-      type: 'router'
-      os: 'nxos'
-      platform: n9kv
-      alias: 'uut'
-      credentials:
-          default:
-              username: admin
-              password: admin
-      connections:
-          cli:
-              protocol: ssh
-              ip: "172.25.192.90"
+.. code-block:: yaml
+
+    devices:
+        nx-osv-1:
+            type: 'router'
+            os: 'nxos'
+            platform: n9kv
+            alias: 'uut'
+            credentials:
+                default:
+                    username: admin
+                    password: admin
+            connections:
+                cli:
+                    protocol: ssh
+                    ip: "172.25.192.90"
 
 
-  csr1000v-1:
-      type: 'router'
-      os: 'iosxe'
-      platform: asr1k
-      alias: 'helper'
-      credentials:
-          default:
-              username: cisco
-              password: cisco
-      connections:
-          cli:
-              protocol: ssh
-              ip: "172.25.192.90"
+        csr1000v-1:
+            type: 'router'
+            os: 'iosxe'
+            platform: asr1k
+            alias: 'helper'
+            credentials:
+                default:
+                    username: cisco
+                    password: cisco
+            connections:
+                cli:
+                    protocol: ssh
+                    ip: "172.25.192.90"
 
 
 .. attention:: Remember that YAML is white-space and case-sensitive.
 
-Use Excel to create the YAML file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can define all of your device data in a CSV :monospace:`(.csv)` or Excel :monospace:`(.xls, .xlsx)` file. The |geniecmd| ``create testbed`` command automatically converts the input and creates an equivalent YAML file. 
+Creation from Excel File
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can define all of your device data in a CSV :monospace:`(.csv)` or 
+Excel :monospace:`(.xls, .xlsx)` file. The ``pyats create testbed`` 
+command automatically converts the input and creates an equivalent YAML file. 
 
 The following example shows an Excel file with the required columns.
 
@@ -118,19 +121,20 @@ Follow these guidelines to create a valid YAML file:
 
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
- (pyats) $ genie create testbed my_devices.xls --output yaml/my_testbed.yaml
+ (pyats) $ pyats create testbed my_devices.xls --output yaml/my_testbed.yaml
 
 where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
 
 .. tip:: Add the ``--encode-password`` option to hide the password in the YAML file as a secret string. Note that this only *obfuscates* the password --- it does *not* make the password cryptographically secure. For more information, see the topic `Secret Strings <https://pubhub.devnetcloud.com/media/pyats/docs/utilities/secret_strings.html#secret-strings>`_.
 
-For more details about the ``genie create`` functionality, see the topic `Genie Create Testbed <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_create.html#genie-create-testbed>`_.
+For more details about the ``pyats create`` functionality, see the topic `Genie Create Testbed <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_create.html#genie-create-testbed>`_.
 
-Other ways to create the testbed
----------------------------------
+Interactive Command Line
+^^^^^^^^^^^^^^^^^^^^^^^^
+
  * You can enter the device data manually, without having to first create a YAML or Excel/CSV file::
 
-    (pyats) $ genie create testbed --output yaml/my_testbed.yaml --encode-password
+    (pyats) $ pyats create testbed --output yaml/my_testbed.yaml --encode-password
 
    *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option obfuscates the password in the resulting YAML file. |br| |br|
 
@@ -138,8 +142,9 @@ Other ways to create the testbed
 
 .. _validate-yaml:
 
-Validate the YAML file
-----------------------
+Validate the Testbed YAML
+-------------------------
+
 If you want to check that your testbed YAML file meets the |pyATS| requirements, run the following command::
 
  (pyats) $ pyats validate testbed [file]
@@ -152,8 +157,9 @@ For more details, see the topic `pyats validate testbed <https://pubhub.devnetcl
 
 .. _connect-to-device:
 
-Connect to a device
----------------------------
+Connect To Devices
+------------------
+
 This step-by-step example shows you how to connect to a device. 
 
 .. note:: You can run the commands in the following examples on real devices, if you have them available. If you don't have a real device to practice with, we offer a :term:`mock device` that you can use with most of the |library| examples. 

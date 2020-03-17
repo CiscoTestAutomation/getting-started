@@ -1,5 +1,6 @@
-Run a test case
-======================
+Run Test Scripts
+================
+
 This topic describes how you can use the |librarybold| to build and run test cases and use them for automated network testing. 
 
 You don't need to know Python --- you can use the ``genie run`` functionality from your Linux terminal. Simply stated, you tell the system the test cases to run, the order to execute them, and the data to pass to the system at runtime.
@@ -7,7 +8,7 @@ You don't need to know Python --- you can use the ``genie run`` functionality fr
 .. _auto-testing-process:
 
 Automated testing process
----------------------------
+-------------------------
 The |library| provides the building blocks that make it easy for you to automate your network testing. Simply:
 
  * Select from a pool of pre-written test cases (:ref:`triggers <triggers>`).
@@ -27,6 +28,7 @@ At runtime, the ``Harness`` pulls together all of the data that you've defined i
 
 Advantages of a modular strategy
 --------------------------------
+
  * Consistent, standards-based test cases are reusable.
  * You can write test scripts efficiently, using the reusable, plug and play test cases as building blocks.
  * It's easy to customize the standard test cases to meet your requirements.

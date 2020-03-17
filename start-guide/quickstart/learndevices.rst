@@ -1,6 +1,6 @@
 .. _learn-features:
 
-Learn device features
+Learn Device Features
 =====================
 This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
@@ -9,8 +9,8 @@ This topic describes how to use the ``learn`` function of the |librarybold| ``Op
 
 .. _cli-learn:
 
-How the |library| "learns" a feature
--------------------------------------
+"Learning" Mechanism Explained
+------------------------------
 .. include:: ../definitions/def_ops.rst
    :start-line: 3
 
@@ -20,8 +20,9 @@ The output is stored with the same :term:`key-value pair` structure across devic
 
 .. _supported-features:
 
-Supported features
--------------------
+Supported Features
+------------------
+
 To see a complete list of the features that the |library| can learn, and to see the resulting data structure for each feature, visit the `Models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ page.
 
 If you try to "learn" a feature that we don't yet support, the system returns the following exception:
@@ -36,13 +37,13 @@ If you try to "learn" a feature that we don't yet support, the system returns th
 
 If you want to request support for a new feature, please contact us at pyats-support-ext@cisco.com
 
-Examples of how to learn device features
-----------------------------------------
+"Learn" Examples
+----------------
 This topic describes how you can tell the system to learn one or more features.
 
 .. attention:: Before you try these examples, make sure that you :download:`download and extract the zip file <mock.zip>` that contains the mock data and Python script.
 
-Learn a single feature
+Learn a Single Feature
 ^^^^^^^^^^^^^^^^^^^^^^
 To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
 
@@ -52,11 +53,11 @@ To learn one feature on a single device, you can use the device hostname or the 
 
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``:
+    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``:
 
        .. code-block:: 
 
-          (pyats) $ genie shell --testbed-file mock.yaml
+          (pyats) $ pyats shell --testbed-file mock.yaml
             >>> dev = testbed.devices['uut']
             >>> dev.connect()
             >>> output = dev.learn('ospf')
@@ -65,7 +66,7 @@ To learn one feature on a single device, you can use the device hostname or the 
 
     * If you want to use the CLI::
 
-      (pyats) $ genie learn ospf --testbed-file mock.yaml --devices uut --output output_folder
+      (pyats) $ pyats learn ospf --testbed-file mock.yaml --devices uut --output output_folder
 
       *Result*: The system connects to the device, runs the show commands, stores the output in JSON format in the specified directory, and displays a "Learn Summary" that shows the names of the output files. These include:
         
@@ -90,12 +91,12 @@ To learn one feature on a single device, you can use the device hostname or the 
 
 
 
-Learn multiple features
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Learn Multiple Features
+^^^^^^^^^^^^^^^^^^^^^^^
 You can use the ``learn`` function to get the operational states of multiple or all features, as shown in the following examples.
 
-Learn multiple features on all devices
-******************************************
+Across Multiple Devices
+"""""""""""""""""""""""
 This example shows you how to learn the ``bgp`` and ``ospf`` features on all of the devices in your testbed.
 
       .. note:: The mock data only contains one device, so you will only see the results for that device.
@@ -106,9 +107,9 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable ``learnt`` and displays the output::
+    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable ``learnt`` and displays the output::
 
-       (pyats) $ genie shell --testbed-file mock.yaml
+       (pyats) $ pyats shell --testbed-file mock.yaml
           >>> learnt = {}
           >>> for name, dev in testbed.devices.items():
           ...     dev.connect()
@@ -121,7 +122,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
 
     * If you want to use the CLI::
 
-       (pyats) $ genie learn bgp ospf --testbed-file mock.yaml --output output_folder
+       (pyats) $ pyats learn bgp ospf --testbed-file mock.yaml --output output_folder
 
       *Result*: Within the output directory, the system creates the output files and displays a summary for each device.
 
@@ -163,8 +164,8 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
 
       To see the structured data, use a text editor to open any of the ``ops.txt`` files.
 
-Learn all features on one device
-**********************************
+On a Single Device
+""""""""""""""""""
 
 .. tip:: Use the ``learn all`` functionality to learn all of the supported features on a device. The system returns the results in a format with key-value pairs, and notifies you of any exceptions for features it did not learn.
 
@@ -174,9 +175,9 @@ Learn all features on one device
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``genie shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable ``output``::
 
-       (pyats) $ genie shell --testbed-file mock.yaml
+       (pyats) $ pyats shell --testbed-file mock.yaml
           >>> dev = testbed.devices['uut']
           >>> dev.connect()
           >>> output = dev.learn('all')
@@ -185,7 +186,7 @@ Learn all features on one device
 
     * If you want to use the CLI::
 
-      (pyats) $ genie learn all --testbed-file mock.yaml --devices uut --output output_folder
+      (pyats) $ pyats learn all --testbed-file mock.yaml --devices uut --output output_folder
 
       *Result*: The system saves all of the console and structured output files in JSON format to the specified directory and displays a summary of the results, as shown in the following example. 
 

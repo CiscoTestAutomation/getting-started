@@ -1,7 +1,17 @@
 .. _structure-of-pyats-statement:
 
-Structure of a |pyATS| statement
-----------------------------------
+Everything is Python
+--------------------
+
+.. sidebar:: See also...
+
+    - `Learn Python tutorial <https://www.learnpython.org/>`_
+    
+    - `Python for Beginners <https://www.python.org/about/gettingstarted/>`_
+    
+    - `Learn Python Programming <https://realpython.com/start-here/>`_
+
+
 Although you don't need to know Python to use the |pyATSbold| ecosystem, it might help you to understand the structure of the Python-based commands described in this guide. 
 
 .. tip:: Remember, you can use the :term:`library command line` for network automation and never have to enter a Python command!
@@ -20,9 +30,3 @@ The following example explains the statements used to connect to a device and pa
    "6", "|line6|", "Print a meaningful message and the serial number for Slot 1."
 
 .. tip:: If you want to know more about how to use Python, you can find many good online tutorials.
-
-See also...
-
-* `Learn Python tutorial <https://www.learnpython.org/>`_
-* `Python for Beginners <https://www.python.org/about/gettingstarted/>`_
-* `Learn Python Programming <https://realpython.com/start-here/>`_

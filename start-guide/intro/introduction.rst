@@ -27,7 +27,7 @@ This powerful, highly-pluggable |python_reg| framework enables developers to sta
 
 What is the |library|?
 ^^^^^^^^^^^^^^^^^^^^^^
-The |library| provides all the tools needed for network test automation, including
+The |library| (a.k.a. Genie) provides all the tools needed for network test automation, including
 
 * a pool of reusable :term:`parsers <Parser>`
 * a pool of reusable :term:`triggers <Trigger>`
@@ -39,24 +39,24 @@ The |library| provides all the tools needed for network test automation, includi
 
 .. _genie-cli:
 
-What is the |library| CLI?
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+What is the |pyATS| CLI?
+^^^^^^^^^^^^^^^^^^^^^^^^
 .. include:: ../definitions/def_genie_cli.rst
    :start-line: 5
 
 When you want to use the CLI, you simply type::
 
- (pyats) $ genie <command> [options]
+ (pyats) $ pyats <command> [options]
 
 For example, to get the operational state of a :term:`feature` on a device, run the command::
 
- (pyats) $ genie learn ospf --testbed-file testbed.yaml
+ (pyats) $ pyats learn ospf --testbed-file testbed.yaml
 
 where ``ospf`` is the feature, and ``testbed.yaml`` is the :term:`testbed YAML file` that contains information about your network devices.
 
 To see a complete list of the CLI built-in functions, after you :ref:`configure-environment` and :ref:`install pyATS and the pyATS library <install-pyats>`, run the command::
 
- (pyats) $ genie --help
+ (pyats) $ pyats --help
 
 When to use the |library|
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -115,7 +115,7 @@ The |library| builds on |pyATS| to provide:
 * The ability to build a test suite elastically through the use of YAML-based datafiles
 * A mechanism for modeling network device features
 
-System architecture
+System Architecture
 -------------------
 The following diagram shows a high-level view of the system architecture.
 
