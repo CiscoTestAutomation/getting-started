@@ -1,10 +1,10 @@
 .. _write-blitz:
 
-Quick Trigger
+Write a BLITZ
 -------------
 
-The *Quick Trigger* is a YAML-driven template that makes it easy for you to run
-a test case without having to know any knowledge of programming. The quick trigger ---
+The *BLITZ* also known as *Quick Trigger* is a YAML-driven template that makes it easy for you to run
+a test case without having to know any knowledge of programming. The *Quick Trigger* ---
 called *BLITZ* because it's lightning fast --- does the following actions:
 
 * Configure a device.
@@ -396,7 +396,7 @@ command ``show version``.
                     - get_values('platform')
 
 Below you can see an `example` of calling the :monospace:`get_interface_mtu_config_range` api
-within the :monospace: `trigger_datafile` and checking if certain query results are included or excluded in the output.
+within the :monospace:`trigger_datafile` and checking if certain query results are included or excluded in the output.
 
 .. code-block:: YAML
 
@@ -582,10 +582,10 @@ in action ``execute`` output and print the   :monospace:`main_learn_output` into
           - print:
               print_item1: "%VARIABLES{main_learn_output}"
 
+.. note::
 
-
-Both filter and include/exclude features are using our dictionary querying tool `Dq
-<https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`_.
+    Both filter and include/exclude features are using our dictionary querying tool `Dq
+    <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`_.
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
