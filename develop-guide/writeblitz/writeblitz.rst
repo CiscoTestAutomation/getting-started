@@ -1,11 +1,11 @@
 .. _write-blitz:
 
-Write a BLITZ
+Quick Trigger (Blitz)
 -------------
 
-The *BLITZ* also known as *Quick Trigger* is a YAML-driven template that makes it easy for you to run
+The *Blitz* also known as *Quick Trigger* is a YAML-driven template that makes it easy for you to run
 a test case without having to know any knowledge of programming. The *Quick Trigger* ---
-called *BLITZ* because it's lightning fast --- does the following actions:
+called *Blitz* because it's lightning fast --- does the following actions:
 
 * Configure a device.
 * Parse the device output to verify if the device state is as expected.
@@ -15,6 +15,7 @@ called *BLITZ* because it's lightning fast --- does the following actions:
 * Calling different apis and use their outputs on other actions and other devices
 * Yang integration
 * It is fully customizable and new actions can be added
+* Many more features that will be discussed thoroughly in the upcoming sections
 
 Designed for quick development, the quick trigger verifies *key-value* pairs and
 uses parsing for full flexibility across OS and platforms. As with any
@@ -77,7 +78,7 @@ The yaml is commented out explaining what each section does. See example below.
                   include:
                     - get_values('shutdown')
                   exclude:
-                    - not_contains('bgp_protocol_state')
+                    - not_contains('running')
           - Revert_configuration:
               # Configure action, which accepts command as an argument
               - configure:
@@ -473,7 +474,7 @@ Below you can see an `example` of this.
         exclude:
             - 9999
 
-Replying to the prompt dialouge
+Replying to the prompt dialogue
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When executing or configuring commands on some devices, it is possible that you receive 
