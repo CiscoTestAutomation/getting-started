@@ -121,20 +121,20 @@ Follow these guidelines to create a valid YAML file:
 
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
- (pyats) $ pyats create testbed my_devices.xls --output yaml/my_testbed.yaml
+ (pyats) $ pyats create testbed file --path my_devices.xls --output yaml/my_testbed.yaml
 
 where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
 
 .. tip:: Add the ``--encode-password`` option to hide the password in the YAML file as a secret string. Note that this only *obfuscates* the password --- it does *not* make the password cryptographically secure. For more information, see the topic `Secret Strings <https://pubhub.devnetcloud.com/media/pyats/docs/utilities/secret_strings.html#secret-strings>`_.
 
-For more details about the ``pyats create`` functionality, see the topic `Genie Create Testbed <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_create.html#genie-create-testbed>`_.
+For more details about the ``pyats create`` functionality, see the topic `pyATS Create Testbed <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_create.html#pyats-create-testbed>`_.
 
 Interactive Command Line
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
  * You can enter the device data manually, without having to first create a YAML or Excel/CSV file::
 
-    (pyats) $ pyats create testbed --output yaml/my_testbed.yaml --encode-password
+    (pyats) $ pyats create testbed interactive --output yaml/my_testbed.yaml --encode-password
 
    *Result*: The system prompts you for the device information and passwords. The ``--encode-password`` option obfuscates the password in the resulting YAML file. |br| |br|
 
