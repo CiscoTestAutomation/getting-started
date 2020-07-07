@@ -361,6 +361,45 @@ in your ``Blitz`` datafile.
         TriggerSleep:
             devices: [my_device]
 
+diff
+----
+
+Allow to diff two variables (Dictionary or Ops object).
+
+By default it will just print the difference, but can also fail the section
+if they are different with the argument `fail_different=True`.
+
+.. code-block:: YAML
+
+        - snapshot_pre_configuration:
+           - parse:
+               device: R3_nx
+               command: show interface
+               save:
+                 - variable_name: pre_snapshot_nxos
+
+        - configure_interface:
+            # List of actions
+            - configure:
+                device: R3_nx
+                command: |
+                  interface Ethernet1/56
+                  no switchport
+                  ip address 10.5.5.5 255.255.255.0
+                  no shutdown
+
+            - parse:
+                device: R3_nx
+                command: show interface
+                save:
+                  - variable_name: post_snapshot_nxos
+
+            - diff:
+                pre: "%VARIABLES{pre_snapshot_nxos}"
+                post: "%VARIABLES{post_snapshot_nxos}"
+                device: R3_nx
+                command: show interface
+
 Querying actions' output
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
