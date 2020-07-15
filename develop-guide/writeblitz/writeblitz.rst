@@ -249,11 +249,11 @@ other existing apis.
 rest
 ____
 
-The ``rest`` action allows you to make rest call to any endpoint on a device. Rest uses http protocols to 
+The ``rest`` action allows to make rest call to any endpoint on a device. Rest uses http method to 
 transfer data. Five http protocols are supported, `get`, `post`, `put`, `patch` and `delete`.
 
 You can find additional information on rest, using this `tutorial
-<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
+<http://wwwin-pyats.cisco.com/cisco-shared/rest/connector/latest/user_guide/services/index.html>`_.
 
 .. code-block:: YAML
 
@@ -284,21 +284,41 @@ You can find additional information on rest, using this `tutorial
                       }
                     }
                   }
-
-You can also change your connection alias from rest to anyone of the following 
-['cli', 'yang', 'rest', 'xml', 'web', 'restconf', 'netconf', 'gnmi'] and still take advantage 
-of this action to transfer data from any endpoint that is available on the device.
-
-.. code-block:: YAML
-
-    test_sections:
-        - plain_actions:
             - rest:
-                method: get
-                connection_alis: xml
-                dn:  '/api/mo/sys/intf/phys-[eth1/1].json'
+                method: post
+                dn:  'api/mo/sys/bgp/inst.json'
                 device: N93_3
-
+                payload: {
+                  "bgpInst": {
+                    "attributes": {
+                      "isolate": "disabled",
+                      "adminSt": "enabled",
+                      "fabricSoo": "unknown:unknown:0:0",
+                      "ctrl": "fastExtFallover",
+                      "medDampIntvl": "0",
+                      "affGrpActv": "0",
+                      "disPolBatch": "disabled",
+                      "flushRoutes": "disabled"
+                     }
+                  }
+                }
+            - rest:
+                method: patch
+                dn:  '/api/mo/sys/bgp/inst/dom-default/af-ipv4-mvpn.json'
+                device: N93_3
+                payload: {
+                    "intf-items": {
+                      "phys-items": {
+                        "PhysIf-list": [
+                          {
+                            "adminSt": "down",
+                            "id": "eth1/2",
+                            "userCfgdFlags": "admin_layer,admin_state"
+                          }
+                        ]
+                      }
+                    }
+                  }
 
 sleep
 _____
