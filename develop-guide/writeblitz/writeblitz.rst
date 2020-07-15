@@ -246,6 +246,60 @@ other existing apis.
         function: get_traffic_stream_objects
         ...
 
+rest
+____
+
+The ``rest`` action allows you to make rest call to any endpoint on a device. Rest uses http protocols to 
+transfer data. Five http protocols are supported, `get`, `post`, `put`, `patch` and `delete`.
+
+You can find additional information on rest, using this `tutorial
+<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
+
+.. code-block:: YAML
+
+    test_sections:
+        - plain_actions:
+            - rest:
+                method: get
+                dn:  '/api/mo/sys/intf/phys-[eth1/1].json'
+                device: N93_3
+            - rest:
+                method: delete
+                device: N93_3
+                dn: '/api/mo/sys/bgp/inst.json'
+            - rest:
+                method: put
+                dn:  '/api/mo/sys/bgp/inst/dom-default/af-ipv4-mvpn.json'
+                device: N93_3
+                payload: {
+                    "intf-items": {
+                      "phys-items": {
+                        "PhysIf-list": [
+                          {
+                            "adminSt": "down",
+                            "id": "eth1/2",
+                            "userCfgdFlags": "admin_layer,admin_state"
+                          }
+                        ]
+                      }
+                    }
+                  }
+
+You can also change your connection alias from rest to anyone of the following 
+['cli', 'yang', 'rest', 'xml', 'web', 'restconf', 'netconf', 'gnmi'] and still take advantage 
+of this action to transfer data from any endpoint that is available on the device.
+
+.. code-block:: YAML
+
+    test_sections:
+        - plain_actions:
+            - rest:
+                method: get
+                connection_alis: xml
+                dn:  '/api/mo/sys/intf/phys-[eth1/1].json'
+                device: N93_3
+
+
 sleep
 _____
 
@@ -362,7 +416,7 @@ in your ``Blitz`` datafile.
             devices: [my_device]
 
 diff
-----
+_____
 
 Allow to diff two variables (Dictionary or Ops object).
 
@@ -627,6 +681,12 @@ in action ``execute`` output and print the   :monospace:`main_learn_output` into
     Both filter and include/exclude features are using our dictionary querying tool `Dq
     <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`_.
 
+.. note::
+
+    The name of the device that the action is being executed on will be saved automatically upon
+    execution of the action and stay usable till the end of that action lifecycle. You can use that 
+    name as a variable using ``VARIABLES{device.name}`` for various purposes in your action. 
+
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -751,6 +811,7 @@ Trigger timeout/interval ratio adjustments
 
 Each action performs verification to make sure it has performed as expected.
 These timeouts can be modified with a ratio from the testbed datafile.
+Actions ``api``, ``execute``, ``parse``, ``learn`` and ``rest`` are supporting this feature
 
 .. code-block:: YAML
 
