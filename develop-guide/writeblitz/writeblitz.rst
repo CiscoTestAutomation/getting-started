@@ -705,7 +705,7 @@ in action ``execute`` output and print the   :monospace:`main_learn_output` into
 
     The name of the device that the action is being executed on will be saved automatically upon
     execution of the action and stay usable till the end of that action lifecycle. You can use that 
-    name as a variable using ``VARIABLES{device.name}`` for various purposes in your action. 
+    name as a variable using ``%VARIABLES{device.name}`` for various purposes in your action. 
 
 Quick Trigger parallel
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -831,7 +831,7 @@ Trigger timeout/interval ratio adjustments
 
 Each action performs verification to make sure it has performed as expected.
 These timeouts can be modified with a ratio from the testbed datafile.
-Actions ``api``, ``execute``, ``parse``, ``learn`` and ``rest`` are supporting this feature
+This feature is supported by actions ``api``, ``execute``, ``parse``, ``learn`` and ``rest``.
 
 .. code-block:: YAML
 
