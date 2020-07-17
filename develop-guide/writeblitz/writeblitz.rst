@@ -456,13 +456,13 @@ Example of get CONFIG state using gNMI with expected returns
           - id: 2
             name: router-id
             op: ==
-            selected: true # set this to ``false`` and field is ignored making it like a placeholder
+            selected: true
             datatype: string
             value: 10.10.10.2
             xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
             
 
-Example of gnmi subscribe testing a config change:
+Example of gNMI subscribe testing a config change:
 
 .. code-block:: YAML
 
