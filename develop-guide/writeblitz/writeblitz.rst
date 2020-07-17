@@ -364,7 +364,187 @@ ______
 yang
 ____
 
-Documentation in development
+The ``yang`` actions are designed to work with differring underlying protocols, but, at the
+time of this writing, only NETCONF and gNMI are supported. YANG models can be boiled down to 
+3 required components in order to construct the content of a message.
+
+* Xpath based on `XML Path Language 1.0`_ identifying a resource
+.. _XML Path Language 1.0: https://www.w3.org/TR/1999/REC-xpath-19991116/
+* `Namespaces in XML 1.0`_
+.. _Namespaces in XML 1.0: https://www.w3.org/TR/REC-xml-names/
+* The value you wish to set the resource to
+
+Some format options are available relating to the message and return handling. For example, if
+the message is related to a ``subscribe`` operation, you will need to communicate the type of
+subscription or you may expect the test to fail (referred to as a negative test).
+
+Format options:
+
+.. code-block:: YAML
+
+    format:
+      request_mode: STREAM # [STREAM, ONCE, POLL]
+      sub_mode: SAMPLE     # [ON_CHANGE, SAMPLE]
+      encoding: JSON_IETF  # [JSON, JSON_IETF]
+      sample_interval: 5   # seconds (default)
+      stream_max: 20       # seconds to stop stream (default no max)
+      auto-validate: true  # automatically validate config messages
+      negative-test: false # expecting device to return an error
+      delay: 0             # pause N seconds between each test
+
+Expected return values can also be defined with the fexibility of approximation. The return
+values are identified by the Xpath derived from the return message. The ``op`` is an 
+operation performed between returned value and expected value
+
+    * ``==`` equals
+    * ``!=`` not equal
+    * ``<`` less than
+    * ``>`` greater than
+    * ``<=`` less than or equal
+    * ``>=`` greater than or equal
+    * ``1 - 10`` range (example)
+
+.. code-block:: YAML
+
+    returns:
+      - id:  # for referencing only
+        name: # name of field for referencing only
+        op:  # operation performed between returned value and expected value
+        selected: # set this to ``false`` and field is ignored making it like a placeholder
+        datatype: # datatype of field for general verification
+        value: # expected value to compare to returned value
+        xpath: # Xpath to field in YANG model (without prefixes because return prefixes may differ)
+
+Below are some typical examples of different YANG actions:
+
+Example of configuration using NETCONF with no special formatting
+
+.. code-block:: YAML
+
+    - yang:
+        device: uut2
+        connection: netconf
+        operation: edit-config
+        protocol: netconf
+        datastore: candidate
+        banner: YANG EDIT-CONFIG MESSAGE
+        content:
+          namespace:
+            ios-l2vpn: http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn
+          nodes:
+          - value: 10.10.10.2
+            xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+            edit-op: merge
+
+
+Example of get CONFIG state using gNMI with expected returns
+
+.. code-block:: YAML
+
+    - yang:
+        device: uut2
+        connection: gnmi
+        operation: get-config
+        protocol: gnmi
+        banner: gNMI GET-CONFIG MESSAGE
+        content:
+          namespace:
+            ios-l2vpn: http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn
+          nodes:
+          - xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+        returns:
+          - id: 2
+            name: router-id
+            op: ==
+            selected: true # set this to ``false`` and field is ignored making it like a placeholder
+            datatype: string
+            value: 10.10.10.2
+            xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+            
+
+Example of gnmi subscribe testing a config change:
+
+.. code-block:: YAML
+
+    - configure:
+        commmand:
+          - l2vpn router-id 10.10.10.1
+    - sleep:
+        sleep_time: 5
+    - yang:
+        device: uut2
+        connection: gnmi
+        operation: subscribe
+        protocol: gnmi
+        banner: gNMI SUBCRIBE MESSAGE
+        format:
+          request_mode: STREAM
+          sub_mode: SAMPLE
+          encoding: JSON_IETF
+          sample_interval: 5
+          stream_max: 20       # test completes after 20 seconds
+        content:
+          namespace:
+            ios-l2vpn: http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn
+          nodes:
+          - xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+        returns:
+          - id: 2
+            name: router-id
+            op: ==
+            selected: true
+            datatype: string
+            value: 10.10.10.2
+            xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+    - sleep:
+        sleep_time: 5
+    # following event will trigger a returns check
+    - configure:
+        commmand:
+          - l2vpn router-id 10.10.10.2
+
+You should think about the portability of your test. Using variables to refer
+to parameters in the ``yang`` action will allow you to run the same set of tests
+over different protocols by only changing a couple variables or changing the
+file that contains your content. A variable can be defined by wrapping a YAML
+location inside ``%{ my.variable }`` and find the value at my: variable: value.
+The location can also exist in a different file by adding ``extends: mydata.yml``
+at the top of the test file.
+
+
+Example of variables in external data file:
+
+.. code-block:: YAML
+
+    extends: data_test_file.yml
+
+    - yang:
+        device: '%{ data.device }'
+        connection: '%{ data.connection }'
+        operation: edit-config
+        protocol: '%{ data.protocol }'
+        datastore: '%{ data.datastore }'
+        banner: YANG EDIT-CONFIG MESSAGE
+        content: '%{ data.content.1 }'
+
+
+Content in data_test_file.yml:
+
+.. code-block:: YAML
+
+  data:
+    device: uut1
+    connection: gnmi
+    protocol: gnmi
+    content:
+      1:
+        namespace:
+          ios-l2vpn: http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn
+        nodes:
+          - value: 10.10.10.2
+            xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+            edit-op: merge
+
 
 bash_console
 _________________
