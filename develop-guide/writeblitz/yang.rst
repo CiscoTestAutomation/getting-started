@@ -65,7 +65,7 @@ Returns
 Expected return values can also be defined with the fexibility of approximation. The return
 values are identified by the Xpath derived from the return message (without prefixes because
 return prefixes may differ). The ``op`` is an operation performed between returned value and
-expected value
+expected value.
 
     * ``==`` equals
     * ``!=`` not equal
