@@ -1,16 +1,22 @@
 .. _yang:
 
-yang Action Details
-^^^^^^^^^^^^^^^^^^^
+Action Details "yang"
+^^^^^^^^^^^^^^^^^^^^^
 
-YANG models can be boiled down to 3 required components in order to construct
-the ``content`` of a simple message.
+YANG, "Yet Another Network Generation", is a data modeling language used to
+model configuration and state data on network devices. The model is represented
+in a hierachal fashion and can be presented in many ways, one of which is the
+"Xpath". The ``content`` of a simple YANG message can be boiled down to 3 required
+components.
 
 * Xpath based on `XML Path Language 1.0`_ identifying a resource
 .. _XML Path Language 1.0: https://www.w3.org/TR/1999/REC-xpath-19991116/
 * `Namespaces in XML 1.0`_
 .. _Namespaces in XML 1.0: https://www.w3.org/TR/REC-xml-names/
 * The value you wish to set the resource to
+
+Several Xpath/value pairs can construct a complex message. This is the format the
+``yang`` action follows when defining simple or complex messages.
 
 Description of Available YAML Components
 ----------------------------------------
@@ -31,7 +37,7 @@ Description of Available YAML Components
         format: # Various fomat options (see Format options below)
         banner: # (optional) Prominant log message with borders
         log: # (optional) Log INFO message
-        content: # Content of YANG message being sent (see Example of configuration above)
+        content: # Content of YANG message being sent (Xpaths, values, namespaces)
         returns: # (optional) Expected return of YANG message (see Returns section below)
 
 Format Options
@@ -39,7 +45,7 @@ Format Options
 
 Some format options are available relating to the message and return handling. For example, if
 the message is related to a ``subscribe`` operation, you will need to communicate the type of
-subscription or you may expect the test to fail (referred to as a negative test).
+subscription or you may __expect__ the test to fail (referred to as a negative test).
 
 .. code-block:: YAML
 
@@ -51,7 +57,7 @@ subscription or you may expect the test to fail (referred to as a negative test)
       stream_max: 20       # seconds to stop stream (default no max)
       auto-validate: true  # automatically validate config messages
       negative-test: false # expecting device to return an error
-      delay: 0             # pause N seconds between each test
+      delay: 0             # pause N seconds between each test (global ``sleep``)
 
 Returns
 -------
