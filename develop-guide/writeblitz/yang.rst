@@ -63,8 +63,9 @@ Returns
 -------
 
 Expected return values can also be defined with the fexibility of approximation. The return
-values are identified by the Xpath derived from the return message. The ``op`` is an 
-operation performed between returned value and expected value
+values are identified by the Xpath derived from the return message (without prefixes because
+return prefixes may differ). The ``op`` is an operation performed between returned value and
+expected value
 
     * ``==`` equals
     * ``!=`` not equal
@@ -83,7 +84,7 @@ operation performed between returned value and expected value
         selected: # set this to ``false`` and field is ignored making it like a placeholder
         datatype: # datatype of field for general verification
         value:    # expected value to compare to returned value
-        xpath:    # Xpath to field in YANG model (without prefixes because return prefixes may differ)
+        xpath:    # Xpath to field in YANG model (without prefixes)
 
 Using Variables
 ---------------
