@@ -45,19 +45,19 @@ Format Options
 
 Some format options are available relating to the message and return handling. For example, if
 the message is related to a ``subscribe`` operation, you will need to communicate the type of
-subscription or you may __expect__ the test to fail (referred to as a negative test).
+subscription, or, you may expect the test to fail (referred to as a negative test).
 
 .. code-block:: YAML
 
     format:
-      request_mode: STREAM # [STREAM, ONCE, POLL]
-      sub_mode: SAMPLE     # [ON_CHANGE, SAMPLE]
-      encoding: JSON_IETF  # [JSON, JSON_IETF]
-      sample_interval: 5   # seconds (default)
-      stream_max: 20       # seconds to stop stream (default no max)
-      auto-validate: true  # automatically validate config messages
-      negative-test: false # expecting device to return an error
-      delay: 0             # pause N seconds between each test (global ``sleep``)
+      request_mode:    # [STREAM, ONCE, POLL]
+      sub_mode:        # [ON_CHANGE, SAMPLE]
+      encoding:        # [JSON, JSON_IETF]
+      sample_interval: # seconds (default)
+      stream_max: 20   # seconds to stop stream (default no max)
+      auto-validate:   # [true | false] automatically validate config messages
+      negative-test:   # [true | false] expecting device to return an error
+      delay: 0         # pause N seconds between each test (global ``sleep``)
 
 Returns
 -------
@@ -77,13 +77,13 @@ operation performed between returned value and expected value
 .. code-block:: YAML
 
     returns:
-      - id:  # for referencing only
-        name: # name of field for referencing only
-        op:  # operation performed between returned value and expected value
+      - id:       # for referencing only
+        name:     # name of field for referencing only
+        op:       # operation performed between returned value and expected value (choices above)
         selected: # set this to ``false`` and field is ignored making it like a placeholder
         datatype: # datatype of field for general verification
-        value: # expected value to compare to returned value
-        xpath: # Xpath to field in YANG model (without prefixes because return prefixes may differ)
+        value:    # expected value to compare to returned value
+        xpath:    # Xpath to field in YANG model (without prefixes because return prefixes may differ)
 
 Using Variables
 ---------------
@@ -92,7 +92,7 @@ You should think about the portability of your test. Using variables to refer
 to parameters in the ``yang`` action will allow you to run the same set of tests
 over different protocols by only changing a couple variables or changing the
 file that contains your content. A variable can be defined by wrapping a YAML
-location inside ``%{ my.variable }`` and find the value at my: variable: value.
+location inside ``%{ my.variable }`` and find the value at "my: variable: value".
 The location can also exist in a different file by adding ``extends: mydata.yml``
 at the top of the test file.
 
@@ -242,7 +242,7 @@ Examples
             xpath: /native/l2vpn-config/l2vpn/router-id
             
 
-- gNMI subscribe testing a config change:
+- gNMI subscribe testing a config change
 
 .. code-block:: YAML
 
