@@ -1,3 +1,5 @@
+.. _yang action:
+
 yang
 ^^^^
 
@@ -8,9 +10,13 @@ in a hierachal fashion and can be presented in many ways, one of which is the
 components.
 
 * Xpath based on `XML Path Language 1.0`_ identifying a resource
+
 .. _XML Path Language 1.0: https://www.w3.org/TR/1999/REC-xpath-19991116/
+
 * `Namespaces in XML 1.0`_
+
 .. _Namespaces in XML 1.0: https://www.w3.org/TR/REC-xml-names/
+
 * The value you wish to set the resource to
 
 Several Xpath/value pairs can construct a complex message. This is the format the
