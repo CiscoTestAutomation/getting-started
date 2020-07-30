@@ -364,7 +364,7 @@ ______
 yang
 ____
 
-The ``yang`` action is designed to work with differring underlying protocols, but, at the
+The :ref:`yang action` action is designed to work with differring underlying protocols, but, at the
 time of this writing, only NETCONF and gNMI are supported.  Changing the connection and
 protocol determines the message format.
 
