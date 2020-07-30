@@ -1,7 +1,5 @@
-.. _yang:
-
-Action Details "yang"
-^^^^^^^^^^^^^^^^^^^^^
+yang
+^^^^
 
 YANG, "Yet Another Network Generation", is a data modeling language used to
 model configuration and state data on network devices. The model is represented
@@ -37,7 +35,7 @@ Description of Available YAML Components
         format: # Various fomat options (see Format options below)
         banner: # (optional) Prominant log message with borders
         log: # (optional) Log INFO message
-        content: # Content of YANG message being sent (Xpaths, values, namespaces)
+        content: # Content of YANG message being sent (see Content section below)
         returns: # (optional) Expected return of YANG message (see Returns section below)
 
 Format Options
@@ -58,6 +56,27 @@ subscription, or, you may expect the test to fail (referred to as a negative tes
       auto-validate:   # [true | false] automatically validate config messages
       negative-test:   # [true | false] expecting device to return an error
       delay: 0         # pause N seconds between each test (global ``sleep``)
+
+Content
+-------
+
+As explained above, ``content`` contains a reference to namespaces followed by a list of
+Xpath/value pairs (nodes).  Namespace with mapped prefix is defined at the top of the
+YANG file.
+
+.. code-block:: YAML
+
+    content:
+      namespace:
+        # prefix: namespace examples:
+        ios: http://cisco.com/ns/Cisco-IOS-XE-native
+        config-mda-cfg: http://cisco.com/ns/yang/Cisco-IOS-XR-config-mda-cfg
+        oc-if: http://openconfig.net/yang/interfaces
+      nodes: # List of:
+      - xpath: # Xpath based on `XML Path Language 1.0`_ identifying a resource
+        value: # Value Xpath points to which must match the defined datatype
+        edit-op: # (Optional) Applies only to edit-config
+                 # [ create | merge | replace | delete | remove ]
 
 Returns
 -------
