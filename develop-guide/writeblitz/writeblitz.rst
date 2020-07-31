@@ -1,7 +1,7 @@
 .. _write-blitz:
 
 Quick Trigger (Blitz)
--------------
+---------------------
 
 The *Blitz* also known as *Quick Trigger* is a YAML-driven template that makes it easy for you to run
 a test case without having to know any knowledge of programming. The *Quick Trigger* ---
@@ -364,7 +364,28 @@ ______
 yang
 ____
 
-Documentation in development
+The :ref:`yang action` action is designed to work with differring underlying protocols, but, at the
+time of this writing, only NETCONF and gNMI are supported.  Changing the connection and
+protocol determines the message format.
+
+Example of configuration using NETCONF (with automated verification of edit-config on device)
+
+.. code-block:: YAML
+
+    - yang:
+        device: uut2
+        connection: netconf
+        operation: edit-config
+        protocol: netconf
+        datastore: candidate
+        banner: YANG EDIT-CONFIG MESSAGE
+        content:
+          namespace:
+            ios-l2vpn: http://cisco.com/ns/yang/Cisco-IOS-XE-l2vpn
+          nodes:
+          - value: 10.10.10.2
+            xpath: /native/l2vpn-config/ios-l2vpn:l2vpn/ios-l2vpn:router-id
+            edit-op: merge
 
 bash_console
 _________________
@@ -475,7 +496,7 @@ if they are different with the argument `fail_different=True`.
                 command: show interface
 
 Querying actions' output
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 As it was mentioned when introducing different actions, users can query
 the action outputs that are dictionary using a tool called Dq. You can find the complete
@@ -588,7 +609,7 @@ Below you can see an `example` of this.
             - 9999
 
 Replying to the prompt dialogue
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When executing or configuring commands on some devices, it is possible that you receive 
 a prompt message that needs to be replied. In ``Blitz``, you can handle these prompt messages 
@@ -612,7 +633,7 @@ Below you can see an `example` of the action ``execute`` handeling a prompt mess
               continue_timer: False
 
 Filter, Save and Load variables 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Another very useful feature that ``Blitz`` has, is the ability to save actions output.
 You can save actions outputs to a variable name and later use that variable in other actions.

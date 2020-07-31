@@ -21,6 +21,7 @@ This guide describes how you can use the features and functionality of |pyATSbol
    /writeparser/writeparser
    /writetrigger/writetrigger
    /writeblitz/writeblitz
+   /writeblitz/index
    /contribute/contribute
 
 
