@@ -241,7 +241,7 @@ other existing apis.
 
 .. code-block:: YAML
 
-    - api: # ACTION
+    - tgn: # ACTION
         continue: True
         function: get_traffic_stream_objects
         ...
