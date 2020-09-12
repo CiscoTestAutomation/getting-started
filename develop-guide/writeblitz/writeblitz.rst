@@ -349,7 +349,7 @@ similar to api action and parse action.
 print
 ______
 
-``print`` action allows you to print messages, vairables and actions output into the console. 
+``print`` action allows you to print messages, variables and actions output into the console. 
 
 .. code-block:: YAML
 
@@ -361,7 +361,7 @@ ______
 yang
 ____
 
-The :ref:`yang action` action is designed to work with differring underlying protocols, but, at the
+The :ref:`yang action` action is designed to work with differing underlying protocols, but, at the
 time of this writing, only NETCONF and gNMI are supported.  Changing the connection and
 protocol determines the message format.
 
@@ -482,6 +482,13 @@ Allow to diff two variables (Dictionary or Ops object).
 By default it will just print the difference, but can also fail the section
 if they are different with the argument `fail_different=True`.
 
+``command`` or ``feature`` to diff will gather pre-defined exclude list from 
+the parser or Ops.
+
+``mode`` can be specified only what you want to check. ``mode`` has ``add``, 
+``remote`` and ``modified``. By default, it will show all the differences, 
+for the case ``add``, will show only added difference.
+
 .. code-block:: YAML
 
         - snapshot_pre_configuration:
@@ -512,6 +519,23 @@ if they are different with the argument `fail_different=True`.
                 post: "%VARIABLES{post_snapshot_nxos}"
                 device: R3_nx
                 command: show interface
+                mode: modified
+
+Example with ``feature``.
+
+.. code-block:: YAML
+
+            - diff:
+                pre: "%VARIABLES{pre_interface_ops}"
+                post: "%VARIABLES{post_interface_ops}"
+                device: R3_nx
+                feature: interface
+                mode: add
+
+.. note::
+
+    Please find more detail for ``diff`` from below document.
+    `Diff <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#diff>`_
 
 compare 
 _____________
@@ -709,7 +733,7 @@ a prompt message that needs to be replied. In ``Blitz``, you can handle these pr
 automatically by using the keyword `reply` in your action. In order to reply a message, 
 you need to know the regex pattern of the message that would show up in the console.
 
-Below you can see an `example` of the action ``execute`` handeling a prompt message.
+Below you can see an `example` of the action ``execute`` handling a prompt message.
 
 .. code-block:: YAML
 
@@ -799,7 +823,7 @@ Below you can see the example of regex filter
         save:
         - filter: BIOS:\s+version\s+(?P<bios>[0-9A-Za-z()./]+).*                        # bios version is 07.33
           regex: true
-        - filter: bootflash:\s+(?P<bootflash>[0-9A-Za-z()./]+)\s+(?P<measure>\w+).*     # booflash is  51496280 and measure is KB
+        - filter: bootflash:\s+(?P<bootflash>[0-9A-Za-z()./]+)\s+(?P<measure>\w+).*     # bootflash is  51496280 and measure is KB
           regex: true
     - print:
         bios:
@@ -881,7 +905,7 @@ In this section we will discuss how to execute multiple actions in parallel and 
 in parallel allows you to execute numerous actions all together, which make the execution of a  :monospace:`trigger_datafile`
 way more faster.
 
-You can run multiple actions concurently by defining your actions after the keyword `parallel` within 
+You can run multiple actions concurrently by defining your actions after the keyword `parallel` within 
 your :monospace:`trigger_datafile`. Below you can see an example of multiple actions that are running in parallel.
 In below example actions ``api`` and ``learn`` are executed on device ``PE1`` and ``parse`` is executed on device ``PE2``
 and all at the same time.
@@ -1040,7 +1064,7 @@ To run actions with a conditional statement, BLITZ expects:
 
 * An if statement with boolean value (True or False statement).
 
-* A function that can be the result of all the actions under run_condtion if the boolean condition is equal True.
+* A function that can be the result of all the actions under run_condition if the boolean condition is equal True.
 
 * A set of actions (e.g parse, execute etc.) that would be specified under keyword ``actions``.
 
@@ -1170,7 +1194,7 @@ Examples are provided below for these conditional statements.
                        interface: GigabitEthernet1
                 - run_condition:
                        if: "%VARIABLES{gims_output} != 1500"        # if action gims_output is not equal 1500 the function should abort the section
-                       function: aborted                            # the if statement is false hence, con't the actions
+                       function: aborted                            # the if statement is false hence, won't the actions
                        actions:
                          - parse:
                              command: show version
@@ -1227,7 +1251,7 @@ Each loop can contains the following keywords:
     
     A loop can only have one of the ``value``, ``range``, ``until``, ``do_until``.
 
-There are a lot of usecases for looping with various features. Examples can be found below.
+There are a lot of use cases for looping with various features. Examples can be found below.
 
 .. code-block:: YAML
 
