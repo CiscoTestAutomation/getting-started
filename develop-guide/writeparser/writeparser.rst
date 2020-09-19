@@ -311,9 +311,94 @@ Run your parser on a real device to make sure that you get the expected parsed o
  dev.connect()
  p1 = dev.parse('show inventory')
 
-If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute. 
+If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute.
 
-The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
+There are currently two mechanisms to create tests as the testing strategy is in a state of transition. The reasoning for the new testing type is to avoid merge conflicts, removing duplicate boilerplate code, ensuring tests are built, and making the process overall easier. However, in the meantime unfortunately a user may create different tests depending on the OS of the parser that they wrote.
+
+Folder based parsers are currently supported for:
+
+  * ASA
+  * IOS
+  * IOSXE
+
+All other OS's are still leveraging the unittest library.
+
+To create a folder based test with cli based output, follow these simple tests.
+
+  * Create a folder in the tests directory named exactly the same as the class name in the respective folder.
+    * As an example, the code `class ShowClock(ShowClockSchema)` would point you to creating a folder called `ShowClock`.
+    * The `tests` directory is a OS specific folder such as `src/genie/libs/parser/iosxe/tests/`.
+  * Create a folder within the class name directory called `cli`.
+    * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli`.
+  * Create folders for `empty` and `equal` within the `cli` folder.
+    * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli/empty`.
+    * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli/equal`.
+  * Within the `empty` folder create a file that ends with `_output.txt`
+    * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli/empty/empty_output.txt`.
+    * This file should be either empty or partial output that will not raise a `SchemaEmptyParserError` error.
+  * Within the `equal` folder create the raw output, expected value, and potentially arguments.
+    * The files are grouped together by stripping `_output.txt`, `_expected.py`, and `_arguments.json` and comparing the names that match.
+      * As an example `golden_output1_arguments.json`, `golden_output1_expected.py`, and `golden_output1_output.txt` are understood to be part of the same test.
+    * The output file, should be a simple txt file with the expected output.
+    * The expected Python file, should be a Python file with a single variable called `expected_output` that has the expected data structure.
+    * The arguments JSON file, should be a single dictionary that is a set of key/value pairs.
+  * Repeat this process for as many tests outputs you would like to verify, meaning you are not limited to a single test per command. This is helpful when output may be different based on any number of conditions.
+
+Following that process, you should end up with a folder structure that looks similar to:
+
+   .. code-block:: bash
+
+    ShowClock
+    └── cli
+        ├── empty
+        │   └── empty_output_output.txt
+        └── equal
+            ├── golden_output_expected.py
+            └── golden_output_output.txt
+
+    4 directories, 3 files
+
+Ideally, this entire process once known, should only take a few seconds to create files and a few minutes to populate those files. For testing purposes you can run the tests locally. You can either run all tests, run a single OS tests, or run a single command tests for a single OS, as shown below from *within the tests folder*.
+
+   .. code-block:: bash
+
+    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py
+    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe
+    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+
+The output will show you the something similar, which will provide the `PASSED` and `FAILED` results.
+
+   .. code-block:: bash
+    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+    <cut for brevity>
+    2020-09-19T16:14:17: %AETEST-INFO: |                               Detailed Results                               |
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO:  SECTIONS/TESTCASES                                                      RESULT   
+    2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
+    2020-09-19T16:14:17: %AETEST-INFO: .
+    2020-09-19T16:14:17: %AETEST-INFO: `-- FileBasedTest                                                         PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:     `-- check_os_folder[operating_system=iosxe]                           PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1: iosxe -> ShowClock                                    PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1: Test Golden -> iosxe -> ShowClock                   PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1.1: Gold -> iosxe -> ShowClock -> golden_output       PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.2: Test Empty -> iosxe -> ShowClock                    PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         `-- Step 1.2.1: Empty -> iosxe -> ShowClock -> empty_output       PASSED
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO: |                                   Summary                                    |
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of ABORTED                                                            0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of BLOCKED                                                            0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of ERRORED                                                            0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of FAILED                                                             0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSED                                                             1 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSX                                                              0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of SKIPPED                                                            0 
+    2020-09-19T16:14:17: %AETEST-INFO:  Total Number                                                                 1 
+    2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0% 
+    2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
+    root@197979f5dbd6:/genieparser/tests$
+
+The other testing strategy leverages unittest. The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
 
 The following example shows how to create a unit test file for :ref:`the show lisp session example <regex-parser>`.
 
