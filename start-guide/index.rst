@@ -1,4 +1,4 @@
-Geting Started with pyATS
+Getting Started with pyATS
 =========================
 
 The |getstartedguide| introduces you to the features and functionality of the 
