@@ -137,6 +137,19 @@ this level:
 
 Below you can find the list of all available actions
 
+configure
+_________
+
+The `configure` action is used to configure the device.
+
+.. code-block:: YAML
+
+    - configure: # ACTION
+        device: device_name
+        command: |
+            router bgp 65000
+            shutdown
+
 execute
 _______
 
@@ -164,6 +177,25 @@ exists in the output. You also, have the option to check if a specific
 
 Both include and exclude keywords are optional to use.
 
+.. note::
+
+    The all the arguments that can be sent to the device while executing a command on a device (specified in this `link
+    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_.)
+    and while configuring a device (specified in this `link
+    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.) 
+    can be used like below example.
+
+.. code-block:: YAML
+
+    - configure:
+        command: feature bgp
+        device: PE1
+        timeout: 10
+    - execute:
+        command: show version
+        device: PE1
+        timeout: 10
+
 parse
 _____
 
@@ -190,19 +222,6 @@ this `section
               # Make sure the memory is greater than 1217420
 
         ...
-
-configure
-_________
-
-The `configure` action is used to configure the device.
-
-.. code-block:: YAML
-
-    - configure: # ACTION
-        device: device_name
-        command: |
-            router bgp 65000
-            shutdown
 
 api
 ___
@@ -387,8 +406,8 @@ Example of configuration using NETCONF (with automated verification of edit-conf
 bash_console
 _________________
 
-Using this action, now you can run various bash command on the device. You can also save the output of each command into a variable
-and later on use that values in other actions
+Using this action, now you can run various bash command on the device. You can save output of each command, and apply include/exclude
+verification on the output of each command. Below example shows how to use bash_console action.
 
 .. code-block:: YAML
 
@@ -398,8 +417,6 @@ and later on use that values in other actions
               target: standby
               timeout: 45
               save:
-                - variable_name: first_cmd
-                  filter: contains('pwd')
                 - variable_name: second_cmd
                   filter: contains('ls')
                 - variable_name: everything
@@ -407,8 +424,10 @@ and later on use that values in other actions
                 - pwd
                 - ls
                 - |
-                  cd ~  
+                  cd ~
                   echo A string of text
+              include: 
+                  - contains('ls')
 
 configure_replace
 _________________
@@ -549,6 +568,41 @@ Action ``compare`` allows you to verify the values of the saved variables. Below
         items:
         - "'%VARIABLES{os}' == 'NX-OS' and '%VARIABLES{date_created}' == '10/22/2019 10:00:00 [10/22/2019 16:57:31]'"
         - " %VARIABLES{bootflash} >= 290000 or '%VARIABLES{bios}' == '07.33'"
+
+
+
+.. note::
+
+    The starting message of an step in etrade logs, is predefined. However, that value can be changed.
+    In your action you can specify your custom message like the example below and change the starting action log message.
+
+.. code-block:: YAML
+
+    - execute:
+        command: show version
+        device: PE1
+        custom_step_message: This is a test to see if a custom_step_message would be applied
+        timeout: 100
+
+as shown in the image you can see how in the logs the starting message is customized.
+
+.. image:: ../images/custom_step_msg.png
+   :width: 200%
+
+.. note::
+
+    You can get a Passed result for an action that is expected to fail by using setting the key; ``expected_failure: True``.
+
+.. code-block:: YAML
+
+    # The command doesnt exist so action should error out but since it was anticipated that the command wouldn't work.
+    The results would finally be shown as passed.
+    - execute:
+        command: banana
+        device: PE1
+        expected_failure: True
+        timeout: 100
+
 
 Failing actions and sections upon failure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -835,12 +889,20 @@ Below you can see the example of regex filter
 
     The name of the device that the action is being executed on will be saved automatically upon
     execution of the action and stay usable till the end of that action lifecycle. You can use that 
-    name as a variable using ``%VARIABLES{device.name}`` for various purposes in your action. 
+    name as a variable using ``%VARIABLES{device.name}`` for various purposes in your action. Task id and 
+    transcript name also can be accessed by using ``%VARIABLES{task.ud}``, ``%VARIABLES{transcript.name}.``
 
 .. note::
 
     The result of a section (whether it is passed, failed etc.) will be saved automatically into a variable 
-    same as the section name. You can use that name using ``%VARIABLES{<section_name>}``. 
+    same as the section name. You can use that name using ``%VARIABLES{<section_name>}``. Also in your YAML file,
+    it is possible to have accesc the section's uid simply by using ``%VARIABLES{section.uid}``.
+
+.. note::
+
+    Job file related values, such as job file path or job file name can be accessed by using ``%VARIABLES{runtime.job.file}`` 
+    and ``%VARIABLES{runtime.job.name}``. Any other job file related value can be accessed in similar fashion ``%VARIABLES{runtime.job.<value>``
+
 
 The following `example` is showing how to use our specific markup language
 to load the saved variable in another action. In this example we save the output
