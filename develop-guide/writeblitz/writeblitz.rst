@@ -137,19 +137,6 @@ this level:
 
 Below you can find the list of all available actions
 
-configure
-_________
-
-The `configure` action is used to configure the device.
-
-.. code-block:: YAML
-
-    - configure: # ACTION
-        device: device_name
-        command: |
-            router bgp 65000
-            shutdown
-
 execute
 _______
 
@@ -177,16 +164,32 @@ exists in the output. You also, have the option to check if a specific
 
 Both include and exclude keywords are optional to use.
 
-.. note::
+configure
+_________
 
-    The all the arguments that can be sent to the device while executing a command on a device (specified in this `link
-    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_.)
-    and while configuring a device (specified in this `link
-    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.) 
-    can be used like below example.
+The `configure` action is used to configure the device.
 
 .. code-block:: YAML
 
+    - configure: # ACTION
+        device: device_name
+        command: |
+            router bgp 65000
+            shutdown
+
+.. note::
+
+    You can apply additional arguments to commands ``execute`` and ``configure``.
+    List of arguments for the execute command can be found at this (`link
+    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_.), 
+    and all the arguments for the configure command can be found at this (`link
+    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.).
+    Example can be seen below.
+
+.. code-block:: YAML
+
+    # A timeout of 10 second is applied to each action,
+    # Now if the device is not configured within 10 seconds, the step will fail.
     - configure:
         command: feature bgp
         device: PE1
@@ -570,18 +573,17 @@ Action ``compare`` allows you to verify the values of the saved variables. Below
         - " %VARIABLES{bootflash} >= 290000 or '%VARIABLES{bios}' == '07.33'"
 
 
-
 .. note::
 
-    The starting message of an step in etrade logs, is predefined. However, that value can be changed.
-    In your action you can specify your custom message like the example below and change the starting action log message.
+    The starting message of a Step can be modified by specifying a custom message like the example below. This can be applied
+    to all the actions supported in Blitz.
 
 .. code-block:: YAML
 
     - execute:
         command: show version
         device: PE1
-        custom_step_message: This is a test to see if a custom_step_message would be applied
+        custom_start_step_message: This is a test to see if a custom_start_step_message would be applied
         timeout: 100
 
 as shown in the image you can see how in the logs the starting message is customized.
@@ -589,9 +591,11 @@ as shown in the image you can see how in the logs the starting message is custom
 .. image:: ../images/custom_step_msg.png
    :width: 200%
 
-.. note::
+Negative testing
+^^^^^^^^^^^^^^^^
 
-    You can get a Passed result for an action that is expected to fail by using setting the key; ``expected_failure: True``.
+You can get a Passed result for an action that is expected to fail by setting the key; ``expected_failure: True``.
+Actions, [``configure``, ``execute``, ``parse``, ``learn``, ``api``, ``rest``, ``bash_console``] support this feature.
 
 .. code-block:: YAML
 
