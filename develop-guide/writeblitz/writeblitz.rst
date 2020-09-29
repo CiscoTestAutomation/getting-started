@@ -164,6 +164,20 @@ exists in the output. You also, have the option to check if a specific
 
 Both include and exclude keywords are optional to use.
 
+You can apply additional arguments to ``execute`` command.
+List of arguments that can be applied to execute command can be found at this `link
+<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_. 
+Example can be seen below.
+
+.. code-block:: YAML
+
+    # A timeout of 10 second is applied to execute action,
+    # Now if the device has not executed the command within 10 seconds, the step will fail.
+    - execute:
+        command: show version
+        device: PE1
+        timeout: 10
+
 configure
 _________
 
@@ -177,25 +191,18 @@ The `configure` action is used to configure the device.
             router bgp 65000
             shutdown
 
-.. note::
 
-    You can apply additional arguments to commands ``execute`` and ``configure``.
-    List of arguments for the execute command can be found at this (`link
-    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_.), 
-    and all the arguments for the configure command can be found at this (`link
-    <http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.).
-    Example can be seen below.
+You can apply additional arguments to ``configure`` command.
+List of arguments for the configure command can be found at this `link
+<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.
+Example can be seen below.
 
 .. code-block:: YAML
 
-    # A timeout of 10 second is applied to each action,
+    # A timeout of 10 second is applied to configure action,
     # Now if the device is not configured within 10 seconds, the step will fail.
     - configure:
         command: feature bgp
-        device: PE1
-        timeout: 10
-    - execute:
-        command: show version
         device: PE1
         timeout: 10
 
@@ -572,25 +579,6 @@ Action ``compare`` allows you to verify the values of the saved variables. Below
         - "'%VARIABLES{os}' == 'NX-OS' and '%VARIABLES{date_created}' == '10/22/2019 10:00:00 [10/22/2019 16:57:31]'"
         - " %VARIABLES{bootflash} >= 290000 or '%VARIABLES{bios}' == '07.33'"
 
-
-.. note::
-
-    The starting message of a Step can be modified by specifying a custom message like the example below. This can be applied
-    to all the actions supported in Blitz.
-
-.. code-block:: YAML
-
-    - execute:
-        command: show version
-        device: PE1
-        custom_start_step_message: This is a test to see if a custom_start_step_message would be applied
-        timeout: 100
-
-as shown in the image you can see how in the logs the starting message is customized.
-
-.. image:: ../images/custom_step_msg.png
-   :width: 200%
-
 Negative testing
 ^^^^^^^^^^^^^^^^
 
@@ -888,25 +876,6 @@ Below you can see the example of regex filter
           value: "The bios version is %VARIABLES{bios}"
         bootflash:
           value: "The bootflash is %VARIABLES{bootflash} and %VARIABLES{measure}"
-
-.. note::
-
-    The name of the device that the action is being executed on will be saved automatically upon
-    execution of the action and stay usable till the end of that action lifecycle. You can use that 
-    name as a variable using ``%VARIABLES{device.name}`` for various purposes in your action. Task id and 
-    transcript name also can be accessed by using ``%VARIABLES{task.ud}``, ``%VARIABLES{transcript.name}.``
-
-.. note::
-
-    The result of a section (whether it is passed, failed etc.) will be saved automatically into a variable 
-    same as the section name. You can use that name using ``%VARIABLES{<section_name>}``. Also in your YAML file,
-    it is possible to have accesc the section's uid simply by using ``%VARIABLES{section.uid}``.
-
-.. note::
-
-    Job file related values, such as job file path or job file name can be accessed by using ``%VARIABLES{runtime.job.file}`` 
-    and ``%VARIABLES{runtime.job.name}``. Any other job file related value can be accessed in similar fashion ``%VARIABLES{runtime.job.<value>``
-
 
 The following `example` is showing how to use our specific markup language
 to load the saved variable in another action. In this example we save the output
@@ -1471,3 +1440,42 @@ in your script.
                 - execute:
                     command: "%VARIABLES{list_name}"
                     device: PE2
+
+Useful tips and tricks in BLITZ
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+    1- The name of the device that the action is being executed on will be saved automatically upon
+    execution of the action and stay usable till the end of that action life-cycle. You can use that 
+    name as a variable using ``%VARIABLES{device.name}`` for various purposes in your action. 
+
+    2- Task id and transcript name also can be accessed by using ``%VARIABLES{task.id}``, ``%VARIABLES{transcript.name}``.
+
+    3- The result of a section (whether it is passed, failed etc.) will be saved automatically into a variable 
+    same as the section name. You can use that name using ``%VARIABLES{<section_name>}``.
+    
+    4- Also in your YAML file, it is possible to have access the section's uid simply by using ``%VARIABLES{section.uid}``.
+    
+    5- Job file related values, such as job file path or job file name can be accessed by using ``%VARIABLES{runtime.job.file}`` 
+    and ``%VARIABLES{runtime.job.name}``. Any other job file related value can be accessed in similar fashion 
+    ``%VARIABLES{runtime.job.<value>``
+
+.. note::
+
+    The starting message of a Step can be modified by specifying a custom message like the example below. This can be applied
+    to all the actions supported in Blitz.
+
+.. code-block:: YAML
+
+    # Blitz action with custom message
+    - execute:
+        command: show version
+        device: PE1
+        custom_start_step_message: My own message instead of the default one
+        timeout: 100
+
+as shown in the image you can see how in the logs the starting message is customized.
+
+.. image:: ../images/custom_step_msg.png
+   :width: 200%
