@@ -2,7 +2,7 @@
 
 Write a Python script
 ======================
-As a network engineer or programmer, you can write your own Python scripts that use the |pyATSbold| libraries to automate your network testing. A script is simply a Python file that lists different actions and lets you run them with a single command. In |pyATS| terms, a script is an aggregation of :term:`triggers <trigger>` and :term:`verifications <verification>`.
+As a network engineer or programmer, you can write your own Python scripts that use the |pyATSbold| libraries to automate your network testing. A script is simply a Python file that lists different actions and lets you run them with a single command. In |pyATS| terms, a script is an aggregation of :term:`Triggers <Trigger>` and :term:`Verifications <Verification>`.
 
 This topic describes how to write a basic script and how to add complexity to that script.
 
@@ -77,7 +77,7 @@ The following procedure describes the steps that you take to write the same samp
 
 #. Import the functionality that you need from Python, |pyATS|, and the |library|. For a description of the more commonly used functionality that you might want to import, see the topic `Useful Libraries <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#useful-libraries>`_.
 
-   Remember that you always need to load the :term:`testbed YAML file`.
+   Remember that you always need to load the :term:`Testbed YAML file`.
 
     .. code-block:: python
 
@@ -109,20 +109,20 @@ The following procedure describes the steps that you take to write the same samp
       testbed = load('testbed.yaml')
       log.info("\nPASS: Successfully loaded testbed '{}'\n".format(testbed.name))
 
-#. Now connect to one of the devices in the testbed. In this example, ``nx-osv-1`` is the hostname of a device in the :term:`testbed yaml file`.
+#. Now connect to one of the devices in the testbed. In this example, ``nx-osv-1`` is the hostname of a device in the :term:`Testbed YAML file`.
 
    .. code-block:: python
 
       device = testbed.devices['nx-osv-1']
       device.connect(via='cli')
 
-#. Check the current state of the interface and parse the output into a data structure that has :term:`key-value pairs <key-value pair>`. We expect that the interface ``Ethernet2/1`` is currently down.
+#. Check the current state of the interface and parse the output into a data structure that has :term:`Key-value pairs <Key-value pair>`. We expect that the interface ``Ethernet2/1`` is currently down.
 
    .. code-block:: python
 
       pre_output = device.parse("show interface Ethernet2/1 brief")
 
-#. With the data parsed and stored as the :term:`object` ``pre_output``, check the value of the ``status`` key.
+#. With the data parsed and stored as the :term:`Object` ``pre_output``, check the value of the ``status`` key.
 
    .. code-block:: python
 
