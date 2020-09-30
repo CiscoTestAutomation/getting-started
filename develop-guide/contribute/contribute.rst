@@ -13,11 +13,11 @@ We offer the |library| feature libraries and components as open-source code, and
     "Conf", "Configuration library"
     "Ops", "Operational state library"
     "Robot", "These libraries support the Robot Framework."
-    "SDK", "These libraries and datafiles define the test cases (:term:`Triggers <trigger>` and :term:`Verifications <verification>`), API functions, and parsers."
+    "SDK", "These libraries and datafiles define the test cases (:term:`Triggers <Trigger>` and :term:`Verifications <Verification>`), API functions, and parsers."
 
 Check the existing components
 -----------------------------
-Before you begin this process, check to see if an existing ``conf`` or ``ops`` structure, :term:`trigger`, or :term:`parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
+Before you begin this process, check to see if an existing ``conf`` or ``ops`` structure, :term:`Trigger`, or :term:`Parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
 
 * If you need to create a new feature within the ``conf`` or ``ops`` packages, follow the `conf <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_ or `ops <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_ guidelines.
 

@@ -166,7 +166,7 @@ Both include and exclude keywords are optional to use.
 
 You can apply additional arguments to ``execute`` command.
 List of arguments that can be applied to execute command can be found at this `link
-<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`_. 
+<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#execute>`__. 
 Example can be seen below.
 
 .. code-block:: YAML
@@ -194,7 +194,7 @@ The `configure` action is used to configure the device.
 
 You can apply additional arguments to ``configure`` command.
 List of arguments for the configure command can be found at this `link
-<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`_.
+<http://wwwin-pyats.cisco.com/cisco-shared/unicon/latest/user_guide/services/generic_services.html#configure>`__.
 Example can be seen below.
 
 .. code-block:: YAML
@@ -217,7 +217,7 @@ somewhere in the output, irrelevant of the structure. You can use the keywords
 `include` and `exclude` to *query* the output of your parser. You can learn, how 
 to use `include/exclude` keywords in a parse action by reading through 
 this `section
-<#querying-actions-output>`_.
+<#querying-actions-output>`__.
 
 .. code-block:: YAML
 
@@ -241,7 +241,7 @@ The ``api`` action use pyATS `Api
 
 You can use `include/exclude` to query the results of the apis that their outputs are ``dictionary``.
 See `section
-<#querying-actions-output>`_.
+<#querying-actions-output>`__.
 
 .. code-block:: YAML
 
@@ -259,7 +259,7 @@ See `section
 
 The output of the apis that are numerical or string can be also verified using the `include/exclude` keywords.
 See `section
-<#verification-of-non-dictionary-outputs>`_.
+<#verification-of-non-dictionary-outputs>`__.
 
 tgn 
 ____
@@ -631,7 +631,7 @@ Querying actions' output
 As it was mentioned when introducing different actions, users can query
 the action outputs that are dictionary using a tool called Dq. You can find the complete
 tutorial of Dq by following this `link
-<https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`_.
+<https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/utils/index.html#dq>`__.
 
 Actions ``parse``, ``learn`` and ``api`` are benefiting from this feature the most, as they are
 the one that are most likely to have a dictionary output. You can query a dictionary using Dq

@@ -100,7 +100,7 @@ This glossary defines the terminology that we use to describe |pyATSbold| and th
     The term *mock device* refers to a set of recorded device interactions that you can replay any time you want to practice with or demo the |pyATS| ecosystem. 
 
    Unicon
-    Unicon is a framework for developing device control libraries for routers, switches and servers. It is developed purely in Python, with no dependency on Tcl-based infrastructure. Unicon is also test framework agnostic and can be used with |pyATS|. We use *Unicon.playback* to create :term:`mock devices`.
+    Unicon is a framework for developing device control libraries for routers, switches and servers. It is developed purely in Python, with no dependency on Tcl-based infrastructure. Unicon is also test framework agnostic and can be used with |pyATS|. We use *Unicon.playback* to create :term:`Mock devices`.
 
    Platform
     The name of the hardware or chassis, or the name of the virtual hardware. The system uses the ``os`` and ``platform`` values to determine the |library| functionality to load and the correct connection plugin and services to use.
