@@ -301,6 +301,10 @@ Test your new parser
 --------------------
 Remember to execute `make json` every time you create a new parser. 
 
+`make json` will create a json file which will link command and related class.
+This json file will be used when device.parse is executed inorder to find parser class based on command. 
+Without `make json` device.parse will not be able to find the parser class and hence will show "Could not find parser" error.
+
 Run your parser on a real device to make sure that you get the expected parsed output. The following example shows how to do this in pure Python:
 
 .. code-block:: python
