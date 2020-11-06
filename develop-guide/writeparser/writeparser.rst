@@ -306,8 +306,7 @@ This json file will be used when device.parse is executed inorder to find parser
 Without `make json` device.parse will not be able to find the parser class and hence will show "Could not find parser" error.
 
 Example:
-When you do device.parse('show version') for IOS with platform c7600 it will search for that command in json file containing that os and platform and import the class.
-
+When you do device.parse('show version') for IOS with platform c7600 it will search for that command in json file containing that os and platform and import the class::
  {"show version": {
     "ios": {
     "c7600": {
