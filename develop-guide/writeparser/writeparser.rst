@@ -308,7 +308,6 @@ Without `make json` device.parse will not be able to find the parser class and h
 Example:
 When you do device.parse('show version') for IOS with platform c7600 it will search for that command in json file containing that os and platform and import the class.
 
-.. code-block:: python
  {"show version": {
     "ios": {
     "c7600": {
