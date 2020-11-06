@@ -308,8 +308,8 @@ Without `make json` device.parse will not be able to find the parser class and h
 Example:
 When you do device.parse('show version') for IOS with platform c7600 it will search for that command in json file containing that os and platform and import the class.
 
-.. code-block:: text
- "show version": {
+.. code-block:: python
+ {"show version": {
     "ios": {
     "c7600": {
         "class": "ShowVersion",
@@ -318,7 +318,7 @@ When you do device.parse('show version') for IOS with platform c7600 it will sea
         "package": "genie.libs.parser",
         "uid": "show_version",
         "url": "https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser/ios/c7600/show_platform.py#L17"
-    }}}
+    }}}}
 
 Run your parser on a real device to make sure that you get the expected parsed output. The following example shows how to do this in pure Python:
 
