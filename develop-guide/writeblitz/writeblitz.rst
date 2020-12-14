@@ -778,7 +778,6 @@ It is also possible to check and see if certain items exist within a output that
 
 .. code-block:: YAML
 
-
   - api:
       device: PE1
       function: get_list_items
@@ -913,14 +912,13 @@ Below you can see the example of regex filter
         bootflash:
           value: "The bootflash is %VARIABLES{bootflash} and %VARIABLES{measure}"
 
-For actions that has list outputs you can get an index or a part of a list and save it into a  list with a desired variable_name.
+For actions that has list outputs you can get an index or a part of a list and save it into a list with a desired variable_name.
 You can also create a regex filter and match it against all the items within that list, and get a list of 
 all the matched items.
 
 Below you can see the example of list filter.
 
 .. code-block:: YAML
-
 
     # saves various items of a list with a variable
 
@@ -1224,7 +1222,8 @@ To better understand the use of this feature lets look at the following example.
 
 .. note::
     
-    Be noted, actions would run only if the condition statement is False. If the statement is True, the function would be applied to all following actions.
+    Be noted, actions would run only if the condition statement is False. If the statement is True, 
+    the result of all the actions underneath the run_condition would be as same as the function value.
 
 Using the run_condition, users can evaluate various conditional statements before running their actions. 
 Examples are provided below for these conditional statements.
@@ -1276,7 +1275,7 @@ Examples are provided below for these conditional statements.
                     include:
                         - parser
                 - run_condition:
-                       if: "%VARIABLES{execute_alias} == failed"     # if action execute_alias has failed fail all the actions below
+                       if: "%VARIABLES{execute_alias} == failed"     
                        function: skipped                             # The action execute_alias failed so all the actions below will be skipped
                        actions:
                          - parse:
@@ -1351,7 +1350,7 @@ Examples are provided below for these conditional statements.
 Looping in Blitz
 ^^^^^^^^^^^^^^^^
 
-In Blitz, a loop is a sequence of actions that is repeated until a certain condition is reached.
+In Blitz, a loop is a sequence of actions that is iterated until a certain terminating condition is reached.
 Looping allows the development of more dynamic testcases.
 
 Lets take a look at a basic examples of looping before diving deeper into looping in Blitz.
