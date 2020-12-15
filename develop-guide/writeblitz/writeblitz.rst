@@ -625,8 +625,8 @@ a failure the script stops the run of the rest of the sections in the testscript
 In the section confirm_actions, in the first action ``execute`` a keyword ``continue`` is added with value ``False``.
 That would send the signal that upon failure of an action the rest of the actions in that section should not be running.
 
-Verification of actions JSON outputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Verifying action JSON output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As it was mentioned when introducing different actions, users can query
 the action outputs that are dictionary using a tool called Dq. You can find the complete
@@ -719,8 +719,8 @@ within the :monospace:`trigger_datafile` and checking if certain query results a
             - contains('lc')
             - get_values('rp')
 
-Verification of actions string outputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Verifying action string output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 At this moment, it is only action `api` that supports this feature, as it is the only
 action that have ``integer``, ``float`` and ``string`` outputs.
@@ -771,10 +771,10 @@ Below you can see an `example` of this.
         exclude:
             - 9999
 
-Verification of actions list outputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Verifying action list output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is also possible to check and see if certain items exist within a output that is list. 
+It is also possible to check and see if certain items exist within a output that is a list. 
 
 .. code-block:: YAML
 
@@ -933,9 +933,11 @@ Below you can see the example of list filter.
             - variable_name: list_int5          # the output is [{'a': 1}, {'d': {'c': 'name1'}}, [1,2,34], {'e': ['a', 'b', 'c']}]
               list_index: "[0:2]"               # saves items 0,1 from the above array of itmes => [{'a': 1}, {'d': {'c': 'name1'}}]
                                                 # into a list named list_int5
-            - variable_name: list_int7
-              list_index: 2                     
-            - variable_name: list_int8          # saves item #2 in the array =>[[1,2,34]] into a list name list_int7
+
+            - variable_name: list_int7          # saves item #2 in the array =>[[1,2,34]] into a list name list_int7
+              list_index: 2
+
+            - variable_name: list_int8          # saves the entire array in a list named list_int8
 
     - api:
         device: PE1
