@@ -625,8 +625,8 @@ a failure the script stops the run of the rest of the sections in the testscript
 In the section confirm_actions, in the first action ``execute`` a keyword ``continue`` is added with value ``False``.
 That would send the signal that upon failure of an action the rest of the actions in that section should not be running.
 
-Querying actions' output
-^^^^^^^^^^^^^^^^^^^^^^^^
+Verifying action JSON output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As it was mentioned when introducing different actions, users can query
 the action outputs that are dictionary using a tool called Dq. You can find the complete
@@ -719,8 +719,8 @@ within the :monospace:`trigger_datafile` and checking if certain query results a
             - contains('lc')
             - get_values('rp')
 
-Verification of non dictionary outputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Verifying action string output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 At this moment, it is only action `api` that supports this feature, as it is the only
 action that have ``integer``, ``float`` and ``string`` outputs.
@@ -771,6 +771,40 @@ Below you can see an `example` of this.
         exclude:
             - 9999
 
+Verifying action list output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is also possible to check and see if certain items exist within a output that is a list. 
+
+.. code-block:: YAML
+
+  - api:
+      device: PE1
+      function: get_list_items
+      arguments:
+          name: [1,2,3,4,5,6,7]       # the output is [1,2,3,4,5,6,7]
+      include:
+          - 5                         # checks if 5 is in the list
+          - "6"                       # checks if 6 is in the list
+      exclude:
+          - 99                        # checks if 99 is NOT in the list
+
+Additionally, you can set a regex and see if that regex is within that output
+
+.. code-block:: YAML
+
+
+  - api:
+      device: PE1
+      function: get_platform_logging
+      include:
+          - \*Dec 10 03:2.*     # Check if any item within a list matches this regex
+          - "23:31:16.651"
+      exclude:
+          - name                # Check if any item within a list not matches this regex
+          - \*Dec 10 03:2.*
+
+
 Replying to the prompt dialogue
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -797,7 +831,8 @@ Below you can see an `example` of the action ``execute`` handling a prompt messa
 Filter, Save and Load variables 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Another very useful feature that BLITZ has, is the ability to save actions output or a variation of the output. You can save values to a variable name and later use that variable in other actions. There are different ways to save values to a variable:
+Another very useful feature that Blitz has, is the ability to save actions output or a variation of the output. 
+You can save values to a variable name and later use that variable in other actions. There are different ways to save values to a variable:
 
 * Save the entire output of an action to a variable name.
 
@@ -876,6 +911,43 @@ Below you can see the example of regex filter
           value: "The bios version is %VARIABLES{bios}"
         bootflash:
           value: "The bootflash is %VARIABLES{bootflash} and %VARIABLES{measure}"
+
+For actions that has list outputs you can get an index or a part of a list and save it into a list with a desired variable_name.
+You can also create a regex filter and match it against all the items within that list, and get a list of 
+all the matched items.
+
+Below you can see the example of list filter.
+
+.. code-block:: YAML
+
+    # saves various items of a list with a variable
+
+    - api:
+        device: PE1
+        function: get_list_items
+        arguments:
+            name: [{'a': 1}, {'d': {'c': 'name1'}}, [1,2,34], {'e': ['a', 'b', 'c']}]
+            index: 0
+            index_end: 5
+        save:
+            - variable_name: list_int5          # the output is [{'a': 1}, {'d': {'c': 'name1'}}, [1,2,34], {'e': ['a', 'b', 'c']}]
+              list_index: "[0:2]"               # saves items 0,1 from the above array of itmes => [{'a': 1}, {'d': {'c': 'name1'}}]
+                                                # into a list named list_int5
+
+            - variable_name: list_int7          # saves item #2 in the array =>[[1,2,34]] into a list name list_int7
+              list_index: 2
+
+            - variable_name: list_int8          # saves the entire array in a list named list_int8
+
+    - api:
+        device: PE1
+        function: get_platform_logging
+        save:
+            # apply regex filter to items and save a list of matches
+            - variable_name: platform_log                                   # The output to save value from is a list of platform logs
+              filter: Oct\s+15[\S\s]+Configured from console by console$    # checks if any item in the list matches this filter and 
+                                                                            # save it in a list named platform_log
+
 
 The following `example` is showing how to use our specific markup language
 to load the saved variable in another action. In this example we save the output
@@ -1095,7 +1167,7 @@ Running conditional statements
 
 It is possible to run (or not run) a set of actions with regards to a conditional statement. 
 This can be achieved by running actions below the keyword run_condition. 
-To run actions with a conditional statement, BLITZ expects:
+To run actions with a conditional statement, Blitz expects:
 
 * An if statement with boolean value (True or False statement).
 
@@ -1150,6 +1222,11 @@ To better understand the use of this feature lets look at the following example.
           - sleep:         # will sleep for a sec
               sleep_time: 1
 
+.. note::
+    
+    Be noted, actions would run only if the condition statement is False. If the statement is True, 
+    the result of all the actions underneath the run_condition would be as same as the function value.
+
 Using the run_condition, users can evaluate various conditional statements before running their actions. 
 Examples are provided below for these conditional statements.
 
@@ -1170,7 +1247,7 @@ Examples are provided below for these conditional statements.
             - apply_config:
                 - run_condition:
                        if: "%VARIABLES{plain_actions} == failed"  # if section plain_actions has failed, fail all the actions below
-                       function: failed                           # The section plain_actions has passed so all the actions below will con't running
+                       function: failed                           # The condtion above is False so the actions below will run
                        actions:
                          - execute:
                              command: show version
@@ -1200,8 +1277,8 @@ Examples are provided below for these conditional statements.
                     include:
                         - parser
                 - run_condition:
-                       if: "%VARIABLES{parser_alias} == failed"     # if action execute_alias has failed fail all the actions below
-                       function: skipped                            # The action execute_alias failed so all the actions below will be skipped
+                       if: "%VARIABLES{execute_alias} == failed"     
+                       function: skipped                             # The action execute_alias failed so all the actions below will be skipped
                        actions:
                          - parse:
                              command: show version
@@ -1237,14 +1314,49 @@ Examples are provided below for these conditional statements.
                          - sleep:
                              sleep_time: 1
 
-Looping in BLITZ
+.. code-block:: YAML
+
+    # Description: You can check multiple conditional statements all at once and run actions with regards to their output
+    
+    test:
+        source:
+            pkg: genie.libs.sdk
+            class: triggers.blitz.blitz.Blitz
+        devices: ['uut']
+        test_sections:
+            - apply_config:
+                - api:                                              # api output is equal to 1500
+                     device: uut
+                     function: get_interface_mtu_size
+                     save:
+                       - variable_name: gims_output                 # the 1500 is stored in gims_output
+                     arguments:
+                       interface: GigabitEthernet1
+                - api:                                              # api output is equal to 1500
+                     device: uut
+                     function: get_interface_mtu_size
+                     save:
+                       - variable_name: gims_output_1                 # the 2500 is stored in gims_output
+                     arguments:
+                       interface: GigabitEthernet10
+                - run_condition:
+                       if: "%VARIABLES{gims_output} != 1500 and %VARIABLES{gims_output} != 2500"        # if gims_output and gime_output_1 are not storing the proper value
+                       function: skipped                                                                # the if statement is false hence, skipping actions 
+                       actions:
+                         - parse:
+                             command: show version
+                             device: uut
+                         - sleep:
+                             sleep_time: 1
+
+Looping in Blitz
 ^^^^^^^^^^^^^^^^
 
-In BLITZ, a loop is a sequence of actions that is repeated until a certain condition is reached.
+In Blitz, a loop is a sequence of actions that is iterated until a certain terminating condition is reached.
 Looping allows the development of more dynamic testcases.
 
-Lets take a look at a basic examples of looping before diving deeper into looping in BLITZ.
-In the below BLITZ section, the loop is above an execute action.
+Lets take a look at a basic examples of looping before diving deeper into looping in Blitz.
+In the below Blitz section, the loop is above an execute action.
 
 The goal is to run this action twice on the same device using 2 different commands, without writing two separate execute
 actions with 2 different commands. This can be achieved simply by using loop like below.
@@ -1281,6 +1393,7 @@ Each loop can contains the following keywords:
 * ``do_until``: Another terminating condition, with one slight difference. If specified the loop will run once even if the terminating condition is met.
 * ``max_time``: A max_time that should be specified in case of defining an until or do_until so the loop would finish at a certain point, without falling into infinite loop.
 * ``every_seconds``: A value to set so each iteration of the loop run exactly to that amount of seconds.
+* ``loop_until``: It could be set to (passed/failed). If set, loop will iterate until the result of the last iteration is as same as the value.
 
 .. note::
     
@@ -1371,6 +1484,27 @@ There are a lot of use cases for looping with various features. Examples can be 
         - sleep:
             sleep_time: "%VARIABLES{range_name}"
 
+.. code-block:: YAML
+
+    # running a loop with loop_until: passed
+    # The iteration stops the second the last iteration is equal to passed.
+
+    - loop:
+        
+        range: 2
+        loop_variable_name: range_name
+        loop_until: passed
+        actions:
+          - parallel:
+            - parse:
+                device: PE1
+                command: show version
+            - execute:
+                device: PE2
+                command: show version
+        - sleep:
+            sleep_time: "%VARIABLES{range_name}"
+
 The keyword ``every_seconds`` is defined so users can manage their loop and if possible run it with synchronized timing.
 If the execution of an iteration of a loop exceeds the time assigned for every_seconds, the loop would still continue its work but a warning would be 
 printed into the log. Below you can see the example of how ``every_seconds`` work.
@@ -1398,7 +1532,7 @@ printed into the log. Below you can see the example of how ``every_seconds`` wor
                     device: uut
                     command: show version
 
-Another feature that Looping in BLITZ supports is nested loops. There are cases that the users might want to iterate over
+Another feature that Looping in Blitz supports is nested loops. There are cases that the users might want to iterate over
 various values. Using nested loop would provide users with that functionality. Below shows the example of how you can implement nested loops
 in your script.
 
@@ -1441,7 +1575,82 @@ in your script.
                     command: "%VARIABLES{list_name}"
                     device: PE2
 
-Useful tips and tricks in BLITZ
+Creating a custom action in Blitz
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Blitz its not limited to its built-in actions. It is possible to create various custom actions and still utilize Blitz framework.
+The structure needed to create a custom action in Blitz is pretty straight forward. A new module (e.g. customBlitz.py) with a new class
+should be created. Within the said class, Blitz class should be inherited and the action can be developed. The content of that action can be anything that helps users 
+with their testing. Look at example below
+
+.. code-block:: PYTHON
+
+  import logging
+  from pyats import aetest 
+  from genie.libs.sdk.triggers.blitz.blitz import Blitz
+
+
+  log = logging.getLogger()
+
+  class CustomBlitz(Blitz):  # <- inheriting Blitz
+    def my_custom_action(self, steps, device. **kwargs):
+      log.info("This is my custom action")
+
+
+Later on the custom action can be called within the trigger datafile, with the same name as the function name.
+
+.. code-block:: YAML
+
+  TestCustomAction:
+      source:
+        pkg: genie.libs.sdk
+        class: triggers.blitz.blitz.Blitz
+      devices: ['uut']
+      test_sections:
+          - section_name:
+            - my_custom_action:
+              device: PE1
+              key1: val1
+              key2: val2
+
+Creating a custom section in Blitz
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The behavior of a Blitz section also can be customized. Just like custom actions, to create a customized section, a class that inherits Blitz class should be created.
+A function that represent the custom section should be created within said class and be decorated with ``@aetest.test``. Look  at the below example.
+
+
+.. code-block:: PYTHON
+
+  import logging
+  from pyats import aetest 
+  from genie.libs.sdk.triggers.blitz.blitz import Blitz
+
+
+  log = logging.getLogger()
+
+  class CustomBlitz(Blitz):  # <- inheriting Blitz
+    @aetest.test
+    def my_custom_section(self, steps, testbed, data):
+      log.info("This is my custom section")
+
+
+
+.. code-block:: YAML
+
+  TestCustomAction:
+      source:
+        pkg: genie.libs.sdk
+        class: triggers.blitz.blitz.Blitz
+      devices: ['uut']
+      test_sections:
+          - my_custom_section:
+            - my_custom_action:
+              device: PE1
+              key1: val1
+              key2: val2
+
+Useful tips and tricks in Blitz
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note::
@@ -1465,6 +1674,11 @@ Useful tips and tricks in BLITZ
 
     The starting message of a Step can be modified by specifying a custom message like the example below. This can be applied
     to all the actions supported in Blitz.
+
+.. note::
+    
+    ```&&``` and ``and`` have different functionalities. ``&&`` is only useful to check if the result of an action is within a range of number
+    ``and`` as well as ``or`` should be used to write conditional statements.
 
 .. code-block:: YAML
 
