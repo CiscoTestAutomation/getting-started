@@ -2,7 +2,37 @@
 
 Contribution guidelines
 =======================
-The more our users contribute to the pool of feature libraries and components, the more varied, scalable, and robust the |library| becomes. This saves you time and effort when you set up your own network automation.
+We strongly encourage everyone to contribute to the pyATS community. The more our users contribute to the pool of feature libraries and components, the more varied, scalable, and robust the |library| becomes. This saves you time and effort when you set up your own network automation.
+
+Helping with documentaion issues
+--------------------------------
+If you look at the Github issue tracker (eg. pyats, genie, etc.), you will find various documentation problems that may need work. Issues vary from typos to unclear documentation and items lacking documentation, etc.
+
+If you see a documentation issue that you would like to tackle, you can:
+
+    - check to see if there is already an assignee to it, if not, go for it!
+    - assign yourself to that issue.
+    - leave a comment on the issue, mentioning the estimated time you will take to tackle the issue.
+    - submit a pull request for the issue.
+
+Help proofreading documentaion
+------------------------------
+While an issue filed on the issue tracker means there is a known issue somewhere, 
+that does not mean that we have found all the issues. Proofreading is also an important part of the documentation.
+
+Here are a few examples that could be great pull requests for proofreading:
+    - Fix Typos
+    - Better wording, easier explanation
+    - More details, examples
+    - Anything else to enhance the documentation.
+
+Proofreading workflow: 
+    1. read a section of the documentation from start to finish
+    2. filing issues in the issue tracker for each major type of problem you find. 
+    3. Simple typos don’t require issues of their own, but, instead, submit a pull request directly. 
+    4. Try not to file a single issue for an entire section containing multiple problems. Break the issue down, and file several issues. Making it easier to divide the work up for multiple people to perform more efficient review.
+
+
 
 We offer the |library| feature libraries and components as open-source code, and we welcome your contributions to any of the following packages:
 
@@ -24,7 +54,6 @@ Before you begin this process, check to see if an existing ``conf`` or ``ops`` s
 * If you want to write a new trigger, check to see if an existing trigger exists for the same action (such as ShutNoshut, ConfigUnconfig). Check by feature (such as BGP or OSPF) at `/genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
 
 For verifications (parsers), check by OS and show command at `genieparser/src/genie/libs/parser <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser>`_
-
 
 Clone the source code repository
 --------------------------------
