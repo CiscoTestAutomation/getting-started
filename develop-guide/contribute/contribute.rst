@@ -7,7 +7,7 @@ We strongly encourage everyone to contribute to the pyATS community. The more ou
 .. _Helping-with-documentation-issues:
 
 Helping with documentation issues
---------------------------------
+---------------------------------
 If you look at the Github issue tracker (eg. pyats, genie, etc.), you will find various documentation problems that may need work. Issues vary from typos to unclear documentation and items lacking documentation, etc.
 
 If you see a documentation issue that you would like to tackle, you can:
@@ -20,7 +20,7 @@ If you see a documentation issue that you would like to tackle, you can:
 .. _Help-proofreading-documentation:
 
 Help proofreading documentation
-------------------------------
+-------------------------------
 While an issue filed on the issue tracker means there is a known issue somewhere, 
 that does not mean that we have found all the issues. Proofreading is also an important part of the documentation.
 
@@ -333,7 +333,17 @@ Commit procedure
 
       git push origin master
 
+.. _Making-good-pull-request:
 
+Making good pull request
+------------------------
+Before submitting your pull request (PR), there are several things to be considered:
+
+   * Make sure to follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`
+   * Think about backward-compatibility, make sure your changes do not break other's code. (see `PEP 387 <https://www.python.org/dev/peps/pep-0387/>`
+   * Please ensure that you have added proper tests to verify your changes work as expected.
+   * Run the entire test suite and making sure all tests passed.
+   * Remember to update the changelog file for your changes.
 
 .. _open-pull-request:
 
