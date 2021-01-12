@@ -1,5 +1,5 @@
 Introduction
-=============================
+============
 
 This topic provides a high-level view of the |pyATS| ecosystem and describes how it helps you to automate your network operations and testing.
 
@@ -115,11 +115,6 @@ The |library| builds on |pyATS| to provide:
 * The ability to build a test suite elastically through the use of YAML-based datafiles
 * A mechanism for modeling network device features
 
-System Architecture
--------------------
-The following diagram shows a high-level view of the system architecture.
-
-.. image:: ../images/SystemArchitecture.png
 
 
 

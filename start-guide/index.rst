@@ -11,6 +11,7 @@ with |pyATSbold| and the |librarybold| (formerly "Genie").
     :caption: Getting Started
 
     /intro/introduction
+    /intro/architecture
     /prereqs/prerequisites
     /install/installpyATS
 
@@ -39,6 +40,7 @@ with |pyATSbold| and the |librarybold| (formerly "Genie").
     bestpractices/lib
     bestpractices/topology
     bestpractices/job
+    bestpractices/summary
 
 .. toctree::
     :maxdepth: 1

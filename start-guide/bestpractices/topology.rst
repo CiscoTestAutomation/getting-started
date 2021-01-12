@@ -14,5 +14,11 @@ Format
 Usage
 -----
 * Testbed topology file shall be provided to pyATS using ``–-testbed-file`` argument.
+
 * Test suites sections that requires access to testbed topology shall access the topology objects via testbed parameter.
+
 * Testbed devices and interfaces shall be dereferenced using alias feature. Testbed devices names shall never be referenced directly.
+
+* Where you have multiple testbeds that are similar, and or are supersets of each other, make use of the pyATS YAML extension feature,
+  and create YAML files that extend each other. Eg: start with base testbed YAML, create extended testbed YAML (auto-including the content from 
+  base, etc).
