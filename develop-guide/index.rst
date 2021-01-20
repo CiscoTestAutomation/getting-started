@@ -20,7 +20,7 @@ This guide describes how you can use the features and functionality of |pyATSbol
 
    /writeparser/writeparser
    /writetrigger/writetrigger
-   /writeblitz/writeblitz
+   pyATS Blitz <https://pubhub.devnetcloud.com/media/genie-docs/docs/blitz/index.html>
    /contribute/contribute
 
 .. toctree::
