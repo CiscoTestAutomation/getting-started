@@ -31,7 +31,7 @@ This topic describes how to install the |pyATSbold| within your system.
          #. :ref:`configure-environment`.
          #. Upgrade and :ref:`run the package installer for Python (pip) <install-with-pip>`:
 
-            ``pip install pyats[full]`` |br| |br|
+            ``pip install "pyats[full]"`` |br| |br|
 
          #. Verify the installation:
 
