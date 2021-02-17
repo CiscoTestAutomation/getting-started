@@ -134,8 +134,8 @@ You can use the following tools to check the PEP 8 and style conventions.
 .. csv-table:: Testing tools
    :header: "Tool", "Installation |br| (from your virtual environment)", "Execution"
 
-   "pep8", ":monospace:`pip install pep8`", ":monospace:`deactivate` |br| :monospace:`pep8 myfile`"
-   "pylint", ":monospace:`pip install pylint`", ":monospace:`deactivate` |br| :monospace:`pylint myfile`"
+   "pep8", ":monospace:`pip install pep8`", ":monospace:`pep8 myfile`"
+   "pylint", ":monospace:`pip install pylint`", ":monospace:`pylint myfile`"
 
 Conf or Ops packages
 ^^^^^^^^^^^^^^^^^^^^
