@@ -4,10 +4,13 @@ Write a parser
 ======================
 This topic describes why and how to write your own parsers to meet your network automation requirements.
 
-.. tip:: Remember to share your new parser with the rest of the |pyATS| user community. See the topic :ref:`contribute` for more information.
+.. tip:: Remember to share your new parser with the rest of the |pyATS| user community! Please see the topic :ref:`contribute` for more information.
 
-What is a parser?
------------------
+If you're the kind of person who prefers to learn by watching someone else, then
+please
+
+1. What is a parser?
+--------------------
 
 .. include:: ../definitions/def_parser.rst
     :start-line: 3
@@ -15,28 +18,415 @@ What is a parser?
 * For a basic introduction to the |library| parsers, see the topic `Parse device output <https://pubhub.devnetcloud.com/media/pyats-getting-started/docs/quickstart/parseoutput.html#parse-device-output>`_ in the *Get Started with pyATS* guide.
 * For more information about the ``metaparser`` package, see the topic `Metaparser Package <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/index.html#genie-metaparser-package>`_.
 
-Why write a parser?
--------------------
+2. Why write a parser?
+----------------------
 The |library| provides you with many out-of-the box `parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for use with the most frequently-used Cisco show commands and OS/platform combinations.
 
-But if you want to customize a parser, or if you need to parse output for a feature that does not yet have a |library| model, you can easily write your own parser.
+But if you want to customize a parser, make a new parser, or if you need to parse output for a feature that does not yet have a |library| model, you can easily write your own parser.
 
-How the |library| parsers work
-------------------------------
+3. How the |library| parsers work
+---------------------------------
 A parser is composed of two Python classes:
 
-1. Schema class
-2. Parser class
+- :ref:`Schema class<schema>`
+- :ref:`Parser class<parser>`
 
-Each parser performs three main actions:
+| Each schema defines:
+|   1. What the structure of our parsed data will be.
+|   2. How that structure is composed through the use of key-value pairs.
 
-1. Run a show command and collect the device output.
-2. "Loop" over (read) each line of output data.
-3. Look for patterns in the output, and add any matching patterns to a Python dictionary.
+| Each parser performs four main actions:
+|   1. Run a show command and collect the device output.
+|   2. Define patterns that will be looked for in the device output.
+|   3. Iterate through each line of the device output data.
+|   4. Look for patterns in the output and add any matching patterns to a Python dictionary.
 
-The result is standardized, *structured* output that works with network automation scripts, regardless of OS or communication protocol.
+The result of the parser and schema classes working together is a standardized
+and *structured* output that works with network automation scripts, regardless
+of OS or communication protocol.
 
-The following sections describe this process in more detail.
+Later sections will describe this process in more detail and the creation of an
+example parser will be shown.
+
+
+4. Setting up your development environment
+------------------------------------------
+
+If this is your first time writing a pyATS parser or if you're looking for an easy way
+to jump right into things, then start here. This section wil outline example commands
+and environment setup you can use as a starting point for writing a parser.
+
+Things you'll need before starting:
+
+- Python 3.6 (or newer)
+- pip
+- git
+
+First, create a python virtual environment, activate it, and install pyATS into it:
+
+.. code-block:: python
+
+    $ python -m venv <directory_of_your_choice>
+    $ source <directory_of_your_choice>/bin/activate
+    $ pip install pyats[full]
+
+Once the installation has finished, clone the ``genieparser`` repo, and run ``make develop`` to get your environment ready to work in.
+
+.. code-block:: python
+
+    $ git clone https://github.com/CiscoTestAutomation/genieparser
+    $ cd genieparser
+    $ make develop
+
+At this point, you are now ready to start writing your parser, but if you'd
+like to follow along with some of the examples in this guide, then
+follow these next few steps to set up a mock network environment.
+First, :download:`download the zip file <mock_parser.zip>` and extract the contents
+to a directory of your choice, such as :monospace:`mock_parser`. Similar to starting a
+server in a terminal, it's recommended to open a seperate terminal for mock
+network operations.
+
+#. Go to the directory that contains the extracted files::
+
+    $ cd mock_parser
+    $ python
+
+#. In your Python interpreter, load the :term:`Testbed YAML file`, and connect to a device.
+
+   .. code-block:: python
+
+    from genie.testbed import load
+    testbed = load('mock_parser.yaml')
+    dev = testbed.devices['iosxe1']
+    dev.connect()
+
+   .. note:: Ignore the prompt to continue to connect.
+
+
+
+.. _schema:
+
+5. :ref:`The Schema Class`
+-------------------
+
+A good schema is one of the most crucial
+(and in some cases, most challenging) aspects of creating a parser.
+It's where you must examine the output from a device
+and determine what information is important and how that information should be
+structured. In pyATS, a schema is used to define all of the key-value pairs that will
+be stored in a Python dictionary. This dictionary is what will contain all of
+the output from our parser.
+
+If you intend to contribute your parser to the pyATS project, then you must
+build and implement a schema class as it results in the following benefits:
+
+* *Time-saving*: You can quickly see the data structure without having to read hundreds of lines of regex output. This saves you time when troubleshooting.
+* *Future-proof* and *robust*: When you or others modify code, you're less likely to break something.
+* *Scalable*: It's more efficient to modify a schema than to have multiple developers working with just the regex output.
+
+
+5.1 Creating a schema
+~~~~~~~~~~~~~~~~~~~~~
+
+This section covers the making of your own new schema.
+
+To start creating a new schema, you'll first need to gather device output.
+Once you have some, you can identify the keys that you need in a number of ways, including:
+
+| :ref:`5.1.1<keysfromshowcommand>` Examining the ``show`` command output directly.
+| :ref:`5.1.2<keysfromXML>` Using the XML output option with a ``show`` command to display the output as key-value pairs.
+| :ref:`5.1.3<keysfromYANG>` Using the YANG data model to identify the relevant keys.
+
+.. note:: You can also :ref:`create a schema based on an existing model<schemabasedonanexistingmodel>`
+
+.. tip:: You can find more examples of schemas :ref:`here<schemaexamples>`
+
+
+.. _keysfromshowcommand:
+
+5.1.1 Identify keys directy from show command output
+****************************************************
+
+Writing a schema based on device output can range from straightforward to
+surprisingly complex. Having multiple examples of device output for a given
+command can be incredibly helpful when designing a schema. For example, the
+output from the ``show track`` command for IOSXE can look like this:
+
+.. code-block:: python
+
+    Track 1
+    Interface GigabitEthernet3.420 line-protocol
+    Line protocol is Up
+        1 change, last change 00:00:27
+    Tracked by:
+        VRRP GigabitEthernet3.420 10
+
+Or it can look like this:
+
+.. code-block:: python
+
+    Track 2
+    IP route 10.21.12.0 255.255.255.0 reachability
+    Reachability is Down (no ip route), delayed Up (1 sec remaining) (connected)
+        1 change, last change 00:00:24
+    Delay up 20 secs, down 10 secs
+    First-hop interface is unknown (was Ethernet1/0)
+    Tracked by:
+        HSRP Ethernet0/0 3
+        HSRP Ethernet0/1 3
+
+Or even this:
+
+.. code-block:: python
+
+    Track 1
+    IP route 172.16.52.0 255.255.255.0 metric threshold
+    Metric threshold is Down (no route)
+        1 change, last change 00:00:35
+    Metric threshold down 255 up 254
+    Delay up 2 secs, down 1 sec
+    First-hop interface is unknown
+
+Comparing these three outputs reveals a lot about the structure of the information
+given by that particular show command. Using both output examples, a schema that
+looks like this can be created:
+
+.. code-block:: python
+
+    class ShowTrackSchema(MetaParser):
+        """ Schema for 'show track' """
+        schema = {
+            'type': {
+                Any(): {
+                    Optional('name'): str,
+                    Optional('address'): str,
+                    Optional('mask'): str,
+                    'state': str,
+                    Optional('state_description'): str,
+                    Optional('delayed'): {
+                        Optional('delayed_state'): str,
+                        Optional('secs_remaining'): float,
+                        Optional('connection_state'): str,
+                    },
+                    'change_count': int,
+                    'last_change': str,
+                    Optional('threshold_down'): int,
+                    Optional('threshold_up'): int,
+                },
+            },
+            Optional('delay_up_secs'): float,
+            Optional('delay_down_secs'): float,
+            Optional('first_hop_interface_state'): str,
+            Optional('prev_first_hop_interface'): str,
+            Optional('tracked_by'): {
+                Optional(Any()): {   #increasing index 0, 1, 2, 3, ...
+                    Optional('name'): str,
+                    Optional('interface'): str,
+                    Optional('group_id'): str,
+                }
+            },
+        }
+
+Using the following mock network example, you can generate some device output
+for yourself, examine output indentation behaviour, in
+
+#. Get some device out put by executing the ``show interfaces`` command in your mock exmaple.
+
+   .. code-block:: python
+
+    dev.execute('show interfaces')
+
+   *Result*: The system displays the unparsed output. The following example shows some of the output that you can use to identify keys for your parser::
+
+    GigabitEthernet1 is up, line protocol is up
+        Hardware is CSR vNIC, address is 0800.2729.3800 (bia 0800.2729.3800)
+        Internet address is 10.0.2.15/24
+        MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+            reliability 255/255, txload 1/255, rxload 1/255
+        Encapsulation ARPA, loopback not set
+        Keepalive set (10 sec)
+        Full Duplex, 1000Mbps, link type is auto, media type is Virtual
+        output flow-control is unsupported, input flow-control is unsupported
+        ARP type: ARPA, ARP Timeout 04:00:00
+        Last input 00:00:00, output 00:00:00, output hang never
+        Last clearing of "show interface" counters never
+        ...
+    ...
+
+
+#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys.
+
+   .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In the following example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address` value for Interface1 won't be overwritten by the :monospace:`mac_address` value for Interface2.
+
+   Your schema might begin with the following lines:
+
+   .. code-block:: python
+
+        'interfaces': {
+            'interface_name': {
+                'oper_status': str,
+                'line_protocol': str,
+                'hardware': str,
+                'mac_address': str,
+                ...
+            ...
+
+
+#. You can also check for ways to group the data based on counters, input and output, as well as other statistics. For the following output:
+
+   .. code-block:: python
+
+        4243 packets input, 361948 bytes, 0 no buffer
+        Received 0 broadcasts (0 IP multicasts)
+        0 runts, 0 giants, 0 throttles
+        0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+        0 watchdog, 0 multicast, 0 pause input
+        3616 packets output, 1637917 bytes, 0 underruns
+        0 output errors, 0 collisions, 0 interface resets
+        0 unknown protocol drops
+        0 babbles, 0 late collision, 0 deferred
+        0 lost carrier, 0 no carrier, 0 pause output
+        0 output buffer failures, 0 output buffers swapped out
+
+   Your schema could be::
+
+    'counters': {  # categorize the value as 'counters'
+        'input': {   # categorize the 'input' related values
+            'packets': int,
+            'bytes': int,
+
+        },
+        'output': {
+            'packets': int,
+            'bytes': int,
+        }
+
+#. To see the output with a more readable structure, you can use Python's "pretty-print" module:
+
+   .. code-block:: python
+
+    output = dev.parse('show interfaces')
+    import pprint
+    pprint.pprint(output)
+
+   *Result*: The following snippet shows the output formatted so that it's easier to read::
+
+    {'GigabitEthernet1': {'arp_timeout': '04:00:00',
+                      'arp_type': 'arpa',
+                      'auto_negotiate': True,
+                      'bandwidth': 1000000,
+                      'counters': {'in_broadcast_pkts': 0,
+                                   'in_crc_errors': 0,
+                                   'in_errors': 0,
+                                   'in_frame': 0,
+
+   .. note:: You can use ``dev.parse`` even without a schema, because ``genie.libs.parse`` can parse at least some of the output.
+
+
+
+
+.. _keysfromXML:
+
+5.1.2 Identify keys from XML output
+***********************************
+NXOS device ``show`` commands have an XML option that formats the output as key-value pairs. If you have an IOSXE or IOSXR device, you can usually find a similar NXOS command to run so that you can see the XML output:
+
+.. code-block:: text
+
+ nx-osv9000-1# show interface | xml
+
+*Result*::
+
+    <?xml version="1.0" encoding="ISO-8859-1"?>
+    <nf:rpc-reply xmlns="http://www.cisco.com/nxos:1.0:if_manager" xmlns:nf="urn:iet
+    f:params:xml:ns:netconf:base:1.0">
+    <nf:data>
+    <show>
+    <interface>
+        <__XML__OPT_Cmd_show_interface_quick>
+        <__XML__OPT_Cmd_show_interface___readonly__>
+        <__readonly__>
+        <TABLE_interface>
+            <ROW_interface>
+            <interface>mgmt0</interface>
+            <state>up</state>
+            <admin_state>up</admin_state>
+            <eth_hw_desc>Ethernet</eth_hw_desc>
+            <eth_hw_addr>5e01.c005.0000</eth_hw_addr>
+            <eth_bia_addr>5e01.c005.0000</eth_bia_addr>
+            <eth_ip_addr>10.0.0.0</eth_ip_addr>
+
+In this example, your schema could include the keys :monospace:`state`, :monospace:`admin_state`, :monospace:`eth_hw_desc`, and others.
+
+
+.. _keysfromYANG:
+
+5.1.3 Identify keys from the YANG data model
+********************************************
+
+#. Install the ``pyang`` package in your virtual environment::
+
+    pip install pyang
+
+#. Clone the git repository for the YANG model::
+
+    git clone https://github.com/YangModels/yang.git
+
+#. Look for the latest model. (At the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
+
+    find . | grep arp
+
+#. View the model and identify the keys::
+
+    pyang -f tree ./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang
+
+   *Result*: You can see the YANG model with the keys and data types::
+
+     module: ietf-arp
+        +--rw arp
+            +--rw dynamic-learning?   boolean
+
+        augment /if:interfaces/if:interface/ip:ipv4:
+            +--rw arp
+            +--rw expiry-time?        uint32
+            +--rw dynamic-learning?   boolean
+            +--rw proxy-arp
+            |  +--rw mode?   enumeration
+            +--rw gratuitous-arp
+            |  +--rw enable?     boolean
+            |  +--rw interval?   uint32
+            +--ro statistics
+                +--ro discontinuity-time?    yang:date-and-time
+                +--ro in-requests-pkts?      yang:counter32
+                +--ro in-replies-pkts?       yang:counter32
+                +--ro in-gratuitous-pkts?    yang:counter32
+                +--ro out-requests-pkts?     yang:counter32
+                +--ro out-replies-pkts?      yang:counter32
+                +--ro out-gratuitous-pkts?   yang:counter32
+        augment /if:interfaces/if:interface/ip:ipv4/ip:neighbor:
+            +--ro remaining-expiry-time?   uint32
+
+
+.. _schemaexamples:
+
+5.2 Schema examples
+~~~~~~~~~~~~~~~~~~~
+
+.. note:: You can see all of the available parsers on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. Select an item from the list to see the schema.
+
+1. At the top of the page, search for a show command, such as :monospace:`show interfaces`.
+2. Select an OS, in this example, **IOSXE**.
+3. Select **show interfaces**, and then scroll down to the IOSXE schema.
+The following illustration shows part of the schema. **Optional** indicates keys that are not always included in the expected output.
+
+.. image:: ../images/schema_example.png
+
+
+
+.. _parser:
+
+7. :ref:`The Parser Class`
+-------------------
 
 .. _pattern-matching
 
@@ -58,7 +448,7 @@ The following references provide detailed information about how to use regular e
 
 * https://www.learnpython.org/en/Regular_Expressions
 * https://regexone.com/references/python
-* https://www.dataquest.io/blog/regex-cheatsheet/ 
+* https://www.dataquest.io/blog/regex-cheatsheet/
 
 The following online tools can help you build and test Python regular expressions:
 
@@ -70,7 +460,7 @@ The following online tools can help you build and test Python regular expression
 The |library| uses the following two packages to parse (pattern match) device output data (text):
 
 #. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema <schema>` (definition of the key-value pairs).
- 
+
 #. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. A parser can parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser's associated schema defines the data structure of the parsed output.
 
 The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
@@ -88,7 +478,7 @@ The following illustration shows how the Metaparser and parser classes work toge
 
 Write a parser class with RegEx
 --------------------------------
-When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema. 
+When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema.
 
 The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are defined in the same Python file. Take a look at the example, and then we'll explain how it works.
 
@@ -97,14 +487,14 @@ The following example shows a schema and parser class for the ``show lisp sessio
     # Metaparser
     from genie.metaparser import MetaParser
     from genie.metaparser.util.schemaengine import Any, Or, Optional
-    
+
     # ==============================
     # Schema for 'show lisp session'
     # ==============================
     class ShowLispSessionSchema(MetaParser):
-    
+
         ''' Schema for "show lisp session" '''
-    
+
     # These are the key-value pairs to add to the parsed dictionary
         schema = {
             'vrf':
@@ -125,50 +515,50 @@ The following example shows a schema and parser class for the ``show lisp sessio
                     },
                 },
             }
-    
+
     # Python (this imports the Python re module for RegEx)
     import re
-    
+
     # ==============================
     # Parser for 'show lisp session'
     # ==============================
-    
+
     # The parser class inherits from the schema class
     class ShowLispSession(ShowLispSessionSchema):
-    
+
         ''' Parser for "show lisp session"'''
-    
+
         cli_command = 'show lisp session'
-    
+
         # Defines a function to run the cli_command
         def cli(self, output=None):
             if output is None:
                 out = self.device.execute(self.cli_command)
             else:
                 out = output
-    
+
             # Initializes the Python dictionary variable
             parsed_dict = {}
-    
+
             # Defines the regex for the first line of device output, which is:
             # Sessions for VRF default, total: 3, established: 3
 
             p1 = re.compile(r'Sessions +for +VRF +(?P<vrf>(\S+)),'
                             ' +total: +(?P<total>(\d+)),'
                             ' +established: +(?P<established>(\d+))$')
-    
+
             # Defines the regex for the next line of device output, which is:
             # Peer                           State      Up/Down        In/Out    Users
             # 2.2.2.2                        Up         00:51:38        8/13     3
-            
+
             p2 = re.compile(r'(?P<peer>(\S+)) +(?P<state>(Up|Down)) +(?P<time>(\S+))'
                             ' +(?P<in>(\d+))\/(?P<out>(\d+)) +(?P<users>(\d+))$')
-    
+
             # Defines the "for" loop, to pattern match each line of output
 
             for line in out.splitlines():
                 line = line.strip()
-    
+
                 # Processes the matched patterns for the first line of output
                 m = p1.match(line)
                 if m:
@@ -179,7 +569,7 @@ The following example shows a schema and parser class for the ``show lisp sessio
                     vrf_dict['total'] = int(group['total'])
                     vrf_dict['established'] = int(group['established'])
                     continue
-    
+
                 # Processes the matched patterns for the second line of output
                 m = p2.match(line)
                 if m:
@@ -192,7 +582,7 @@ The following example shows a schema and parser class for the ``show lisp sessio
                     peer_dict['total_out'] = int(group['out'])
                     peer_dict['users'] = int(group['users'])
                     continue
-    
+
             return parsed_dict
 
 The following table describes the structure of the parser class in more detail.
@@ -210,7 +600,7 @@ Write a parser class with the parsergen package
 -----------------------------------------------
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
-The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values. 
+The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values.
 
 Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NVE/VXLAN platform.
 
@@ -263,7 +653,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
     pprint(result.entries)
 
    *Result*: Easy-to-read and easy-to-automate structured data:
-   
+
    .. code-block:: text
 
     {'nve1': {'BD': '1',
@@ -295,14 +685,15 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
    (pyats) $ python parsergen_script.py
 
-.. _parser-unit-test:
 
-Test your new parser
+.. _testingyourparser:
+
+Testing your new parser
 --------------------
-Remember to execute `make json` every time you create a new parser. 
+Remember to execute `make json` every time you create a new parser.
 
 `make json` will create a json file which will link command and related class.
-This json file will be used when device.parse is executed inorder to find parser class based on command. 
+This json file will be used when device.parse is executed inorder to find parser class based on command.
 Without `make json` device.parse will not be able to find the parser class and hence will show "Could not find parser" error.
 
 Example:
@@ -359,9 +750,9 @@ To create a folder based test with cli based output, follow these simple tests.
     * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli/empty/empty_output.txt`.
     * This file should be either empty or partial output that will not raise a `SchemaEmptyParserError` error.
   * Within the `equal` folder create the raw output, expected value, and potentially arguments.
-    
+
     * The files are grouped together by stripping `_output.txt`, `_expected.py`, and `_arguments.json` and comparing the names that match.
-      
+
       * As an example `golden_output1_arguments.json`, `golden_output1_expected.py`, and `golden_output1_output.txt` are understood to be part of the same test.
     * The output file, should be a simple txt file with the expected output.
     * The expected Python file, should be a Python file with a single variable called `expected_output` that has the expected data structure.
@@ -398,7 +789,7 @@ The output will show you the something similar, which will provide the `PASSED` 
         <cut for brevity>
         2020-09-19T16:14:17: %AETEST-INFO: |                               Detailed Results                               |
         2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
-        2020-09-19T16:14:17: %AETEST-INFO:  SECTIONS/TESTCASES                                                      RESULT   
+        2020-09-19T16:14:17: %AETEST-INFO:  SECTIONS/TESTCASES                                                      RESULT
         2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
         2020-09-19T16:14:17: %AETEST-INFO: .
         2020-09-19T16:14:17: %AETEST-INFO: `-- FileBasedTest                                                         PASSED
@@ -411,15 +802,15 @@ The output will show you the something similar, which will provide the `PASSED` 
         2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
         2020-09-19T16:14:17: %AETEST-INFO: |                                   Summary                                    |
         2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of ABORTED                                                            0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of BLOCKED                                                            0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of ERRORED                                                            0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of FAILED                                                             0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSED                                                             1 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSX                                                              0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of SKIPPED                                                            0 
-        2020-09-19T16:14:17: %AETEST-INFO:  Total Number                                                                 1 
-        2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0% 
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of ABORTED                                                            0
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of BLOCKED                                                            0
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of ERRORED                                                            0
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of FAILED                                                             0
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSED                                                             1
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSX                                                              0
+        2020-09-19T16:14:17: %AETEST-INFO:  Number of SKIPPED                                                            0
+        2020-09-19T16:14:17: %AETEST-INFO:  Total Number                                                                 1
+        2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0%
         2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
         root@197979f5dbd6:/genieparser/tests$
 
@@ -432,26 +823,26 @@ The following example shows how to create a unit test file for :ref:`the show li
     # Import the Python mock functionality
     import unittest
     from unittest.mock import Mock
-    
+
     # pyATS
     from pyats.topology import Device
     from pyats.topology import loader
-    
+
     # Metaparser
     from genie.metaparser.util.exceptions import SchemaEmptyParserError, SchemaMissingKeyError
-    
+
     # iosxe show_lisp
     from genie.libs.parser.iosxe.show_lisp import ShowLispSession
-    
+
     # =================================
     # Unit test for 'show lisp session'
     # =================================
     class test_show_lisp_session(unittest.TestCase):
-    
+
         '''Unit test for "show lisp session"'''
-    
+
         empty_output = {'execute.return_value': ''}
-    
+
         # Specify the expected result for the parsed output
         golden_parsed_output1 = {
             'vrf':
@@ -481,7 +872,7 @@ The following example shows how to create a unit test file for :ref:`the show li
                     },
                 },
             }
-    
+
         # Specify the expected unparsed output
         golden_output1 = {'execute.return_value': '''
             204-MSMR#show lisp session
@@ -491,14 +882,14 @@ The following example shows how to create a unit test file for :ref:`the show li
             6.6.6.6                        Up         00:51:53        3/10     1
             8.8.8.8                        Up         00:52:15        8/13     3
             '''}
-    
+
         def test_show_lisp_session_full1(self):
             self.maxDiff = None
             self.device = Mock(**self.golden_output1)
             obj = ShowLispSessionNew(device=self.device)
             parsed_output = obj.parse()
             self.assertEqual(parsed_output, self.golden_parsed_output1)
-    
+
         def test_show_lisp_session_empty(self):
             self.maxDiff = None
             self.device = Mock(**self.empty_output)
@@ -541,39 +932,92 @@ To create your own unit test, complete the following steps.
    *Result*:
 
    .. image:: ../images/unit_test_results.png
-   
+
    |br| |br|
 
 #. Take a screen capture of the test results and save them as an image file. When you :ref:`open a pull request <open-pull-request>`, you must attach the unit test results.
 
    .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
 
-.. _schema:
 
-Create a parser schema
-----------------------
-A schema defines the key-value pairs stored in the Python dictionary that contains the parsed output. 
+.. _contributingyourwork:
 
-When you create or extend a parser, you must first identify the keys to include in the parsed output. Using a schema is optional, but because you can easily see the data structure in a schema, you gain the following benefits:
+Contributing your work to the pyATS project
+-------------------------------------------
 
-* *Time-saving*: You can quickly see the data structure without having to read hundreds of lines of regex output. This saves you time when troubleshooting.
-* *Future-proof* and robust: When you or others modify code, you're less likely to break something.
-* *Scalable*: It's more efficient to modify a schema than to have multiple developers working with just the regex output.
+TODO write this section
+runAll + compileAll screenshots,
 
-Example of a schema
-^^^^^^^^^^^^^^^^^^^
-.. note:: You can see all of the available parsers on the `Parsers List website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. Select an item from the list to see the schema.
+See also...
 
-1. At the top of the page, search for a show command, such as :monospace:`show interfaces`.
-2. Select an OS, in this example, **IOSXE**.
-3. Select **show interfaces**, and then scroll down to the IOSXE schema.
+* `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
+* `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
+* :ref:`contribute`
 
-The following illustration shows part of the schema. **Optional** indicates keys that are not always included in the expected output.
 
-.. image:: ../images/schema_example.png
 
-Create a schema based on a model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Extra examples and supplemental information
+===========================================
+
+
+.. _schemabasedonanexistingmodel:
+
+Creating a schema based on an existing model
+--------------------------------------------
+
+Check Genie Model to check if the parser feature you are working on has a Model: Genie Models
+
+    Check the Model Ops structure
+    Create the Parser Schema to be as close as possible to the Genie Model Ops Structure
+
 If you want to create a new schema, you can base it on the keys for an existing feature.
 
 #. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
@@ -585,7 +1029,7 @@ If you want to create a new schema, you can base it on the keys for an existing 
    .. image:: ../images/ops_structure.png
       :scale: 50 %
 
-   |br| |br| *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|  
+   |br| |br| *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|
 
 #. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema defintion. Use JSON format and save the file as a :monospace:`*.py` file.
 
@@ -603,19 +1047,20 @@ If you want to create a new schema, you can base it on the keys for an existing 
                 Optional('connected'): bool,
                 Optional('description'): str,
                 'type': str,
-                
+
 
    .. note:: You must specify the value type, such as integer, string, boolean, or list.
-   
-   You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_. 
 
-Create a schema without a model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-If you want to create a new schema, you can identify the keys that you need in a number of ways, including:
+   You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_.
 
-* Use the ``show`` command output.
-* Use the XML output option with a ``show`` command to display the output as key-value pairs.
-* Use the YANG data model to identify the relevant keys.
+
+
+EXAMPLES
+--------
+
+
+Identifying keys from the show command example
+
 
 Identify keys from the show command
 ***********************************
@@ -658,7 +1103,7 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
         Last input 00:00:00, output 00:00:00, output hang never
         Last clearing of "show interface" counters never
 
-#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys. 
+#. Check the indentation in the output. The indentation tells you about the parent-child relationship of the keys.
 
    .. note:: Remember to use the indentation (parent-child relationships) to ensure that values don't overwrite other values at the same level. In the following example, the keys for :monospace:`interface_name` are indented so that the :monospace:`mac_address` value for Interface1 won't be overwritten by the :monospace:`mac_address` value for Interface2.
 
@@ -672,140 +1117,3 @@ For this example, :download:`download the zip file <mock_parser.zip>` and extrac
                 'line_protocol': str,
                 'hardware': str,
                 'mac_address': str,
-                 
-
- 
-
-
-
-#. You can also check for ways to group the data based on counters, input and output, as well as other statistics. For the following output:
-
-   .. code-block:: python
-
-        4243 packets input, 361948 bytes, 0 no buffer
-        Received 0 broadcasts (0 IP multicasts)
-        0 runts, 0 giants, 0 throttles
-        0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
-        0 watchdog, 0 multicast, 0 pause input
-        3616 packets output, 1637917 bytes, 0 underruns
-        0 output errors, 0 collisions, 0 interface resets
-        0 unknown protocol drops
-        0 babbles, 0 late collision, 0 deferred
-        0 lost carrier, 0 no carrier, 0 pause output
-        0 output buffer failures, 0 output buffers swapped out
-
-   Your schema could be::
-
-    'counters': {  # categorize the value as 'counters'
-        'input': {   # categorize the 'input' related values
-            'packets': int,
-            'bytes': int,
-            
-        },
-        'output': {
-            'packets': int,
-            'bytes': int,
-        }
-
-#. To see the output with a more readable structure, you can use Python's "pretty-print" module:
-
-   .. code-block:: python
-
-    output = dev.parse('show interfaces')
-    import pprint
-    pprint.pprint(output)
-
-   *Result*: The following snippet shows the output formatted so that it's easier to read::
-
-    {'GigabitEthernet1': {'arp_timeout': '04:00:00',
-                      'arp_type': 'arpa',
-                      'auto_negotiate': True,
-                      'bandwidth': 1000000,
-                      'counters': {'in_broadcast_pkts': 0,
-                                   'in_crc_errors': 0,
-                                   'in_errors': 0,
-                                   'in_frame': 0,
-
-   .. note:: You can use ``dev.parse`` even without a schema, because ``genie.libs.parse`` can parse at least some of the output.
-
-Identify keys from XML output
-******************************
-NXOS device ``show`` commands have an XML option that formats the output as key-value pairs. If you have an IOSXE or IOSXR device, you can usually find a similar NXOS command to run so that you can see the XML output:
-
-.. code-block:: text
-
- nx-osv9000-1# show interface | xml
-
-*Result*::
-
-    <?xml version="1.0" encoding="ISO-8859-1"?>
-    <nf:rpc-reply xmlns="http://www.cisco.com/nxos:1.0:if_manager" xmlns:nf="urn:iet
-    f:params:xml:ns:netconf:base:1.0">
-    <nf:data>
-    <show>
-    <interface>
-        <__XML__OPT_Cmd_show_interface_quick>
-        <__XML__OPT_Cmd_show_interface___readonly__>
-        <__readonly__>
-        <TABLE_interface>
-            <ROW_interface>
-            <interface>mgmt0</interface>
-            <state>up</state>
-            <admin_state>up</admin_state>
-            <eth_hw_desc>Ethernet</eth_hw_desc>
-            <eth_hw_addr>5e01.c005.0000</eth_hw_addr>
-            <eth_bia_addr>5e01.c005.0000</eth_bia_addr>
-            <eth_ip_addr>10.0.0.0</eth_ip_addr>
-
-In this example, your schema could include the keys :monospace:`state`, :monospace:`admin_state`, :monospace:`eth_hw_desc`, and others.
-
-Identify keys from the YANG data model
-**************************************
-
-#. Install the ``pyang`` package in your virtual environment::
-
-    pip install pyang
-
-#. Clone the git repository for the YANG model::
-
-    git clone https://github.com/YangModels/yang.git
-
-#. Look for the latest model. (At the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
-
-    find . | grep arp
-
-#. View the model and identify the keys::
-
-    pyang -f tree ./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang
-
-   *Result*: You can see the YANG model with the keys and data types::
-
-     module: ietf-arp
-        +--rw arp
-            +--rw dynamic-learning?   boolean
-
-        augment /if:interfaces/if:interface/ip:ipv4:
-            +--rw arp
-            +--rw expiry-time?        uint32
-            +--rw dynamic-learning?   boolean
-            +--rw proxy-arp
-            |  +--rw mode?   enumeration
-            +--rw gratuitous-arp
-            |  +--rw enable?     boolean
-            |  +--rw interval?   uint32
-            +--ro statistics
-                +--ro discontinuity-time?    yang:date-and-time
-                +--ro in-requests-pkts?      yang:counter32
-                +--ro in-replies-pkts?       yang:counter32
-                +--ro in-gratuitous-pkts?    yang:counter32
-                +--ro out-requests-pkts?     yang:counter32
-                +--ro out-replies-pkts?      yang:counter32
-                +--ro out-gratuitous-pkts?   yang:counter32
-        augment /if:interfaces/if:interface/ip:ipv4/ip:neighbor:
-            +--ro remaining-expiry-time?   uint32
-
-See also...
-
-* `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
-* `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
-* :ref:`contribute`
