@@ -69,7 +69,7 @@ contributing to the Genie parser repo. It will save you (and us) time in the end
 
 The |library| provides you with many out-of-the box `parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for use with the most frequently-used Cisco show commands and OS/platform combinations.
 
-But if you want to customize a parser, make a new parser, or if you need to parse output for a feature that does not yet have a |library| model, you can easily write your own parser.
+But if you want to modify a parser, make a new parser, or if you need to parse output for a feature that does not yet have a |library| model, you can easily write your own parser.
 
 
 .. _how_the_parsers_work:
@@ -84,8 +84,9 @@ A parser is composed of two Python classes:
 - :ref:`Parser class <writing_the_parser_class>`
 
 | Each schema defines:
-|   1. What the structure of our parsed data will be.
-|   2. How that structure is composed through the use of key-value pairs.
+|   1. What the structure of the parsed data will be.
+|   2. The data types used for the key-value pairs in the parsed output.
+
 
 | Each parser performs four main actions:
 |   1. Run a show command and collect the device output.
@@ -93,9 +94,10 @@ A parser is composed of two Python classes:
 |   3. Iterate through each line of the device output data.
 |   4. Look for patterns in the output and add any matching patterns to a Python dictionary.
 
-The result of the parser and schema classes working together is a standardized
-and *structured* output that works with network automation scripts, regardless
-of OS or communication protocol.
+Using these classes together results in output that is a standardized
+and relaibly structured. This is crucial for network automation
+scripts to work across different types of OS's and communication
+protocols.
 
 Later sections will describe this process in more detail and multiple examples
 will be provided.
@@ -113,10 +115,14 @@ easily set up a development environment that can be used for writing a parser.
 
 | Things you'll need before starting:
 |   - Python 3.6 (or newer)
-|   - pip
+|   - pip (inlcuded with Python)
 |   - git
 
-#. Fork the https://github.com/CiscoTestAutomation/genieparser repo.
+#. `Fork <https://docs.github.com/en/github/getting-started-with-github/fork-a-repo>`_ the https://github.com/CiscoTestAutomation/genieparser repo.
+
+   .. image:: ../images/fork_repo.png
+
+
 
 #. Create a python virtual environment, activate it, and install pyATS into it.
 
@@ -399,9 +405,6 @@ to group data into containers, and use the Python's pretty print module.
                                    'in_errors': 0,
                                    'in_frame': 0,
 
-   .. note:: You can use ``dev.parse`` even without a schema, because ``genie.libs.parse`` can parse at least some of the output.
-
-
 
 
 .. _keys_from_XML:
@@ -581,7 +584,7 @@ expressions. It's a little more work to write regexes for each piece of
 data, but it offers excellent control for pattern matching and for assigning
 the right values to the right keys in the right way.
 
-The |library| parsers use regular expressions (regex) to match patterns in the device output. Regular expressions are the backbone of all parsers, so you must know how to use them before you can write a parser.
+The |library| parsers use regular expressions (regex) to match patterns in the device output. Regexes are the backbone of all parsers, so you must know how to use them before you can write a parser.
 
 The following references provide detailed information about how to use regular expressions:
 
@@ -1166,7 +1169,6 @@ To create your own unit test, complete the following steps.
 
    .. image:: ../images/unit_test_results.png
 
-|
 
 #. Take a screen capture of the test results and save them as an image file. When you :ref:`open a pull request <open-pull-request>`, you must attach the unit test results.
 
@@ -1180,7 +1182,7 @@ To create your own unit test, complete the following steps.
 8. Contributing your work to the pyATS project
 **********************************************
 
-You've written your parser, you've made and run tests for it, and you're ready
+You've written your parser, you've run tests on your parser, and you're ready
 to contribute your parser. Great! For your convenience, the steps required to
 make a good pull request are outlined here, but before you start them, go read the
 `pyATS contribution guide <https://pubhub.devnetcloud.com/media/pyats-development-guide/docs/contribute/contribute.html#contribute>`_.
