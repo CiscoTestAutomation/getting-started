@@ -21,10 +21,10 @@ Remember to share your new parser with the rest of the |pyATS| user community! P
 
 Heads up! This guide contains lots useful information and handy examples, which
 also means that there's a lot to read before you can actually get to parts about coding a
-parser! We get it, it's cool. Click :ref:`here <regex-parser>` to
-get right to the fun stuff. Just make sure to read up on the rest of this guide
-before you say "finished" and go contributing to the Genie parser repo! It will
-save you time in the end. Trust us.
+parser. If you want to skip the reading and just get right to the fun stuff, then
+by all means, skip ahead by clicking :ref:`here <regex-parser>`! We get it, it's cool.
+Just promise to read the rest of this guide before you say "finished!" and go
+contributing to the Genie parser repo. It will save you (and us) time in the end.
 
 
 | 1. :ref:`What is a parser? <what_is_a_parser>`
@@ -36,17 +36,17 @@ save you time in the end. Trust us.
 |     5.1.1. :ref:`Identifying keys directy from show command output <keys_from_show_command>`
 |     5.1.2. :ref:`Identifying keys from XML output <keys_from_XML>`
 |     5.1.3. :ref:`Identifying keys from the YANG data model <keys_from_YANG>`
-|   5.2. :ref:`Explore other pyATS schemas <schemaexamples>`
+|   5.2. :ref:`Creating a schema based on an existing model <schema_on_existing_model>`
+|   5.3. :ref:`Explore other pyATS schemas <schemaexamples>`
 | 6. :ref:`Writing the Parser Class <writing_the_parser_class>`
 |   6.1. :ref:`Writing a parser class with RegEx <regex-parser>`
-|   6.2. :ref:`Write a parser class with the parsergen package <parsergen>`
+|   6.2. :ref:`Writing a parser class with the parsergen package <parsergen>`
 | 7. :ref:`Testing your parser <testingyourparser>`
 |   7.1. :ref:`Folder based testing <folder_based_testing>`
 |   7.2. :ref:`Unittest based testing <unittest_based_testing>`
+| 8. :ref:`Contributing your work to the pyATS project <contributing_your_work>`
 
 
-TODO
-Finish this ^^ table of contents
 
 .. _what_is_a_parser:
 
@@ -111,29 +111,28 @@ If this is your first time writing a pyATS parser or if you're looking for an ea
 to jump right into things, then start here. This section will outline how to
 easily set up a development environment that can be used for writing a parser.
 
-Things you'll need before starting:
-
-- Python 3.6 (or newer)
-- pip
-- git
+| Things you'll need before starting:
+|   - Python 3.6 (or newer)
+|   - pip
+|   - git
 
 #. Fork the https://github.com/CiscoTestAutomation/genieparser repo.
 
-#. Create a python virtual environment, activate it, and install pyATS into it:
+#. Create a python virtual environment, activate it, and install pyATS into it.
 
-    .. code-block:: python
+   .. code-block:: python
 
-        $ python -m venv <directory_of_your_choice>
-        $ source <directory_of_your_choice>/bin/activate
-        $ pip install pyats[full]
+    $ python -m venv <directory_of_your_choice>
+    $ source <directory_of_your_choice>/bin/activate
+    $ pip install pyats[full]
 
 #. Once the installation has finished, clone your ``genieparser`` repo (replace ``YOUR_USERNAME`` with your Gihub account username) and run ``make develop`` to get your environment ready to work in.
 
-    .. code-block:: python
+   .. code-block:: python
 
-        $ git clone https://github.com/YOUR_USERNAME/genieparser
-        $ cd genieparser
-        $ make develop
+    $ git clone https://github.com/YOUR_USERNAME/genieparser
+    $ cd genieparser
+    $ make develop
 
 
 At this point, you are now ready to start writing your parser, but if you'd
@@ -290,8 +289,9 @@ looks like this can be created:
             },
         }
 
-To see what the parsed output is when using this schema, click here [HYPERLINK TO SHOW_TRACK GOLDEN OUTPUT 1 EXPECTED]
-To see the file that contains the above ShowTrackSchema class, click `here <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_track.py>`_
+If you want to jump ahead and see what the parsed output is when using this
+schema, then click :ref:`here <golden_output_example>`.
+The file that contains the above ShowTrackSchema class can be found `here <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_track.py>`_.
 
 In the above schema example, you can see the use of two schema subclasses; ``Any`` and ``Optional``.
 As you might expect, ``Any`` is used to match anything and is often used in larger
@@ -486,10 +486,56 @@ In this example, your schema could include the keys :monospace:`state`, :monospa
         augment /if:interfaces/if:interface/ip:ipv4/ip:neighbor:
             +--ro remaining-expiry-time?   uint32
 
-|
+
+.. _schema_on_existing_model:
+
+5.2 Creating a schema based on an existing model
+================================================
+
+Check Genie Model to check if the parser feature you are working on has a Model: Genie Models
+
+    Check the Model Ops structure
+    Create the Parser Schema to be as close as possible to the Genie Model Ops Structure
+
+If you want to create a new schema, you can base it on the keys for an existing feature.
+
+#. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
+
+#. For this example, select **interface**, and then select **MODEL** to open a PDF file that contains the interface model.
+
+#. Navigate to the **Interface Ops structure** section.
+
+   .. image:: ../images/ops_structure.png
+      :scale: 40 %
+
+   |br|  *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br|
+
+#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema defintion. Use JSON format and save the file as a :monospace:`*.py` file.
+
+   .. code-block:: python
+
+    class ShowInterfacesSchema(MetaParser):
+    """schema for show interfaces
+                  show interfaces <interface>"""
+
+    schema = {
+            Any(): {
+                'oper_status': str,
+                Optional('line_protocol'): str,
+                'enabled': bool,
+                Optional('connected'): bool,
+                Optional('description'): str,
+                'type': str,
+
+
+   .. note:: You must specify the value type, such as integer, string, boolean, or list.
+
+   You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_.
+
+
 .. _schemaexamples:
 
-5.2 Explore other pyATS schemas
+5.3 Explore other pyATS schemas
 ===============================
 
 If you want to do some exploration of existing schemas, or if you
@@ -528,7 +574,7 @@ The |library| parsers look for specific patterns in the device output and then s
 There are two main ways to write the parser class:
 
 #. :ref:`Writing a parser class with regular expressions. <regex-parser>`
-#. :ref:`Write a parser class with the parsergen package. <parsergen>`
+#. :ref:`Writing a parser class with the parsergen package. <parsergen>`
 
 Most of the parsers in the pyATS parser library are written using regular
 expressions. It's a little more work to write regexes for each piece of
@@ -678,8 +724,8 @@ The following table describes the structure of the parser class in more detail.
 
 .. _parsergen:
 
-6.2 Write a parser class with the parsergen package
-===================================================
+6.2 Writing a parser class with the parsergen package
+=====================================================
 
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
@@ -768,53 +814,6 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
    (pyats) $ python parsergen_script.py
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 |
 |
 
@@ -859,7 +858,7 @@ parser. Simply navigate to the root directory of the genieparser repo and execut
 
 .. code-block:: bash
 
-    root@197979f5dbd6:/genieparser/make json
+    .../genieparser/make json
 
 `make json` will then create/update a json file which will link commands to
 their related class.
@@ -913,7 +912,7 @@ To create a folder based test with cli based output, follow these simple tests.
 
     * e.g. `src/genie/libs/parser/iosxe/tests/ShowClock/cli/empty/empty_output.txt`.
     * This file should be either empty or partial output that will not raise a `SchemaEmptyParserError` error.
-  * Within the `equal` folder create the raw output, expected value, and potentially arguments.
+  * Within the `equal` folder create the raw output, expected value, and potential arguments.
 
     * The files are grouped together by stripping `_output.txt`, `_expected.py`, and `_arguments.json` and comparing the names that match.
 
@@ -925,7 +924,7 @@ To create a folder based test with cli based output, follow these simple tests.
 
 Following that process, you should end up with a folder structure that looks similar to:
 
-   .. code-block:: bash
+.. code-block:: bash
 
     ShowClock
     └── cli
@@ -939,46 +938,107 @@ Following that process, you should end up with a folder structure that looks sim
 
 Ideally, this entire process once known, should only take a few seconds to create files and a few minutes to populate those files. For testing purposes you can run the tests locally. You can either run all tests, run a single OS tests, or run a single command tests for a single OS, as shown below from *within the tests folder*.
 
-   .. code-block:: bash
+.. code-block:: bash
 
-    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py
-    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe
-    root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+    .../genieparser/tests$ python ci_folder_parsing.py
+    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe
+    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
 
 The output will show you the something similar, which will provide the `PASSED` and `FAILED` results.
 
-   .. code-block:: bash
+.. code-block:: bash
 
-        root@197979f5dbd6:/genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
-        <cut for brevity>
-        2020-09-19T16:14:17: %AETEST-INFO: |                               Detailed Results                               |
-        2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
-        2020-09-19T16:14:17: %AETEST-INFO:  SECTIONS/TESTCASES                                                      RESULT
-        2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
-        2020-09-19T16:14:17: %AETEST-INFO: .
-        2020-09-19T16:14:17: %AETEST-INFO: `-- FileBasedTest                                                         PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:     `-- check_os_folder[operating_system=iosxe]                           PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1: iosxe -> ShowClock                                    PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1: Test Golden -> iosxe -> ShowClock                   PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1.1: Gold -> iosxe -> ShowClock -> golden_output       PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.2: Test Empty -> iosxe -> ShowClock                    PASSED
-        2020-09-19T16:14:17: %AETEST-INFO:         `-- Step 1.2.1: Empty -> iosxe -> ShowClock -> empty_output       PASSED
-        2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
-        2020-09-19T16:14:17: %AETEST-INFO: |                                   Summary                                    |
-        2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of ABORTED                                                            0
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of BLOCKED                                                            0
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of ERRORED                                                            0
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of FAILED                                                             0
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSED                                                             1
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSX                                                              0
-        2020-09-19T16:14:17: %AETEST-INFO:  Number of SKIPPED                                                            0
-        2020-09-19T16:14:17: %AETEST-INFO:  Total Number                                                                 1
-        2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0%
-        2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
-        root@197979f5dbd6:/genieparser/tests$
+    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+    <cut for brevity>
+    2020-09-19T16:14:17: %AETEST-INFO: |                               Detailed Results                               |
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO:  SECTIONS/TESTCASES                                                      RESULT
+    2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
+    2020-09-19T16:14:17: %AETEST-INFO: .
+    2020-09-19T16:14:17: %AETEST-INFO: `-- FileBasedTest                                                         PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:     `-- check_os_folder[operating_system=iosxe]                           PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1: iosxe -> ShowClock                                    PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1: Test Golden -> iosxe -> ShowClock                   PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.1.1: Gold -> iosxe -> ShowClock -> golden_output       PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         |-- Step 1.2: Test Empty -> iosxe -> ShowClock                    PASSED
+    2020-09-19T16:14:17: %AETEST-INFO:         `-- Step 1.2.1: Empty -> iosxe -> ShowClock -> empty_output       PASSED
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO: |                                   Summary                                    |
+    2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of ABORTED                                                            0
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of BLOCKED                                                            0
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of ERRORED                                                            0
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of FAILED                                                             0
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSED                                                             1
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of PASSX                                                              0
+    2020-09-19T16:14:17: %AETEST-INFO:  Number of SKIPPED                                                            0
+    2020-09-19T16:14:17: %AETEST-INFO:  Total Number                                                                 1
+    2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0%
+    2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
+    root@197979f5dbd6:/genieparser/tests$
 
 
+.. _golden_output_example:
+
+Golden output example files
+---------------------------
+
+In section  :ref:`5.1.1 <keys_from_show_command>`, there are examples of the output from the ``show track``
+command for IOSXE. Below is what the parsed output from one of those
+examples looks like. You can explore these test files yourself by
+clicking `here <https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser/iosxe/tests/ShowTrack/cli/equal>`_.
+
+So, given this device output in ``golden_output1_output.txt``,
+
+.. code-block:: python
+
+  Track 2
+    IP route 10.21.12.0 255.255.255.0 reachability
+    Reachability is Down (no ip route), delayed Up (1 sec remaining) (connected)
+      1 change, last change 00:00:24
+    Delay up 20 secs, down 10 secs
+    First-hop interface is unknown (was Ethernet1/0)
+    Tracked by:
+      HSRP Ethernet0/0 3
+      HSRP Ethernet0/1 3
+
+the expected output from the parser in ``golden_output2_expected.py`` would be:
+
+.. code-block:: python
+
+    expected_output = {
+        'type': {
+            'IP route': {
+                'address': '10.21.12.0',
+                'mask': '255.255.255.0',
+                'state': 'Down',
+                'state_description': 'no ip route',
+                'delayed': {
+                    'delayed_state': 'Up',
+                    'secs_remaining': 1.0,
+                    'connection_state': 'connected',
+                },
+                'change_count': 1,
+                'last_change': '00:00:24',
+            }
+        },
+        'delay_up_secs': 20.0,
+        'delay_down_secs': 10.0,
+        'first_hop_interface_state': 'unknown',
+        'prev_first_hop_interface': 'Ethernet1/0',
+        'tracked_by': {
+            1: {
+                'name': 'HSRP',
+                'interface': 'Ethernet0/0',
+                'group_id': '3'
+            },
+            2: {
+                'name': 'HSRP',
+                'interface': 'Ethernet0/1',
+                'group_id': '3'
+            }
+        }
+    }
 
 |
 
@@ -1098,166 +1158,73 @@ To create your own unit test, complete the following steps.
 
 #. Execute the tests:
 
-   .. code-block:: bash
+    .. code-block:: bash
 
-    python test_show_lisp_new.py -v
+        python test_show_lisp_new.py -v
 
    *Result*:
 
    .. image:: ../images/unit_test_results.png
 
-   |br| |br|
+|
 
 #. Take a screen capture of the test results and save them as an image file. When you :ref:`open a pull request <open-pull-request>`, you must attach the unit test results.
 
-   .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
+.. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
 
+|
 
-.. _contributingyourwork:
+.. _contributing_your_work:
 
-Contributing your work to the pyATS project
-===========================================
+**********************************************
+8. Contributing your work to the pyATS project
+**********************************************
 
-TODO write this section
-runAll + compileAll screenshots,
+You've written your parser, you've made and run tests for it, and you're ready
+to contribute your parser. Great! For your convenience, the steps required to
+make a good pull request are outlined here, but before you start them, go read the
+`pyATS contribution guide <https://pubhub.devnetcloud.com/media/pyats-development-guide/docs/contribute/contribute.html#contribute>`_.
+Seriously. It's good stuff. Please follow the steps closely as it saves time for you and also for our
+development team! The `genieparser repo README <https://github.com/CiscoTestAutomation/genieparser#genie-parser>`_
+also contains useful information on submitting your parser.
+
+#. Make sure your code compiles properly by running ``make compile`` in the root directory of your genierepo repository and take a screenshot of the results.
+
+   .. code-block:: bash
+
+    .../genieparser$ make compile
+
+#. Make sure all tests pass by running ``make test`` in the root directory of your genierepo repository and by running ``ci_folder_parsing.py`` in the genieparser/tests directory. Screenshot the results of both commands.
+
+   .. code-block:: bash
+
+    .../genieparser$ make test
+    .../genieparser$ cd tests
+    .../genieparser/tests$ python ci_folder_parsing.py
+
+#. Fix any errors found during compilation and testing.
+
+#. Create a new changelog file in ``genieparser/changelog/undistributed/``. The genieparser repo README explains how in the `how to write changelog <https://github.com/CiscoTestAutomation/genieparser#how-to-write-changelog>`_ section.
+
+#. Commit and push your changes to your forked genieparser repo.
+
+#. Create a pull request
+
+#. Fill out the Description, Motivation and Context, Impact, and Screenshots sections of the pull request form.
+
+   .. note:: This is where you should attach the 3 screenshots of the results of
+    ``make compile``, ``make test``, and ``python ci_folder_parsing.py``. Drag
+    and drop, select files to upload, or simply copy/paste them.
+
+#. Complete the Checklist section.
+
+#. Submit your pull request!
+
+|
+|
 
 See also...
 
 * `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
 * `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
 * :ref:`contribute`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Extra examples and supplemental information
-===========================================
-
-
-.. _schemabasedonanexistingmodel:
-
-Creating a schema based on an existing model
---------------------------------------------
-
-Check Genie Model to check if the parser feature you are working on has a Model: Genie Models
-
-    Check the Model Ops structure
-    Create the Parser Schema to be as close as possible to the Genie Model Ops Structure
-
-If you want to create a new schema, you can base it on the keys for an existing feature.
-
-#. In a web browser, go to the `list of models <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/models>`_ on which you can base a new parser schema.
-
-#. For this example, select **interface**, and then select **MODEL** to open a PDF file that contains the interface model.
-
-#. Navigate to the **Interface Ops structure** section.
-
-   .. image:: ../images/ops_structure.png
-      :scale: 50 %
-
-   |br| |br| *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br| |br|
-
-#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema defintion. Use JSON format and save the file as a :monospace:`*.py` file.
-
-   .. code-block:: python
-
-    class ShowInterfacesSchema(MetaParser):
-    """schema for show interfaces
-                  show interfaces <interface>"""
-
-    schema = {
-            Any(): {
-                'oper_status': str,
-                Optional('line_protocol'): str,
-                'enabled': bool,
-                Optional('connected'): bool,
-                Optional('description'): str,
-                'type': str,
-
-
-   .. note:: You must specify the value type, such as integer, string, boolean, or list.
-
-   You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_.
-
-
-
-
-
-
-
-##################
-H1: document title
-##################
-
-Introduction text.
-
-
-*********
-Sample H2
-*********
-
-Sample content.
-
-
-**********
-Another H2
-**********
-
-Sample H3
-=========
-
-Sample H4
----------
-
-Sample H5
-^^^^^^^^^
-
-Sample H6
-"""""""""
