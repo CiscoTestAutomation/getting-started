@@ -33,11 +33,17 @@ save you time in the end. Trust us.
 | 4. :ref:`Setting up your development environment <setting_up_your_environment>`
 | 5. :ref:`Writing the Schema Class <writing_the_schema_class>`
 |   5.1 :ref:`Creating a schema <creating_a_schema>`
-|     5.1.1 :ref:`Identifying keys directy from show command output <keys_from_show_command>`
-|     5.1.2 :ref:`Identifying keys from XML output <keys_from_XML>`
-|     5.1.3 :ref:`Identifying keys from the YANG data model <keys_from_YANG>`
-|   5.2 :ref:`Explore other pyATS schemas <schemaexamples>`
+|     5.1.1. :ref:`Identifying keys directy from show command output <keys_from_show_command>`
+|     5.1.2. :ref:`Identifying keys from XML output <keys_from_XML>`
+|     5.1.3. :ref:`Identifying keys from the YANG data model <keys_from_YANG>`
+|   5.2. :ref:`Explore other pyATS schemas <schemaexamples>`
 | 6. :ref:`Writing the Parser Class <writing_the_parser_class>`
+|   6.1. :ref:`Writing a parser class with RegEx <regex-parser>`
+|   6.2. :ref:`Write a parser class with the parsergen package <parsergen>`
+| 7. :ref:`Testing your parser <testingyourparser>`
+|   7.1. :ref:`Folder based testing <folder_based_testing>`
+|   7.2. :ref:`Unittest based testing <unittest_based_testing>`
+
 
 TODO
 Finish this ^^ table of contents
@@ -206,7 +212,7 @@ Writing a schema based on device output can range from straightforward to
 surprisingly complex. Having multiple examples of device output for a given
 command can be incredibly helpful when designing a schema.
 
-For example, the output from the `show track` command for IOSXE can look like
+For example, the output from the ``show track`` command for IOSXE can look like
 this:
 
 .. code-block:: python
@@ -284,8 +290,8 @@ looks like this can be created:
             },
         }
 
-To see what the parsed output would be using this schema would be, scroll down
-to the tsting section, or simply click here [HYPERLINK TO SHOW_TRACK GOLDEN OUTPUT 1 EXPECTED]
+To see what the parsed output is when using this schema, click here [HYPERLINK TO SHOW_TRACK GOLDEN OUTPUT 1 EXPECTED]
+To see the file that contains the above ShowTrackSchema class, click `here <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_track.py>`_
 
 In the above schema example, you can see the use of two schema subclasses; ``Any`` and ``Optional``.
 As you might expect, ``Any`` is used to match anything and is often used in larger
@@ -294,8 +300,6 @@ may not exist in the device output.
 
 There are other helpful subclasses that can be used in the creation of your schema such as ``Default``, ``And``,
 and ``Or``. Visit the `Schema Engine Documentation <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/advanced/schemaengine.html#other-types-of-schema>`_ to read more about them and how to use them.
-
-The file that contains the above ShowTrackSchema class can be found here -> `show_track.py <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_track.py>`_
 
 
 Generate mock device output
@@ -503,38 +507,6 @@ website
     :scale: 70 %
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 |
 |
 
@@ -543,19 +515,6 @@ website
 ***************************
 6. Writing the Parser Class
 ***************************
-
-Two main ways to go about writing the parser class:
-
-- using self defined regex patterns
-- using the pyats parsergen package.
-
-explain pros and cons of both. better control for regex but more work vs parser
-gen works best when info is in a tabular format.
-
-.. _pattern-matching:
-
-6.1 Pattern matching
-====================
 
 The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information as a set of key-value pairs, as shown in the following example of a section of parsed output::
 
@@ -566,6 +525,15 @@ The |library| parsers look for specific patterns in the device output and then s
     "auto_negotiate": true,
     "bandwidth": 1000000,
 
+There are two main ways to write the parser class:
+
+#. :ref:`Writing a parser class with regular expressions. <regex-parser>`
+#. :ref:`Write a parser class with the parsergen package. <parsergen>`
+
+Most of the parsers in the pyATS parser library are written using regular
+expressions. It's a little more work to write regexes for each piece of
+data, but it offers excellent control for pattern matching and for assigning
+the right values to the right keys in the right way.
 
 The |library| parsers use regular expressions (regex) to match patterns in the device output. Regular expressions are the backbone of all parsers, so you must know how to use them before you can write a parser.
 
@@ -580,23 +548,6 @@ The following online tools can help you build and test Python regular expression
 * https://pythex.org/
 * https://regex101.com/
 
-6.2 |library| parser packages
-=============================
-
-The |library| uses the following two packages to parse (pattern match) device output data (text):
-
-#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser
-returns a fixed data structure based upon the parser's schema. The metaparser
-is an important aspect of how a pyATS parser works behind the scenes. More
-information about it can be found `here <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/introduction.html>`_.
-
-#. The ``genie.libs.parser`` package contains Python classes that parse device
-data using regular expressions. A parser can parse output from different
-protocols, such as CLI, XML, NETCONF, and YANG. Each parser's associated schema
-defines the data structure of the parsed output. When you contribute a parser to
-pyATS, it will become part of this package.
-
-
 .. note:: The |library| standard parsers use regular expressions for scalability. You can, however, write a parser that uses any of the following tools:
 
   * `TextFSM <https://github.com/google/textfsm/wiki/TextFSM>`_
@@ -606,8 +557,8 @@ pyATS, it will become part of this package.
 
 .. _regex-parser:
 
-Write a parser class with RegEx
-===============================
+6.1 Writing a parser class with RegEx
+=====================================
 
 When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema.
 
@@ -727,8 +678,8 @@ The following table describes the structure of the parser class in more detail.
 
 .. _parsergen:
 
-Write a parser class with the parsergen package
-===============================================
+6.2 Write a parser class with the parsergen package
+===================================================
 
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
@@ -818,30 +769,116 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
    (pyats) $ python parsergen_script.py
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|
+|
+
 .. _testingyourparser:
 
-Testing your new parser
-=======================
-Remember to execute `make json` every time you create a new parser.
+**********************
+7. Testing your parser
+**********************
 
-`make json` will create a json file which will link command and related class.
-This json file will be used when device.parse is executed inorder to find parser class based on command.
-Without `make json` device.parse will not be able to find the parser class and hence will show "Could not find parser" error.
+Now that you've finished writing your parser, the time has come to test it!
 
-Example:
-When you do device.parse('show version') for IOS with platform c7600 it will search for that command in json file containing that os and platform and import the class::
- {"show version": {
-    "ios": {
-    "c7600": {
-        "class": "ShowVersion",
-        "doc": "\n    parser for command: show version\n    ",
-        "module_name": "show_platform",
-        "package": "genie.libs.parser",
-        "uid": "show_version",
-        "url": "https://github.com/CiscoTestAutomation/genieparser/tree/master/src/genie/libs/parser/ios/c7600/show_platform.py#L17"
-    }}}}
+There are currently two mechanisms to create tests as the testing strategy is
+in a state of transition. The reasoning for the new testing type is to avoid
+merge conflicts, removing duplicate boilerplate code, ensuring tests are built,
+and making the process overall easier. However, in the meantime unfortunately
+a user may create different tests depending on the OS of the parser that
+they wrote.
 
-Run your parser on a real device to make sure that you get the expected parsed output. The following example shows how to do this in pure Python:
+:ref:`Folder based testing <folder_based_testing>` is currently supported for:
+
+  * ASA
+  * IOS
+  * IOSXE
+
+All other OS's use :ref:`unittest based testing <unittest_based_testing>`.
+
+.. important::
+    If you want to contribute your new parser to the open-source |pyATS| feature
+    libraries and components, you must attach testing results for each parser
+    that you want to contribute.
+
+
+Make JSON
+=========
+
+Before we can run any tests, we need to incorporate your new parser into the pyATS
+``genie.libs.parser`` package using the `make json` command.
+
+The `make json` command makes it easy to let pyATS know about how to use your new
+parser. Simply navigate to the root directory of the genieparser repo and execute
+`make json`.
+
+.. code-block:: bash
+
+    root@197979f5dbd6:/genieparser/make json
+
+`make json` will then create/update a json file which will link commands to
+their related class.
+This json file will be used when device.parse is executed in order to find
+the correct parser class based on the given command.
+
+.. attention::
+    Remember to execute `make json` every time you create a new parser!
+    Without `make json`, device.parse will not be able to find the parser class
+    and you'll end up with a ``Could not find parser`` error when trying to test
+    your parser.
+
+|
+
+**Try your parser on a real device**
+
+If possible, it is recommended to run your parser on a real device to make sure
+that you get the expected parsed output. The following example shows how to do
+this in pure Python:
 
 .. code-block:: python
 
@@ -851,17 +888,12 @@ Run your parser on a real device to make sure that you get the expected parsed o
  dev.connect()
  p1 = dev.parse('show inventory')
 
-If you want to contribute your new parser to the open-source |pyATS| feature libraries and components, you must attach unit test results for each parser that you want to contribute.
 
-There are currently two mechanisms to create tests as the testing strategy is in a state of transition. The reasoning for the new testing type is to avoid merge conflicts, removing duplicate boilerplate code, ensuring tests are built, and making the process overall easier. However, in the meantime unfortunately a user may create different tests depending on the OS of the parser that they wrote.
+|
+.. _folder_based_testing:
 
-Folder based parsers are currently supported for:
-
-  * ASA
-  * IOS
-  * IOSXE
-
-All other OS's are still leveraging the unittest library.
+7.1 Folder based testing (ASA, IOS, and IOSXE)
+==============================================
 
 To create a folder based test with cli based output, follow these simple tests.
 
@@ -945,6 +977,15 @@ The output will show you the something similar, which will provide the `PASSED` 
         2020-09-19T16:14:17: %AETEST-INFO:  Success Rate                                                            100.0%
         2020-09-19T16:14:17: %AETEST-INFO: --------------------------------------------------------------------------------
         root@197979f5dbd6:/genieparser/tests$
+
+
+
+|
+
+.. _unittest_based_testing:
+
+7.2 Unittest based testing
+==========================
 
 The other testing strategy leverages unittest. The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
 
