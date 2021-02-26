@@ -19,9 +19,13 @@ Remember to share your new parser with the rest of the |pyATS| user community! P
     - `Creating a pyATS | Genie Parser from SCRATCH <https://youtu.be/knxkbWTamBY>`_ - uploaded by `Data Knox <https://www.youtube.com/channel/UCi7SD3zfCjkiDWvSFthIQSg>`_
         - Data Knox's gives a full hands on parser writing guide from start to finish
 
-This guide contains lots information and exmaples,
-so please feel free to use the following links to jump around in this guide as
-you choose.
+Heads up! This guide contains lots useful information and handy examples, which
+also means that there's a lot to read before you can actually get to parts about coding a
+parser! We get it, it's cool. Click :ref:`here <regex-parser>` to
+get right to the fun stuff. Just make sure to read up on the rest of this guide
+before you say "finished" and go contributing to the Genie parser repo! It will
+save you time in the end. Trust us.
+
 
 | 1. :ref:`What is a parser? <what_is_a_parser>`
 | 2. :ref:`Why write a parser? <why_write_a_parser>`
@@ -551,7 +555,7 @@ gen works best when info is in a tabular format.
 .. _pattern-matching:
 
 6.1 Pattern matching
-^^^^^^^^^^^^^^^^^^^^
+====================
 
 The |library| parsers look for specific patterns in the device output and then structure the output as a set of key-value pairs. When you write a parser, you specify the patterns that you want the parser to match. For example, the ``show interfaces`` parser looks for patterns and returns the information as a set of key-value pairs, as shown in the following example of a section of parsed output::
 
@@ -577,20 +581,21 @@ The following online tools can help you build and test Python regular expression
 * https://regex101.com/
 
 6.2 |library| parser packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=============================
 
 The |library| uses the following two packages to parse (pattern match) device output data (text):
 
-#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser returns a fixed data structure based on the parser's :ref:`schema <schema>` (definition of the key-value pairs).
+#. The ``genie.metaparser`` (Metaparser) core package ensures that each parser
+returns a fixed data structure based upon the parser's schema. The metaparser
+is an important aspect of how a pyATS parser works behind the scenes. More
+information about it can be found `here <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/introduction.html>`_.
 
-#. The ``genie.libs.parser`` package contains Python classes that parse device data using regular expressions. A parser can parse output from different protocols, such as CLI, XML, NETCONF, and YANG. Each parser's associated schema defines the data structure of the parsed output.
+#. The ``genie.libs.parser`` package contains Python classes that parse device
+data using regular expressions. A parser can parse output from different
+protocols, such as CLI, XML, NETCONF, and YANG. Each parser's associated schema
+defines the data structure of the parsed output. When you contribute a parser to
+pyATS, it will become part of this package.
 
-TODO remove this image as it is available here https://pubhub.devnetcloud.com/media/genie-metaparser/docs/introduction.html
-Put a link to this page instead!
-
-The following illustration shows how the Metaparser and parser classes work together to standardize parsed output.
-
-.. image:: ../images/structure.png
 
 .. note:: The |library| standard parsers use regular expressions for scalability. You can, however, write a parser that uses any of the following tools:
 
@@ -602,7 +607,8 @@ The following illustration shows how the Metaparser and parser classes work toge
 .. _regex-parser:
 
 Write a parser class with RegEx
--------------------------------
+===============================
+
 When you write a new parser class, you can define the regular expressions used to match patterns in the device output. The parser adds the matched patterns as key-value pairs to a Python dictionary. The parser class inherits from the schema class to ensure that the resulting Python dictionary exactly follows the format of the defined schema.
 
 The following example shows a schema and parser class for the ``show lisp session`` command. As you can see, the schema and parser classes are defined in the same Python file. Take a look at the example, and then we'll explain how it works.
@@ -722,7 +728,7 @@ The following table describes the structure of the parser class in more detail.
 .. _parsergen:
 
 Write a parser class with the parsergen package
------------------------------------------------
+===============================================
 
 The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
@@ -815,7 +821,7 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 .. _testingyourparser:
 
 Testing your new parser
------------------------
+=======================
 Remember to execute `make json` every time you create a new parser.
 
 `make json` will create a json file which will link command and related class.
@@ -1069,7 +1075,7 @@ To create your own unit test, complete the following steps.
 .. _contributingyourwork:
 
 Contributing your work to the pyATS project
--------------------------------------------
+===========================================
 
 TODO write this section
 runAll + compileAll screenshots,
