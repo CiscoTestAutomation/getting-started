@@ -12,8 +12,8 @@ Remember to share your new parser with the rest of the |pyATS| user community! P
 Heads up! This guide contains lots useful information and handy examples, which
 also means that there's a lot to read before you can actually get to parts about coding a
 parser. If you want to skip the reading and just get right to the fun stuff, then
-by all means, skip ahead by clicking :ref:`here <regex-parser>`! We get it, it's cool.
-Just promise to read the rest of this guide before you say "finished!" and go
+by all means, skip ahead by clicking :ref:`here <regex-parser>`. We get it, it's cool.
+Just be sure to read the rest of this guide before 
 contributing to the Genie parser repo. It will save you (and us) time in the end.
 
 .. tip::
