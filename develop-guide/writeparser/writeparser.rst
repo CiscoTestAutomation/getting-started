@@ -9,6 +9,13 @@ This topic describes why and how to write your own parsers to meet your network 
 
 Remember to share your new parser with the rest of the |pyATS| user community! Please see the topic :ref:`contribute` for more information.
 
+Heads up! This guide contains lots useful information and handy examples, which
+also means that there's a lot to read before you can actually get to parts about coding a
+parser. If you want to skip the reading and just get right to the fun stuff, then
+by all means, skip ahead by clicking :ref:`here <regex-parser>`! We get it, it's cool.
+Just promise to read the rest of this guide before you say "finished!" and go
+contributing to the Genie parser repo. It will save you (and us) time in the end.
+
 .. tip::
     If you're the kind of person who prefers to learn by video
     instead of reading about it, then please checkout these great videos
@@ -18,13 +25,6 @@ Remember to share your new parser with the rest of the |pyATS| user community! P
         - Juhi provides a good overview of parser creation process
     - `Creating a pyATS | Genie Parser from SCRATCH <https://youtu.be/knxkbWTamBY>`_ - uploaded by `Data Knox <https://www.youtube.com/channel/UCi7SD3zfCjkiDWvSFthIQSg>`_
         - Data Knox's gives a full hands on parser writing guide from start to finish
-
-Heads up! This guide contains lots useful information and handy examples, which
-also means that there's a lot to read before you can actually get to parts about coding a
-parser. If you want to skip the reading and just get right to the fun stuff, then
-by all means, skip ahead by clicking :ref:`here <regex-parser>`! We get it, it's cool.
-Just promise to read the rest of this guide before you say "finished!" and go
-contributing to the Genie parser repo. It will save you (and us) time in the end.
 
 
 | 1. :ref:`What is a parser? <what_is_a_parser>`
@@ -94,8 +94,8 @@ A parser is composed of two Python classes:
 |   3. Iterate through each line of the device output data.
 |   4. Look for patterns in the output and add any matching patterns to a Python dictionary.
 
-Using these classes together results in output that is a standardized
-and relaibly structured. This is crucial for network automation
+Using these classes together results in output that is standardized
+and reliably structured. This is crucial for network automation
 scripts to work across different types of OS's and communication
 protocols.
 
@@ -1229,4 +1229,5 @@ See also...
 
 * `Cisco Live DevNet workshop 2601 - pyATS/GENIE ops and parsers <https://github.com/RunSi/DEVWKS-2601>`_
 * `Available parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_
+* `This excellent blog post <https://anirudhkamath.github.io/network-automation-blog/notes/genie-parsing.html>`_ by `Anirudh Kamath <https://github.com/anirudhkamath>`_
 * :ref:`contribute`
