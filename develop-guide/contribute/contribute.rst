@@ -71,12 +71,12 @@ GitHub basics
 ^^^^^^^^^^^^^
 You need to know a few basic GitHub commands and processes to download, change, and upload a feature library or component.
 
-.. note:: Internal Cisco developers and engineers use Bitbucket rather than GitHub to commit changes. The |library| team synchronizes the Bitbucket and GitHub repos as part of each monthly release.
+.. note:: Internal Cisco developers and engineers use Cisco Internal GitHub to commit changes. The |library| team synchronizes the Cisco Internal GitHub and GitHub repos as part of each monthly release.
 
 In GitHub, *branches* separate different versions of the same repository (repo), so that more than one person can make changes at the same time. We use the following:
 
 * *master* branch --- contains code that is already released or ready to be released.
-* *dev* branch --- (internal, Bitbucket users only) contains code that is stable, reviewed, and ready to release.
+* *dev* branch --- (Cisco Internal GitHub only) contains code that is stable, reviewed, and ready to release.
 * *fork* --- contains a complete copy of the original repository. This is what you use to make your changes.
 
 .. _clone-repo:
@@ -100,7 +100,7 @@ Clone the repo
 #. Fork a repository (see https://help.github.com/en/articles/fork-a-repo).
 
    * On GitHub (DevNet users), fork off of the master branch.
-   * On Bitbucket (internal Cisco users), fork off of the dev branch. |br| |br|
+   * On Cisco Internal GitHub (internal Cisco users), fork off of the dev branch. |br| |br|
 
    *Result*: This step creates a copy of the repository that you can work on without affecting anyone else's work. |br| |br|
 
@@ -110,11 +110,11 @@ Clone the repo
 
    where *repo_name* is the name of the repository you want to work on. |br| |br|
 
-.. note:: For internal Cisco users on Bitbucket, make sure you are on the :monospace:`dev` branch of the repo when you clone it.
+.. note:: For internal Cisco users on Cisco Internal GitHub, make sure you are on the :monospace:`dev` branch of the repo when you clone it.
 
 Write new code
 --------------
-After you clone the repo from GitHub (DevNet) or Bitbucket (internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
+After you clone the repo from GitHub (DevNet) or Cisco Internal GitHub (Cisco internal), you can activate the develop mode, make your changes, and request approval (:ref:`open a pull request <open-pull-request>`).
 
 As a guide, follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_. Note the following items:
 
@@ -325,7 +325,7 @@ Commit procedure
 
 #. When you have committed all of your changes, you can "push" them to your fork.
 
-   * Internal Cisco users -- :monospace:`dev` branch in Bitbucket::
+   * Internal Cisco users -- :monospace:`dev` branch in Cisco Internal GitHub::
 
       git push origin dev
 
