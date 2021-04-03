@@ -99,8 +99,8 @@ Clone the repo
 
 #. Fork a repository (see https://help.github.com/en/articles/fork-a-repo).
 
-   * On GitHub (DevNet users), fork off of the master branch.
-   * On Cisco Internal GitHub (internal Cisco users), fork off of the dev branch. |br| |br|
+   * On GitHub (DevNet users), fork off of the *master* branch.
+   * On Cisco Internal GitHub (internal Cisco users), fork off of the *dev* branch. |br| |br|
 
    *Result*: This step creates a copy of the repository that you can work on without affecting anyone else's work. |br| |br|
 
@@ -142,11 +142,7 @@ Conf or Ops packages
 
 #. :ref:`Clone the relevant repository <clone-repo>`. |br| |br|
 
-#. Uninstall the packages::
-
-    pip uninstall genie.libs.conf genie.libs.ops genie.libs.sdk genie.libs.robot -y
-
-#. Change directories::
+#. Move to directory where repository is cloned::
 
     cd genielibs
 
@@ -154,7 +150,7 @@ Conf or Ops packages
 
     make develop
 
-   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``conf``, ``ops``, ``robot``, and ``sdk`` packages. |br| |br|
+   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``conf``, ``ops``, ``robot``, ``sdk``, ``health``, ``clean`` and ``filetransferutils`` packages. |br| |br|
 
 #. Write your own code as required.
 
@@ -168,11 +164,7 @@ Parsers
 ^^^^^^^
 #. :ref:`Clone the relevant repository <clone-repo>`. |br| |br|
 
-#. Uninstall the packages::
-
-    pip uninstall genie.libs.parser -y
-
-#. Change directories::
+#. Move to directory where repository is cloned::
 
     cd genieparser
 
@@ -180,7 +172,7 @@ Parsers
 
     make develop
 
-   *Result*: The system installs dependencies and packages, and sets up the development environment. |br| |br|
+   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``parser`` package. |br| |br|
 
 #. See detailed steps for writing and testing a parser in the topic :ref:`write-parser`.
 
@@ -224,7 +216,7 @@ Internal Cisco users
 
    *Result*: The system displays the test results. |br| |br|
 
-#. For parsers, see the section :ref:`parser-unit-test`. |br| |br|
+#. For parsers, see the section `Testing your parser <https://pubhub.devnetcloud.com/media/pyats-development-guide/docs/writeparser/writeparser.html#testing-your-parser>`_. |br| |br|
 
 #. Did all of the tests pass?
 
@@ -257,7 +249,7 @@ External DevNet users
 
    *Result*: The system displays any failed tests and the number of tests run. |br| |br|
 
-#. For parsers, see the section :ref:`parser-unit-test`. |br| |br|
+#. For parsers, see the section `Testing your parser <https://pubhub.devnetcloud.com/media/pyats-development-guide/docs/writeparser/writeparser.html#testing-your-parser>`_. |br| |br|
 
 #. Did all of the tests pass?
 
@@ -268,11 +260,9 @@ External DevNet users
 
 Update the changelog
 --------------------
-We use changelogs for each package (:monospace:`genielibs/pkgs/<name>-pkg/changelog`) to track all development efforts by month and year.
+We use changelogs for each package (``changelog/undistributed/``) to track new features, updates and fixes.
 
-#. In the repo, locate the year and month for the next release.
-
-#. In your fork of the main repo, in the :monospace:`<month>.md` file, add a clear and brief description of your change.
+#. Create a new changelog file in ``changelog/undistributed/``. The genieparser repo README explains how in the `how to write changelog <https://github.com/CiscoTestAutomation/genieparser#how-to-write-changelog>`_ section.
 
 You can either edit the file directly, or change it locally and then :ref:`commit your changes <commit-changes>`.
 
@@ -339,8 +329,8 @@ Making good pull request
 ------------------------
 Before submitting your pull request (PR), there are several things to be considered:
 
-   * Make sure to follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`
-   * Think about backward-compatibility, make sure your changes do not break other's code. (see `PEP 387 <https://www.python.org/dev/peps/pep-0387/>`
+   * Make sure to follow the `PEP 8 -- Style Guide for Python Code <https://www.python.org/dev/peps/pep-0008/>`_
+   * Think about backward-compatibility, make sure your changes do not break other's code. (see `PEP 387 <https://www.python.org/dev/peps/pep-0387/>`_
    * Please ensure that you have added proper tests to verify your changes work as expected.
    * Run the entire test suite and making sure all tests passed.
    * Remember to update the changelog file for your changes.
