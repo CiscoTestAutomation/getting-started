@@ -348,11 +348,11 @@ to group data into containers, and use the Python's pretty print module.
    .. code-block:: python
 
         'interfaces': {
-            'interface_name': {
-                'oper_status': str,
-                'line_protocol': str,
-                'hardware': str,
-                'mac_address': str,
+            Any(): {                  # GigabitEthernet1
+                'oper_status': str,   # up
+                'line_protocol': str, # up
+                'hardware': str,      # CSR vNIC
+                'mac_address': str,   # 0800.2729.3800
                 ...
             ...
 
@@ -455,13 +455,13 @@ In this example, your schema could include the keys :monospace:`state`, :monospa
 
     git clone https://github.com/YangModels/yang.git
 
-#. Look for the latest model. (At the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang`)::
+#. Look for the latest model. (At the time of writing, this is |br| :monospace:`./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-11-04.yang`)::
 
-    find . | grep arp
+    find . | grep ietf-arp
 
 #. View the model and identify the keys::
 
-    pyang -f tree ./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-02-21.yang
+    pyang -f tree ./yang/experimental/ietf-extracted-YANG-modules/ietf-arp@2019-11-04.yang
 
    *Result*: You can see the YANG model with the keys and data types::
 
@@ -479,7 +479,6 @@ In this example, your schema could include the keys :monospace:`state`, :monospa
             |  +--rw enable?     boolean
             |  +--rw interval?   uint32
             +--ro statistics
-                +--ro discontinuity-time?    yang:date-and-time
                 +--ro in-requests-pkts?      yang:counter32
                 +--ro in-replies-pkts?       yang:counter32
                 +--ro in-gratuitous-pkts?    yang:counter32
@@ -513,7 +512,7 @@ If you want to create a new schema, you can base it on the keys for an existing 
 
    |br|  *Result*: The ops structure lists the keys that you can use to create your own parser schema. |br|
 
-#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema defintion. Use JSON format and save the file as a :monospace:`*.py` file.
+#. In a text editor, define the schema class, and then add the keys that you want your parser to return, as shown in the following example of part of a schema definition. Use JSON format and save the file as a :monospace:`*.py` file.
 
    .. code-block:: python
 
@@ -531,7 +530,7 @@ If you want to create a new schema, you can base it on the keys for an existing 
                 'type': str,
 
 
-   .. note:: You must specify the value type, such as integer, string, boolean, or list.
+   .. note:: You must specify the value type, such as integer, float, string, boolean, or list.
 
    You can see `the complete parser file on GitHub <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_interface.py#L178>`_.
 
@@ -628,24 +627,24 @@ The following example shows a schema and parser class for the ``show lisp sessio
 
     # These are the key-value pairs to add to the parsed dictionary
         schema = {
-            'vrf':
-                {Any():
-                    {'sessions':
-                        {'total': int,
+            'vrf': {
+                Any(): {
+                    'sessions': {
+                        'total': int,
                         'established': int,
-                        'peers':
-                            {Any():
-                                {'state': str,
+                        'peers': {
+                            Any(): {
+                                'state': str,
                                 'time': str,
                                 'total_in': int,
                                 'total_out': int,
                                 Optional('users'): int,
-                                },
-                            },
-                        },
-                    },
-                },
+                            }
+                        }
+                    }
+                }
             }
+        }
 
     # Python (this imports the Python re module for RegEx)
     import re
@@ -673,7 +672,6 @@ The following example shows a schema and parser class for the ``show lisp sessio
 
             # Defines the regex for the first line of device output, which is:
             # Sessions for VRF default, total: 3, established: 3
-
             p1 = re.compile(r'Sessions +for +VRF +(?P<vrf>(\S+)),'
                             ' +total: +(?P<total>(\d+)),'
                             ' +established: +(?P<established>(\d+))$')
@@ -681,16 +679,15 @@ The following example shows a schema and parser class for the ``show lisp sessio
             # Defines the regex for the next line of device output, which is:
             # Peer                           State      Up/Down        In/Out    Users
             # 2.2.2.2                        Up         00:51:38        8/13     3
-
             p2 = re.compile(r'(?P<peer>(\S+)) +(?P<state>(Up|Down)) +(?P<time>(\S+))'
                             ' +(?P<in>(\d+))\/(?P<out>(\d+)) +(?P<users>(\d+))$')
 
             # Defines the "for" loop, to pattern match each line of output
-
             for line in out.splitlines():
                 line = line.strip()
 
                 # Processes the matched patterns for the first line of output
+                # Sessions for VRF default, total: 3, established: 3
                 m = p1.match(line)
                 if m:
                     group = m.groupdict()
@@ -702,6 +699,8 @@ The following example shows a schema and parser class for the ``show lisp sessio
                     continue
 
                 # Processes the matched patterns for the second line of output
+                # Peer                           State      Up/Down        In/Out    Users
+                # 2.2.2.2                        Up         00:51:38        8/13     3
                 m = p2.match(line)
                 if m:
                     group = m.groupdict()
@@ -734,30 +733,30 @@ The |library| ``parsergen`` package provides a one-step parsing mechanism that c
 
 The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values.
 
-Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the NVE/VXLAN platform.
+Using ``parsergen`` to create a parser class is particularly useful when you don't have a |library| model for a feature. In this example, we'll create a new parser class for the VXLAN related parser.
 
 #. In a Python interpreter, import the required |library| and Python functionality (``re`` is the Python regex functionality):
 
    .. code-block:: python
 
-     from genie.testbed import load
-     from genie import parsergen
-     import re
-     from pprint import pprint
+    import re
+    from pprint import pprint
+    from genie.testbed import load
+    from genie import parsergen
 
 #. Load the testbed, create the device object, and connect to the device:
 
    .. code-block:: python
 
      testbed = load('mock_parser.yaml')
-     uut = testbed.devices['iosxe1']
-     uut.connect()
+     dev = testbed.devices['iosxe1']
+     dev.connect()
 
 #. Execute the show command and store the output in the variable ``output``:
 
    .. code-block:: python
 
-    output = uut.device.execute('show nve vni')
+    output = dev.execute('show nve vni')
 
    *Result*: You can see the tabular output::
 
@@ -861,7 +860,7 @@ parser. Simply navigate to the root directory of the genieparser repo and execut
 
 .. code-block:: bash
 
-    .../genieparser/make json
+    .../genieparser$ make json
 
 `make json` will then create/update a json file which will link commands to
 their related class.
@@ -888,7 +887,7 @@ this in pure Python:
  tb = load('yourtestbed.yaml')
  dev = tb.devices['uut']
  dev.connect()
- p1 = dev.parse('show inventory')
+ parsed_output = dev.parse('show inventory')
 
 
 |
@@ -1005,7 +1004,7 @@ So, given this device output in ``golden_output1_output.txt``,
       HSRP Ethernet0/0 3
       HSRP Ethernet0/1 3
 
-the expected output from the parser in ``golden_output2_expected.py`` would be:
+the expected output from the parser in ``golden_output1_expected.py`` would be:
 
 .. code-block:: python
 
@@ -1140,11 +1139,15 @@ To create your own unit test, complete the following steps.
 
 #. Make sure to save your parser file in the directory for the device OS::
 
-   /genie/libs/parser/iosxe/show_lisp_new.py
+   /genie/libs/parser/iosxe/show_lisp.py
+
+   .. note::
+   The idea where adding your parser is, if show command is ``show lisp <something>``,
+   add to `show_lisp.py`. So that we can easily find the parser code based on file name.
 
 #. Open a new text file, and save it in the :monospace:`tests` folder for the OS.
 
-#. In this new file, import the functionality shown in the example. Also, import your new parser class. In this example, :monospace:`show_lisp_new` is the parser file and :monospace:`ShowLispSessionNew` is the new parser class:
+#. In this new file, import the functionality shown in the example. Also, import your new parser class. In this example, :monospace:`show_lisp` is the parser file and :monospace:`ShowLispSessionNew` is the new parser class:
 
    .. code-block:: python
 
@@ -1153,7 +1156,7 @@ To create your own unit test, complete the following steps.
     from ats.topology import Device
     from ats.topology import loader
     from genie.metaparser.util.exceptions import SchemaEmptyParserError, SchemaMissingKeyError
-    from genie.libs.parser.iosxe.show_lisp_new import ShowLispSessionNew
+    from genie.libs.parser.iosxe.show_lisp import ShowLispSession
 
 #. Define the expected parsed and unparsed output. We refer to this as the "golden" output.
 
@@ -1163,14 +1166,14 @@ To create your own unit test, complete the following steps.
 
     .. code-block:: bash
 
-        python test_show_lisp_new.py -v
+        python test_show_lisp.py -v
 
    *Result*:
 
    .. image:: ../images/unit_test_results.png
 
 
-#. Take a screen capture of the test results and save them as an image file. When you :ref:`open a pull request <open-pull-request>`, you must attach the unit test results.
+#. After you push your parser testing to your branch, GitHub Actions will check it on your pull request. Please make sure your parser testing passes.
 
 .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
 
@@ -1190,21 +1193,9 @@ Seriously. It's good stuff. Please follow the steps closely as it saves time for
 development team! The `genieparser repo README <https://github.com/CiscoTestAutomation/genieparser#genie-parser>`_
 also contains useful information on submitting your parser.
 
-#. Make sure your code compiles properly by running ``make compile`` in the root directory of your genierepo repository and take a screenshot of the results.
+#. Make sure your testing passed via GitHub Actions.
 
-   .. code-block:: bash
-
-    .../genieparser$ make compile
-
-#. Make sure all tests pass by running ``make test`` in the root directory of your genierepo repository and by running ``ci_folder_parsing.py`` in the genieparser/tests directory. Screenshot the results of both commands.
-
-   .. code-block:: bash
-
-    .../genieparser$ make test
-    .../genieparser$ cd tests
-    .../genieparser/tests$ python ci_folder_parsing.py
-
-#. Fix any errors found during compilation and testing.
+#. Fix any errors found in GitHub Actions result.
 
 #. Create a new changelog file in ``genieparser/changelog/undistributed/``. The genieparser repo README explains how in the `how to write changelog <https://github.com/CiscoTestAutomation/genieparser#how-to-write-changelog>`_ section.
 
@@ -1213,10 +1204,6 @@ also contains useful information on submitting your parser.
 #. Create a pull request
 
 #. Fill out the Description, Motivation and Context, Impact, and Screenshots sections of the pull request form.
-
-   .. note:: This is where you should attach the 3 screenshots of the results of
-    ``make compile``, ``make test``, and ``python ci_folder_parsing.py``. Drag
-    and drop, select files to upload, or simply copy/paste them.
 
 #. Complete the Checklist section.
 
