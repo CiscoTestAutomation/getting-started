@@ -3,7 +3,7 @@ General Guidelines
 
 Environment Requirements
 ------------------------
-* Test suites, by default, shall not presume (depend on) any pre-existing 
+* Test suites, shall not presume (depend on) any pre-existing 
   configuration of the environment (e.g. routers, switches), and shall always 
   perform its own configurations, unless explicitly coded to be and/or 
   provided/told otherwise.
@@ -25,14 +25,22 @@ Headers & Comments
   describing in detail its author, support contacts, purpose, description, 
   usages & etc.
 
+# Lukas
+
 * All classes, functions, methods shall have headers using Python docstring 
   notation, describing its purpose, usage, arguments, return values and 
   providing examples.
 
+# Lukas api header example
+
 * Code blocks shall be commented, describing its steps and purpose
+
+# Lukas
 
 * Convoluted logic shall be commented, including descriptions for each 
   logic path.
+
+# Lukas
 
 * Code changes shall have in-line comments before the change, with the bug ID 
   and a brief explanation of what’s changed.
@@ -40,16 +48,16 @@ Headers & Comments
 Libraries & Packages
 --------------------
 
-* All users shall prioritize using and contributing to genie libraries. 
+* All users shall prioritize using and contributing to `genie libraries<https://developer.cisco.com/docs/pyats-development-guide/>`_. 
   Uplifts should be made as needed with the required review process.
 
 * Library & package requirements shall be clearly identified within the
   script header
 
-* Libraries & packages should be leveraging Genie abstraction concept/solution 
+* Libraries & packages should be leveraging `Genie abstraction<https://pubhub.devnetcloud.com/media/genie-docs/docs/abstract/index.html#>`_ concept/solution 
   whenever possible
 
-* All import statements shall be explicit and shall occur at the top of the file
+* All import statements shall be explicit and shall occur at the top of the file.
  
 * Traffic generation/control shall be done by using central, common functions
   and libraries.
@@ -59,7 +67,12 @@ Libraries & Packages
   should belong to common libraries.
 
 * All device output parsing (including screen scraping) shall be done using 
-  common library parsers. 
+  `common library parsers<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. 
+
+.. code-block:: python
+
+   device.parse('show version')
+
 
 Errors & Exceptions
 -------------------
@@ -67,46 +80,126 @@ Errors & Exceptions
 * All exceptions and errors (including expected ones) shall be logged. 
   Avoid silent exceptions
 
+# Lukas - show example of bad logging from the slide
+
 * Exception catching shall be explicit: never blanket catch all exceptions 
   (``except:`` statement without exception class type), or catching for 
   ``BaseException`` types.
 
+**Good**
+
+.. code-block:: python
+
+   try:
+       some code
+   except Exception:
+       some other code
+
+**Bad**
+
+.. code-block:: python
+
+   try:
+       some code
+   except:
+       some other code
+
 * All code should prefer raising built-in exceptions whenever possible. Avoid 
   creating excessive new exception types.
 
+**Good**
+
+.. code-block:: python
+
+   raise TypeError('...')
+
 * Test suite shall always test for both positive and negative logic paths.
+
+**Good**
+
+.. code-block:: python
+
+   if api():
+       do something
+   else:
+       do something else
+
+**Bad**
+
+.. code-block:: python
+
+   if api():
+       do something
 
 Execution
 ---------
 
-* Test suite shall be executable through job files (pyats run job execution) 
-  and as a standalone script.
+* Test suite shall be executable through job files (pyats run job execution).
 
-* Test suite shall leverage asynchronous (parallel) executions whenever 
-  possible.
+
+* Test suite shall leverage asynchronous (`parallel<https://pubhub.devnetcloud.com/media/pyats/docs/async/pcall.html>`_) executions whenever possible.
 
 * Temporary file generation shall be done using python tempfile module, 
   generated under the current runtime directory. All temporary files shall be 
   deleted at the end of the run.
 
 * Test suite shall detect and report any anomalies during execution, such as 
-  crash, CPU freeze, memory leaks, etc.
+  crash, CPU freeze, memory leaks, etc. Look into `pyATS Health Check`<https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_.
 
 Logging
 -------
 
 * Logging shall be done only through using python native logging module and 
-  functionality.
-* Test suites and libraries shall not contain ``print()`` functions.
+  functionality. ``print()`` function should never be used in Test suites and libraries.
+
+**Good**
+
+.. code-block:: python
+
+   log.info('This is some message')
+
+**Bad**
+
+.. code-block:: python
+
+   print('This is some message')
 
 * Test suites must log thorough and informative messages describing its 
   actions, purposes, progress and intermediate/final result.
 
+**Good**
+
+.. code-block:: python
+
+   log.info('Performing check 1 to verify x is up')
+   perform check 1
+
+   log.info('Performing check 2 to verify z is down')
+   perform check 2
+
+   if all passed:
+       log.info('All worked as expected')
+   else:
+       log.info('Failed because step <...> has failed')
+       some logic
+
+**Bad**
+
+.. code-block:: python
+
+   perform check 1
+   perform check 2
+
+
 * Point of failures and expected output/behavior/values shall be clearly 
   identified in the log file.
 
+# Lukas
+
 * Test results and any diagnostic information that may be helpful for debugging 
   and bug-raising purposes shall be logged thoroughly.
+
+# JB - Talk to Dave/Thomas tomorrow
 
 * Avoid using warnings excessively: in test automation, warnings are typically 
   ignored.
@@ -127,4 +220,3 @@ Governance
 * Each test suite shall have an owner (individual or team), responsible of 
   reviewing pull requests and changes to the test suite.
 
- 

@@ -1,6 +1,40 @@
 Concept Introduction
 ====================
 
+Dream
+-----
+
+I would like to ask you to think of the following:
+
+Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases. Re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
+
+If we had this, imagine what our testcases would look like.
+
+.. code-block:: python
+
+   dev.api.shut_interface(interface='Ethernet2/3')
+   dev.api.verify_interface_shut(interface='Ethernet2/3')
+   ...
+
+
+When one api is not there, you would add the API and then continue with the automation. Each API would follow good developing practice:
+
+* One set of library for all
+* Everybody commit to the same set of libraries
+* All re-usable
+* No code duplication
+* Re-usable Testcases
+* Debuggable
+* Writing script is now very easy and FAST
+* Good comments
+
+This is the goal of having good practice; Creating a development environment
+that scales, simplify work for all, and speed up development. 
+
+
+Introduction
+------------
+
 Originating as Cisco engineering document, *EDCS-1529178*, this sections expands
 on the best practices of writing pyATS test cases and libraries. It was created 
 with a few purposes in mind:
@@ -48,6 +82,9 @@ Automation must be cost-effective in the long-term. We should keep this in
 mind while planning, designing, and developing test automation. The following 
 is a set of key principles that all test automation development shall follow.
 
+We tried to add as much example as possible to make the content less dry, and
+easier to follow in the next pages.
+
 Agnostic & Reusable
 -------------------
 The test code must remain generic enough such that the support of new 
@@ -60,6 +97,18 @@ Consider leveraging the genie.abstract package and contributing your
 agnostic packages and libraries to genie.libs, benefiting the user community. 
 Follow guidelines outlined in the repository README files and development 
 guides.
+
+In summary:
+
+* Reuses what already exists
+* Saves time
+* How many “Shut Interface” blocks of code are there out there? 
+* How many bugs in all of them ?
+* Reuse Libraries
+* Reuse Parsers
+* Reuse Testcases
+* Reuse Configurations
+* Contribute!
 
 Effective & Efficient
 ---------------------
@@ -86,6 +135,22 @@ and attempting to catch all potential bugs/issues:
 * Use your knowledge of the source code and architecture and constantly seek 
   to improve the effectiveness of your test suites. 
 
+
+In summay:
+
+* Effectiveness of a test script
+  * execution time
+  * resource requirements
+  * number of unique problems/bugs/issues it catches
+* Time limit per test suite
+  * Reserve devices
+  * Clean
+  * Configure
+* Asynchronous
+* Constant review of coverage
+* Knowledge of source code and architecture 
+* Prioritize testcases
+
 Reliable & Repeatable
 ---------------------
 Tests that reports pass under failure conditions is worse than not having such 
@@ -94,6 +159,17 @@ avoid bugs slipping through, code logic shall be explicit and strict (eg, if
 statements covering all possible scenarios), flexible (eg, handles assorted 
 environments & timing conditions), and code changes should always be reviewed 
 by colleagues and/or subject matter experts.
+
+In summary:
+
+* Test automation must always give the same result
+* Inconsistent results make you question everything
+  * Is it the device?
+  * Is it the script ?
+  * Configuration ?
+  * Let's rerun to try to find the issue - Waste of time
+* Pass under Failure condition is worse than having no test
+
 
 Sustainable & Responsible
 -------------------------
@@ -118,3 +194,19 @@ on complex code and logic, and detail the different use-cases of your creations
 and how to debug them in case of failures. Keep your comments to the point and 
 accurate in the explanation.
  
+In summary:
+
+* Scripts get modified
+  * Increasing Coverage
+  * Platform Support
+  * Bug Fix
+* Ownership will change over the course of script life
+* Minimize effort with each revision
+* CLI/output might change
+* Easy to read
+* Consistent style
+* Documentation
+  * Header
+  * Comments
+* Maintain comments
+* Be explicit with your errors
