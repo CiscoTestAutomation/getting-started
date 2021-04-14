@@ -118,6 +118,7 @@ Follow these guidelines to create a valid YAML file:
     * To enter privileged EXEC mode with the ``enable`` command, add a column with the header ``enable_password``. The value can be the same as or different from the default password.
     * Any additional columns that you define, such as ``platform``, ``alias`` or ``type``, are added to the YAML file as key-value pairs.
     * The columns can be in any order, as long as you include the required columns.
+    * When creating CSV file, separate fields by comma (,). If you need text qualifier, use double qoutes (").
 
 When you're ready to create the YAML file, from your virtual environment, run the command::
 
