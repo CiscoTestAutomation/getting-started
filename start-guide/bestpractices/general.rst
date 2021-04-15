@@ -86,50 +86,49 @@ Errors & Exceptions
   (``except:`` statement without exception class type), or catching for 
   ``BaseException`` types.
 
-**Good**
 
 .. code-block:: python
 
-   try:
-       some code
-   except Exception:
-       some other code
-
-**Bad**
-
-.. code-block:: python
-
+   # Wrong:
    try:
        some code
    except:
        some other code
 
+.. code-block:: python
+
+   # Correct:
+   try:
+       some code
+   except Exception:
+       some other code
+
+|
+
 * All code should prefer raising built-in exceptions whenever possible. Avoid 
   creating excessive new exception types.
 
-**Good**
-
 .. code-block:: python
 
+   # Correct:
    raise TypeError('...')
 
+|
 * Test suite shall always test for both positive and negative logic paths.
-
-**Good**
 
 .. code-block:: python
 
+   # Wrong:
+   if api():
+       do something
+
+.. code-block:: python
+
+   # Correct:
    if api():
        do something
    else:
        do something else
-
-**Bad**
-
-.. code-block:: python
-
-   if api():
-       do something
 
 Execution
 ---------

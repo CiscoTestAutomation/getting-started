@@ -3,17 +3,30 @@ Test Suite Guidelines
 
 Generic
 -------
-* Test suites shall be written following pyATS script templates (eg, pyATS 
+* Test suites shall be written following pyATS `script templates<https://github.com/CiscoTestAutomation/pyATS-project-template>`_ (eg, pyATS 
   project template, Genie Trigger/Verification template) 
 
 * Test suites shall be unique. Inheritance should be used in cases where 
   test case re-use is applicable.
 
+.. code-block:: python
+
+        from script_a import OldTestcase
+
+        class ReuseTestcase(OldTestcase):
+            pass
+
 * Test suites shall leverage existing libraries where possible.
 
-* Test cases should be categorized using execution grouping feature.
+* Test cases should be categorized using execution `grouping feature<https://pubhub.devnetcloud.com/media/pyats/docs/aetest/control.html#testcase-grouping>`_.
 
 * Global variables shall not be used within test suites.
+
+**Bad**
+
+.. code-block:: python
+
+    global variable
 
 * Test suites shall never hard-code the required testbed devices, links and 
   interface names. It should either reference them using testbed aliases, or 
@@ -45,6 +58,8 @@ Headers
 
   * Input parameters
   * Description of the test
+
+  Example can be found `here<https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
 
 Common Setup/Cleanup
 --------------------
@@ -104,17 +119,39 @@ Tests
 Debugging
 ---------
 
-* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections)
+* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections). Look into `pyATS Health<https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_
+
 * All code shall be written with the assumption that it may fail at any step: errors shall be handled intelligently and gracefully.
   
   * Report errors in the result report, with details of the error in the log file.
   * Collect all associated debug information (core dumps, debug commands, etc.) for post-mortem debugging purposes.
   * Exit gracefully after cleaning up the environment
 
+**Good**
+
+.. code-block:: python
+
+   try:
+       some code that might blow up
+   except Exception:
+       handle it
+
+**Bad**
+
+.. code-block:: python
+
+    some code that might blow up
+
 * Common-cleanup should always be executed to perform clean-up duty if something fails dramatically.
+
+
 
 Code Coverage
 -------------
+
+Internal only links
+`CTC<http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
+`CRFT<http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
 
 * Test suites should measure, collect and support the analysis of its automated tests’ code-coverage.
 * Test suites should strive for the best code coverage possible, whilst balancing runtime efficiency.
