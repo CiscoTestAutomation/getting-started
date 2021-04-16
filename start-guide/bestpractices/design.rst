@@ -1,5 +1,6 @@
+********************
 Design & Development
-====================
+********************
 
 Following Agile software development methodology, test suites shall be carefully
 planned, designed, and iteratively developed. This section provides high-level 
@@ -7,7 +8,7 @@ insights on how pyATS test automation development should be properly carried
 out.
 
 Automate Everything?
---------------------
+====================
 
 Ideally, all tests should be automated. However, this isn’t always practical, 
 feasible, and/or cost-effective. The following questions should be answered as 
@@ -25,15 +26,15 @@ part of your design phase for determining which tests should be automated:
 * Will it generate by-products (e.g., libraries) that others may leverage?
 
 Make It Simple
---------------
+==============
 
 The simplest things are often the hardest: use and perform only what is 
 necessary to achieve your goals, and avoid overly complicating your design, 
 implementation and requirements. However, do not confuse simplicity and straightforwardness with poor designs. A 
 simple design can still be elegant, extendable and effective. 
 
-K.I.S.S. Principle
-""""""""""""""""""
+The K.I.S.S. Principle
+----------------------
 
 Always consider factors such as hardware/software/license costs, 
 development/setup/execution times, and the skills & efforts required to use and 
@@ -42,6 +43,7 @@ used for years to come, passed from one engineer to the next: simplicity
 facilitates the long-term sustenance costs.
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Bad
         def GetMemory(self, testbed, testscript, method, param = False):​
@@ -62,6 +64,7 @@ facilitates the long-term sustenance costs.
                     return
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
    
         # Good
         def verify_minimum_size(device, minimum_size):​
@@ -75,13 +78,14 @@ facilitates the long-term sustenance costs.
                                     free_memory=free_memory))
 
 Don't reinvent the wheel
-""""""""""""""""""""""""
+------------------------
 
 Prioritize the use of existing tools, packages and libraries. Where needed, 
 use best-of-breed open-source solutions – when doing so, make sure it is 
 popular, well developed & supported. 
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
    
         # Bad
         d.sendline("reload\r")​
@@ -93,18 +97,20 @@ popular, well developed & supported.
 
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
    
         # Good
         device.reload(timeout = sleep_time)
 
 Leave it to the pros
-""""""""""""""""""""
+--------------------
 
 Always use these external components in 
 their originally intended fashion: taking unintended shortcuts and hacking 
 internals often leads to long-term, irreparable issues.
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Bad
         result = uut.execute("show processes | include CPU")​
@@ -115,15 +121,18 @@ internals often leads to long-term, irreparable issues.
         return fives_number
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Good
         output = dev.parse('show processes')​
         cpu = output['cpu_load']
 
 
-Dialog example ** TODO fit this in somewhere!
+***** Dialog example ** TODO fit this in somewhere *****
+Kind of a big example though...
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Bad
         def send_newline_and_wait_callback(spawn):​
@@ -146,7 +155,7 @@ Dialog example ** TODO fit this in somewhere!
         ​
         config_dialog = Dialog([​
             Statement(pattern=r"Would you like to enter the "​
-                                r"initial configuration dialog\?\s\[yes/no\]:\s?$",​
+                              r"initial configuration dialog\?\s\[yes/no\]:\s?$",​
                         action=send_no_and_wait_callback,​
                         loop_continue=True),​
             Statement(pattern=r"^Would you like to terminate autoinstall\?\s?\[yes\]:\s?$",​
@@ -163,6 +172,7 @@ Dialog example ** TODO fit this in somewhere!
 
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Good
         config_dialog = Dialog([​
@@ -184,7 +194,7 @@ Dialog example ** TODO fit this in somewhere!
 
 
 Make it Modular
----------------
+===============
 
 Properly designed, modular software is independent, interchangeable, easy to 
 read, extend and debug. Test automation itself is software: and thus also 
@@ -205,7 +215,8 @@ order to further expand their usefulness. Otherwise, create a new shared
 library. Avoid local, private libraries and silo-development.
 
     .. code-block:: python
-    
+      :name: this_just_bumps_code_over
+
         # Bad
         def get_release_version(ctlr):​
         try:​
@@ -229,7 +240,8 @@ library. Avoid local, private libraries and silo-development.
             return None
 
     .. code-block:: python
-    
+      :name: this_just_bumps_code_over
+
         # Good
         def get_release_version(device):​
             if not device.is_connected():​
@@ -250,7 +262,7 @@ Here are some generic principles to remember when coding:
 * Limit the number of logic path per function, avoid using too many input parameters
 
 Make It Dynamic
----------------
+===============
 Dynamic software can be driven with different inputs (parameters) yield 
 different results and/or do different things. This promotes code-reusability 
 and increases code flexibility.
@@ -263,6 +275,7 @@ configuration, timing, name, etc) apart from the procedural implementation
 generic, robust and extendable.
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Bad
         @aetest.subsection​
@@ -285,6 +298,7 @@ generic, robust and extendable.
             d.disconnect() #always on the last action on box
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Good
         @aetest.subsection​
@@ -313,7 +327,7 @@ offsetting major development effort into creating sharable, reusable and
 independent libraries.
 
 Make It Agnostic
-----------------
+================
 
 Agnostic, single-source test suites have the potential to work across a variety 
 of releases, platforms, OSes, as well as through different management interfaces 
@@ -329,7 +343,7 @@ refactor existing ones. Your neighbors will thank you dearly when your test
 suites are written to leverage abstraction (genie.abstract) from day-one.
 
 Make it Unique & Independent
-----------------------------
+============================
 
 Each test suite should be unique, and should contain a collection of independent
 tests that tests the different facets of the same feature or component. This 
@@ -342,7 +356,7 @@ Leverage code search tools (eg, grep, GitHub search) to find out whether what
 you’re looking for already exists.
 
 Optimize, Optimize, Optimize
-----------------------------
+============================
 
 Optimization can be done in many ways: logic flow optimization, test pattern 
 optimization, runtime optimization (asynchronous executions), source code 
@@ -378,7 +392,8 @@ Here are some tips regarding generic optimizations:
   RESTCONF, SNMP, … etc)
 
 Assume Nothing
---------------
+==============
+
 The purpose of test automation is to comb through a given target 
 (software/hardware) for errors, bugs and problems, and validating for expected 
 states, outputs and results. Do not impose unreasonable requirements on the
@@ -403,7 +418,8 @@ to set-up and run in a variety of possible environments:
   testbed time.
 
 Follow the Guidelines
----------------------
+=====================
+
 Always follow the guidelines and templates when creating test suites and 
 libraries. This ensures that the end product always looks & feels the same, 
 and assures easy hand-off between teams, greatly simplifying long-term 

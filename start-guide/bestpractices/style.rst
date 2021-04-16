@@ -32,7 +32,24 @@ Code Layouts
 * Continuation lines should align wrapped elements vertically using 
   Python’s implicit line joining inside parenthesis, brackets and braces. 
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Wrong
+        p2 = re.compile(r'^\s*BGP +table +version +is'
+            r' +(?P<bgp_table_version>[0-9]+), +[Ll]ocal +[Rr]outer'
+                r' +ID +is +(?P<local_router_id>(\S+))$')
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        p2 = re.compile(r'^\s*BGP +table +version +is'
+                        r' +(?P<bgp_table_version>[0-9]+), +[Ll]ocal +[Rr]outer'
+                        r' +ID +is +(?P<local_router_id>(\S+))$')
 
 * Separate logic blocks using white lines, with two lines between major 
   function/class definitions.
@@ -63,7 +80,26 @@ Comments and Docstrings
 
 * Comments should be complete sentences in plain, readable English.
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Wrong
+        # dict check
+        if arg in jsons_dict:
+            mod_path = jsons_dict[arg]['module']
+            file_name = jsons_dict[arg]['file']
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        # Look up module's path and file's name in the dictionary
+        if arg in jsons_dict:
+            mod_path = jsons_dict[arg]['module']
+            file_name = jsons_dict[arg]['file']
 
 * Use inline comments sparingly, and only if the line (including comments) is 
   less than 79 characters.
@@ -100,11 +136,39 @@ Naming Conventions
 
 * Short, all ``lowercase`` names for modules.
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Wrong
+        genie.UTILS
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        genie.utils
 
 * ``CapWordCamelBack`` for class names
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Wrong
+        class mycustomclass():
+            ...
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        class MyCustomClass():
+            ...
 
 * Suffix Error for all exception classes.
 
@@ -125,7 +189,20 @@ Naming Conventions
 * All lowercase for function names, use underscore only if it improves 
   readability
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Wrong
+        def LoadAttribute(pkg, attr_name, device=None):
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        def load_attribute(pkg, attr_name, device=None):
 
 * Always use ``self`` for the first argument to instance methods
 

@@ -29,6 +29,7 @@ Headers & Comments
         Lukas
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Wrong
         import os
@@ -39,6 +40,7 @@ Headers & Comments
 
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Correct
         '''
@@ -66,6 +68,7 @@ Headers & Comments
         Lukas
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Wrong
         def extract_module(i, j, k):
@@ -75,6 +78,7 @@ Headers & Comments
             return find(i, j.expand(), k)
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Correct
         def extract_module(name, root_dir, timeout):
@@ -118,6 +122,7 @@ Headers & Comments
         Lukas
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Wrong:
         #### workaround Code ####​
@@ -137,6 +142,7 @@ Headers & Comments
         #########################
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Correct:
         #### workaround Code ####​
@@ -156,6 +162,7 @@ Headers & Comments
         Lukas
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Wrong
         for device in route.hops():
@@ -164,6 +171,7 @@ Headers & Comments
 
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Correct
         '''
@@ -217,6 +225,7 @@ Errors & Exceptions
         Lukas - show example of bad logging from the slide
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Wrong:
         try:​
@@ -227,6 +236,7 @@ Errors & Exceptions
             self.errored("Errored connecting to console. You're on your own.\n" + str(err))
 
     .. code-block:: python
+      :name: this_just_bumps_code_over
 
         # Correct:
         try:​
