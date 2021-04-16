@@ -29,20 +29,159 @@ Make It Simple
 
 The simplest things are often the hardest: use and perform only what is 
 necessary to achieve your goals, and avoid overly complicating your design, 
-implementation and requirements. Keep in mind that your creations will be 
+implementation and requirements. However, do not confuse simplicity and straightforwardness with poor designs. A 
+simple design can still be elegant, extendable and effective. 
+
+K.I.S.S. Principle
+""""""""""""""""""
+
+Always consider factors such as hardware/software/license costs, 
+development/setup/execution times, and the skills & efforts required to use and 
+maintain your product. Keep in mind that your creations will be 
 used for years to come, passed from one engineer to the next: simplicity 
 facilitates the long-term sustenance costs.
 
-However, do not confuse simplicity and straightforwardness with poor designs. A 
-simple design can still be elegant, extendable and effective. Always consider 
-factors such as hardware/software/license costs, development/setup/execution 
-times, and the skills & efforts required to use and maintain your product. 
+    .. code-block:: python
+
+        # Bad
+        def GetMemory(self, testbed, testscript, method, param = False):​
+            uut_arr = testscript.parameters['devices']​
+            uut = testbed.devices[uut_arr[0]]​
+            uut.connect()​
+            result = uut.execute("show memory")​
+            if param is True:​
+                lines = result.splitlines()​
+                line = lines[0]​
+                words = line.split()​
+                free_memory = int(words[7][:-1])​
+                if free_memory <= 1048576:​
+                    log.error("Not enough free memory")​
+                    method.failed()​
+                    return​
+                else:​
+                    return
+
+    .. code-block:: python
+   
+        # Good
+        def verify_minimum_size(device, minimum_size):​
+        device.connect()​
+        result = device.parse('show memory')​
+        free_memory = result['free_memory']​
+        if free_memory <= minimum_size:​
+            raise Exception('Requires at least {minimium_size} of free memory; '​
+                            'but only {free_memory} is available'​
+                            .format(minimum_size=minimum_size,​
+                                    free_memory=free_memory))
+
+Don't reinvent the wheel
+""""""""""""""""""""""""
 
 Prioritize the use of existing tools, packages and libraries. Where needed, 
 use best-of-breed open-source solutions – when doing so, make sure it is 
-popular, well developed & supported. Always use these external components in 
+popular, well developed & supported. 
+
+    .. code-block:: python
+   
+        # Bad
+        d.sendline("reload\r")​
+        d.expect("Proceed with reload?", timeout=10)​
+        d.sendline("y\r")​
+        log.debug("Sleeping 200 seconds for CSR image reload")​
+        time.sleep(200)​
+        d.disconnect()
+
+
+    .. code-block:: python
+   
+        # Good
+        device.reload(timeout = sleep_time)
+
+Leave it to the pros
+""""""""""""""""""""
+
+Always use these external components in 
 their originally intended fashion: taking unintended shortcuts and hacking 
 internals often leads to long-term, irreparable issues.
+
+    .. code-block:: python
+
+        # Bad
+        result = uut.execute("show processes | include CPU")​
+        words = result.split()​
+        #for five seconds​
+        fives_string = words[5]​
+        fives_number = int(fives_string[0:1])​
+        return fives_number
+
+    .. code-block:: python
+
+        # Good
+        output = dev.parse('show processes')​
+        cpu = output['cpu_load']
+
+
+Dialog example ** TODO fit this in somewhere!
+
+    .. code-block:: python
+
+        # Bad
+        def send_newline_and_wait_callback(spawn):​
+            time.sleep(0.5)​
+            spawn.sendline()​
+        ​
+        def send_no_and_wait_callback(spawn):​
+            time.sleep(0.5)​
+            spawn.sendline("no")​
+        ​
+        def send_yes_and_wait_callback(spawn):​
+            time.sleep(0.5)​
+            spawn.sendline("yes")​
+
+        def send_multiple_newlines(spawn):​
+            for _ in range(3):​
+                time.sleep(2)​
+                spawn.sendline()​
+            time.sleep(2)​
+        ​
+        config_dialog = Dialog([​
+            Statement(pattern=r"Would you like to enter the "​
+                                r"initial configuration dialog\?\s\[yes/no\]:\s?$",​
+                        action=send_no_and_wait_callback,​
+                        loop_continue=True),​
+            Statement(pattern=r"^Would you like to terminate autoinstall\?\s?\[yes\]:\s?$",​
+                        action=send_yes_and_wait_callback,​
+                        loop_continue=True),​
+            Statement(pattern=r"Press RETURN to get started!",​
+                        action=send_multiple_newlines,​
+                        loop_continue=True),​
+            Statement(pattern=r'^(.*)>\s?$',​
+                        action=send_newline_and_wait_callback,​
+                        loop_continue=False,​
+                        continue_timer=False)​
+        ])
+
+
+    .. code-block:: python
+
+        # Good
+        config_dialog = Dialog([​
+            Statement(pattern=r"Would you like to enter the initial configuration dialog\?\s\[yes/no\]:\s?$",​
+                    action=sendline(no),​
+                    loop_continue=True,​
+                    continue_timer=0.5),​
+            Statement(pattern=r"Would you like to terminate autoinstall\?\s\[yes\]:\s?$",​
+                    action=sendline(yes),​
+                    loop_continue=True,​
+                    continue_timer=0.5),​
+            Statement(pattern=r"Press RETURN to get started!",​
+                    action=sendline(),​
+                    loop_continue=True,​
+                    continue_timer=8),​
+            Statement(pattern=r"^(.*)>\s?$",​
+                    action=sendline(),​
+                    loop_continue=False)])
+
 
 Make it Modular
 ---------------
@@ -65,6 +204,43 @@ applicable, commit your newly creations into corresponding existing libraries in
 order to further expand their usefulness. Otherwise, create a new shared 
 library. Avoid local, private libraries and silo-development.
 
+    .. code-block:: python
+    
+        # Bad
+        def get_release_version(ctlr):​
+        try:​
+            if ctlr.is_connected() is False:​
+                ctlr.connect()​
+            buffer = ctlr.execute('show version')​
+            ver = buffer.splitlines()​
+            ver_line = ''​
+            version_num = '16.12'​
+            for line in ver:​
+                res = re.search('Experimental Version (\d+\.\d+)\.\d+\:\d+.*',line)​
+                if res:​
+                    version_num = res.group(1)​
+                    break​
+            if version_num:​
+                logger.info("Release Image version : "+str(version_num))​
+            return version_num​
+        except Exception as e:​
+            logger.info("Unable to get release Image version from the device: {}".format(ctlr.name))​
+            logger.info("Exception Debug {} ....".format(e))​
+            return None
+
+    .. code-block:: python
+    
+        # Good
+        def get_release_version(device):​
+            if not device.is_connected():​
+                device.connect()​
+        ​
+            output = device.parse('show version')​
+            return output['version']​
+        ​
+        if get_release_version(device) != 16.12:​
+            raise Exception('...')
+
 Here are some generic principles to remember when coding:
 * Use classes, objects and methods over functions and procedures
 * Segregate independent concepts/features/functionalities into different classes & objects
@@ -85,6 +261,48 @@ duplicating the same code and only changing a minor piece of it
 configuration, timing, name, etc) apart from the procedural implementation 
 (eg, function, class, method). This encourages for a design that is more 
 generic, robust and extendable.
+
+    .. code-block:: python
+
+        # Bad
+        @aetest.subsection​
+        def copy_codecov(self, testbed):​
+            d = testbed.devices['csr127']​
+            d.execute('cflow copy')​
+            d.sendline("request platform software system shell\r")​
+            d.expect("Are you sure you want to continue?", timeout=10)​
+            d.send("y\r")​
+            d.expect("\[csr127:\/\]\$", timeout=10) ​
+            d.send("chmod 777 bootflash/cflow\r")​
+            d.expect("\[csr127:\/\]\$", timeout=10) ​
+            d.send("tar -zcvf bootflash/codecov.tar.gz bootflash/cflow/\r")​
+            d.expect("\[csr127:\/\]\$", timeout=10) ​
+            d.send("exit\r")​
+            d.expect("csr127#", timeout=10)​
+            ## config "file prompt quiet" to disable prompts​
+            d.sendline("copy bootflash:codecov.tar.gz tftp://223.255.254.254/alllo/FIBModelTest/copyout/\r")​
+            d.expect("csr127#", timeout=1000)​
+            d.disconnect() #always on the last action on box
+
+    .. code-block:: python
+
+        # Good
+        @aetest.subsection​
+        def copy_codecov(self, testbed, device_name, base_dir, target_dir, zip_file, ip_mount):​
+        ​
+            d = testbed.devices[device_name]​
+            d.execute('cflow copy')​
+        ​
+            dialog = Dialog([​
+                Statement(pattern=r'Are you sure you want to continue\?',​
+                        action='sendline(y)')])​
+
+            d.execute("request platform software system shell", reply=dialog, timeout=10)​
+            d.execute('chmod 777 %s' % target_dir, timeout=10)​
+            d.execute('tar -zcvf %s/%s %s' % (base_dir, zip_file, target_dir), timeout=10)​
+            d.execute('exit', timeout=10)​
+            d.execute('copy %s:%s tftp:%s' % (base_dir, zip_file, ip_mount), timeout=1000)​
+            d.disconnect()
 
 The best approach to test automation is to design generic test suites and 
 libraries that can be driven with data that alters its footprint (e.g. 

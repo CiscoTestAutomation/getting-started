@@ -25,22 +25,155 @@ Headers & Comments
   describing in detail its author, support contacts, purpose, description, 
   usages & etc.
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+
+        # Wrong
+        import os
+        import json
+        import logging
+        import importlib
+        ...
+
+
+    .. code-block:: python
+
+        # Correct
+        '''
+            Author(s): Mr. Snow, Mr. Wayne, Mr. The Ripper
+            Contact(s): john@gmail.com
+            Purpose: Collect string manipulation tools in one place
+            Description: A string processing package that allows easier string 
+                manipulation by handling all of the slicing, indexing, and 
+                bookkeeping in one place
+            Usages:
+                import JTR
+                from JTR import cracker
+        '''
+
+        import os
+        import json
+        import logging
+        import importlib
 
 * All classes, functions, methods shall have headers using Python docstring 
   notation, describing its purpose, usage, arguments, return values and 
   providing examples.
 
-# Lukas api header example
+    ..
+        Lukas
+
+    .. code-block:: python
+
+        # Wrong
+        def extract_module(i, j, k):
+
+            ...
+
+            return find(i, j.expand(), k)
+
+    .. code-block:: python
+
+        # Correct
+        def extract_module(name, root_dir, timeout):
+            '''
+            Purpose
+            -------
+            Function used to extraxt a specific module/package by searching 
+            through a given directory and all of its subdirectories. 
+
+            Parameters
+            ----------
+            name : str
+                Name of module. Not case-sensitive
+            root_dir : str
+                Directory to start search in. All subdirectories will be 
+                searched until module is found.
+            max_depth : int
+                Optional. Specifies the maximum depth of subdirectories to 
+                search in. Default is infinite
+            
+            Returns
+            -------
+            path : str
+                If module is found, the absolute path of the module. 
+                If module is not found, an empty string.
+
+            Usage
+            -----
+            path = extract_module(name, dir)
+            path = extract_module(name, dir, 5)
+            '''
+
+            ...
+
+            return find(i, j.expand(), k)
+
 
 * Code blocks shall be commented, describing its steps and purpose
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+
+        # Wrong:
+        #### workaround Code ####​
+        s.send('conf t\r')​
+        s.expect('conf t.*#')​
+        s.send('hostname {}\r'.format(ctrl.custom.name))​
+        s.expect('hostname.*#')​
+        s.send('end\r')​
+        s.expect('end.*#')​
+        s.send('wri mem\r')​
+        s.expect('wri mem.*#',timeout = 120)​
+        s.send('conf t\r')​
+        s.expect('conf t.*#')​
+        s.send('hostname {}\r'.format(ctrl.custom.name))​
+        s.expect('hostname.*#')​
+        s.send('end\r')​
+        #########################
+
+    .. code-block:: python
+
+        # Correct:
+        #### workaround Code ####​
+        # Send commands in altered order to set up environment​
+        # for proceeding tests. This code is a workaround for​
+        # host image memory not initializing properly​
+        device.hostname = device.custom.name​
+        device.configure('hostname {}'.format(device.custom.name))​
+        device.execute('write memory', timeout=120)​
+        device.configure('hostname {}'.format(device.custom.name))​
+        #########################
 
 * Convoluted logic shall be commented, including descriptions for each 
   logic path.
 
-# Lukas
+    ..
+        Lukas
+
+    .. code-block:: python
+
+        # Wrong
+        for device in route.hops():
+            net_freq = 0 if device[0] < 0 else max_freq - 1 if device[0] > max_freq - 1 else device[0]
+            net_addr = 0 if device[1] < 0 else max_addr - 1 if device[1] > max_addr - 1 else device[1]
+
+
+    .. code-block:: python
+
+        # Correct
+        '''
+        Loop through devices and ensure network fabric frequencies and addresses 
+        always fall within allowed values. Reassign values if less than 0 or 
+        greater than max_freq/max_addr
+        '''
+        for device in route.hops():
+            net_freq = 0 if device[0] < 0 else max_freq - 1 if device[0] > max_freq - 1 else device[0]
+            net_addr = 0 if device[1] < 0 else max_addr - 1 if device[1] > max_addr - 1 else device[1]
 
 * Code changes shall have in-line comments before the change, with the bug ID 
   and a brief explanation of what’s changed.
@@ -80,7 +213,38 @@ Errors & Exceptions
 * All exceptions and errors (including expected ones) shall be logged. 
   Avoid silent exceptions
 
-# Lukas - show example of bad logging from the slide
+    ..
+        Lukas - show example of bad logging from the slide
+
+    .. code-block:: python
+
+        # Wrong:
+        try:​
+            log.info("Try to connect to console (connection a)")​
+            uut.connect(alias='con', via='a')​
+
+        except Exception as e:​
+            self.errored("Errored connecting to console. You're on your own.\n" + str(err))
+
+    .. code-block:: python
+
+        # Correct:
+        try:​
+            log.info("Try to connect to console (connection a)")​
+            uut.connect(alias='con', via='a')​
+
+        except TimeoutError as te:​
+            log.error("Log relevant connection info here")​
+            self.errored("Connection timed out!\n" + str(te))​
+        ​
+        except InterruptedError as ie:​
+            log.error("Log relevant connection info here")​
+            self.errored("Connection interupted!\n" + str(ie))​
+        ​
+        except Exception as err:​
+            log.error("Log ALL connection info here")​
+            self.errored("Unexpected error!\n" + str(err))    
+
 
 * Exception catching shall be explicit: never blanket catch all exceptions 
   (``except:`` statement without exception class type), or catching for 
@@ -193,7 +357,24 @@ Logging
 * Point of failures and expected output/behavior/values shall be clearly 
   identified in the log file.
 
-# Lukas
+    .. code-block:: python
+
+        # Wrong:
+        if dbgObj.verify_poe_deployment() == False:​
+            self.failed()​
+        else:​
+            self.passed()
+
+    .. code-block:: python
+
+        # Correct:
+        if dbgObj.verify_poe_deployment() == False:​
+            # Give debug information ... ​
+            log.error("Debug History:" + dbgObj.command_history + "\n \​
+                    Status: " + dbgObj.status)​
+            self.failed("Point of entry deployment verification failed.")​
+        else:​
+            self.passed()
 
 * Test results and any diagnostic information that may be helpful for debugging 
   and bug-raising purposes shall be logged thoroughly.
