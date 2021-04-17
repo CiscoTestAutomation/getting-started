@@ -40,7 +40,7 @@ Code Layouts
 
         # Wrong
         p2 = re.compile(r'^\s*BGP +table +version +is'
-            r' +(?P<bgp_table_version>[0-9]+), +[Ll]ocal +[Rr]outer'
+                r' +(?P<bgp_table_version>[0-9]+), +[Ll]ocal +[Rr]outer'
                 r' +ID +is +(?P<local_router_id>(\S+))$')
 
     .. code-block:: python
