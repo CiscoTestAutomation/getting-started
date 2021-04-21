@@ -36,7 +36,7 @@ Recommended Features
 - Max failures/max runtime: turn on these options to ensure your script fails
   fast when errors are encountered, and no testbed times are wasted
 
-- Healthchecks: leverage the pyATS healthcheck feature to ensure the auto collection
+- Healthchecks: leverage the pyATS `healthcheck <https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_ feature to ensure the auto collection
   of device cores/tracebacks before/after each test case
 
 

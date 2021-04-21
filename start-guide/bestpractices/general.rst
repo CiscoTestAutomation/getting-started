@@ -3,7 +3,7 @@ General Guidelines
 
 Environment Requirements
 ------------------------
-* Test suites, shall not presume (depend on) any pre-existing 
+* Test suites, shall not depend on any pre-existing 
   configuration of the environment (e.g. routers, switches), and shall always 
   perform its own configurations, unless explicitly coded to be and/or 
   provided/told otherwise.
@@ -25,11 +25,7 @@ Headers & Comments
   describing in detail its author, support contacts, purpose, description, 
   usages & etc.
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         import os
@@ -40,20 +36,27 @@ Headers & Comments
 
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
-        '''
-            Author(s): Mr. Snow, Mr. Wayne, Mr. The Ripper
-            Contact(s): john@gmail.com
-            Purpose: Collect string manipulation tools in one place
-            Description: A string processing package that allows easier string 
-                manipulation by handling all of the slicing, indexing, and 
-                bookkeeping in one place
-            Usages:
-                import JTR
-                from JTR import cracker
-        '''
+        #*******************************************************************************
+        #*                           Test Script Template
+        #* ----------------------------------------------------------------------------
+        #* ABOUT THIS TEMPLATE - Please read
+        #*
+        #* - Anything enclosed in <> must be replaced by the appropriate text for your
+        #*   application
+        #*
+        #* Author:
+        #*    <name>, Cisco Systems Inc.
+        #*
+        #* Support:
+        #*    <name>@cisco.com
+        #*
+        #* Read More:
+        #*   For the complete and up-to-date user guide on pyATS, visit:
+        #*   https://pyats.dev/
+        #*
+        #*******************************************************************************
 
         import os
         import json
@@ -64,11 +67,8 @@ Headers & Comments
   notation, describing its purpose, usage, arguments, return values and 
   providing examples.
 
-    ..
-        Lukas
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         def extract_module(i, j, k):
@@ -81,88 +81,53 @@ Headers & Comments
       :name: this_just_bumps_code_over
 
         # Correct
-        def extract_module(name, root_dir, timeout):
-            '''
-            Purpose
-            -------
-            Function used to extraxt a specific module/package by searching 
-            through a given directory and all of its subdirectories. 
-
-            Parameters
-            ----------
-            name : str
-                Name of module. Not case-sensitive
-            root_dir : str
-                Directory to start search in. All subdirectories will be 
-                searched until module is found.
-            max_depth : int
-                Optional. Specifies the maximum depth of subdirectories to 
-                search in. Default is infinite
-            
-            Returns
-            -------
-            path : str
-                If module is found, the absolute path of the module. 
-                If module is not found, an empty string.
-
-            Usage
-            -----
-            path = extract_module(name, dir)
-            path = extract_module(name, dir, 5)
-            '''
-
-            ...
-
-            return find(i, j.expand(), k)
-
+        def configure_cdp(device, interfaces=None):
+            """ Enables cdp on target device
+                Args:
+                    device ('obj'): Device object
+                    interfaces ('list'): List of interfaces to configure cdp on
+                Returns:
+                    None
+            """
 
 * Code blocks shall be commented, describing its steps and purpose
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
-        # Wrong:
-        #### workaround Code ####​
-        s.send('conf t\r')​
-        s.expect('conf t.*#')​
-        s.send('hostname {}\r'.format(ctrl.custom.name))​
-        s.expect('hostname.*#')​
-        s.send('end\r')​
-        s.expect('end.*#')​
-        s.send('wri mem\r')​
-        s.expect('wri mem.*#',timeout = 120)​
-        s.send('conf t\r')​
-        s.expect('conf t.*#')​
-        s.send('hostname {}\r'.format(ctrl.custom.name))​
-        s.expect('hostname.*#')​
-        s.send('end\r')​
+        # Wrong
+        #### workaround Code ####
+        s.send('conf t\r')
+        s.expect('conf t.*#')
+        s.send('hostname {}\r'.format(ctrl.custom.name))
+        s.expect('hostname.*#')
+        s.send('end\r')
+        s.expect('end.*#')
+        s.send('wri mem\r')
+        s.expect('wri mem.*#',timeout = 120)
+        s.send('conf t\r')
+        s.expect('conf t.*#')
+        s.send('hostname {}\r'.format(ctrl.custom.name))
+        s.expect('hostname.*#')
+        s.send('end\r')
         #########################
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
-        # Correct:
-        #### workaround Code ####​
-        # Send commands in altered order to set up environment​
-        # for proceeding tests. This code is a workaround for​
-        # host image memory not initializing properly​
-        device.hostname = device.custom.name​
-        device.configure('hostname {}'.format(device.custom.name))​
-        device.execute('write memory', timeout=120)​
-        device.configure('hostname {}'.format(device.custom.name))​
+        # Correct
+        #### workaround Code ####
+        # Send commands in altered order to set up environment
+        # for proceeding tests. This code is a workaround for
+        # host image memory not initializing properly
+        device.hostname = device.custom.name
+        device.configure('hostname {}'.format(device.custom.name))
+        device.execute('write memory', timeout=120)
+        device.configure('hostname {}'.format(device.custom.name))
         #########################
 
 * Convoluted logic shall be commented, including descriptions for each 
   logic path.
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         for device in route.hops():
@@ -171,14 +136,11 @@ Headers & Comments
 
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
-        '''
-        Loop through devices and ensure network fabric frequencies and addresses 
-        always fall within allowed values. Reassign values if less than 0 or 
-        greater than max_freq/max_addr
-        '''
+        # Loop through devices and ensure network fabric 
+        # frequencies and addresses  always fall within allowed values.
+        # Reassign values if less than 0 or greater than max_freq/max_addr
         for device in route.hops():
             net_freq = 0 if device[0] < 0 else max_freq - 1 if device[0] > max_freq - 1 else device[0]
             net_addr = 0 if device[1] < 0 else max_addr - 1 if device[1] > max_addr - 1 else device[1]
@@ -210,7 +172,7 @@ Libraries & Packages
 * All device output parsing (including screen scraping) shall be done using 
   `common library parsers<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. 
 
-.. code-block:: python
+  .. code-block:: python
 
    device.parse('show version')
 
@@ -221,38 +183,35 @@ Errors & Exceptions
 * All exceptions and errors (including expected ones) shall be logged. 
   Avoid silent exceptions
 
-    ..
-        Lukas - show example of bad logging from the slide
-
     .. code-block:: python
       :name: this_just_bumps_code_over
 
-        # Wrong:
-        try:​
-            log.info("Try to connect to console (connection a)")​
-            uut.connect(alias='con', via='a')​
+        # Wrong
+        try:
+            log.info("Try to connect to console (connection a)")
+            uut.connect(alias='con', via='a')
 
-        except Exception as e:​
+        except Exception as e:
             self.errored("Errored connecting to console. You're on your own.\n" + str(err))
 
     .. code-block:: python
       :name: this_just_bumps_code_over
 
-        # Correct:
-        try:​
-            log.info("Try to connect to console (connection a)")​
-            uut.connect(alias='con', via='a')​
+        # Correct
+        try:
+            log.info("Try to connect to console (connection a)")
+            uut.connect(alias='con', via='a')
 
-        except TimeoutError as te:​
-            log.error("Log relevant connection info here")​
-            self.errored("Connection timed out!\n" + str(te))​
-        ​
-        except InterruptedError as ie:​
-            log.error("Log relevant connection info here")​
-            self.errored("Connection interupted!\n" + str(ie))​
-        ​
-        except Exception as err:​
-            log.error("Log ALL connection info here")​
+        except TimeoutError as te:
+            log.error("Log relevant connection info here")
+            self.errored("Connection timed out!\n" + str(te))
+        
+        except InterruptedError as ie:
+            log.error("Log relevant connection info here")
+            self.errored("Connection interupted!\n" + str(ie))
+        
+        except Exception as err:
+            log.error("Log ALL connection info here")
             self.errored("Unexpected error!\n" + str(err))    
 
 
@@ -260,55 +219,51 @@ Errors & Exceptions
   (``except:`` statement without exception class type), or catching for 
   ``BaseException`` types.
 
+  .. code-block:: python
 
-.. code-block:: python
+     # Wrong
+     try:
+         some code
+     except:
+         some other code
 
-   # Wrong:
-   try:
-       some code
-   except:
-       some other code
+  .. code-block:: python
 
-.. code-block:: python
+     # Correct
+     try:
+         some code
+     except Exception:
+         some other code
 
-   # Correct:
-   try:
-       some code
-   except Exception:
-       some other code
-
-|
 
 * All code should prefer raising built-in exceptions whenever possible. Avoid 
   creating excessive new exception types.
 
-.. code-block:: python
+  .. code-block:: python
 
-   # Correct:
-   raise TypeError('...')
+     # Correct
+     raise TypeError('...')
 
-|
 * Test suite shall always test for both positive and negative logic paths.
 
-.. code-block:: python
+  .. code-block:: python
 
-   # Wrong:
-   if api():
-       do something
+     # Wrong
+     if api():
+         do something
 
-.. code-block:: python
+  .. code-block:: python
 
-   # Correct:
-   if api():
-       do something
-   else:
-       do something else
+     # Correct
+     if api():
+         do something
+     else:
+         do something else
 
 Execution
 ---------
 
 * Test suite shall be executable through job files (pyats run job execution).
-
 
 * Test suite shall leverage asynchronous (`parallel<https://pubhub.devnetcloud.com/media/pyats/docs/async/pcall.html>`_) executions whenever possible.
 
@@ -325,43 +280,41 @@ Logging
 * Logging shall be done only through using python native logging module and 
   functionality. ``print()`` function should never be used in Test suites and libraries.
 
-**Good**
+  .. code-block:: python
 
-.. code-block:: python
+   # Wrong
+   print('This is some message')
 
+  .. code-block:: python
+
+   # Correct
    log.info('This is some message')
 
-**Bad**
-
-.. code-block:: python
-
-   print('This is some message')
 
 * Test suites must log thorough and informative messages describing its 
   actions, purposes, progress and intermediate/final result.
 
-**Good**
+  .. code-block:: python
 
-.. code-block:: python
+    # Wrong
+    perform check 1
+    perform check 2
 
-   log.info('Performing check 1 to verify x is up')
-   perform check 1
+  .. code-block:: python
 
-   log.info('Performing check 2 to verify z is down')
-   perform check 2
+    # Correct
+    log.info('Performing check 1 to verify x is up')
+    perform check 1
 
-   if all passed:
-       log.info('All worked as expected')
-   else:
-       log.info('Failed because step <...> has failed')
-       some logic
+    log.info('Performing check 2 to verify z is down')
+    perform check 2
 
-**Bad**
+    if all passed:
+        log.info('All worked as expected')
+    else:
+        log.info('Failed because step <...> has failed')
+        some logic
 
-.. code-block:: python
-
-   perform check 1
-   perform check 2
 
 
 * Point of failures and expected output/behavior/values shall be clearly 
@@ -369,27 +322,25 @@ Logging
 
     .. code-block:: python
 
-        # Wrong:
-        if dbgObj.verify_poe_deployment() == False:​
-            self.failed()​
-        else:​
+        # Wrong
+        if dbgObj.verify_poe_deployment() == False:
+            self.failed()
+        else:
             self.passed()
 
     .. code-block:: python
 
-        # Correct:
-        if dbgObj.verify_poe_deployment() == False:​
-            # Give debug information ... ​
-            log.error("Debug History:" + dbgObj.command_history + "\n \​
-                    Status: " + dbgObj.status)​
-            self.failed("Point of entry deployment verification failed.")​
-        else:​
+        # Correct
+        if dbgObj.verify_poe_deployment() == False:
+            # Give debug information ... 
+            log.error("Debug History:" + dbgObj.command_history + "\n \
+                    Status: " + dbgObj.status)
+            self.failed("Point of entry deployment verification failed.")
+        else:
             self.passed()
 
 * Test results and any diagnostic information that may be helpful for debugging 
   and bug-raising purposes shall be logged thoroughly.
-
-# JB - Talk to Dave/Thomas tomorrow
 
 * Avoid using warnings excessively: in test automation, warnings are typically 
   ignored.

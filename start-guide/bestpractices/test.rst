@@ -3,35 +3,52 @@ Test Suite Guidelines
 
 Generic
 -------
-* Test suites shall be written following pyATS `script templates<https://github.com/CiscoTestAutomation/pyATS-project-template>`_ (eg, pyATS 
+* Test suites shall be written following pyATS `script templates <https://github.com/CiscoTestAutomation/pyATS-project-template>`_ (eg, pyATS 
   project template, Genie Trigger/Verification template) 
 
 * Test suites shall be unique. Inheritance should be used in cases where 
   test case re-use is applicable.
 
-.. code-block:: python
+  .. code-block:: python
 
+        # Correct
         from script_a import OldTestcase
 
         class ReuseTestcase(OldTestcase):
             pass
 
-* Test suites shall leverage existing libraries where possible.
+* Test suites shall leverage `existing libraries <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/>`_ where possible.
 
-* Test cases should be categorized using execution `grouping feature<https://pubhub.devnetcloud.com/media/pyats/docs/aetest/control.html#testcase-grouping>`_.
+* Test cases should be categorized using execution `grouping feature <https://pubhub.devnetcloud.com/media/pyats/docs/aetest/control.html#testcase-grouping>`_.
 
 * Global variables shall not be used within test suites.
 
-**Bad**
+  .. code-block:: python
 
-.. code-block:: python
-
-    global variable
+     # Wrong
+     global variable
 
 * Test suites shall never hard-code the required testbed devices, links and 
   interface names. It should either reference them using testbed aliases, or 
   accept a mapping as input argument to the test suite, satisfying its topology 
   requirements.
+
+  .. code-block::
+  
+      devices:
+        xr-1:
+          alias: dev1
+          ...
+
+  .. code-block:: python
+
+     # Wrong
+     testbed.devices['xr-1']
+
+  .. code-block:: python
+
+     # Good
+     testbed.devices['dev-1']
 
 Headers
 -------
@@ -59,7 +76,7 @@ Headers
   * Input parameters
   * Description of the test
 
-  Example can be found `here<https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
+* Example can be found `here<https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
 
 Common Setup/Cleanup
 --------------------
@@ -127,20 +144,18 @@ Debugging
   * Collect all associated debug information (core dumps, debug commands, etc.) for post-mortem debugging purposes.
   * Exit gracefully after cleaning up the environment
 
-**Good**
+  .. code-block:: python
 
-.. code-block:: python
+     # Wrong
+     some code that might blow up
 
-   try:
-       some code that might blow up
-   except Exception:
-       handle it
+  .. code-block:: python
 
-**Bad**
-
-.. code-block:: python
-
-    some code that might blow up
+     # Correct
+     try:
+         some code that might blow up
+     except Exception:
+         handle it
 
 * Common-cleanup should always be executed to perform clean-up duty if something fails dramatically.
 
@@ -149,13 +164,14 @@ Debugging
 Code Coverage
 -------------
 
-Internal only links
-`CTC<http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
-`CRFT<http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
-
 * Test suites should measure, collect and support the analysis of its automated tests’ code-coverage.
 * Test suites should strive for the best code coverage possible, whilst balancing runtime efficiency.
 * Test suites should support execution on code-coverage instrumented images (e.g. code-coverage timing vs regular timing)
 * If code-coverage is enabled, test suites should check for instrumented images before continuing.
 * Code-coverage collection shall be performed only via use of common library functions and packages.
 * Code-coverage metrics shall be collected and stored along with runtime log files.
+
+Internal only links
+`CTC<http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
+`CRFT<http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
+

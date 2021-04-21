@@ -4,32 +4,35 @@ Concept Introduction
 Dream
 -----
 
-I would like to ask you to think of the following:
-
-Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases. Re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
+Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases, business requirement.. Re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
 
 If we had this, imagine what our testcases would look like.
 
 .. code-block:: python
 
    dev.api.shut_interface(interface='Ethernet2/3')
-   dev.api.verify_interface_shut(interface='Ethernet2/3')
+   if dev.api.verify_interface_shut(interface='Ethernet2/3'):
+       self.failed('Interface is not shut')
    ...
 
+It would make the script code very easy to write, quick and extremely readable.
 
-When one api is not there, you would add the API and then continue with the automation. Each API would follow good developing practice:
+When the library is not there, simply add it and then continue with the automation. Each library would follow good developing practice:
 
-* One set of library for all
-* Everybody commit to the same set of libraries
-* All re-usable
+* One common library which is shared to all
+* Re-usable library
+  * Parsers
+  * Apis
+  * Connections
+  * Testcases
+  * ...
 * No code duplication
-* Re-usable Testcases
 * Debuggable
-* Writing script is now very easy and FAST
 * Good comments
 
+
 This is the goal of having good practice; Creating a development environment
-that scales, simplify work for all, and speed up development. 
+that scales, simplify the work for all, and speed up development. 
 
 
 Introduction
@@ -93,22 +96,35 @@ handling inputs/outputs/timings differences. All platform, OS and version
 specific code must be abstracted into libraries. This promotes code reusability 
 whilst reducing overall code complexity.
 
-Consider leveraging the genie.abstract package and contributing your 
-agnostic packages and libraries to genie.libs, benefiting the user community. 
-Follow guidelines outlined in the repository README files and development 
+Consider leveraging the `genie.abstract <https://pubhub.devnetcloud.com/media/genie-docs/docs/abstract/index.html>`_ package and `contributing <https://pubhub.devnetcloud.com/media/pyats-development-guide/docs/writeparser/writeparser.html>`_ your 
+agnostic packages and libraries to genie.libs, benefiting the user community.
+Follow guidelines outlined in the repository README files and development
 guides.
 
-In summary:
+    .. code-block:: python
+      :name: this_just_bumps_code_over
 
-* Reuses what already exists
-* Saves time
-* How many “Shut Interface” blocks of code are there out there? 
-* How many bugs in all of them ?
-* Reuse Libraries
-* Reuse Parsers
-* Reuse Testcases
-* Reuse Configurations
-* Contribute!
+        # Wrong
+        if '17.2' in show_version:
+            do_something()
+        elif '17.3' in show_version:
+            do something()
+        elif '17.5' in show_version:
+            do_something()
+        ...
+
+
+    .. code-block:: python
+      :name: this_just_bumps_code_over
+
+        # Correct
+        # Because of abstraction, no need to do the ifs
+        dev.api.do_something()
+
+**In summary**
+
+* Overtime, Script might need to be modified to support multiple versions
+* Abstract can solve all these problems by making it library driven and require 0 script modification.
 
 Effective & Efficient
 ---------------------
@@ -136,7 +152,7 @@ and attempting to catch all potential bugs/issues:
   to improve the effectiveness of your test suites. 
 
 
-In summay:
+**In summary**
 
 * Effectiveness of a test script
   * execution time
@@ -160,7 +176,7 @@ statements covering all possible scenarios), flexible (eg, handles assorted
 environments & timing conditions), and code changes should always be reviewed 
 by colleagues and/or subject matter experts.
 
-In summary:
+**In summary**
 
 * Test automation must always give the same result
 * Inconsistent results make you question everything
@@ -194,7 +210,7 @@ on complex code and logic, and detail the different use-cases of your creations
 and how to debug them in case of failures. Keep your comments to the point and 
 accurate in the explanation.
  
-In summary:
+**In summary**
 
 * Scripts get modified
   * Increasing Coverage

@@ -4,8 +4,8 @@ Topology Guidelines
 Format
 ------
 
-* Testbed physical topology shall be defined following pyATS topology YAML format and template.
-* Testbed topology file shall adhere to pyATS topology production schema.
+* Testbed physical topology shall be defined following `pyATS topology <https://pubhub.devnetcloud.com/media/pyats/docs/topology/index.html>`_ YAML format and template.
+* Testbed topology file shall adhere to pyATS topology `production schema <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html>`_.
 * Custom topology information shall always be defined under ``custom:`` section.
 * Testbed topology file shall only contain physical devices and links (this also includes actual software-based and virtual devices).
 * When bringup is used, the topology file may contain logical routers (placeholders until replaced with actual router information)

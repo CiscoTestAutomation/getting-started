@@ -32,11 +32,7 @@ Code Layouts
 * Continuation lines should align wrapped elements vertically using 
   Python’s implicit line joining inside parenthesis, brackets and braces. 
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         p2 = re.compile(r'^\s*BGP +table +version +is'
@@ -44,7 +40,6 @@ Code Layouts
                 r' +ID +is +(?P<local_router_id>(\S+))$')
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
         p2 = re.compile(r'^\s*BGP +table +version +is'
@@ -58,7 +53,7 @@ Code Layouts
   per import.
 
 * All import statements shall be either absolute, or relative to the current 
-  module, e.g.: 
+  module.
 
 **Good**
 
@@ -80,11 +75,7 @@ Comments and Docstrings
 
 * Comments should be complete sentences in plain, readable English.
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         # dict check
@@ -93,7 +84,6 @@ Comments and Docstrings
             file_name = jsons_dict[arg]['file']
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
         # Look up module's path and file's name in the dictionary
@@ -108,10 +98,15 @@ Comments and Docstrings
   methods, following PEP 257. Refer to Sphinx documentation requirements if
   library is to be auto-documented using Sphinx.
 
-**Good**
+.. code-block:: python
+
+    # Wrong
+    def configure_cdp(device, interfaces=None):
+        '''cdp configuration'''
 
 .. code-block:: python
 
+    # Correct
     def configure_cdp(device, interfaces=None):
         """ Enables cdp on target device
             Args:
@@ -120,13 +115,6 @@ Comments and Docstrings
             Returns:
                 None
         """
-  
-**Bad**
-
-.. code-block:: python
-
-    def configure_cdp(device, interfaces=None):
-        '''cdp configuration'''
 
 * Docstrings should be in a Sphinx-friendly format in order to allow for 
   auto-generated API documentation, eg, Sphinx REST.
@@ -136,35 +124,25 @@ Naming Conventions
 
 * Short, all ``lowercase`` names for modules.
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         genie.UTILS
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
         genie.utils
 
 * ``CapWordCamelBack`` for class names
 
-    ..
-        Lukas
-
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         class mycustomclass():
             ...
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
         class MyCustomClass():
@@ -172,75 +150,64 @@ Naming Conventions
 
 * Suffix Error for all exception classes.
 
-**Good**
-
 .. code-block:: python
 
-    class MyError(Exception):
+    # Wrong
+    class BadName(Exception):
         pass
 
-**Bad**
-
 .. code-block:: python
 
-    class BadName(Exception):
+    # Correct
+    class MyError(Exception):
         pass
 
 * All lowercase for function names, use underscore only if it improves 
   readability
 
-    ..
-        Lukas
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Wrong
         def LoadAttribute(pkg, attr_name, device=None):
 
     .. code-block:: python
-      :name: this_just_bumps_code_over
 
         # Correct
         def load_attribute(pkg, attr_name, device=None):
 
 * Always use ``self`` for the first argument to instance methods
 
-**Good**
-
 .. code-block:: python
 
-    class MyClass():
-        def my_function(self):
-            pass
-
-**Bad**
-
-.. code-block:: python
-
+    # Wrong
     class MyClass():
         def my_function(this):
             pass
 
+.. code-block:: python
+
+    # Correct
+    class MyClass():
+        def my_function(self):
+            pass
 
 * Always use ``cls`` for first argument to class methods
 
-**Good**
-
 .. code-block:: python
 
-    class MyClass():
-        @classmethod
-        def my_function(cls):
-            pass
-
-**Bad**
-
-.. code-block:: python
-
+    # Wrong
     class MyClass():
         @classmethod
         def my_function(self):
+            pass
+
+.. code-block:: python
+
+    # Correct
+    class MyClass():
+        @classmethod
+        def my_function(cls):
             pass
 
 * Use ``CAPS_WITH_UNDERSCORES`` for constants
