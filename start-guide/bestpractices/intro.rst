@@ -4,7 +4,7 @@ Concept Introduction
 Dream
 -----
 
-Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases, business requirement.. Re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
+Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases, business requirement, re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
 
 If we had this, imagine what our testcases would look like.
 
@@ -15,12 +15,13 @@ If we had this, imagine what our testcases would look like.
        self.failed('Interface is not shut')
    ...
 
-It would make the script code very easy to write, quick and extremely readable.
+It would make script code very easy to write, quick and extremely readable.
 
-When the library is not there, simply add it and then continue with the automation. Each library would follow good developing practice:
+If a library does not exists yet, add it and then continue with your automation. Each library would follow good developing practice:
 
 * One common library which is shared to all
 * Re-usable library
+
   * Parsers
   * Apis
   * Connections
@@ -30,15 +31,14 @@ When the library is not there, simply add it and then continue with the automati
 * Debuggable
 * Good comments
 
-
 This is the goal of having good practice; Creating a development environment
-that scales, simplify the work for all, and speed up development. 
+that scales, simplify the work for all, and speed up development. As time pass, a larger and a better libraries exists for all to use.
 
 
 Introduction
 ------------
 
-Originating as Cisco engineering document, *EDCS-1529178*, this sections expands
+Originating as Cisco engineering document, *EDCS-1529178*, this documentation expands
 on the best practices of writing pyATS test cases and libraries. It was created 
 with a few purposes in mind:
 
@@ -180,10 +180,12 @@ by colleagues and/or subject matter experts.
 
 * Test automation must always give the same result
 * Inconsistent results make you question everything
+
   * Is it the device?
   * Is it the script ?
   * Configuration ?
   * Let's rerun to try to find the issue - Waste of time
+
 * Pass under Failure condition is worse than having no test
 
 
@@ -213,9 +215,11 @@ accurate in the explanation.
 **In summary**
 
 * Scripts get modified
+
   * Increasing Coverage
   * Platform Support
   * Bug Fix
+
 * Ownership will change over the course of script life
 * Minimize effort with each revision
 * CLI/output might change
