@@ -123,8 +123,6 @@ internals often leads to long-term technical debt.
         cpu = output['cpu_load']
 
 
-
-
 Make it Modular
 ===============
 

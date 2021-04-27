@@ -10,7 +10,8 @@ guidelines.
 Code Layouts
 ------------
 
-* Use 4 spaces per indentation level. Do NOT use tabs.
+* Use 4 spaces per indentation level. Do NOT use tabs. Be consistent with the
+  amount used.
 
 **Good**
 
@@ -52,23 +53,21 @@ Code Layouts
 * All import statements should occur at the top of the file, with one module 
   per import.
 
-* All import statements shall be either absolute, or relative to the current 
-  module.
+* All import statements shall be either absolute, or relative to the current
+  module. Never do ``import *`` , this makes debugging very hard as you cannot
+  know where the library comes from
 
-**Good**
+    .. code-block:: python
 
-.. code-block:: python
+        # Wrong
+        from x.y import *
 
-    from x.y import Z
-    from . import x
-    from .. import y
+    .. code-block:: python
 
-**Bad**
-
-.. code-block:: python
-
-    from x.y import *
-
+        # Correct
+        from x.y import Z
+        from . import x
+        from .. import y
 
 Comments and Docstrings
 -----------------------
@@ -93,6 +92,17 @@ Comments and Docstrings
 
 * Use inline comments sparingly, and only if the line (including comments) is 
   less than 79 characters.
+
+.. code-block:: python
+
+    # Not Recommended
+    x = 5 ; # Setting 5 to value x
+
+.. code-block:: python
+
+    # Correct
+    # Setting 5 to value x
+    x = 5
 
 * Write proper, useful docstrings for all modules, functions, classes and 
   methods, following PEP 257. Refer to Sphinx documentation requirements if

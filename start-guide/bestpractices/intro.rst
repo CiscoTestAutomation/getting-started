@@ -4,7 +4,7 @@ Concept Introduction
 Dream
 -----
 
-Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases, business requirement, re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log in case of failures. You could 100% focus on what you want to do, and not focus on how to do it.
+Imagine a development environment where all libraries you need are there. You can re-use libraries to develop your testcases, business requirement, re-use all libraries which have been developped in previous testcase by anybody else. This mean, the Bgp team re-use the OSPF team libraries, routing re-using platform, IOSXR re-using NXOS when needed. Each have great log message in the case they fail, or pass. You could 100% focus on what you want to do, and not focus on how to do it.
 
 If we had this, imagine what our testcases would look like.
 
@@ -15,9 +15,14 @@ If we had this, imagine what our testcases would look like.
        self.failed('Interface is not shut')
    ...
 
-It would make script code very easy to write, quick and extremely readable.
+.. code-block:: python
 
-If a library does not exists yet, add it and then continue with your automation. Each library would follow good developing practice:
+   dev.reload()
+   ...
+
+It makes the script code very easy and quick to write. It also makes the code extremely readable by your teammate and other people that might inherits this script in the future.
+
+If a library does not exists yet, add it and then continue with your automation. Each library follows good developing practice:
 
 * One common library which is shared to all
 * Re-usable library
@@ -31,8 +36,10 @@ If a library does not exists yet, add it and then continue with your automation.
 * Debuggable
 * Good comments
 
-This is the goal of having good practice; Creating a development environment
+This is one of the goal of having good practice; Creating a development environment
 that scales, simplify the work for all, and speed up development. As time pass, a larger and a better libraries exists for all to use.
+
+For this to exists, we need guidelines and best practice.
 
 
 Introduction
@@ -86,7 +93,7 @@ mind while planning, designing, and developing test automation. The following
 is a set of key principles that all test automation development shall follow.
 
 We tried to add as much example as possible to make the content less dry, and
-easier to follow in the next pages.
+easier to follow.
 
 Agnostic & Reusable
 -------------------
@@ -119,12 +126,11 @@ guides.
 
         # Correct
         # Because of abstraction, no need to do the ifs
+        # and it will find the right library for this os, platform, image, ...
         dev.api.do_something()
 
-**In summary**
-
-* Overtime, Script might need to be modified to support multiple versions
-* Abstract can solve all these problems by making it library driven and require 0 script modification.
+* As new version of the OS appear, we should not be modifying all our scripts,
+  but only the library that drives the script.
 
 Effective & Efficient
 ---------------------
@@ -138,7 +144,7 @@ and attempting to catch all potential bugs/issues:
 
 * Add new tests and/or enhance existing tests as the feature gets more stable. 
 
-* Do things asynchronously when applicable to reduce execution time. 
+* Do things `asynchronously <https://pubhub.devnetcloud.com/media/pyats/docs/async/pcall.html>`_ when applicable to reduce execution time. 
 
 * Refactor test suites often in order to make them more efficient whilst 
   maintaining the same test coverage. 
@@ -162,9 +168,8 @@ and attempting to catch all potential bugs/issues:
   * Reserve devices
   * Clean
   * Configure
-* Asynchronous
+* Use Asynchronous as much as possible
 * Constant review of coverage
-* Knowledge of source code and architecture 
 * Prioritize testcases
 
 Reliable & Repeatable
@@ -178,7 +183,7 @@ by colleagues and/or subject matter experts.
 
 **In summary**
 
-* Test automation must always give the same result
+* Test automation must always give the same result with the starting point
 * Inconsistent results make you question everything
 
   * Is it the device?
@@ -187,7 +192,6 @@ by colleagues and/or subject matter experts.
   * Let's rerun to try to find the issue - Waste of time
 
 * Pass under Failure condition is worse than having no test
-
 
 Sustainable & Responsible
 -------------------------
@@ -221,10 +225,9 @@ accurate in the explanation.
   * Bug Fix
 
 * Ownership will change over the course of script life
-* Minimize effort with each revision
-* CLI/output might change
+* The goal should be to Minimize effort each time it has to be modified
 * Easy to read
-* Consistent style
+* Consistent style across script, library
 * Documentation
   * Header
   * Comments
