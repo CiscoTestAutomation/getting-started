@@ -76,7 +76,7 @@ Headers
   * Input parameters
   * Description of the test
 
-* Example can be found `here<https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
+* Example can be found `here <https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
 
 Common Setup/Cleanup
 --------------------
@@ -136,7 +136,7 @@ Tests
 Debugging
 ---------
 
-* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections). Look into `pyATS Health<https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_
+* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections). Look into `pyATS Health <https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_
 
 * All code shall be written with the assumption that it may fail at any step: errors shall be handled intelligently and gracefully.
   
@@ -172,6 +172,6 @@ Code Coverage
 * Code-coverage metrics shall be collected and stored along with runtime log files.
 
 Internal only links
-`CTC<http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
-`CRFT<http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
+`CTC <http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
+`CRFT <http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
 

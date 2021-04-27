@@ -151,13 +151,13 @@ Headers & Comments
 Libraries & Packages
 --------------------
 
-* All users shall prioritize using and contributing to `genie libraries<https://developer.cisco.com/docs/pyats-development-guide/>`_. 
+* All users shall prioritize using and contributing to `genie libraries <https://developer.cisco.com/docs/pyats-development-guide/>`_. 
   Uplifts should be made as needed.
 
 * Library & package requirements shall be clearly identified within the
   script header
 
-* Libraries & packages should be leveraging `Genie abstraction<https://pubhub.devnetcloud.com/media/genie-docs/docs/abstract/index.html#>`_ concept/solution 
+* Libraries & packages should be leveraging `Genie abstraction <https://pubhub.devnetcloud.com/media/genie-docs/docs/abstract/index.html#>`_ concept/solution 
   whenever possible
 
 * All import statements shall be explicit and shall occur at the top of the file.
@@ -182,7 +182,7 @@ Libraries & Packages
   should belong to the `common libraries <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_.
 
 * All device output parsing (including screen scraping) shall be done using 
-  `common library parsers<https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. 
+  `common library parsers <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_. 
 
   .. code-block:: python
 
@@ -277,14 +277,14 @@ Execution
 
 * Test suite shall be executable through job files (pyats run job execution).
 
-* Test suite shall leverage asynchronous (`parallel<https://pubhub.devnetcloud.com/media/pyats/docs/async/pcall.html>`_) executions whenever possible.
+* Test suite shall leverage asynchronous (`parallel <https://pubhub.devnetcloud.com/media/pyats/docs/async/pcall.html>`_) executions whenever possible.
 
 * Temporary file generation shall be done using python tempfile module, 
   generated under the current runtime directory. All temporary files shall be 
   deleted at the end of the run.
 
 * Test suite shall detect and report any anomalies during execution, such as 
-  crash, CPU freeze, memory leaks, etc. Look into `pyATS Health Check`<https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_.
+  crash, CPU freeze, memory leaks, etc. Look into `pyATS Health Check <https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_.
 
 Logging
 -------
