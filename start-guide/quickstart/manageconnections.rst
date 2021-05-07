@@ -209,10 +209,10 @@ This step-by-step example shows you how to connect to a device.
 .. tip:: Remember - you can put all of these commands into a single script. We'll show you how in the :ref:`parse-output` section. 
 
 
-Depends on your device terminal settings, when you connect to device using CLI and execute command, you would see "press any key to continue". 
-For humans, this point of brake, give possibility to analyse output. However from automation point of view it would break parsers, as they change output data. 
+Depending on your device terminal settings, when you connect to a device using a CLI and execute a command, you would sometimes see "press any key to continue". 
+For humans, this break-point gives a possibility to analyze output. However, from automation point of view it would break parsers, as they change output data.  
 
-To avoid those, Unicon's (#pyATS connection implementation) is to issue the following on connection established: 
+To avoid those, Unicon (#pyATS connection implementation) issues the following commands on connection established: 
 
     * no logging console
     * terminal width 511
@@ -228,8 +228,9 @@ or
 
 >>> dev.connect(mit=True)
 
-For more details, see the topic `customizing your connection <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/connection.html#customizing-your-connection>`_.
+Each plugin can specify their own init commands which are set via the plugin settings. For example, the generic plugin settings can be found `here <https://github.com/CiscoTestAutomation/unicon.plugins/blob/master/src/unicon/plugins/generic/settings.py#L17>`_.
 
+For more details, see the topic `customizing your connection <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/connection.html#customizing-your-connection>`_.
 
 
 
