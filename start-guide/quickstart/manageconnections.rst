@@ -208,6 +208,33 @@ This step-by-step example shows you how to connect to a device.
 
 .. tip:: Remember - you can put all of these commands into a single script. We'll show you how in the :ref:`parse-output` section. 
 
+
+Depending on your device terminal settings, when you connect to a device using a CLI and execute a command, you would sometimes see "press any key to continue". 
+For humans, this break-point gives a possibility to analyze output. However, from automation point of view it would break parsers, as they change output data.  
+
+To avoid those, Unicon (#pyATS connection implementation) issues the following commands on connection established: 
+
+    * no logging console
+    * terminal width 511
+    * etc (depending on platform, which can be specified in testbed file)
+
+.. important:: All these commands affect the terminal behavior, not your device's functionality. 
+
+To disable default configuration:
+
+>>> dev.connect(init_exec_commands=[], init_config_commands=[])
+
+or
+
+>>> dev.connect(mit=True)
+
+Each plugin can specify their own init commands which are set via the plugin settings. For example, the generic plugin settings can be found `here <https://github.com/CiscoTestAutomation/unicon.plugins/blob/master/src/unicon/plugins/generic/settings.py#L17>`_.
+
+For more details, see the topic `customizing your connection <https://pubhub.devnetcloud.com/media/unicon/docs/user_guide/connection.html#customizing-your-connection>`_.
+
+
+
+
 See also...
 
 * `Detailed description of the testbed file <https://pubhub.devnetcloud.com/media/pyats/docs/topology/creation.html#testbed-file>`_
