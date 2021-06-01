@@ -33,7 +33,7 @@ contributing to the Genie parser repo. It will save you (and us) time in the end
 | 4. :ref:`Setting up your development environment <setting_up_your_environment>`
 | 5. :ref:`Writing the Schema Class <writing_the_schema_class>`
 |   5.1 :ref:`Creating a schema <creating_a_schema>`
-|     5.1.1. :ref:`Identifying keys directy from show command output <keys_from_show_command>`
+|     5.1.1. :ref:`Identifying keys directly from show command output <keys_from_show_command>`
 |     5.1.2. :ref:`Identifying keys from XML output <keys_from_XML>`
 |     5.1.3. :ref:`Identifying keys from the YANG data model <keys_from_YANG>`
 |   5.2. :ref:`Creating a schema based on an existing model <schema_on_existing_model>`
@@ -220,7 +220,7 @@ command can be incredibly helpful when designing a schema.
 For example, the output from the ``show track`` command for IOSXE can look like
 this:
 
-.. code-block:: python
+.. code-block::
 
     Track 1
     Interface GigabitEthernet3.420 line-protocol
@@ -231,7 +231,7 @@ this:
 
 Or it can look like this:
 
-.. code-block:: python
+.. code-block::
 
     Track 2
     IP route 10.21.12.0 255.255.255.0 reachability
@@ -245,7 +245,7 @@ Or it can look like this:
 
 Or even this:
 
-.. code-block:: python
+.. code-block::
 
     Track 1
     IP route 172.16.52.0 255.255.255.0 metric threshold
@@ -359,7 +359,7 @@ to group data into containers, and use the Python's pretty print module.
 
 #. You can also check for ways to group the data based on counters, input and output, as well as other statistics. For the following output:
 
-   .. code-block:: python
+   .. code-block::
 
         4243 packets input, 361948 bytes, 0 no buffer
         Received 0 broadcasts (0 IP multicasts)
@@ -827,24 +827,23 @@ Using ``parsergen`` to create a parser class is particularly useful when you don
 
 Now that you've finished writing your parser, the time has come to test it!
 
-There are currently two mechanisms to create tests as the testing strategy is
-in a state of transition. The reasoning for the new testing type is to avoid
-merge conflicts, removing duplicate boilerplate code, ensuring tests are built,
-and making the process overall easier. However, in the meantime unfortunately
-a user may create different tests depending on the OS of the parser that
-they wrote.
+There are currently two types of tests, those being Folder Based and Unittest Based.
+The testing strategy is currently in a state of transition.
+Moving to folder based testing helps us avoid merge conflicts and duplicate boilerplate code
+while ensuring tests are faster and easier create and use.
+When creating tests for a new parser do so in the Folder Based style.
 
-:ref:`Folder based testing <folder_based_testing>` is currently supported for:
+:ref:`Folder based testing <folder_based_testing>` is currently completed for:
 
   * ASA
   * IOS
   * IOSXE
 
-All other OS's use :ref:`unittest based testing <unittest_based_testing>`.
+All other OS's are in transition from :ref:`unittest based testing <unittest_based_testing>`.
 
 .. important::
     If you want to contribute your new parser to the open-source |pyATS| feature
-    libraries and components, you must attach testing results for each parser
+    libraries and components, you must attach Folder Based testing results for each parser
     that you want to contribute.
 
 
@@ -942,15 +941,15 @@ Ideally, this entire process once known, should only take a few seconds to creat
 
 .. code-block:: bash
 
-    .../genieparser/tests$ python ci_folder_parsing.py
-    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe
-    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+    .../genieparser/tests$ python folder_parsing_job.py
+    .../genieparser/tests$ python folder_parsing_job.py -o iosxe
+    .../genieparser/tests$ python folder_parsing_job.py -o iosxe -c ShowClock
 
 The output will show you the something similar, which will provide the `PASSED` and `FAILED` results.
 
 .. code-block:: bash
 
-    .../genieparser/tests$ python ci_folder_parsing.py -o iosxe -c ShowClock
+    .../genieparser/tests$ python folder_parsing_job.py -o iosxe -c ShowClock
     <cut for brevity>
     2020-09-19T16:14:17: %AETEST-INFO: |                               Detailed Results                               |
     2020-09-19T16:14:17: %AETEST-INFO: +------------------------------------------------------------------------------+
@@ -1049,7 +1048,7 @@ the expected output from the parser in ``golden_output1_expected.py`` would be:
 7.2 Unittest based testing
 ==========================
 
-The other testing strategy leverages unittest. The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
+The old testing strategy leverages unittest. The `Python unittest.mock library <https://docs.python.org/3/library/unittest.mock.html>`_ returns mock device output. Use your parser class to parse the mock data and return a Python dictionary that contains the results.
 
 The following example shows how to create a unit test file for :ref:`the show lisp session example <regex-parser>`.
 
@@ -1173,7 +1172,7 @@ To create your own unit test, complete the following steps.
    .. image:: ../images/unit_test_results.png
 
 
-#. After you push your parser testing to your branch, GitHub Actions will check it on your pull request. Please make sure your parser testing passes.
+#. After you push your parser code to your branch, GitHub Actions will check it on your pull request. Please make sure your parser testing passes.
 
 .. attention:: Test on real devices whenever possible. If you use the Python mock functionality, make sure the expected output is from a real device.
 
