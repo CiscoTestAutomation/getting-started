@@ -722,6 +722,25 @@ The following table describes the structure of the parser class in more detail.
    :header-rows: 1
    :widths: 48 52
 
+For consistency and compatibility when an interface name is parsed in its shortened form
+it should be converted to a standard format.
+The easiest way to accomplish this is with use of the Common library, found in /genie/parser/utils/common.py.
+
+.. code-block:: python
+
+    # take the example of a Ten Gigabit Ethernet port. When parsed out it may look like this:
+    >>> interface_name = "Te0/0/1"
+
+    # for consistency and compatibility we want to convert this to be a standardized name.
+    >>> from genie.libs.parser.utils.common import Common
+    >>> interface_name
+    'Te0/0/1'
+
+    >>> converted_name = Common.convert_intf_name(interface_name)
+    >>> converted_name
+    'TenGigabitEthernet0/0/1'
+
+
 .. note:: You need to know the patterns that you want to match before you write the parser class. These patterns can be some or all of the keys defined in the schema class.
 
 .. _parsergen:
