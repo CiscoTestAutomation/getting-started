@@ -859,7 +859,6 @@ When creating tests for a new parser do so in the Folder Based style.
   * IOSXE
   * IOSXR
   * JUNOS
-  * NXOS
 
 All other OS's are in transition from :ref:`unittest based testing <unittest_based_testing>`.
 
