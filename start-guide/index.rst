@@ -41,6 +41,7 @@ with |pyATSbold| and the |librarybold| (formerly "Genie").
     bestpractices/topology
     bestpractices/job
     bestpractices/summary
+    bestpractices/doAndDont
 
 .. toctree::
     :maxdepth: 1

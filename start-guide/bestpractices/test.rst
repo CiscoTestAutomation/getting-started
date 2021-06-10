@@ -3,22 +3,52 @@ Test Suite Guidelines
 
 Generic
 -------
-* Test suites shall be written following pyATS script templates (eg, pyATS 
+* Test suites shall be written following pyATS `script templates <https://github.com/CiscoTestAutomation/pyATS-project-template>`_ (eg, pyATS 
   project template, Genie Trigger/Verification template) 
 
 * Test suites shall be unique. Inheritance should be used in cases where 
   test case re-use is applicable.
 
-* Test suites shall leverage existing libraries where possible.
+  .. code-block:: python
 
-* Test cases should be categorized using execution grouping feature.
+        # Correct
+        from script_a import OldTestcase
+
+        class ReuseTestcase(OldTestcase):
+            pass
+
+* Test suites shall leverage `existing libraries <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/>`_ where possible.
+
+* Test cases should be categorized using execution `grouping feature <https://pubhub.devnetcloud.com/media/pyats/docs/aetest/control.html#testcase-grouping>`_.
 
 * Global variables shall not be used within test suites.
+
+  .. code-block:: python
+
+     # Wrong
+     global variable
 
 * Test suites shall never hard-code the required testbed devices, links and 
   interface names. It should either reference them using testbed aliases, or 
   accept a mapping as input argument to the test suite, satisfying its topology 
   requirements.
+
+  .. code-block::
+  
+      devices:
+        xr-1:
+          alias: dev1
+          ...
+
+  .. code-block:: python
+
+     # Wrong
+     testbed.devices['xr-1']
+
+  .. code-block:: python
+
+     # Good
+     testbed.devices['dev-1']
 
 Headers
 -------
@@ -45,6 +75,8 @@ Headers
 
   * Input parameters
   * Description of the test
+
+* Example can be found `here <https://github.com/CiscoTestAutomation/pyATS-project-template/blob/master/template/template_script.py>`_.
 
 Common Setup/Cleanup
 --------------------
@@ -104,14 +136,30 @@ Tests
 Debugging
 ---------
 
-* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections)
+* Test suites should collect for trace-backs, memory-leaks and core dumps at various strategic points in the script (e.g. at the end of test cases, at the end of common setup/cleanup sections). Look into `pyATS Health <https://pubhub.devnetcloud.com/media/genie-docs/docs/health/index.html>`_
+
 * All code shall be written with the assumption that it may fail at any step: errors shall be handled intelligently and gracefully.
   
   * Report errors in the result report, with details of the error in the log file.
   * Collect all associated debug information (core dumps, debug commands, etc.) for post-mortem debugging purposes.
   * Exit gracefully after cleaning up the environment
 
+  .. code-block:: python
+
+     # Wrong
+     some code that might blow up
+
+  .. code-block:: python
+
+     # Correct
+     try:
+         some code that might blow up
+     except Exception:
+         handle it
+
 * Common-cleanup should always be executed to perform clean-up duty if something fails dramatically.
+
+
 
 Code Coverage
 -------------
@@ -122,3 +170,8 @@ Code Coverage
 * If code-coverage is enabled, test suites should check for instrumented images before continuing.
 * Code-coverage collection shall be performed only via use of common library functions and packages.
 * Code-coverage metrics shall be collected and stored along with runtime log files.
+
+Internal only links
+`CTC <http://wwwin-pyats.cisco.com/cisco-shared/ctc/latest/index.html>`_
+`CRFT <http://wwwin-pyats.cisco.com/cisco-shared/plugin_bundle/latest/>`_
+
