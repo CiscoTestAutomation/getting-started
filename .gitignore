@@ -53,3 +53,4 @@ pkgs/examples-pkg/examples/genie
 
 # vscode
 .vscode
+.history
