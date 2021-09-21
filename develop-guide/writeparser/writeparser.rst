@@ -24,7 +24,7 @@ contributing to the Genie parser repo. It will save you (and us) time in the end
     - `How to write a Genie parser for Cisco! <https://youtu.be/ibLNilSfdTc>`_ - uploaded by `Juhi Mahajan <https://www.youtube.com/channel/UCA0EsjQEEJac9XIidC6v6Rg>`_
         - Juhi provides a good overview of parser creation process
     - `Creating a pyATS | Genie Parser from SCRATCH <https://youtu.be/knxkbWTamBY>`_ - uploaded by `Data Knox <https://www.youtube.com/channel/UCi7SD3zfCjkiDWvSFthIQSg>`_
-        - Data Knox's gives a full hands on parser writing guide from start to finish
+        - Data Knox gives a full hands-on parser writing guide from start to finish
 
 
 | 1. :ref:`What is a parser? <what_is_a_parser>`
