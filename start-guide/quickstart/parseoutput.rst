@@ -199,6 +199,21 @@ The following example shows you how to parse output from the ``show inventory`` 
     >>> exit()
 
 
+Optionally, if you already have the output from the device, you can pass it into the parse method even if the device is not connected:
+
+    .. code-block:: python
+    
+     output = """
+     NAME: "1", DESCR: "WS-C3560CX-12PC-S"
+     PID: WS-C3560CX-12PC-S , VID: V03  , SN: FOC2419L9KY
+     """
+
+     dev.parse('show inventory', output=output)
+
+    *Result*: The ``.parse()`` method will return the parsed structure (a dictionary) that you can navigate to find the values you are looking for::
+
+     {'slot': {'1': {'rp': {'WS-C3560CX-12PC-S': {'name': '1', 'descr': 'WS-C3560CX-12PC-S', 'pid': 'WS-C3560CX-12PC-S', 'vid': 'V03', 'sn': 'FOC2419L9KY'}}}}}
+
 .. _example-run-parse-script:
 
 In a Python Script
