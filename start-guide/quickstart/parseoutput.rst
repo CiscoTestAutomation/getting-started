@@ -199,7 +199,7 @@ The following example shows you how to parse output from the ``show inventory`` 
     >>> exit()
 
 
-Optionally, if you already have the output from the device, you can pass it into the parse method even if the device is not connected:
+Optionally, if you already have the output from the device, then you can pass it into the parse method even if the device is not connected:
 
     .. code-block:: python
     
