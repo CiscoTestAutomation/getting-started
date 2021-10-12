@@ -136,7 +136,7 @@ easily set up a development environment that can be used for writing a parser.
 
    .. code-block:: python
 
-    $ git clone https://github.com/YOUR_USERNAME/genieparser
+    $ git clone https://github.com/<YOUR_USERNAME>/genieparser
     $ cd genieparser
     $ make develop
 
