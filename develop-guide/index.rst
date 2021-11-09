@@ -19,6 +19,7 @@ This guide describes how you can use the features and functionality of |pyATSbol
    :caption: Contribute to pyATS
 
    /writeparser/writeparser
+   /writeapi/writeapi
    /writetrigger/writetrigger
    pyATS Blitz <https://pubhub.devnetcloud.com/media/genie-docs/docs/blitz/index.html>
    /contribute/contribute
