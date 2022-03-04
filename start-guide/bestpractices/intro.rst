@@ -161,13 +161,16 @@ and attempting to catch all potential bugs/issues:
 **In summary**
 
 * Effectiveness of a test script
+  
   * execution time
   * resource requirements
   * number of unique problems/bugs/issues it catches
 * Time limit per test suite
+
   * Reserve devices
   * Clean
   * Configure
+
 * Use Asynchronous as much as possible
 * Constant review of coverage
 * Prioritize testcases
@@ -229,7 +232,9 @@ accurate in the explanation.
 * Easy to read
 * Consistent style across script, library
 * Documentation
+
   * Header
   * Comments
+
 * Maintain comments
 * Be explicit with your errors
