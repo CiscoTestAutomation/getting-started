@@ -232,7 +232,9 @@ accurate in the explanation.
 * Easy to read
 * Consistent style across script, library
 * Documentation
+
   * Header
   * Comments
+
 * Maintain comments
 * Be explicit with your errors
