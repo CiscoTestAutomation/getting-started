@@ -100,7 +100,7 @@ Clone the repo
 #. Fork a repository (see https://help.github.com/en/articles/fork-a-repo).
 
    * On GitHub (DevNet users), fork off of the *master* branch.
-   * On Cisco Internal GitHub (internal Cisco users), fork off of the *dev* branch. |br| |br|
+   * On Cisco Internal GitHub (internal Cisco users), branch out from *dev* branch. forking is not allowed. |br| |br|
 
    *Result*: This step creates a copy of the repository that you can work on without affecting anyone else's work. |br| |br|
 
