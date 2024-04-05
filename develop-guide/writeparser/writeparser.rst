@@ -44,7 +44,8 @@ contributing to the Genie parser repo. It will save you (and us) time in the end
 | 7. :ref:`Testing your parser <testingyourparser>`
 |   7.1. :ref:`Folder based testing <folder_based_testing>`
 |   7.2. :ref:`Unittest based testing <unittest_based_testing>`
-| 8. :ref:`Contributing your work to the pyATS project <contributing_your_work>`
+| 8. :ref:`Revising a parser <revising_a_parser>`
+| 9. :ref:`Contributing your work to the pyATS project <contributing_your_work>`
 
 
 
@@ -1199,10 +1200,81 @@ To create your own unit test, complete the following steps.
 
 |
 
-.. _contributing_your_work:
+.. _revising_a_parser:
 
 **********************************************
-8. Contributing your work to the pyATS project
+8. Revising a parser
+**********************************************
+
+As CLI parsers continue to evolve, updates may introduce breaking 
+changes that result in errors within previously functional jobs. To address this
+issue, we have implemented a revision system that allows us to update parsers, 
+without changing the existing implementations. 
+
+When commands are parsed, the most recent revision of the relevant 
+parser will be automatically identified and used.
+
+To create a revision for a parser/api/ops, a new revision folder must be 
+established within the existing OS folder, following the naming convention 
+`rv<Revision Number>`.
+
+    .. code-block::
+
+        genieparser/
+        └── src/
+            └── genie/
+                └── libs/
+                    └── parser/
+                        └── <OS>/
+                            ├── rv1/
+                            ├── rv2/
+                            └── rv3/
+
+Within the revision folder, two steps must be taken:
+
+#. Create a new `__init__.py` file with the following contents:
+
+    .. code-block:: python
+
+        from genie import abstract
+        abstract.declare_token(revision='<Revision Number>')
+
+   The `<revision number>` should match the number used in the folder name (for 
+   instance, `rv1` would use `'1'` as the revision number).
+
+#. Create a new file with the same name as the file of the feature you are 
+   revising. For example, if the `"show platform"` command is to be revised, 
+   create a `show_platform.py` in the revision folder.
+
+#. Once the new file has been created, open it and create the revised version
+   of whatever feature you would like with **the exact function/class name**.
+   IE, if you were to create a revision for the `show platform` parser, you 
+   would create a new class `ShowPlatform` and the accompanying schema.
+
+As an example, assume the first revision is being created for the IOSXE version 
+of the `"show platform"` command, the resulting file structure would resemble:
+
+    .. code-block::
+
+        genieparser/
+        └── src/
+            └── genie/
+                └── libs/
+                    └── parser/
+                        └── iosxe/
+                            └── rv1/
+                                ├── __init__.py
+                                └── show_platform.py
+
+Any changes made in `iosxe/rv1/show_platform.py` will then be used instead of
+the original `iosxe/show_platform.py` file.
+
+.. _contributing_your_work:
+
+|
+
+**********************************************
+9. Contributing your work to the pyATS project
 **********************************************
 
 You've written your parser, you've run tests on your parser, and you're ready
