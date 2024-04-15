@@ -288,6 +288,7 @@ file, you can add revised APIs into the folder like you would other APIs and hav
                     └── sdk/
                         └── apis/
                             └── iosxe/
+                                ├── __init__.py
                                 └── rv1/
                                     ├── __init__.py
                                     └── interface/

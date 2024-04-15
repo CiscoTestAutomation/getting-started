@@ -1206,6 +1206,8 @@ To create your own unit test, complete the following steps.
 8. Revising a parser
 **********************************************
 
+.. note:: Wondering when you should revise a parser? Follow this general rule: If the schema must be changed in a way that's incompatible with current unittests, revise it!
+
 As CLI parsers continue to evolve, updates may introduce breaking 
 changes that result in errors within previously functional jobs. To address this
 issue, we have implemented a revision system that allows us to update parsers, 
@@ -1247,8 +1249,8 @@ Within the revision folder, two steps must be taken:
    create a `show_platform.py` in the revision folder.
 
 #. Once the new file has been created, open it and create the revised version
-   of whatever feature you would like with **the exact function/class name**.
-   IE, if you were to create a revision for the `show platform` parser, you 
+   of whatever feature you would like with **the exact same function/class name**.
+   If you were to create a revision for the `show platform` parser, you 
    would create a new class `ShowPlatform` and the accompanying schema.
 
 As an example, assume the first revision is being created for the IOSXE version 
@@ -1266,12 +1268,17 @@ of the `"show platform"` command, the resulting file structure would resemble:
                                 ├── __init__.py
                                 └── show_platform.py
 
-Any changes made in `iosxe/rv1/show_platform.py` will then be used instead of
-the original `iosxe/show_platform.py` file.
+By default, the parser in `iosxe/rv1/show_platform.py` will then be used instead of
+the original `iosxe/show_platform.py` file. If you want to use a specific revision, pass
+the revision number to the ``parse()`` command, e.g. `dev.parse('show version', revision=1)`. If you want to use the original parser, use `dev.parse('show version', revision=None)`.
 
-.. _contributing_your_work:
+
+To change the default behavior of revision selection to use either the latest , 
+use the CLI argument `\-\-abstract-revision 1`
 
 |
+
+.. _contributing_your_work:
 
 **********************************************
 9. Contributing your work to the pyATS project
