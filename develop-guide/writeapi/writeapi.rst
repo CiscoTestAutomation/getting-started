@@ -271,6 +271,31 @@ Once your parser or API is merged into its respective repository, it will be ava
 .. video:: ../../_videos/dev_api.mp4
     :width: 100%
 
+Revision
+""""""""
+
+Like :ref:`parsers <revising_a_parser>`, APIs can also have revisions.
+
+The process is mostly similar. By creating an `rv<number>` folder and defining the correct token in the `__init__.py`
+file, you can add revised APIs into the folder like you would other APIs and have them discovered automatically.
+
+    .. code-block::
+
+        genielibs/
+        └── src/
+            └── genie/
+                └── libs/
+                    └── sdk/
+                        └── apis/
+                            └── iosxe/
+                                ├── __init__.py
+                                └── rv1/
+                                    ├── __init__.py
+                                    └── interface/
+                                        ├── configure.py
+                                        ├── get.py
+                                        └── verify.py
+
 Unit Testing
 """"""""""""
 
