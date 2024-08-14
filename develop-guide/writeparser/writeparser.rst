@@ -13,7 +13,7 @@ Heads up! This guide contains lots useful information and handy examples, which
 also means that there's a lot to read before you can actually get to parts about coding a
 parser. If you want to skip the reading and just get right to the fun stuff, then
 by all means, skip ahead by clicking :ref:`here <regex-parser>`. We get it, it's cool.
-Just be sure to read the rest of this guide before 
+Just be sure to read the rest of this guide before
 contributing to the Genie parser repo. It will save you (and us) time in the end.
 
 .. tip::
@@ -45,7 +45,8 @@ contributing to the Genie parser repo. It will save you (and us) time in the end
 |   7.1. :ref:`Folder based testing <folder_based_testing>`
 |   7.2. :ref:`Unittest based testing <unittest_based_testing>`
 | 8. :ref:`Revising a parser <revising_a_parser>`
-| 9. :ref:`Contributing your work to the pyATS project <contributing_your_work>`
+| 9. :ref:`Versioning a parser <versioning_a_parser>`
+| 10. :ref:`Contributing your work to the pyATS project <contributing_your_work>`
 
 
 
@@ -1208,16 +1209,16 @@ To create your own unit test, complete the following steps.
 
 .. note:: Wondering when you should revise a parser? Follow this general rule: If the schema must be changed in a way that's incompatible with current unittests, revise it!
 
-As CLI parsers continue to evolve, updates may introduce breaking 
+As CLI parsers continue to evolve, updates may introduce breaking
 changes that result in errors within previously functional jobs. To address this
-issue, we have implemented a revision system that allows us to update parsers, 
-without changing the existing implementations. 
+issue, we have implemented a revision system that allows us to update parsers,
+without changing the existing implementations.
 
-When commands are parsed, the most recent revision of the relevant 
+When commands are parsed, the most recent revision of the relevant
 parser will be automatically identified and used.
 
-To create a revision for a parser/api/ops, a new revision folder must be 
-established within the existing OS folder, following the naming convention 
+To create a revision for a parser/api/ops, a new revision folder must be
+established within the existing OS folder, following the naming convention
 `rv<Revision Number>`.
 
     .. code-block::
@@ -1241,19 +1242,19 @@ Within the revision folder, two steps must be taken:
         from genie import abstract
         abstract.declare_token(revision='<Revision Number>')
 
-   The `<revision number>` should match the number used in the folder name (for 
+   The `<revision number>` should match the number used in the folder name (for
    instance, `rv1` would use `'1'` as the revision number).
 
-#. Create a new file with the same name as the file of the feature you are 
-   revising. For example, if the `"show platform"` command is to be revised, 
+#. Create a new file with the same name as the file of the feature you are
+   revising. For example, if the `"show platform"` command is to be revised,
    create a `show_platform.py` in the revision folder.
 
 #. Once the new file has been created, open it and create the revised version
    of whatever feature you would like with **the exact same function/class name**.
-   If you were to create a revision for the `show platform` parser, you 
+   If you were to create a revision for the `show platform` parser, you
    would create a new class `ShowPlatform` and the accompanying schema.
 
-As an example, assume the first revision is being created for the IOSXE version 
+As an example, assume the first revision is being created for the IOSXE version
 of the `"show platform"` command, the resulting file structure would resemble:
 
     .. code-block::
@@ -1273,15 +1274,64 @@ the original `iosxe/show_platform.py` file. If you want to use a specific revisi
 the revision number to the ``parse()`` command, e.g. `dev.parse('show version', revision=1)`. If you want to use the original parser, use `dev.parse('show version', revision=None)`.
 
 
-To change the default behavior of revision selection to use either the latest , 
+To change the default behavior of revision selection to use either the latest ,
 use the CLI argument `\-\-abstract-revision 1`
+
+|
+
+.. _versioning_a_parser
+
+**********************
+9. Versioning a Parser
+**********************
+
+Sometimes, rarely, but sometimes, you may find that the output of a command changes between versions of
+IOSXE, IOSXR, or any other OS. When this happens, you can create a new version of the parser to handle
+the new output. This is similar to creating a revision, but requires a different keyword to be used.
+
+To create a new version for a parser/api/ops, a new version folder must be
+established within the existing OS folder, following the naming convention
+`v<Version Number>`.
+
+    .. code-block::
+
+        genieparser/
+        └── src/
+            └── genie/
+                └── libs/
+                    └── parser/
+                        └── <OS>/
+                            ├── v1_0/
+                            ├── v1_1/
+                            └── v2_0/
+
+.. important::
+    Ensure that you do not use periods in your folder names. This will cause import errors
+
+To define a version range, create a new `__init__.py` file with the following contents:
+
+    .. code-block:: python
+
+        from genie import abstract
+        from genie.abstract.token import VersionRange
+        abstract.declare_token(version=VersionRange("<Minimum Version Number>", "<Maximum Version Number>"))
+
+The `<Minimum Version Number>` and `<Maximum Version Number>` should match the version numbers used in the folder name (for instance, `v1_0` would use `'1.0'` as the minimum version number and `'1.1'` as the maximum version number).
+
+From there you can create your parsers as you normally would. When Genie connects to the device, it will automatically
+pick up the device's OS version and use the appropriate parser.
+
+.. note::
+    It's important to understand the difference between revisions and versions. Revisions are used to update parsers
+    that were poorly made or in need of a rewrite, while versions are used to handle changes in the output of a command
+    between different versions of the OS.
 
 |
 
 .. _contributing_your_work:
 
 **********************************************
-9. Contributing your work to the pyATS project
+10. Contributing your work to the pyATS project
 **********************************************
 
 You've written your parser, you've run tests on your parser, and you're ready
