@@ -212,7 +212,7 @@ Once you have some, you can identify the keys that you'll need in a number of wa
 
 .. _keys_from_show_command:
 
-5.1.1 Identifying keys directy from show command output
+5.1.1 Identifying keys directly from show command output
 -------------------------------------------------------
 
 Writing a schema based on device output can range from straightforward to
