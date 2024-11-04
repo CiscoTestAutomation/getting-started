@@ -1,10 +1,12 @@
 # pyATS Getting Started Guide
 
 This is the pyATS getting started guide and development guide source code.
-The content of this repository, once reviewed and approved, is published on Cisco 
-DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
+The content of this repository, once reviewed and approved, is published on
+Cisco DevNet @ https://developer.cisco.com/docs/pyats-getting-started/
 
-Please note that this repository contains WORK IN PROGRESS. We cannot guarantee that the information is accurate until we publish the content to https://developer.cisco.com.
+Please note that this repository contains WORK IN PROGRESS. We cannot guarantee
+that the information is accurate until we publish the content to
+https://developer.cisco.com.
 
 ## Contributions
 
@@ -33,23 +35,19 @@ And you're good to go.
 ## Directory Structure:
 
 ```text
-
 source/             folder where all sources are. 
 source/index.rst    main entry point
 
 build/              where the output built HTML is
-
 ```
 
 
 ## To Build Local docs
 
 ```bash
-
 # build html
 make html
 
 # open the built files
 open ./build/html/index.html
-
 ```
