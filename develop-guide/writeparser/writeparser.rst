@@ -148,7 +148,7 @@ like to follow along with some of the examples in this guide, then
 follow these next few steps to set up a mock network environment.
 First, :download:`download the zip file <mock_parser.zip>` and extract the contents
 to a directory of your choice, such as :monospace:`mock_parser`. It's recommended
-to use a seperate terminal for your mock network operations.
+to use a separate terminal for your mock network operations.
 
 #. Go to the directory that contains the extracted files::
 
