@@ -148,7 +148,7 @@ like to follow along with some of the examples in this guide, then
 follow these next few steps to set up a mock network environment.
 First, :download:`download the zip file <mock_parser.zip>` and extract the contents
 to a directory of your choice, such as :monospace:`mock_parser`. It's recommended
-to use a seperate terminal for your mock network operations.
+to use a separate terminal for your mock network operations.
 
 #. Go to the directory that contains the extracted files::
 
@@ -212,7 +212,7 @@ Once you have some, you can identify the keys that you'll need in a number of wa
 
 .. _keys_from_show_command:
 
-5.1.1 Identifying keys directy from show command output
+5.1.1 Identifying keys directly from show command output
 -------------------------------------------------------
 
 Writing a schema based on device output can range from straightforward to
