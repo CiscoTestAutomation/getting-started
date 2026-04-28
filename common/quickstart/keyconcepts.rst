@@ -85,13 +85,13 @@ This glossary defines the terminology that we use to describe |pyATSbold| and th
     The term *object* refers to an entity that the |pyATS| ecosystem can access and act on. You can think of an object as a "container" of information, with actual values. 
 
    Key-value pair 
-    A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1`` has the key ``Device name`` and the value ``nx-osv-1``.
+    A key-value pair is a set of linked data, where the key is an identifier and the value is the actual information. For example, ``Device name: nx-osv-1``has the key``Device name``and the value``nx-osv-1``.
 
    |pyATS| packages
     The |pyATS| ecosystem is available externally through `Cisco DevNet <https://developer.cisco.com/pyats/>`_. We release slightly different packages for internal and external users to ensure that the packages work correctly in different environments. Differences include:
 
     * Package format - where the code is not open source
-    * Package names - ``ats`` internally, ``pyats`` externally
+    * Package names - ``ats``internally,``pyats`` externally
     * Source location for installation files
     * Architecture 64-bit (32-bit available internally *only*)
     * Defaults - no Cisco-specific defaults for external release
@@ -103,6 +103,6 @@ This glossary defines the terminology that we use to describe |pyATSbold| and th
     Unicon is a framework for developing device control libraries for routers, switches and servers. It is developed purely in Python, with no dependency on Tcl-based infrastructure. Unicon is also test framework agnostic and can be used with |pyATS|. We use *Unicon.playback* to create :term:`Mock devices`.
 
    Platform
-    The name of the hardware or chassis, or the name of the virtual hardware. The system uses the ``os`` and ``platform`` values to determine the |library| functionality to load and the correct connection plugin and services to use.
+    The name of the hardware or chassis, or the name of the virtual hardware. The system uses the ``os``and``platform`` values to determine the |library| functionality to load and the correct connection plugin and services to use.
 
 

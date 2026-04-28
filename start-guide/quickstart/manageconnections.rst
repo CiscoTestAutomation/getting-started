@@ -50,7 +50,7 @@ The ``devices`` block contains a description of each network device, and must in
     :widths: 25 75
 
     "``hostname``", "This *must* be the configured hostname of the device."
-    "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as ``uut`` (unit under test)."
+    "``alias``", "The |library| uses the alias to identify the device during script execution. This makes the script reusable on another topology, when a device is assigned the same alias, such as``uut`` (unit under test)."
     "``os``", "Device operating system"
     "``platform``", "(Recommended) The name of the hardware or chassis, or the name of the virtual hardware. The system uses the os/platform values to determine the connection plugin and services."
     "``credentials``", "The username, password, and any other credentials required to log in to the device. |br| |br| For details about how passwords are stored, see the topic `Credential Password Modeling <https://pubhub.devnetcloud.com/media/pyats/docs/topology/schema.html#credential-password-modeling>`_. "
@@ -106,17 +106,17 @@ command automatically converts the input and creates an equivalent YAML file.
 
 The following example shows an Excel file with the required columns.
 
-.. image:: geniecreate_example_excel.png 
+.. image:: geniecreate_example_excel.PNG
 
 :download:`You can download a sample Excel file here. <SampleTestbedFile.xlsx>` This sample includes the recommended ``platform`` column.
 
 Follow these guidelines to create a valid YAML file:
 
-    * Separate the ``ip`` and ``port`` with either a space or a colon (:).
+    * Separate the ``ip``and``port`` with either a space or a colon (:).
     * The ``password`` column is the default password used to log in to the device.
     * If you leave the password blank, the system prompts you for the password when you connect to the device.
-    * To enter privileged EXEC mode with the ``enable`` command, add a column with the header ``enable_password``. The value can be the same as or different from the default password.
-    * Any additional columns that you define, such as ``platform``, ``alias`` or ``type``, are added to the YAML file as key-value pairs.
+    * To enter privileged EXEC mode with the ``enable``command, add a column with the header``enable_password``. The value can be the same as or different from the default password.
+    * Any additional columns that you define, such as ``platform``,``alias``or``type``, are added to the YAML file as key-value pairs.
     * The columns can be in any order, as long as you include the required columns.
     * When creating CSV file, separate fields by comma (,). If you need text qualifier, use double qoutes (").
 
@@ -124,7 +124,7 @@ When you're ready to create the YAML file, from your virtual environment, run th
 
  (pyats) $ pyats create testbed file --path my_devices.xls --output yaml/my_testbed.yaml
 
-where ``my_devices.xls`` is the name of your source file, and ``my_testbed.yaml`` is the name of your output file.
+where ``my_devices.xls``is the name of your source file, and``my_testbed.yaml`` is the name of your output file.
 
 .. tip:: Add the ``--encode-password`` option to hide the password in the YAML file as a secret string. Note that this only *obfuscates* the password --- it does *not* make the password cryptographically secure. For more information, see the topic `Secret Strings <https://pubhub.devnetcloud.com/media/pyats/docs/utilities/secret_strings.html#secret-strings>`_.
 
@@ -163,7 +163,7 @@ Connect To Devices
 
 This step-by-step example shows you how to connect to a device. 
 
-.. note:: You can run the commands in the following examples on real devices, if you have them available. If you don't have a real device to practice with, we offer a :term:`mock device` that you can use with most of the |library| examples. 
+.. note:: You can run the commands in the following examples on real devices, if you have them available. If you don't have a real device to practice with, we offer a mock device that you can use with most of the |library| examples.
 
 #. :download:`Download the zip file that contains the mock data and YAML file <mock.zip>`. |br| |br|
 
@@ -188,13 +188,13 @@ This step-by-step example shows you how to connect to a device.
 
     >>> tb = load('mock.yaml')
 
-   *Result*: The system creates a variable ``tb`` that points to the testbed object. This command also creates ``tb.devices``, which contains the YAML device information in the form of key-value pairs. |br| |br|
+   *Result*: The system creates a variable ``tb``that points to the testbed object. This command also creates``tb.devices``, which contains the YAML device information in the form of key-value pairs. |br| |br|
 
 #. Create an object ``dev`` for the device that you want to connect to::
 
     >>> dev = tb.devices['nx-osv-1']
 
-   *Result*: The |library| finds the device named ``nx-osv-1`` in ``tb.devices`` and stores the information in the ``dev`` object. |br| |br| 
+   *Result*: The |library| finds the device named ``nx-osv-1``in``tb.devices``and stores the information in the``dev`` object. |br| |br| 
 
 #. Connect using the values stored in the ``device`` object::
 
@@ -239,7 +239,6 @@ See also...
 
 * `Detailed description of the testbed file <https://pubhub.devnetcloud.com/media/pyats/docs/topology/creation.html#testbed-file>`_
 * `Detailed description of the pyATS Library topology <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/Conf/user/topology.html?highlight=testbed%20yaml%20file#topology>`_
-
 
 
 

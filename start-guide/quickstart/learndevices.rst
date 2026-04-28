@@ -2,7 +2,7 @@
 
 Learn Device Features
 =====================
-This topic describes how to use the ``learn`` function of the |librarybold| ``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
+This topic describes how to use the ``learn``function of the |librarybold|``Ops`` module for stateful network validation of device features, such as protocols, interfaces, line cards, and other hardware.
 
 .. include:: ../definitions/def_feature.rst 
    :start-line: 3
@@ -45,7 +45,7 @@ This topic describes how you can tell the system to learn one or more features.
 
 Learn a Single Feature
 ^^^^^^^^^^^^^^^^^^^^^^
-To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
+To learn one feature on a single device, you can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut``is the alias "unit under test" for the host``nx-osv-1``.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
@@ -53,7 +53,7 @@ To learn one feature on a single device, you can use the device hostname or the 
 
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable ``output``:
+    * If you want to use Python, you can use ``pyats shell``to load the``testbed``API and create your testbed and device objects. Then, connect to the device and tell the system to learn the feature. In this example, the system stores the output as a Python dictionary in the variable``output``:
 
        .. code-block:: 
 
@@ -97,7 +97,7 @@ You can use the ``learn`` function to get the operational states of multiple or 
 
 Across Multiple Devices
 """""""""""""""""""""""
-This example shows you how to learn the ``bgp`` and ``ospf`` features on all of the devices in your testbed.
+This example shows you how to learn the ``bgp``and``ospf`` features on all of the devices in your testbed.
 
       .. note:: The mock data only contains one device, so you will only see the results for that device.
 
@@ -107,7 +107,7 @@ This example shows you how to learn the ``bgp`` and ``ospf`` features on all of 
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable ``learnt`` and displays the output::
+    * If you want to use Python, you can use ``pyats shell``to load the``testbed``API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified features. In this example, the system stores the output as a Python dictionary in the variable``learnt`` and displays the output::
 
        (pyats) $ pyats shell --testbed-file mock.yaml
           >>> learnt = {}
@@ -175,7 +175,7 @@ On a Single Device
     
 #. You can use a Python interpreter or the :term:`library command line`.
 
-    * If you want to use Python, you can use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable ``output``::
+    * If you want to use Python, you can use ``pyats shell``to load the``testbed``API and create your testbed and device objects. Then, connect to the device and tell the system to learn all of the features. In this example, the system stores the output as a Python dictionary in the variable``output``::
 
        (pyats) $ pyats shell --testbed-file mock.yaml
           >>> dev = testbed.devices['uut']

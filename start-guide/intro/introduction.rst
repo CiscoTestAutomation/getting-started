@@ -52,7 +52,7 @@ For example, to get the operational state of a :term:`feature` on a device, run 
 
  (pyats) $ pyats learn ospf --testbed-file testbed.yaml
 
-where ``ospf`` is the feature, and ``testbed.yaml`` is the :term:`testbed YAML file` that contains information about your network devices.
+where ``ospf``is the feature, and``testbed.yaml`` is the :term:`testbed YAML file` that contains information about your network devices.
 
 To see a complete list of the CLI built-in functions, after you :ref:`configure-environment` and :ref:`install pyATS and the pyATS library <install-pyats>`, run the command::
 
@@ -95,7 +95,7 @@ Network engineer key benefits
 * Take before and after snapshots of the network, and then compare them.
 * Parse device output and store a snapshot, and then automatically run the same commands at specified time intervals to compare the current and previous states.
 * Use an available test case to verify a stable network topology after an image upgrade, for example.
-* Perform typical actions such as ``Reload Devices``, ``Perform Switchover``, ``ShutNoShutBgp``, and ``ConfigUnconfigOspf``.
+* Perform typical actions such as ``Reload Devices``,``Perform Switchover``,``ShutNoShutBgp``, and``ConfigUnconfigOspf``.
 
 How does the |pyATS| ecosystem work?
 ----------------------------------------

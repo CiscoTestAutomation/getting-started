@@ -30,6 +30,7 @@ extensions = [
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel',
     'sphinxcontrib.spelling',
+    'sphinxcontrib.video',
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -37,7 +38,15 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['definitions/*']
+suppress_warnings = [
+    'docutils',
+    'autosectionlabel.*',
+    'ref.ref',
+    'ref.doc',
+    'image.not_readable',
+    'misc.highlighting_failure',
+]
 
 # -- Options for PDF output -------------------------------------------------
 #

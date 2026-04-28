@@ -35,8 +35,6 @@ Advantages of a modular strategy
  * The automated testing process is *data-driven* --- you don't have to re-write tests, just modify the datafiles.
  * You can choose from a few hundred |library| `open-source API functions <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/apis>`_ to define your test case actions and steps. 
 
-.. _triggers:
-
 Triggers
 ---------
 
@@ -67,13 +65,13 @@ Remember that you can use ``genie run`` with the |library| pool of triggers and 
                     steps ('obj'): steps context manager                                
             '''
             with steps.start('Step 1 check if bgp neighbor is shut down') as step:
-                is_expected = uut.api.is_bgp_neighbors_shutdown(uut, [‘1.1.1.1’], ‘ipv4’)
+                is_expected = uut.api.is_bgp_neighbors_shutdown(uut, ['1.1.1.1'], 'ipv4')
                 if is_expected:
                     step.passed('Reason this step passed')
                 else:
                     step.failed('Reason this step failed')
 
-The ``class`` is the name of the trigger and inherits from the |library| ``Trigger`` object. Each class performs one specific task, which can have multiple ``steps``. For more detailed information, see the `Harness Developer Guide <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/harness/developer/index.html#harness-developer-guide>`_.
+The ``class``is the name of the trigger and inherits from the |library|``Trigger``object. Each class performs one specific task, which can have multiple``steps``. For more detailed information, see the `Harness Developer Guide <https://pubhub.devnetcloud.com/media/genie-docs/docs/userguide/harness/developer/index.html#harness-developer-guide>`_.
          
 
 Verifications
@@ -87,8 +85,6 @@ What is a verification?
 How do verifications work?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 By taking an initial snapshot (a parsed show command), and then taking the same snapshot after each trigger runs, the system can compare the snapshots to ensure that here are no unexpected changes to your network configuration or operational state. 
-
-.. _datafiles:
 
 Datafiles
 ----------
@@ -174,7 +170,7 @@ You can run the following example using the :download:`mock device <mock.zip>`.
 
    The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the verification ran before and after the trigger.
 
-   .. image:: ../images/tasklog_example.png
+   .. image:: ../images/tasklog_example.PNG
       
 
 Use a job file to run a test script
@@ -203,7 +199,7 @@ This example shows you how to specify a job file that defines multiple triggers 
 
    The following example shows part of the log where you can see the overall :ref:`automated testing process <auto-testing-process>`. Note that the system ran the verifications once after the common setup and again after each trigger.
 
-   .. image:: ../images/tasklog_example2.png
+   .. image:: ../images/tasklog_example2.PNG
 
 See also...
 

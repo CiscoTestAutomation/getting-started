@@ -54,9 +54,9 @@ We offer the |library| feature libraries and components as open-source code, and
 
 Check the existing components
 -----------------------------
-Before you begin this process, check to see if an existing ``conf`` or ``ops`` structure, :term:`Trigger`, or :term:`Parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
+Before you begin this process, check to see if an existing ``conf``or``ops`` structure, :term:`Trigger`, or :term:`Parser` meets your requirements. On `the pyATS Library GitHub site <https://github.com/CiscoTestAutomation>`_, look at :monospace:`/genielibs/pkgs/<name>-pkg/src/genie/libs/<name>/`, where :monospace:`<name>` is the component that you want to check.
 
-* If you need to create a new feature within the ``conf`` or ``ops`` packages, follow the `conf <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_ or `ops <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_ guidelines.
+* If you need to create a new feature within the ``conf``or``ops`` packages, follow the `conf <https://github.com/CiscoTestAutomation/genielibs/blob/master/CONF.md>`_ or `ops <https://github.com/CiscoTestAutomation/genielibs/blob/master/OPS.md>`_ guidelines.
 
 * If you want to write a new trigger, check to see if an existing trigger exists for the same action (such as ShutNoshut, ConfigUnconfig). Check by feature (such as BGP or OSPF) at `/genielibs/pkgs/sdk-pkg/src/genie/libs/sdk/triggers <https://github.com/CiscoTestAutomation/genielibs/tree/master/pkgs/sdk-pkg/src/genie/libs/sdk/triggers>`_
 
@@ -150,7 +150,7 @@ Conf or Ops packages
 
     make develop
 
-   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``conf``, ``ops``, ``robot``, ``sdk``, ``health``, ``clean`` and ``filetransferutils`` packages. |br| |br|
+   *Result*: The system installs dependencies and packages, and sets up the development environment for the ``conf``,``ops``,``robot``,``sdk``,``health``,``clean``and``filetransferutils`` packages. |br| |br|
 
 #. Write your own code as required.
 

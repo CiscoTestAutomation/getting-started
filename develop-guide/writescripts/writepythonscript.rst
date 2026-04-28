@@ -122,7 +122,7 @@ The following procedure describes the steps that you take to write the same samp
 
       pre_output = device.parse("show interface Ethernet2/1 brief")
 
-#. With the data parsed and stored as the :term:`Object` ``pre_output``, check the value of the ``status`` key.
+#. With the data parsed and stored as the :term:`Object` ``pre_output``, check the value of the``status`` key.
 
    .. code-block:: python
 
@@ -233,7 +233,7 @@ Open the file :monospace:`simple_script2.py`, and note the following **differenc
 
 
 
-#. This script uses the ``Ops`` module ``learn`` functionality to learn the BGP feature (issue and parse a series of show commands):
+#. This script uses the ``Ops``module``learn`` functionality to learn the BGP feature (issue and parse a series of show commands):
 
    .. code-block:: python
 

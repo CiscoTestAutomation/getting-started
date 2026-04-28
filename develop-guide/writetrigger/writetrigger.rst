@@ -44,7 +44,7 @@ To run triggers using the ``harness``, you need at least three files, as describ
 
     "Trigger", "Python (.py)", "Defines the trigger class or classes."
     "Trigger datafile", "YAML (.yaml)", "Lists the triggers and arguments to pass to each trigger."
-    "Job file", "Python (.py)", "Imports ``gRun`` functionality from the ``harness`` package. Points to a specific datafile and identifies which triggers and (optional) verifications to run."
+    "Job file", "Python (.py)", "Imports ``gRun``functionality from the``harness`` package. Points to a specific datafile and identifies which triggers and (optional) verifications to run."
 
 The following diagram shows how the triggers, datafiles, and job files interact when you use the |library| harness to run test cases.
 
@@ -201,7 +201,7 @@ Complete the following steps to see the trigger in action on a mock device.
 
    Your terminal shows the step-by-step actions and the following detailed list of results:
 
-   .. image:: /images/trigger_results.png
+   .. image:: /images/trigger_results.PNG
       :width: 75% 
 
 Write your own trigger
@@ -229,7 +229,7 @@ The following steps describe how you can write a simple trigger using the :monos
 
     log = logging.getLogger()
 
-   .. note:: You don't need to import the ``genie.testbed`` ``load`` function, because you don't have to specify a testbed file in your trigger. Instead, you specify the testbed file when you run the job file, and the |library| ``Harness`` pulls all of the data together, including arguments from the datafile. This makes your trigger reusable.
+   .. note:: You don't need to import the ``genie.testbed````load``function, because you don't have to specify a testbed file in your trigger. Instead, you specify the testbed file when you run the job file, and the |library|``Harness`` pulls all of the data together, including arguments from the datafile. This makes your trigger reusable.
 
 #. Define the :monospace:`ShutNoShutBgp` trigger class and inherit from the standard :monospace:`Trigger` class:
 

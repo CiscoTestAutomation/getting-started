@@ -83,7 +83,7 @@ In the section :ref:`manage-connections`, you learned :ref:`how the system conne
 
 Using Command Line
 ^^^^^^^^^^^^^^^^^^
-You can use the :term:`library command line` ``Parse`` functionality to parse the output from a specified ``show`` command. Check the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for a list of available parsers that you can use.
+You can use the :term:`library command line` ``Parse``functionality to parse the output from a specified``show`` command. Check the `parser website <https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/parsers>`_ for a list of available parsers that you can use.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
@@ -133,7 +133,7 @@ You can use the :term:`library command line` ``Parse`` functionality to parse th
 In Python Interactive Shell
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following example shows you how to parse output from the ``show inventory`` command, using a :term:`mock device`. 
+The following example shows you how to parse output from the ``show inventory`` command, using a mock device.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
