@@ -134,7 +134,7 @@ easily set up a development environment that can be used for writing a parser.
     $ source <directory_of_your_choice>/bin/activate
     $ pip install pyats[full]
 
-#. Once the installation has finished, clone your ``genieparser`` repo (replace ``YOUR_USERNAME`` with your Gihub account username) and run ``make develop`` to get your environment ready to work in.
+#. Once the installation has finished, clone your ``genieparser``repo (replace``YOUR_USERNAME``with your Gihub account username) and run``make develop`` to get your environment ready to work in.
 
    .. code-block:: python
 
@@ -213,7 +213,7 @@ Once you have some, you can identify the keys that you'll need in a number of wa
 .. _keys_from_show_command:
 
 5.1.1 Identifying keys directly from show command output
--------------------------------------------------------
+--------------------------------------------------------
 
 Writing a schema based on device output can range from straightforward to
 surprisingly complex. Having multiple examples of device output for a given
@@ -301,12 +301,12 @@ If you want to jump ahead and see what the parsed output is when using this
 schema, then click :ref:`here <golden_output_example>`.
 The file that contains the above ShowTrackSchema class can be found `here <https://github.com/CiscoTestAutomation/genieparser/blob/master/src/genie/libs/parser/iosxe/show_track.py>`_.
 
-In the above schema example, you can see the use of two schema subclasses; ``Any`` and ``Optional``.
+In the above schema example, you can see the use of two schema subclasses; ``Any``and``Optional``.
 As you might expect, ``Any`` is used to match anything and is often used in larger
 or more complicated schemas. ``Optional`` is used to indicate that a key may or
 may not exist in the device output.
 
-There are other helpful subclasses that can be used in the creation of your schema such as ``Default``, ``And``,
+There are other helpful subclasses that can be used in the creation of your schema such as ``Default``,``And``,
 and ``Or``. Visit the `Schema Engine Documentation <https://pubhub.devnetcloud.com/media/genie-metaparser/docs/advanced/schemaengine.html#other-types-of-schema>`_ to read more about them and how to use them.
 
 
@@ -750,7 +750,7 @@ The easiest way to accomplish this is with use of the Common library, found in /
 6.2 Writing a parser class with the parsergen package
 =====================================================
 
-The |library| ``parsergen`` package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The ``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
+The |library| ``parsergen``package provides a one-step parsing mechanism that can parse dynamic tabular and non-tabular device output. The``parsergen`` produces significantly fewer lines of code than standard parsing mechanisms.
 
 The ``parsergen`` package is a generic parser for show commands. You can use the package to create a parser class for any given show command, and then reuse your new class to create tests for the output values.
 
@@ -1330,9 +1330,9 @@ pick up the device's OS version and use the appropriate parser.
 
 .. _contributing_your_work:
 
-**********************************************
+***********************************************
 10. Contributing your work to the pyATS project
-**********************************************
+***********************************************
 
 You've written your parser, you've run tests on your parser, and you're ready
 to contribute your parser. Great! For your convenience, the steps required to

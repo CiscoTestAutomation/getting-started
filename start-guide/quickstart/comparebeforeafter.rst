@@ -27,7 +27,7 @@ Examples of stateful validation
 -------------------------------
 The following examples show how you can monitor changes in configuration and state, using both learned and parsed output. 
 
-Remember that ``learn`` runs multiple ``show`` commands and creates a consistent output structure across devices. By contrast, ``parse`` typically parses the output of a single ``show`` command, with output structure that is consistent for each device but can vary across devices.
+Remember that ``learn``runs multiple``show``commands and creates a consistent output structure across devices. By contrast,``parse``typically parses the output of a single``show`` command, with output structure that is consistent for each device but can vary across devices.
 
 .. tip:: For a detailed example that includes automation, see the workshop `DevNet-2595: Stateful Network Validation using pyATS+Genie and Robot Framework <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_.
 
@@ -37,9 +37,9 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
 .. note:: We'll show you all of the actions and results, because mock data doesn't work with this example. The `workshop <https://github.com/CiscoTestAutomation/CL-DevNet-2595/blob/master/README.md>`_ provides examples that you can try yourself.
 
-#. With your devices already configured and running, take a snapshot of the ``bgp`` feature and save it to the directory (or variable) ``output1``. You can use a Python interpreter or the :term:`Library command line`.
+#. With your devices already configured and running, take a snapshot of the ``bgp``feature and save it to the directory (or variable)``output1``. You can use a Python interpreter or the :term:`Library command line`.
 
-    * If you want to use Python, use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
+    * If you want to use Python, use ``pyats shell``to load the``testbed`` API and create your testbed and device objects. Then, tell the system to connect to each device and to learn the specified feature::
 
        (pyats) $ pyats shell --testbed-file mock.yaml
           >>> output1 = {}
@@ -57,7 +57,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
 
        (pyats) $ pyats learn "bgp" --testbed-file mock.yaml --output output1
 
-      *Result*: The system creates the output directory ``output1``, stores the ``ops.txt`` device files in JSON format, and displays a summary for each device:
+      *Result*: The system creates the output directory ``output1``, stores the``ops.txt`` device files in JSON format, and displays a summary for each device:
 
        .. code-block:: text
 
@@ -106,7 +106,7 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
     
     .. tip:: Refer to `Genie CLI Diff <https://pubhub.devnetcloud.com/media/genie-docs/docs/cli/genie_diff.html>`_.
 
-    .. note:: ``+`` indicates an addition, ``-`` indicates a deletion, and ``+`` followed by ``-`` indicates a change.
+    .. note:: ``+``indicates an addition,``-``indicates a deletion, and``+``followed by``-`` indicates a change.
 
     .. code-block:: python
 
@@ -128,17 +128,17 @@ In this example, you'll see how to take snapshots with the ``learn`` function, s
         +         session_state: active
         -         session_state: idle
     
-    In this example, you can see that ``ipv4 multicast`` and ``ipv4 unicast`` both changed from idle to active.
+    In this example, you can see that ``ipv4 multicast``and``ipv4 unicast`` both changed from idle to active.
 
 Compare parsed snapshots
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-In this example, you can see how to :ref:`parse the output <parse-output>` of a single ``show`` command at two different points in time, and then use ``Diff`` to compare the output.
+In this example, you can see how to :ref:`parse the output <parse-output>` of a single ``show``command at two different points in time, and then use``Diff`` to compare the output.
 
 .. tip:: Because the parsed output structure can vary across devices, this example shows you how to take a snapshot on a single device. You can, of course, write a script that automates this process for every device in your network.
 
 #. With your device already configured and running, take a snapshot and save it to the directory (or variable) ``po1``. You can use a Python interpreter or the :term:`Library command line`.
 
-    * If you want to use Python, use ``pyats shell`` to load the ``testbed`` API and create your testbed and device objects. Then, tell the system to connect to a device and parse the specified command::
+    * If you want to use Python, use ``pyats shell``to load the``testbed`` API and create your testbed and device objects. Then, tell the system to connect to a device and parse the specified command::
 
        (pyats) $ pyats shell --testbed-file tb.yaml
           >>> dev = testbed.devices['uut']
@@ -151,7 +151,7 @@ In this example, you can see how to :ref:`parse the output <parse-output>` of a 
 
        (pyats) $ pyats parse "show ip ospf interface brief" --testbed-file tb.yaml --devices uut --output po1
 
-      *Result*: The system creates the output directory ``po1``, stores the ``parsed.txt`` file in JSON format, and displays a summary for the device:
+      *Result*: The system creates the output directory ``po1``, stores the``parsed.txt`` file in JSON format, and displays a summary for the device:
 
        .. code-block:: text
 

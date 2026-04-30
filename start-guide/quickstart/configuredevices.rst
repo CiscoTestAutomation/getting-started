@@ -66,7 +66,7 @@ The process to configure devices is simple:
 Configure Feature on Device
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example shows you how to configure a single feature on a single device. You can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut`` is the alias "unit under test" for the host ``nx-osv-1``.
+This example shows you how to configure a single feature on a single device. You can use the device hostname or the device alias (defined in the testbed YAML file). In the following example, ``uut``is the alias "unit under test" for the host``nx-osv-1``.
 
 #. In your virtual environment, change to the directory that contains the mock YAML file::
 
@@ -78,7 +78,7 @@ This example shows you how to configure a single feature on a single device. You
 
         >>> uut = testbed.devices['uut']
 
-#. Get the |library| ``Interface`` functionality, to configure an interface on the ``uut`` device::
+#. Get the |library| ``Interface``functionality, to configure an interface on the``uut`` device::
 
         >>> from genie.conf.base import Interface
 
@@ -131,7 +131,7 @@ By default, the |library| applies the configuration from step 6 of the previous 
 
  >>> nxos_interface.build_config(apply=False, attributes={'ipv4':None})
 
-In this example, the system applies *only* the configuration of the ``ipv4`` attribute to the device. Because the system uses a dictionary that stores key-value pairs, ``None`` serves as a placeholder value that has no effect on the configuration.
+In this example, the system applies *only* the configuration of the ``ipv4``attribute to the device. Because the system uses a dictionary that stores key-value pairs,``None`` serves as a placeholder value that has no effect on the configuration.
 
 Configure Multiple Devices
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

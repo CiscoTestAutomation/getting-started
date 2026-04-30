@@ -1,5 +1,5 @@
 Getting Started with pyATS
-=========================
+==========================
 
 The |getstartedguide| introduces you to the features and functionality of the 
 |pyATSbold| solution for network test automation. Designed for test script 

@@ -82,7 +82,7 @@ Configure APIs connect to the given device and execute commands to perform a tas
                     "Could not shut down interface {}".format(interface)
                 )
 
-        Here we have tried to run the commands ``interface <interface>`` and ``shutdown`` on the device's configuration dialog. If this succeeds, no error will be thrown and our script will continue on. If it fails, a SubCommandFailure exception will be thrown for us to catch in our script.
+        Here we have tried to run the commands ``interface <interface>``and``shutdown`` on the device's configuration dialog. If this succeeds, no error will be thrown and our script will continue on. If it fails, a SubCommandFailure exception will be thrown for us to catch in our script.
 
 Get
 """
@@ -107,7 +107,7 @@ Get APIs retrieve information and return them to our scripts.
                     list: List of interface names
                 """
 
-        Here we are importing ``SchemaEmptyParserError`` for later use, and defining our API. Again, each API is required to have a docstring detailing what is does, its arguments, and its return values. Note that ``device`` is a mandatory parameter for all APIs. 
+        Here we are importing ``SchemaEmptyParserError``for later use, and defining our API. Again, each API is required to have a docstring detailing what is does, its arguments, and its return values. Note that``device`` is a mandatory parameter for all APIs. 
 
     .. tab:: 2
 
@@ -130,7 +130,7 @@ Get APIs retrieve information and return them to our scripts.
                 except SchemaEmptyParserError:
                     return None
 
-        With this we are calling the existing parser for ``show interface`` and getting the parsed output. If the output is empty, it will raise a ``SchemaEmptyParserError`` which we can catch and then return ``None`` back to our scripts.
+        With this we are calling the existing parser for ``show interface``and getting the parsed output. If the output is empty, it will raise a``SchemaEmptyParserError``which we can catch and then return``None`` back to our scripts.
 
     .. tab:: 3
 
@@ -185,7 +185,7 @@ Verification APIs are designed to verify that a configuration has been set corre
                         result(`bool`): True if is up else False
                 """
 
-        We start the verification API by importing ``Timeout``. This is a necessary tool used to loop a section of code until it either confirms what we want it to, or times out. Aside from that, we're again creating the API function with the mandatory ``device`` argument, the ``interface`` argument we need for this specific API, and two parameters that are mandatory for the verify APIs, ``max_time`` and ``check_interval``, which must be set with default values. Again, the docstring is required.
+        We start the verification API by importing ``Timeout``. This is a necessary tool used to loop a section of code until it either confirms what we want it to, or times out. Aside from that, we're again creating the API function with the mandatory``device``argument, the``interface``argument we need for this specific API, and two parameters that are mandatory for the verify APIs,``max_time``and``check_interval``, which must be set with default values. Again, the docstring is required.
 
     .. tab:: 2
 
@@ -213,7 +213,7 @@ Verification APIs are designed to verify that a configuration has been set corre
                 while timeout.iterate():
                     ...
         
-        Here we are creating and starting our timeout. If ``max_time`` and ``check_interval`` are not passed when calling this API, it will default to a 60 second run, checking in 10 second intervals. This results in a total of six attempts.
+        Here we are creating and starting our timeout. If ``max_time``and``check_interval`` are not passed when calling this API, it will default to a 60 second run, checking in 10 second intervals. This results in a total of six attempts.
 
     .. tab:: 3
 
@@ -256,9 +256,9 @@ Verification APIs are designed to verify that a configuration has been set corre
         Let's break down what is happening here. Each time the loop runs, it:
 
           - Gets the parsed output of ``show interface <interface>``
-          - Gets the ``oper_status`` and ``line_protocol`` of our desired ``interface``
-          - Gets the ``enabled`` status of our desired ``interface``
-          - Checks to see if ``oper_status`` and ``line_protocol`` are ``down``, and ``enabled`` is ``True``
+          - Gets the ``oper_status``and``line_protocol``of our desired``interface``
+          - Gets the ``enabled``status of our desired``interface``
+          - Checks to see if ``oper_status``and``line_protocol``are``down``, and``enabled``is``True``
 
             - If all conditions are met, it will return ``True``, breaking out of the loop and ending the API.
             - If all conditions are not met, the Timeout will sleep for ``check_interval`` seconds and then loop again.
@@ -267,9 +267,6 @@ Verification APIs are designed to verify that a configuration has been set corre
         This boolean response will allow us to go forward or stop in our main testscript.
 
 Once your parser or API is merged into its respective repository, it will be available for production use in the next official release.
-
-.. video:: ../../_videos/dev_api.mp4
-    :width: 100%
 
 Revision
 """"""""
@@ -320,7 +317,7 @@ The following arguments can be passed to the script:
 * **-\ -api** (optional) - the name of the API (if no API is specified, the script will try to generate tests for all APIs in the module)
 * **-\ -destination** (optional) - folder where tests will be created (default value is current working directory)
 
-Below is an example of a valid command that will generate unit tests for all APIs in the module ``interface.get`` on a ``nxos`` device:
+Below is an example of a valid command that will generate unit tests for all APIs in the module ``interface.get``on a``nxos`` device:
 
 .. code-block:: bash
 
@@ -357,7 +354,7 @@ Below you can see how the default argument interface can be declared.
             interfaces:
                 - Gi6
 
-In the example above, interface is changed to Tunnel2 only for the API ``is_interface_changed_state_log``. Moreover, ``verify_interface_bundled_interfaces_mode`` has an argument that is exclusive to that API.
+In the example above, interface is changed to Tunnel2 only for the API ``is_interface_changed_state_log``. Moreover,``verify_interface_bundled_interfaces_mode`` has an argument that is exclusive to that API.
 
 Ocasionally, it may be necessary to create more than one unit test per API, in order to increase code coverage. For these cases, you can declare a list of test arguments for the API, like the following:
 
@@ -395,7 +392,7 @@ The item would look like this:
         arguments:
             ...
 
-In this scenario, unit tests for ``question_mark_retrieve`` and ``int_to_mask`` would not be generated.
+In this scenario, unit tests for ``question_mark_retrieve``and``int_to_mask`` would not be generated.
 A regex can be used to filter out APIs, instead of a list. 
 To do that, you need to add the keyword 'regex' to exclude, followed by a pattern.
 In the example below, all APIs with the prefix ``get_`` would be filtered out.
@@ -432,11 +429,11 @@ In this case, you can pass the argument like this (as part of the command):
 
     python api_unittest_generator.py --test-arguments interface:GigabitEthernet1,vrf:VRF1 ...
 
-Note that for this type of declaration, you do not have to declare ``default``, ``arguments`` or a specific API name as part of the string.
+Note that for this type of declaration, you do not have to declare ``default``,``arguments`` or a specific API name as part of the string.
 All arguments will be considered default arguments and their data types will be string.
 
 At the end of its run, the API Unit Test Generator creates a folder structure according to the API/module structure.
-For example, for the API ``get_bundled_interface`` of the ``interface.get`` module on ``iosxe``, it would create the following folder structure:
+For example, for the API ``get_bundled_interface``of the``interface.get``module on``iosxe``, it would create the following folder structure:
 
 .. image:: ../images/ut_1.png
 

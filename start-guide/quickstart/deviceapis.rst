@@ -8,7 +8,7 @@ This topic describes how to use |librarybold| Device ``api`` function to perform
 How to execute Device APIs
 --------------------------
 
-The |library| can perform operations on a Device via specific Device ``api`` functions. Similar to parsing a device, you can perform an operation on a Device using the appropriate ``device.api.function_name()`` call.
+The |library| can perform operations on a Device via specific Device ``api``functions. Similar to parsing a device, you can perform an operation on a Device using the appropriate`` device.api.function_name()`` call.
 
 Let's see how to perform some basic operations on a Device using the Device's ``api`` function.
 
